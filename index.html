@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261103-145513';</script>
+<script>window.VERSAO_SISTEMA = '20261103-151001';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -7020,13 +7020,17 @@ const REGRAS_CLASSE_FORNECEDOR = {
     detectar: /\bCSA-?N\b/i,
     material(nome){ return String(nome||'').replace(/^\s*\d{4,}\s*[-–—]\s*/,'').replace(/\s+/g,' ').trim(); },
     classe(nome){
-      const n = this.material(nome).toUpperCase();
+      // abreviações do mesmo couro: "S DIEGO", "S.DIEGO", "SDIEGOFLX" → "SAN DIEGO", "SAN DIEGO FLX"
+      const n = this.material(nome).toUpperCase()
+        .replace(/\bSDIEGO(FLX|FLEX)\b/g,'SAN DIEGO $1').replace(/\bSDIEGO\b/g,'SAN DIEGO').replace(/\bS\.?\s+DIEGO\b/g,'SAN DIEGO').replace(/\bS\.DIEGO\b/g,'SAN DIEGO')
+        .replace(/\s+/g,' ').trim();
       if(!n) return '';
       if(/^(CSA-?N\s*)?DESVIO/.test(n)) return 'DESVIOS';
-      const tr = n.match(/\bTR\s*-?\s*([1-5])\b/);
-      const sel = tr ? 'TR'+tr[1] : (/\bA\s*\/\s*B\b/.test(n) ? 'A/B' : '');
+      // seleção misturada ("TR1/TR2") fica junta
+      const tr = n.match(/\bTR\s*-?\s*([1-5])(?:\s*\/\s*TR\s*-?\s*([1-5]))?\b/);
+      const sel = tr ? ('TR'+tr[1] + (tr[2] ? '/TR'+tr[2] : '')) : (/\bA\s*\/\s*B\b/.test(n) ? 'A/B' : '');
       const palavras = [];
-      for(const w of n.replace(/^CSA-?N\s*/,'').split(' ')){ if(/\d/.test(w) || w==='TR' || w==='A/B') break; palavras.push(w); }
+      for(const w of n.replace(/^CSA-?N\s*/,'').split(' ')){ if(/\d/.test(w) || w==='TR' || w==='A/B' || /^TR\d/.test(w)) break; palavras.push(w); }
       const prod = palavras.join(' ').trim();
       if(/^FORRO\b/.test(prod)) return ('FORRO ' + sel).trim();
       return [sel, prod].filter(Boolean).join(' ');
@@ -8240,25 +8244,101 @@ function numeroInvoiceDoTexto(texto){
   const m = String(texto||'').replace(/\s+/g,' ').match(/INVOICE\s*(?:N[O°º]\.?|NUMBER|#)?\s*[:：]\s*([A-Z0-9][A-Z0-9\/\-.]{2,20})/i);
   return m ? m[1].replace(/[.\-]+$/,'').toUpperCase() : '';
 }
-// contrato: "Contract: PO OMF#014-2026" → campo Contrato; "Ref: PO OMF#014-2026" → campo Pedido
-// ("DATE OF CONTRACT" não conta: o rótulo tem que começar a célula)
+// dados do contrato/invoice para a ficha do processo (só o que estiver escrito no documento)
+const PAISES_DOC = [
+  [/\bM[EÉ]XICO\b/,'MEXICO'], [/\bCOLOMBIA\b/,'COLOMBIA'], [/\bECUADOR\b|\bEQUADOR\b/,'EQUADOR'], [/\bPER[UÚ]\b/,'PERU'],
+  [/\bBOLIVIA\b/,'BOLIVIA'], [/\bCHILE\b/,'CHILE'], [/\bPARAGUA[YI]\b/,'PARAGUAI'], [/\bURUGUA[YI]\b/,'URUGUAI'],
+  [/DOMINICAN REPUBLIC|REP(?:[UÚ]BLICA|\.)?\s*DOMINICANA/,'REP DOMINICANA'], [/\bGUATEMALA\b/,'GUATEMALA'], [/\bEL SALVADOR\b/,'EL SALVADOR'],
+  [/\bVENEZUELA\b/,'VENEZUELA'], [/\bARGENTINA\b/,'ARGENTINA'], [/\bHONDURAS\b/,'HONDURAS'], [/\bNICARAGUA\b/,'NICARAGUA'],
+  [/\bCOSTA RICA\b/,'COSTA RICA'], [/\bPANAM[AÁ]\b/,'PANAMA'], [/\bBRA[SZ]IL\b/,'BRASIL'], [/\bUNITED STATES\b|\bU\.?S\.?A\.?\b|ESTADOS UNIDOS/,'EUA'],
+  [/\bCHINA\b/,'CHINA'], [/\bITAL(?:Y|IA)\b/,'ITALIA'], [/\bSPAIN\b|\bESPA[NÑ]A\b|\bESPANHA\b/,'ESPANHA'], [/\bPORTUGAL\b/,'PORTUGAL'], [/\bVIET\s*NAM\b/,'VIETNA'], [/\bINDIA\b/,'INDIA']
+];
+const MESES_DOC = { JAN:'JANEIRO', ENE:'JANEIRO', FEB:'FEVEREIRO', FEV:'FEVEREIRO', MAR:'MARÇO', APR:'ABRIL', ABR:'ABRIL', MAY:'MAIO', MAI:'MAIO', MAYO:'MAIO',
+  JUN:'JUNHO', JUL:'JULHO', AUG:'AGOSTO', AGO:'AGOSTO', SEP:'SETEMBRO', SET:'SETEMBRO', OCT:'OUTUBRO', OUT:'OUTUBRO', NOV:'NOVEMBRO', DEC:'DEZEMBRO', DIC:'DEZEMBRO', DEZ:'DEZEMBRO' };
+function paisDoTexto(t){ const u = String(t||'').toUpperCase(); const a = PAISES_DOC.find(([re])=>re.test(u)); return a ? a[1] : ''; }
+function mesDoTexto(t){ const u = String(t||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,''); const m = u.match(/\b(JAN|ENE|FEB|FEV|MAR|APR|ABR|MAYO|MAY|MAI|JUN|JUL|AUG|AGO|SEP|SET|OCT|OUT|NOV|DEC|DIC|DEZ)[A-Z]*\b/); return m ? MESES_DOC[m[1]] : ''; }
+// "October 13, 2026" · "13/10/2026" · "2026-10-13" · "13 de octubre de 2026" → AAAA-MM-DD
+function dataDoTexto(t){
+  const u = String(t||'').trim();
+  let m = u.match(/(\d{4})-(\d{2})-(\d{2})/); if(m) return `${m[1]}-${m[2]}-${m[3]}`;
+  m = u.match(/\b(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})\b/); if(m) return `${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`;
+  const mes = mesDoTexto(u); if(!mes) return '';
+  const nMes = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'].indexOf(mes)+1;
+  const ano = (u.match(/\b(20\d{2})\b/)||[])[1]; const dia = (u.replace(/\b20\d{2}\b/,'').match(/\b(\d{1,2})\b/)||[])[1];
+  return (ano && dia) ? `${ano}-${String(nMes).padStart(2,'0')}-${String(dia).padStart(2,'0')}` : '';
+}
+function condPagtoDoTexto(t){
+  return String(t||'').toUpperCase().replace(/\s+/g,' ').trim()
+    .replace(/\bADVANCED?\b|\bADVANCE PAYMENT\b|\bPREPAYMENT\b|\bPREPAID\b|\bANTICIPADO\b|\bADELANTADO\b/g,'ADIANTADO')
+    .replace(/\s*\bDAYS?\b\s*(?:AFTER|FROM)?\s*(?:THE\s*)?B\s*\/?\s*L\b(?:\s*DATE)?/g,' D/BL').replace(/\s*\bDIAS?\b\s*(?:DESPU[EÉ]S DE|DE LA FECHA DEL?|DESDE)?\s*(?:LA\s*)?B\s*\/?\s*L\b/g,' D/BL')
+    .replace(/\bAGAINST (?:COPY OF )?(?:B\s*\/\s*L|DOCUMENTS?)\b/g,'C/BL').replace(/\bBALANCE\b|\bSALDO\b/g,'SALDO').replace(/\bDAYS?\b/g,'DIAS').replace(/,\s*/g,' ').replace(/\s*\+\s*/g,' + ').replace(/\s{2,}/g,' ').trim();
+}
+function nomeClienteDoDoc(v){
+  const limpo = String(v||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/,?\s*\b(S\.?\s*A\.?\s*S\.?|S\.?\s*A\.?\s*(DE\s*C\.?\s*V\.?)?|S\.?\s*R\.?\s*L\.?|LTDA\.?|L\.?T\.?D\.?A?|CIA\.?|INC\.?|LLC|CORP\.?|E\.?I\.?R\.?L\.?|S\.?\s*DE\s*R\.?\s*L\.?(\s*DE\s*C\.?\s*V\.?)?)\s*$/,'')
+    .replace(/[.,;]+$/,'').replace(/\s+/g,' ').trim();
+  const norm = x => String(x||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+  const cands = new Set((typeof clientCatalog!=='undefined' ? clientCatalog : []).map(String));
+  try{ (processos||[]).forEach(p=>{ if(p && p.cliente) cands.add(String(p.cliente).trim()); }); }catch(e){}
+  try{ ['jbs','vendas'].forEach(k=>{ const L = datasetCache && datasetCache[k] && datasetCache[k].processos; (L||[]).forEach(p=>{ if(p && p.cliente) cands.add(String(p.cliente).trim()); }); }); }catch(e){}
+  const alvo = norm(limpo); if(!alvo) return '';
+  let achado = Array.from(cands).find(c=>norm(c)===alvo);
+  if(!achado){
+    const pa = alvo.split(' ');
+    achado = Array.from(cands).filter(c=>{ const pc = norm(c).split(' '); return pc.length===pa.length && pc.every((w,i)=>pa[i].startsWith(w)) && pc.some((w,i)=>w!==pa[i]); })
+      .sort((a,b)=>norm(b).length-norm(a).length)[0];
+  }
+  if(!achado){ const longos = Array.from(cands).filter(c=>norm(c).length>=4 && (alvo.startsWith(norm(c)+' ') || norm(c).startsWith(alvo+' '))).sort((a,b)=>norm(b).length-norm(a).length); achado = longos[0]; }
+  return achado || limpo;
+}
 function camposDoContrato(linhas){
-  const out = { contrato:'', pedido:'' };
+  const out = { contrato:'', pedido:'', cliente:'', pais:'', data:'', etd:'', condPagto:'', incoterm:'' };
   const limpar = v => String(v||'').replace(/\s+/g,' ').trim().replace(/[.,;]+$/,'');
-  (linhas||[]).forEach(r=>{
+  const ROT = [
+    ['contrato', /^CONTRACT(?:\s*(?:N[Oº°]\.?|NUMBER|#))?\s*:\s*(.*)$/i],
+    ['pedido',   /^(?:REF(?:ERENCE)?\.?|YOUR\s+REF(?:ERENCE)?\.?|P\.?\s*O\.?\s*(?:N[Oº°]\.?|NUMBER|#)?|PURCHASE\s+ORDER(?:\s*N[Oº°]\.?)?|ORDER\s*(?:N[Oº°]\.?|NUMBER|#)|PEDIDO(?:\s*N[Oº°]\.?)?)\s*:\s*(.*)$/i],
+    ['cliente',  /^(?:BUYER|CONSIGNEE|CUSTOMER|SOLD\s+TO|BILL\s+TO|IMPORTER|COMPRADOR|CLIENTE|CONSIGNATARIO|MESSRS\.?)\s*:\s*(.*)$/i],
+    ['data',     /^(?:DATE\s+OF\s+(?:THE\s+)?CONTRACT|CONTRACT\s+DATE|FECHA\s+DEL?\s+CONTRATO|DATA\s+DO\s+CONTRATO)\s*:\s*(.*)$/i],
+    ['etd',      /^(?:DELIVERY(?:\s+DATE|\s+TIME)?|SHIPMENT(?:\s+DATE|\s+TIME|\s+PERIOD)?|TIME\s+OF\s+SHIPMENT|DATE\s+OF\s+SHIPMENT|ETD|FECHA\s+DE\s+EMBARQUE|EMBARQUE|ENTREGA|EX[\s\-]*FACTORY|READY\s+DATE)\s*:\s*(.*)$/i],
+    ['condPagto',/^(?:PAYMENT(?:\s+TERMS?|\s+CONDITIONS?)?|TERMS?\s+OF\s+PAYMENT|CONDICI[OÓ]N(?:ES)?\s+DE\s+PAGO|FORMA\s+DE\s+PAGO|CONDI[CÇ][AÃ]O\s+DE\s+PAGAMENTO)\s*:\s*(.*)$/i],
+    ['incoterm', /^(?:INCO?N?TERMS?(?:\s*20\d\d)?|PRICE\s+TERMS?|DELIVERY\s+TERMS?|TERMS?\s+OF\s+DELIVERY|CONDICI[OÓ]N\s+DE\s+VENTA)\s*:\s*(.*)$/i],
+    ['pais',     /^(?:(?:PORT\s+OF\s+)?DESTINATION(?:\s+PORT|\s+COUNTRY)?|COUNTRY(?:\s+OF\s+DESTINATION)?|PA[IÍ]S(?:\s+DE\s+DESTINO)?|DESTINO|FINAL\s+DESTINATION)\s*:\s*(.*)$/i],
+  ];
+  let linhaCliente = -1;
+  (linhas||[]).forEach((r, ir)=>{
     const cel = (r||[]).map(c=>c==null?'':String(c).trim()).filter(Boolean);
     for(let i=0;i<cel.length;i++){
-      const c = cel[i];
-      const mC = c.match(/^CONTRACT(?:\s*(?:N[Oº°]\.?|NUMBER|#))?\s*:\s*(.*)$/i);
-      const mR = c.match(/^(?:REF(?:ERENCE)?\.?|YOUR\s+REF(?:ERENCE)?\.?)\s*:\s*(.*)$/i);
-      const m = mC || mR; if(!m) continue;
-      let v = limpar(m[1]);
-      if(!v && cel[i+1] && !/:\s*$/.test(cel[i+1]) && !/^(CONTRACT|REF|DATE)\b/i.test(cel[i+1])) v = limpar(cel[i+1]);
-      if(!v || v.length > 40) continue;
-      if(mC && !out.contrato) out.contrato = v;
-      if(mR && !out.pedido) out.pedido = v;
+      for(const [k, re] of ROT){
+        let m = cel[i].match(re);
+        if(!m && k==='cliente' && /^(BUYER|CONSIGNEE|CUSTOMER|SOLD\s+TO|COMPRADOR|CLIENTE)$/i.test(cel[i])) m = [cel[i], ''];
+        if(!m) continue;
+        let v = limpar(m[1]);
+        if(!v && cel[i+1] && !ROT.some(([,r2])=>r2.test(cel[i+1]))) v = limpar(cel[i+1]);
+        if(!v || v.length > 80 || out[k]) break;
+        if(k==='data'){ const d = dataDoTexto(v); if(d) out.data = d; }
+        else if(k==='etd'){ const d = dataDoTexto(v); out.etd = d || mesDoTexto(v) || ''; }
+        else if(k==='incoterm'){ const c = (v.toUpperCase().match(/\b(EXW|FCA|FAS|FOB|CFR|CNF|C&F|CIF|CPT|CIP|DAP|DPU|DDP)\b/)||[])[1]; if(c) out.incoterm = (c==='CNF'||c==='C&F') ? 'CFR' : c; }
+        else if(k==='condPagto'){ out.condPagto = condPagtoDoTexto(v); }
+        else if(k==='pais'){ const p = paisDoTexto(v); if(p) out.pais = p; }
+        else if(k==='cliente'){ out.cliente = nomeClienteDoDoc(v); linhaCliente = ir; }
+        else if(v.length <= 40) out[k] = v;
+        break;
+      }
     }
   });
+  // país pelo endereço do comprador (linhas logo abaixo do nome)
+  if(!out.pais && linhaCliente >= 0){
+    for(let ir=linhaCliente; ir<Math.min((linhas||[]).length, linhaCliente+7); ir++){
+      const t = (linhas[ir]||[]).map(c=>c==null?'':String(c)).join(' ');
+      if(ir>linhaCliente && /\b(SELLER|VENDEDOR|EXPORTER|SHIPPER)\b/i.test(t)) break;
+      const p = paisDoTexto(t); if(p && p!=='BRASIL'){ out.pais = p; break; }
+    }
+  }
+  // incoterm sem rótulo: um único código no documento
+  if(!out.incoterm){
+    const todos = new Set(); (linhas||[]).forEach(r=>{ const t = (r||[]).map(c=>c==null?'':String(c)).join(' ').toUpperCase(); (t.match(/\b(EXW|FCA|FOB|CFR|CIF|CPT|CIP|DAP|DDP)\b/g)||[]).forEach(x=>todos.add(x)); });
+    if(todos.size===1) out.incoterm = Array.from(todos)[0];
+  }
   return out;
 }
 // chamado ao anexar um arquivo na ficha do processo
@@ -8267,10 +8347,14 @@ async function oferecerMateriaisDaInvoice(file, avisar){
   try{ lido = await lerProdutosInvoice(file); }catch(e){ console.warn('leitura da invoice', e); if(avisar) toast('Não consegui ler ' + file.name + (/internet/.test(String(e&&e.message))?' (precisa de internet para ler PDF).':'.')); return; }
   if(lido && !lido.produtos.length){
     const cp = camposDoContrato(lido.linhas);
+    const ehNovo = !(processos||[]).some(p=>p && p.id===draft.id);
     const feitos = [];
-    if(cp.contrato && !String(draft.contrato||'').trim()){ draft.contrato = cp.contrato; feitos.push('Contrato '+cp.contrato); }
-    if(cp.pedido && !String(draft.pedido||'').trim()){ draft.pedido = cp.pedido; feitos.push('Pedido '+cp.pedido); }
-    if(feitos.length){ renderModal(); toast('📄 ' + feitos.join(' · ') + ' preenchido(s) pelo documento.'); return; }
+    ['contrato','pedido','cliente','pais','incoterm','condPagto','etd','data'].forEach(k=>{
+      if(!cp[k]) return;
+      const vazio = !String(draft[k]||'').trim() || (k==='data' && ehNovo);
+      if(vazio){ draft[k] = cp[k]; feitos.push(k); }
+    });
+    if(feitos.length){ renderModal(); try{ refreshVencimentos(); }catch(e){} toast('📄 ' + feitos.length + ' campo(s) preenchido(s) pelo documento.'); return; }
   }
   if(!lido || !lido.produtos.length){ if(avisar) toast('Não encontrei produtos em ' + file.name + '. Se for um PDF escaneado (imagem), digite os materiais — a classe se preenche sozinha.'); return; }
   const fornDet = fornecedorPeloTexto(lido.texto);
@@ -8279,7 +8363,16 @@ async function oferecerMateriaisDaInvoice(file, avisar){
   // YANTAI: o nº da invoice do documento vai para o campo "Invoice" do processo
   const nInv = /YANTAI/i.test(fornUsar) ? numeroInvoiceDoTexto(lido.texto) : '';
   const cp = camposDoContrato(lido.linhas);
-  const campoRef = (id, rotulo, valor, atual) => valor ? `<div style="margin-top:8px;"><label><input type="checkbox" id="${id}" ${atual && atual.toUpperCase()!==valor.toUpperCase() ? '' : 'checked'}> ${rotulo}: <b>${String(valor).replace(/</g,'&lt;')}</b>${atual && atual.toUpperCase()!==valor.toUpperCase() ? ` <span class="an-panel-sub">(hoje está ${String(atual).replace(/</g,'&lt;')})</span>` : ''}</label></div>` : '';
+  const ehNovo = !(processos||[]).some(p=>p && p.id===draft.id);
+  const CAMPOS_DOC = [['contrato','Contrato'],['pedido','Pedido'],['cliente','Cliente'],['pais','País'],['data','Data de abertura'],['incoterm','Incoterm'],['condPagto','Cond. de pagamento'],['etd','ETD']];
+  const escD = t => String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const mostrar = (k,v) => (k==='data' || (k==='etd' && /^\d{4}-\d{2}-\d{2}$/.test(v))) ? fmtDateBR(v) : v;
+  const docCampos = CAMPOS_DOC.filter(([k])=>cp[k]).map(([k,rot])=>{
+    const v = String(cp[k]), atual = String(draft[k]||'').trim();
+    const igual = atual && (atual.toUpperCase()===v.toUpperCase() || (k==='data' && atual.slice(0,10)===v));
+    const marcar = k==='data' ? (ehNovo || !atual) : (!atual || igual);
+    return `<label style="display:flex;gap:6px;align-items:baseline;padding:3px 0;"><input type="checkbox" data-doc-campo="${k}" ${marcar?'checked':''}> <span style="min-width:150px;color:var(--ink-soft);">${rot}</span> <b>${escD(mostrar(k,v))}</b>${atual && !igual ? ` <span class="an-panel-sub">(hoje está ${escD(mostrar(k,atual))})</span>` : ''}</label>`;
+  }).join('');
   const invAtual = String(draft.invoice||'').trim();
   const classeDe = nome => classeAutoFornecedor(nome, fornUsar)
     || (lido.contrato ? (REGRAS_CLASSE_FORNECEDOR['JBS BR'].classe(nome) || null) : null)   // contrato: seleção TR1/TR2/TR3/TR4 ou A/B
@@ -8290,7 +8383,7 @@ async function oferecerMateriaisDaInvoice(file, avisar){
   const linhas = lido.produtos.map(p=>`<tr><td style="font-family:'IBM Plex Mono',monospace;font-weight:600;text-align:left;white-space:nowrap;">${esc(classeDe(p.nomeDoc||p.nome))}</td><td style="text-align:left;">${esc(p.nome)}</td><td class="num">${fmt(p.quantidade)}</td><td class="num">${p.precoLista.toFixed(4).replace(/0{1,2}$/,'')}</td><td class="num">${fmt(p.total)}</td></tr>`).join('');
   const root = document.createElement('div'); root.className='overlay'; root.style.zIndex=99999;
   root.innerHTML = `<div class="modal" style="max-width:860px;">
-    <div class="modal-head"><div><h2>🧾 Produtos encontrados ${lido.contrato?'no contrato':'na invoice'} — ${esc(file.name)}</h2>
+    <div class="modal-head"><div><h2>🧾 Produtos encontrados ${(lido.contrato || (/\bCONTRACT\b/i.test(lido.texto||'') && !/COMMERCIAL\s+INVOICE|PROFORMA/i.test(lido.texto||'')))?'no contrato':'na invoice'} — ${esc(file.name)}</h2>
       <div class="an-panel-sub">${lido.produtos.length} produto(s)${fornUsar?` · ${esc(fornUsar)}`:''}</div></div></div>
     <div class="modal-body">
       <div style="overflow:auto;"><table class="mat-table" style="width:100%;"><thead><tr><th style="text-align:left;">Classe</th><th style="text-align:left;">Material (como na invoice)</th><th>Quant.</th><th>Valor unit.</th><th>Total</th></tr></thead>
@@ -8303,8 +8396,7 @@ async function oferecerMateriaisDaInvoice(file, avisar){
         : lido.totalDoc ? (Math.abs(lido.totalDoc - totalV) < 0.05
         ? `<div style="margin-top:8px;color:var(--green,#2E9E6B);font-weight:600;">✓ Soma confere com o total da invoice: USD ${fmt(lido.totalDoc)}</div>`
         : `<div style="margin-top:8px;color:var(--amber,#C98A0B);font-weight:600;">⚠ Total da invoice: USD ${fmt(lido.totalDoc)} — a soma das linhas dá USD ${fmt(totalV)}. Confira antes de preencher.</div>`) : ''}
-      ${campoRef('invContrato','Contrato do processo', cp.contrato, String(draft.contrato||'').trim())}
-      ${campoRef('invPedido','Pedido do processo', cp.pedido, String(draft.pedido||'').trim())}
+      ${docCampos ? `<div style="margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;"><div style="font-weight:700;margin-bottom:4px;">📋 Dados do ${lido.contrato?'contrato':'documento'} para a ficha</div>${docCampos}</div>` : ''}
       ${nInv ? `<div style="margin-top:12px;"><label><input type="checkbox" id="invNumero" ${invAtual && invAtual.toUpperCase()!==nInv ? '' : 'checked'}> Invoice do processo: <b>${esc(nInv)}</b>${invAtual && invAtual.toUpperCase()!==nInv ? ` <span class="an-panel-sub">(hoje está ${esc(invAtual)})</span>` : ''}</label></div>` : ''}
       ${temMat?`<div style="margin-top:12px;"><label><input type="radio" name="invModo" value="sub" checked> Substituir os materiais que já estão na ficha</label> &nbsp; <label><input type="radio" name="invModo" value="add"> Acrescentar aos existentes</label></div>`:''}
     </div>
@@ -8315,9 +8407,7 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     const modo = root.querySelector('input[name=invModo]:checked');
     const usarNum = root.querySelector('#invNumero');
     if(nInv && usarNum && usarNum.checked){ draft.invoice = nInv; }
-    { const c1 = root.querySelector('#invContrato'), c2 = root.querySelector('#invPedido');
-      if(cp.contrato && c1 && c1.checked) draft.contrato = cp.contrato;
-      if(cp.pedido && c2 && c2.checked) draft.pedido = cp.pedido; }
+    root.querySelectorAll('[data-doc-campo]').forEach(cb=>{ if(cb.checked && cp[cb.dataset.docCampo]) draft[cb.dataset.docCampo] = cp[cb.dataset.docCampo]; });
     const usarFrete = root.querySelector('#invFrete');
     if(lido.frete>0 && usarFrete && usarFrete.checked){ draft.frete = lido.frete; draft.freteModo = (root.querySelector('#invFreteModo')||{}).value || 'somar'; }
     const capa = { campos: fornDet ? {fornecedor:fornDet} : {}, historico:[],
