@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261103-135804';</script>
+<script>window.VERSAO_SISTEMA = '20261103-145513';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -8185,7 +8185,7 @@ async function lerProdutosInvoice(file){
       const chave = JSON.stringify(achados.map(p=>[p.nome,p.quantidade,p.precoLista]));
       if(achados.length && !vistos.has(chave)){ vistos.add(chave); achados.forEach(p=>produtos.push(p)); }   // cópia da mesma invoice em outra página não duplica
     }
-    if(!produtos.length){ const c = produtosSemTabela(todasLinhas); if(c) return { produtos:c.produtos, texto, contrato:true }; }
+    if(!produtos.length){ const c = produtosSemTabela(todasLinhas); if(c) return { produtos:c.produtos, texto, contrato:true, linhas:todasLinhas }; }
     let totalDoc = totalDaInvoice(todasLinhas);
     if(!totalDoc && produtos.length){
       const soma = produtos.reduce((t,p)=>t+(p.total||0),0);
@@ -8205,7 +8205,7 @@ async function lerProdutosInvoice(file){
       else if(totalDoc && Math.abs(soma - totalDoc) < 0.05) freteModo = 'embutido';
       else freteModo = 'somar';
     }
-    return { produtos, texto, totalDoc, frete, freteModo };
+    return { produtos, texto, totalDoc, frete, freteModo, linhas:todasLinhas };
   }
   if(/\.(xlsx|xlsm|xls)$/.test(nome) || /sheet|excel/.test(tipo)){
     if(typeof XLSX==='undefined') throw new Error('a leitura de planilhas ainda não carregou');
@@ -8216,10 +8216,10 @@ async function lerProdutosInvoice(file){
       texto += ' ' + grid.map(r=>(r||[]).filter(v=>v!=null).join(' ')).join(' ');
       grid.forEach(r=>todasLinhas.push(r));
       const produtos = produtosDasLinhasInvoice(grid);
-      if(produtos.length) return { produtos, texto };
+      if(produtos.length) return { produtos, texto, linhas:todasLinhas };
     }
-    const c = produtosSemTabela(todasLinhas); if(c) return { produtos:c.produtos, texto, contrato:true };
-    return { produtos:[], texto };
+    const c = produtosSemTabela(todasLinhas); if(c) return { produtos:c.produtos, texto, contrato:true, linhas:todasLinhas };
+    return { produtos:[], texto, linhas:todasLinhas };
   }
   return null;
 }
@@ -8240,16 +8240,46 @@ function numeroInvoiceDoTexto(texto){
   const m = String(texto||'').replace(/\s+/g,' ').match(/INVOICE\s*(?:N[O°º]\.?|NUMBER|#)?\s*[:：]\s*([A-Z0-9][A-Z0-9\/\-.]{2,20})/i);
   return m ? m[1].replace(/[.\-]+$/,'').toUpperCase() : '';
 }
+// contrato: "Contract: PO OMF#014-2026" → campo Contrato; "Ref: PO OMF#014-2026" → campo Pedido
+// ("DATE OF CONTRACT" não conta: o rótulo tem que começar a célula)
+function camposDoContrato(linhas){
+  const out = { contrato:'', pedido:'' };
+  const limpar = v => String(v||'').replace(/\s+/g,' ').trim().replace(/[.,;]+$/,'');
+  (linhas||[]).forEach(r=>{
+    const cel = (r||[]).map(c=>c==null?'':String(c).trim()).filter(Boolean);
+    for(let i=0;i<cel.length;i++){
+      const c = cel[i];
+      const mC = c.match(/^CONTRACT(?:\s*(?:N[Oº°]\.?|NUMBER|#))?\s*:\s*(.*)$/i);
+      const mR = c.match(/^(?:REF(?:ERENCE)?\.?|YOUR\s+REF(?:ERENCE)?\.?)\s*:\s*(.*)$/i);
+      const m = mC || mR; if(!m) continue;
+      let v = limpar(m[1]);
+      if(!v && cel[i+1] && !/:\s*$/.test(cel[i+1]) && !/^(CONTRACT|REF|DATE)\b/i.test(cel[i+1])) v = limpar(cel[i+1]);
+      if(!v || v.length > 40) continue;
+      if(mC && !out.contrato) out.contrato = v;
+      if(mR && !out.pedido) out.pedido = v;
+    }
+  });
+  return out;
+}
 // chamado ao anexar um arquivo na ficha do processo
 async function oferecerMateriaisDaInvoice(file, avisar){
   let lido = null;
   try{ lido = await lerProdutosInvoice(file); }catch(e){ console.warn('leitura da invoice', e); if(avisar) toast('Não consegui ler ' + file.name + (/internet/.test(String(e&&e.message))?' (precisa de internet para ler PDF).':'.')); return; }
+  if(lido && !lido.produtos.length){
+    const cp = camposDoContrato(lido.linhas);
+    const feitos = [];
+    if(cp.contrato && !String(draft.contrato||'').trim()){ draft.contrato = cp.contrato; feitos.push('Contrato '+cp.contrato); }
+    if(cp.pedido && !String(draft.pedido||'').trim()){ draft.pedido = cp.pedido; feitos.push('Pedido '+cp.pedido); }
+    if(feitos.length){ renderModal(); toast('📄 ' + feitos.join(' · ') + ' preenchido(s) pelo documento.'); return; }
+  }
   if(!lido || !lido.produtos.length){ if(avisar) toast('Não encontrei produtos em ' + file.name + '. Se for um PDF escaneado (imagem), digite os materiais — a classe se preenche sozinha.'); return; }
   const fornDet = fornecedorPeloTexto(lido.texto);
   const fornUsar = String(draft.fornecedor||'').trim() || fornDet;
   lido.produtos.forEach(p=>{ p.nomeDoc = p.nome; p.nome = nomeMaterialFornecedor(p.nome, fornUsar); });   // a classe sai do nome como está no documento
   // YANTAI: o nº da invoice do documento vai para o campo "Invoice" do processo
   const nInv = /YANTAI/i.test(fornUsar) ? numeroInvoiceDoTexto(lido.texto) : '';
+  const cp = camposDoContrato(lido.linhas);
+  const campoRef = (id, rotulo, valor, atual) => valor ? `<div style="margin-top:8px;"><label><input type="checkbox" id="${id}" ${atual && atual.toUpperCase()!==valor.toUpperCase() ? '' : 'checked'}> ${rotulo}: <b>${String(valor).replace(/</g,'&lt;')}</b>${atual && atual.toUpperCase()!==valor.toUpperCase() ? ` <span class="an-panel-sub">(hoje está ${String(atual).replace(/</g,'&lt;')})</span>` : ''}</label></div>` : '';
   const invAtual = String(draft.invoice||'').trim();
   const classeDe = nome => classeAutoFornecedor(nome, fornUsar)
     || (lido.contrato ? (REGRAS_CLASSE_FORNECEDOR['JBS BR'].classe(nome) || null) : null)   // contrato: seleção TR1/TR2/TR3/TR4 ou A/B
@@ -8273,6 +8303,8 @@ async function oferecerMateriaisDaInvoice(file, avisar){
         : lido.totalDoc ? (Math.abs(lido.totalDoc - totalV) < 0.05
         ? `<div style="margin-top:8px;color:var(--green,#2E9E6B);font-weight:600;">✓ Soma confere com o total da invoice: USD ${fmt(lido.totalDoc)}</div>`
         : `<div style="margin-top:8px;color:var(--amber,#C98A0B);font-weight:600;">⚠ Total da invoice: USD ${fmt(lido.totalDoc)} — a soma das linhas dá USD ${fmt(totalV)}. Confira antes de preencher.</div>`) : ''}
+      ${campoRef('invContrato','Contrato do processo', cp.contrato, String(draft.contrato||'').trim())}
+      ${campoRef('invPedido','Pedido do processo', cp.pedido, String(draft.pedido||'').trim())}
       ${nInv ? `<div style="margin-top:12px;"><label><input type="checkbox" id="invNumero" ${invAtual && invAtual.toUpperCase()!==nInv ? '' : 'checked'}> Invoice do processo: <b>${esc(nInv)}</b>${invAtual && invAtual.toUpperCase()!==nInv ? ` <span class="an-panel-sub">(hoje está ${esc(invAtual)})</span>` : ''}</label></div>` : ''}
       ${temMat?`<div style="margin-top:12px;"><label><input type="radio" name="invModo" value="sub" checked> Substituir os materiais que já estão na ficha</label> &nbsp; <label><input type="radio" name="invModo" value="add"> Acrescentar aos existentes</label></div>`:''}
     </div>
@@ -8283,6 +8315,9 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     const modo = root.querySelector('input[name=invModo]:checked');
     const usarNum = root.querySelector('#invNumero');
     if(nInv && usarNum && usarNum.checked){ draft.invoice = nInv; }
+    { const c1 = root.querySelector('#invContrato'), c2 = root.querySelector('#invPedido');
+      if(cp.contrato && c1 && c1.checked) draft.contrato = cp.contrato;
+      if(cp.pedido && c2 && c2.checked) draft.pedido = cp.pedido; }
     const usarFrete = root.querySelector('#invFrete');
     if(lido.frete>0 && usarFrete && usarFrete.checked){ draft.frete = lido.frete; draft.freteModo = (root.querySelector('#invFreteModo')||{}).value || 'somar'; }
     const capa = { campos: fornDet ? {fornecedor:fornDet} : {}, historico:[],
