@@ -16,7 +16,8 @@ A Sinhorelli representa fornecedores que vendem estes produtos (NCM / SH):
 | 6406.90 | Biqueira de aço / palmilhas / partes de calçado | Yantai |
 | 6005.37 | Malha/mesh (air mesh, forro) | Yantai |
 | 5609 | Cadarços (refletivos) | Yantai |
-| 3909.50 | Poliuretano em forma primária: resinas PU para couro sintético/adesivo (Xuchuan) e TPU (Miracll) | Xuchuan, Miracll (China) |
+| 3907.99 | Poliol poliéster — sistema PU para solado (confirmado em contrato da Xuchuan: XC-6002C, XC-200, D-1010) | Xuchuan (China) |
+| 3909.50 | Pré-polímero/isocianato do sistema PU para solado (Xuchuan, XC-8280) e TPU (Miracll) | Xuchuan, Miracll (China) |
 | 3506.91 | Adesivos para calçado (PU, PVC, cola de contato) | BIQ (Brasil) |
 | 3814.00 | Solventes | BIQ |
 | 8480.71 | Moldes para solado (injeção/compressão) | Matrizaria Polako (Brasil) |
@@ -24,7 +25,7 @@ A Sinhorelli representa fornecedores que vendem estes produtos (NCM / SH):
 | 6406.20 | Solados de borracha/plástico | Hiper Solados (Brasil) |
 
 ## Quem compra isso (perfil de cliente)
-Fábricas de calçado (em especial botas de segurança, militares, PVC, couro), curtumes (wet blue/crust), fábricas de solados (PU/TPU/borracha), fabricantes de couro sintético/tecido revestido (compram resina PU 3909.50), fabricantes de marroquinaria/estofados, e distribuidores de insumos para calçado.
+Fábricas de calçado (em especial botas de segurança, militares, PVC, couro), curtumes (wet blue/crust), fábricas de solados (PU/TPU/borracha), fábricas de solado PU e de calçado injetado em PU (compram sistema PU 3907.99 + 3909.50 — ex.: Segurindustria, Peru), fabricantes de couro sintético/tecido revestido, fabricantes de marroquinaria/estofados, e distribuidores de insumos para calçado.
 
 ## Tarefa
 Para os PAÍSES indicados, encontrar empresas que COMPRAM/IMPORTAM essas NCMs, o mais atualizado (2024–2026) e o mais certo possível. Priorize evidência real: registros de importação (Veritrade, Volza, Panjiva, ImportGenius, Datasur, 52wmb, TradeAtlas — páginas gratuitas), notícias, sites oficiais, câmaras setoriais (ex.: CICEG/ANPIC no México, ACICAM na Colômbia, CALTU no Equador, CIC na Argentina), cadastros de empresas. Use a WebSearch e a WebFetch. Não invente empresas, CNPJ/RUC/NIT, sites ou contatos: se não tiver certeza, deixe null. Cada empresa precisa de pelo menos 1 fonte (URL) que a cite.
