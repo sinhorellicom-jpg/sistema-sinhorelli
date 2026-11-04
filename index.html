@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261104-194446';</script>
+<script>window.VERSAO_SISTEMA = '20261104-194916';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -3173,7 +3173,7 @@ function abaDoDocNuvem(docId){
   if(/^resumo_jbs_v1/.test(d)) return 'jbs';
   return null;
 }
-function podeDocNuvem(docId){ if((String(docId)==='resumo_jbs_v1' || String(docId)==='clientes_cadastro_v1') && acessoRestrito()) return false; const a = abaDoDocNuvem(docId); return !a || temAba(a); }
+function podeDocNuvem(docId){ if(/^(resumo_jbs_v1|clientes_cadastro_v1)/.test(String(docId)) && acessoRestrito()) return false; const a = abaDoDocNuvem(docId); return !a || temAba(a); }
 // esconde do menu as abas que a pessoa não pode ver
 function aplicarAbasPermitidas(){
   document.querySelectorAll('.view-tab').forEach(t=>{ const k = abaDaView(t.dataset.view); if(k && !temAba(k)) t.style.display = 'none'; });
@@ -8448,7 +8448,7 @@ function camposDoContrato(linhas){
 // chamado ao anexar um arquivo na ficha do processo
 async function oferecerMateriaisDaInvoice(file, avisar){
   let lido = null;
-  try{ lido = await lerProdutosInvoice(file); }catch(e){ console.warn('leitura da invoice', e); if(avisar) toast('Não consegui ler ' + file.name + (/internet/.test(String(e&&e.message))?' (precisa de internet para ler PDF).':'.')); return; }
+  try{ lido = await lerProdutosInvoice(file); if(lido && lido.texto) ncmArquivarDoDoc(lido, file.name).catch(e=>console.warn('ncm', e)); }catch(e){ console.warn('leitura da invoice', e); if(avisar) toast('Não consegui ler ' + file.name + (/internet/.test(String(e&&e.message))?' (precisa de internet para ler PDF).':'.')); return; }
   if(lido && !lido.produtos.length){
     const cp = camposDoContrato(lido.linhas);
     const ehNovo = !(processos||[]).some(p=>p && p.id===draft.id);
@@ -15159,6 +15159,66 @@ function copiarTexto(t, ok){
    A pesquisa fica no arquivo prospeccao.json publicado junto com o sistema (atualizado periodicamente).
    As NCMs vendidas também são lidas dos processos (materiais com "NCM 1234.56..." no nome). */
 let prospDados = null, prospErro = '';
+/* NCMs dos documentos anexados: ao ler uma invoice/contrato/certificado, procura NCM / HS CODE / NALADISA.
+   NCM que ainda não está cadastrada (ou fornecedor novo para uma NCM) fica arquivada aqui e aparece na Prospecção. */
+const NCM_DOC_KEY = 'resumo_jbs_v1_ncms';     // mesmo nível de proteção do Resumo JBS (só acesso total)
+let ncmDocs = null;
+async function ncmDocsCarregar(){
+  if(typeof acessoRestrito==='function' && acessoRestrito()){ ncmDocs = { itens:[] }; return ncmDocs; }
+  let raw = null;
+  if(typeof firebaseReady!=='undefined' && firebaseReady && firestoreDb){ try{ raw = await firestoreReadProcessos(NCM_DOC_KEY); }catch(e){} }
+  if(raw===null || raw===undefined){ try{ const r = await storageGet(NCM_DOC_KEY, true); raw = r && r.value ? r.value : null; }catch(e){} }
+  try{ ncmDocs = raw ? JSON.parse(raw) : { itens:[] }; }catch(e){ ncmDocs = { itens:[] }; }
+  if(!Array.isArray(ncmDocs.itens)) ncmDocs.itens = [];
+  return ncmDocs;
+}
+function ncmFmt(d){ return d.length>=10 ? d.slice(0,4)+'.'+d.slice(4,6)+'.'+d.slice(6,8)+'.'+d.slice(8,10) : d.length>=8 ? d.slice(0,4)+'.'+d.slice(4,6)+'.'+d.slice(6,8) : d.slice(0,4)+'.'+d.slice(4,6); }
+function ncmValida(d){ if(!/^\d{6,10}$/.test(d)) return false; const cap = +d.slice(0,2); return cap>=1 && cap<=97; }
+function ncmsDoTexto(texto){
+  const t = String(texto||'').replace(/\s+/g,' '), out = new Map();
+  const add = (bruto, rotulada)=>{
+    let d = String(bruto).replace(/\D/g,'');
+    if(d.length===7 || d.length===9) d = d.slice(0, d.length-1);
+    if(!ncmValida(d)) return;
+    if(!rotulada && /^(19|20)\d\d/.test(d)) return;          // parece data (2026.04.08)
+    const k = d.slice(0,6), atual = out.get(k);
+    if(!atual || d.length > atual.replace(/\D/g,'').length) out.set(k, ncmFmt(d));
+  };
+  const COD = String.raw`\d{4}\.?\s?\d{2}(?:\.?\d{2}(?:\.?\d{2})?)?`;
+  const re = new RegExp(String.raw`(?:\bNCM(?:\s*\/\s*SH)?|\bH\.?\s?S\.?\s*(?:CODE|NO|N[º°])?|\bHTS(?:\s*CODE)?|\bNALADI(?:SA)?|\bSUBPARTIDA(?:\s+ARANCELARIA)?|\bPARTIDA\s+ARANCELARIA|\bPOSICI[OÓ]N\s+ARANCELARIA|\bTARIFF\s+(?:CODE|NO)|\bCLASSIFICA[CÇ][AÃ]O\s+FISCAL|\bC[ÓO]DIGO\s+ARANCELARIO)\s*(?:NO\.?|N[º°]\.?|#)?\s*[:：.\-]?\s*(` + COD + String.raw`(?:\s*(?:[\/,;&]|\bE\b|\bY\b|\bAND\b)\s*` + COD + `)*)`, 'gi');
+  let m; while((m = re.exec(t))){ m[1].split(/[\/,;&]|\bE\b|\bY\b|\bAND\b/i).forEach(c=>add(c, true)); }
+  const re2 = /(?<![\d.,])(\d{4})\.(\d{2})\.(\d{2})(?:\.(\d{2}))?(?![\d]|[.,]\d)/g;
+  while((m = re2.exec(t))) add(m.slice(1).filter(Boolean).join(''), false);
+  return Array.from(out.values());
+}
+async function ncmArquivarDoDoc(lido, arquivo){
+  if(typeof acessoRestrito==='function' && acessoRestrito()) return;
+  const achadas = ncmsDoTexto(lido.texto); if(!achadas.length) return;
+  if(!prospDados) await prospCarregar();
+  await ncmDocsCarregar();
+  const forn = String((typeof draft!=='undefined' && draft && draft.fornecedor) || fornecedorPeloTexto(lido.texto) || '').trim().toUpperCase();
+  const conhecidas = prospNcms();
+  const novas = [];
+  achadas.forEach(n=>{
+    const k6 = prospNcm6(n);
+    const x = conhecidas.find(c=>prospNcm6(c.ncm)===k6) || null;
+    const temForn = x && (!forn || (x.fornecedores||[]).some(f=>{ const a = String(f).toUpperCase(); return a===forn || a.indexOf(forn)>=0 || forn.indexOf(a)>=0; }));
+    const maisCompleta = x && n.replace(/\D/g,'').length > String(x.ncmCompleta||x.ncm).replace(/\D/g,'').length;
+    if(temForn && !maisCompleta) return;
+    const p0 = (lido.produtos||[])[0];
+    novas.push({ id:'ncm_'+Date.now().toString(36)+'_'+novas.length, ncm:n, fornecedor:forn, produto: x ? '' : String(p0 && (p0.nomeDoc||p0.nome) || '').slice(0,60),
+      arquivo: String(arquivo||''), processo: String((draft && (draft.processo||draft.contrato||draft.invoice)) || ''), cliente: String((draft && draft.cliente) || ''),
+      data: new Date().toISOString().slice(0,10), motivo: !x ? 'nova' : (!temForn ? 'fornecedor novo' : 'código completo'), _upd: Date.now() });
+  });
+  if(!novas.length) return;
+  ncmDocs.itens = ncmDocs.itens.concat(novas);
+  const json = JSON.stringify(ncmDocs);
+  try{ if(typeof firebaseReady!=='undefined' && firebaseReady && firestoreDb) await firestoreWriteProcessos(json, NCM_DOC_KEY); }catch(e){ console.warn('ncm salvar', e); }
+  try{ storageSet(NCM_DOC_KEY, json, true); }catch(e){}
+  const nv = novas.filter(x=>x.motivo==='nova').map(x=>x.ncm);
+  toast(nv.length ? '🆕 NCM ' + nv.join(', ') + ' não estava cadastrada — arquivada na Prospecção.' : '📦 NCM ' + novas.map(x=>x.ncm).join(', ') + ' arquivada na Prospecção (' + novas[0].motivo + ').');
+  if(window.currentView==='prospeccao'){ try{ renderProspeccaoView(); }catch(e){} }
+}
 const prospF = { pais:'', ncm:'', seg:'', conf:'', per:'', busca:'', soEvid:false, soNovos:false, comForn:false, abertos:{} };
 async function prospCarregar(forcar){
   if(prospDados && !forcar) return prospDados;
@@ -15214,6 +15274,16 @@ function prospNcms(){
       x.noSistema++;
       const f = String(p.fornecedor||'').trim().toUpperCase(); if(f && x.fornecedores.indexOf(f)<0) x.fornecedores.push(f);
     });
+  });
+  // NCMs arquivadas automaticamente a partir dos documentos anexados aos processos
+  ((ncmDocs && ncmDocs.itens) || []).forEach(d=>{
+    const k6 = prospNcm6(d.ncm), k4 = prospNcm4(d.ncm);
+    let x = idx[k6] || (k6.length<6 ? idx[k4] : null);
+    if(!x){ x = { ncm: d.ncm, produto: d.produto||'', fornecedores:[], base:'anexo', noSistema:0 }; base.push(x); idx[k6] = x; }
+    if(d.ncm && String(d.ncm).replace(/\D/g,'').length > String(x.ncm).replace(/\D/g,'').length && prospNcm6(x.ncm)===k6) x.ncmCompleta = d.ncm;
+    if(!x.produto && d.produto) x.produto = d.produto;
+    const f = String(d.fornecedor||'').trim().toUpperCase(); if(f && x.fornecedores.indexOf(f)<0) x.fornecedores.push(f);
+    (x.docs = x.docs || []).push(d);
   });
   return base;
 }
@@ -15273,6 +15343,7 @@ async function renderProspeccaoView(){
   const el = document.getElementById('prospContent'); if(!el) return;
   if(!prospDados){ el.innerHTML = '<div class="an-panel" style="padding:20px;">Carregando a pesquisa…</div>'; await Promise.all([prospCarregar(), anCarregarOutraAba().catch(()=>{})]); }
   if(!prospDados){ el.innerHTML = `<div class="an-panel" style="padding:20px;">${prospEsc(prospErro)}</div>`; return; }
+  if(!ncmDocs) await ncmDocsCarregar();
   const D = prospDados;
   const clientes = prospClientes();
   const empresas = (D.empresas||[]).map(e=>{ e._cliente = prospEhCliente(e, clientes); return e; });
@@ -15293,8 +15364,9 @@ async function renderProspeccaoView(){
     + card('Atualizado em', prospEsc(D.atualizadoEm ? fmtDateBR(D.atualizadoEm) : '—'), prospEsc(D.coleta ? 'coleta ' + D.coleta : ''), 'accent-violet');
   const linhasNcm = ncms.map(x=>{
     const nEmp = empresas.filter(e=>prospEmpresaTemNcm(e, x.ncm)).length;
-    const baseTxt = { documento:'📄 documento', embarque:'🚢 embarque real', processo:'📋 processo', inferida:'🔎 a confirmar' }[x.base] || prospEsc(x.base||'');
-    return `<tr><td class="pr-ncm">${prospEsc(prospFmtNcm(x.ncm))}</td><td>${prospEsc(x.produto)}</td><td>${(x.fornecedores||[]).map(f=>`<span class="pr-tag">${prospEsc(f)}</span>`).join(' ')}</td><td class="pr-base">${baseTxt}${x.noSistema?` <span class="an-panel-sub">· ${x.noSistema} item(ns) nos processos</span>`:''}</td><td style="text-align:right;"><button class="link-btn" data-pr-ncm="${prospEsc(x.ncm)}">${nEmp} empresa(s) →</button></td></tr>`;
+    const baseTxt = { anexo:'📎 anexo de processo', documento:'📄 documento', embarque:'🚢 embarque real', processo:'📋 processo', inferida:'🔎 a confirmar' }[x.base] || prospEsc(x.base||'');
+    const docsTxt = (x.docs||[]).length ? `<div class="an-panel-sub" style="margin-top:3px;">📎 ${x.docs.slice(-3).map(d=>prospEsc([d.arquivo, d.processo, d.data?fmtDateBR(d.data):''].filter(Boolean).join(' · '))).join('<br>📎 ')}</div>` : '';
+    return `<tr><td class="pr-ncm">${prospEsc(prospFmtNcm(x.ncm))}${x.ncmCompleta?`<div class="an-panel-sub">${prospEsc(x.ncmCompleta)}</div>`:''}</td><td>${prospEsc(x.produto)}${docsTxt}</td><td>${(x.fornecedores||[]).map(f=>`<span class="pr-tag">${prospEsc(f)}</span>`).join(' ')}</td><td class="pr-base">${baseTxt}${x.noSistema?` <span class="an-panel-sub">· ${x.noSistema} item(ns) nos processos</span>`:''}</td><td style="text-align:right;"><button class="link-btn" data-pr-ncm="${prospEsc(x.ncm)}">${nEmp} empresa(s) →</button></td></tr>`;
   }).join('');
   const cardsPais = paises.map(p=>{
     const c = cntPais[p]; const m = Object.values(merc).find(x=>x && x.pais===p);
