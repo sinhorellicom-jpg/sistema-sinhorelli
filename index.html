@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261104-191805';</script>
+<script>window.VERSAO_SISTEMA = '20261104-192820';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1361,6 +1361,8 @@ body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 .pr-cli{font-size:10.5px;font-weight:700;color:#0B1220;background:#34D399;border-radius:999px;padding:1px 7px;margin-left:4px;}
 .pr-novo{font-size:10.5px;font-weight:700;color:#fff;background:#5B7CFA;border-radius:999px;padding:1px 7px;margin-left:4px;}
 .pr-ev{font-size:12px;white-space:nowrap;}
+.pr-forn{font-size:11.5px;max-width:220px;} .pr-forn div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pr-per{font:700 11.5px 'IBM Plex Mono',monospace;padding:1px 7px;border-radius:6px;white-space:nowrap;} .pr-per.rec{background:rgba(52,211,153,.18);color:#34D399;} .pr-per.med{background:rgba(245,176,65,.16);color:#F5B041;} .pr-per.ant{background:rgba(127,127,127,.18);color:var(--ink-soft);}
 
 .dpl-livro .dpl-in.num{min-width:112px;}
 .dpl-ano{font-size:12px;}
@@ -15119,7 +15121,7 @@ function copiarTexto(t, ok){
    A pesquisa fica no arquivo prospeccao.json publicado junto com o sistema (atualizado periodicamente).
    As NCMs vendidas também são lidas dos processos (materiais com "NCM 1234.56..." no nome). */
 let prospDados = null, prospErro = '';
-const prospF = { pais:'', ncm:'', seg:'', conf:'', busca:'', soEvid:false, soNovos:false, abertos:{} };
+const prospF = { pais:'', ncm:'', seg:'', conf:'', per:'', busca:'', soEvid:false, soNovos:false, comForn:false, abertos:{} };
 async function prospCarregar(forcar){
   if(prospDados && !forcar) return prospDados;
   try{
@@ -15182,6 +15184,33 @@ function prospEmpresaTemNcm(e, ncm){
   return (e.ncms_provaveis||[]).some(n=>{ const b6 = prospNcm6(n), b4 = prospNcm4(n); return (a6.length===6 && b6.length===6) ? a6===b6 : a4===b4; })
       || (e.evidencias||[]).some(v=>{ const b6 = prospNcm6(v.ncm); return a6.length===6 && b6===a6; });
 }
+// fornecedores da empresa (os já conhecidos + os que aparecem nos registros de importação)
+function prospFornecedores(e){
+  const out = [], vistos = new Set();
+  // separa por vírgula/;/| fora de parênteses ("Elachem SpA (Itália, PU)" fica inteiro)
+  const partes = t => { const r = []; let cur = '', nivel = 0; for(const ch of String(t||'')){ if(ch==='(') nivel++; if(ch===')') nivel = Math.max(0, nivel-1); if(nivel===0 && /[,;|\n]/.test(ch)){ r.push(cur); cur = ''; } else cur += ch; } r.push(cur); return r.map(x=>x.trim()).filter(Boolean); };
+  const chave = x => prospNorm(x.replace(/\(.*?\)/g,'')).replace(/\b(LTDA|SA|SAS|SPA|LIMITED|LTD|CO|SAU|SRL)\b/g,'').replace(/\s+/g,' ').trim();
+  const add = t => partes(t).forEach(x=>{ if(/^(e|y|and)\s/i.test(x)) x = x.replace(/^(e|y|and)\s+/i,''); const k = chave(x); if(!k || k.length<3 || vistos.has(k)) return; vistos.add(k); out.push(x); });
+  add(e.fornecedores_conhecidos);
+  (e.evidencias||[]).forEach(v=>add(v.fornecedor));
+  return out;
+}
+// período das informações (anos e data mais recente citados nos registros)
+function prospPeriodo(e){
+  let min = null, max = null, ultima = '';
+  const MES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  (e.evidencias||[]).forEach(v=>{
+    const t = String(v.periodo||'') + ' ' + String(v.descricao||'');
+    (t.match(/\b(19[89]\d|20[0-3]\d)\b/g)||[]).forEach(y=>{ y = +y; if(min===null || y<min) min = y; if(max===null || y>max) max = y; });
+    let m, d = null;
+    const re = /\b(\d{1,2})\/(\d{1,2})\/(20\d\d)\b|\b(20\d\d)-(\d{2})-(\d{2})\b/g;
+    while((m = re.exec(t))){ const iso = m[3] ? `${m[3]}-${String(m[2]).padStart(2,'0')}` : `${m[4]}-${m[5]}`; if(!d || iso > d) d = iso; }
+    if(d && (!ultima || d > ultima)) ultima = d;
+  });
+  const txt = min===null ? '' : (min===max ? String(max) : `${min}–${max}`);
+  const ult = ultima ? `${MES[+ultima.slice(5,7)-1]||''}/${ultima.slice(0,4)}` : '';
+  return { min, max, txt, ultima, ult };
+}
 function prospFiltrar(lista){
   const q = prospNorm(prospF.busca);
   return lista.filter(e=>{
@@ -15191,7 +15220,13 @@ function prospFiltrar(lista){
     if(prospF.conf && e.confianca!==prospF.conf) return false;
     if(prospF.soEvid && !(e.evidencias||[]).length) return false;
     if(prospF.soNovos && e._cliente) return false;
-    if(q){ const t = prospNorm([e.empresa,e.nome_fantasia,e.cidade,e.produtos,e.segmento,(e.ncms_provaveis||[]).join(' ')].join(' ')); if(t.indexOf(q)<0) return false; }
+    if(prospF.per){ const pr = prospPeriodo(e), ano = new Date().getFullYear();
+      if(prospF.per==='recente' && !(pr.max!==null && pr.max >= ano-1)) return false;
+      if(prospF.per==='medio' && !(pr.max!==null && pr.max < ano-1 && pr.max >= ano-3)) return false;
+      if(prospF.per==='antigo' && !(pr.max!==null && pr.max < ano-3)) return false;
+      if(prospF.per==='sem' && pr.max!==null) return false; }
+    if(prospF.comForn && !prospFornecedores(e).length) return false;
+    if(q){ const t = prospNorm([e.empresa,e.nome_fantasia,e.cidade,e.produtos,e.segmento,(e.ncms_provaveis||[]).join(' '), prospFornecedores(e).join(' ')].join(' ')); if(t.indexOf(q)<0) return false; }
     return true;
   });
 }
@@ -15206,7 +15241,7 @@ async function renderProspeccaoView(){
   const ncms = prospNcms();
   const paises = Array.from(new Set(empresas.map(e=>e.pais))).sort((a,b)=>a.localeCompare(b,'pt'));
   const segs = Array.from(new Set(empresas.map(e=>e.segmento).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'pt'));
-  const lista = prospFiltrar(empresas).sort((a,b)=>(PROSP_ORDEM_CONF[a.confianca]??3)-(PROSP_ORDEM_CONF[b.confianca]??3) || (b.evidencias||[]).length-(a.evidencias||[]).length || a.empresa.localeCompare(b.empresa,'pt'));
+  const lista = prospFiltrar(empresas).sort((a,b)=>(PROSP_ORDEM_CONF[a.confianca]??3)-(PROSP_ORDEM_CONF[b.confianca]??3) || ((prospPeriodo(b).max||0)-(prospPeriodo(a).max||0)) || (b.evidencias||[]).length-(a.evidencias||[]).length || a.empresa.localeCompare(b.empresa,'pt'));
   const nossas = new Set(ncms.map(x=>prospNcm6(x.ncm)||prospNcm4(x.ncm)));
   const ehNossa = n => nossas.has(prospNcm6(n)) || nossas.has(prospNcm4(n)) || Array.from(nossas).some(k=>k.length===4 && prospNcm4(n)===k);
   const cntPais = {}; empresas.forEach(e=>{ const c = cntPais[e.pais] = cntPais[e.pais] || { n:0, alta:0, evid:0, cli:0 }; c.n++; if(e.confianca==='alta') c.alta++; if((e.evidencias||[]).length) c.evid++; if(e._cliente) c.cli++; });
@@ -15238,7 +15273,7 @@ async function renderProspeccaoView(){
   const linhaEmp = e => {
     const id = prospEsc(e.pais + '|' + e.empresa); const aberto = !!prospF.abertos[e.pais + '|' + e.empresa];
     const ncmsHtml = (e.ncms_provaveis||[]).map(n=>`<span class="pr-n ${ehNossa(n)?'nossa':''}">${prospEsc(n)}</span>`).join('');
-    const det = aberto ? `<tr class="pr-det"><td colspan="6">
+    const det = aberto ? `<tr class="pr-det"><td colspan="7">
         ${e.produtos?`<div><b>Produz / compra:</b> ${prospEsc(e.produtos)}</div>`:''}
         ${e.por_que_e_prospect?`<div><b>Por que é prospect:</b> ${prospEsc(e.por_que_e_prospect)}</div>`:''}
         ${e.fornecedores_conhecidos?`<div><b>Fornecedores atuais:</b> ${prospEsc(e.fornecedores_conhecidos)}</div>`:''}
@@ -15251,7 +15286,8 @@ async function renderProspeccaoView(){
       <td>${prospEsc(e.pais)}${e.cidade?`<div class="an-panel-sub">${prospEsc(e.cidade)}</div>`:''}</td>
       <td>${prospEsc(e.segmento||'')}</td>
       <td class="pr-ncms">${ncmsHtml}</td>
-      <td>${(e.evidencias||[]).length?`<span class="pr-ev">🚢 ${e.evidencias.length}</span>`:'<span class="an-panel-sub">—</span>'}</td>
+      <td class="pr-forn">${(()=>{ const fs = prospFornecedores(e); return fs.length ? fs.slice(0,3).map(f=>`<div>${prospEsc(f)}</div>`).join('') + (fs.length>3?`<div class="an-panel-sub">+${fs.length-3}</div>`:'') : '<span class="an-panel-sub">—</span>'; })()}</td>
+      <td>${(()=>{ const pr = prospPeriodo(e); if(pr.max===null) return '<span class="an-panel-sub">sem data</span>'; const ano = new Date().getFullYear(); const cls = pr.max>=ano-1 ? 'rec' : (pr.max>=ano-3 ? 'med' : 'ant'); return `<span class="pr-per ${cls}">${prospEsc(pr.txt)}</span>${pr.ult?`<div class="an-panel-sub">último: ${prospEsc(pr.ult)}</div>`:''}${(e.evidencias||[]).length?`<div class="an-panel-sub">🚢 ${e.evidencias.length} registro(s)</div>`:''}`; })()}</td>
       <td><span class="pr-conf ${prospEsc(e.confianca)}">${prospEsc(e.confianca||'')}</span></td></tr>${det}`;
   };
   el.innerHTML = `
@@ -15273,12 +15309,14 @@ async function renderProspeccaoView(){
         <select id="prNcm">${ncmOpts}</select>
         <select id="prSeg">${opt(segs, prospF.seg, 'Todos os segmentos')}</select>
         <select id="prConf">${opt(['alta','média','baixa'], prospF.conf, 'Toda confiança')}</select>
-        <input id="prBusca" placeholder="Buscar empresa, cidade, produto…" value="${prospEsc(prospF.busca)}">
+        <select id="prPer"><option value="">Qualquer período</option>${[['recente','Recente ('+(new Date().getFullYear()-1)+'–'+new Date().getFullYear()+')'],['medio',(new Date().getFullYear()-3)+'–'+(new Date().getFullYear()-2)],['antigo','Antes de '+(new Date().getFullYear()-3)],['sem','Sem data']].map(([v,l])=>`<option value="${v}" ${prospF.per===v?'selected':''}>${l}</option>`).join('')}</select>
+        <input id="prBusca" placeholder="Buscar empresa, fornecedor (ex.: JBS, Minerva), cidade…" value="${prospEsc(prospF.busca)}">
         <label><input type="checkbox" id="prEvid" ${prospF.soEvid?'checked':''}> só com registro de importação</label>
         <label><input type="checkbox" id="prNovos" ${prospF.soNovos?'checked':''}> esconder quem já é cliente</label>
+        <label><input type="checkbox" id="prComForn" ${prospF.comForn?'checked':''}> só com fornecedor identificado</label>
       </div>
-      <div style="overflow:auto;max-height:70vh;"><table class="pr-tab pr-emps"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>NCMs (as nossas em destaque)</th><th>Importações</th><th>Confiança</th></tr></thead>
-        <tbody>${lista.map(linhaEmp).join('') || '<tr><td colspan="6" class="an-panel-sub" style="padding:16px;">Nenhuma empresa com esses filtros.</td></tr>'}</tbody></table></div>
+      <div style="overflow:auto;max-height:70vh;"><table class="pr-tab pr-emps"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>NCMs (as nossas em destaque)</th><th>Fornecedores</th><th>Período da informação</th><th>Confiança</th></tr></thead>
+        <tbody>${lista.map(linhaEmp).join('') || '<tr><td colspan="7" class="an-panel-sub" style="padding:16px;">Nenhuma empresa com esses filtros.</td></tr>'}</tbody></table></div>
       <div class="an-panel-sub" style="margin-top:8px;">Confiança: <b>alta</b> = registro de importação da NCM ou fonte oficial clara · <b>média</b> = fabricante confirmado do segmento · <b>baixa</b> = citação fraca. Confira na fonte antes de usar numa negociação.</div>
     </div>`;
   const rerender = ()=>{ const sc = document.querySelector('.main-scroll'); const top = sc ? sc.scrollTop : 0; renderProspeccaoView().then(()=>{ if(sc) sc.scrollTop = top; }); };
@@ -15286,13 +15324,13 @@ async function renderProspeccaoView(){
   el.querySelectorAll('[data-pr-ncm]').forEach(b=>b.onclick = ()=>{ prospF.ncm = b.dataset.prNcm; rerender(); });
   el.querySelectorAll('[data-pr-abrir]').forEach(tr=>tr.onclick = ev=>{ if(ev.target.closest('a')) return; const k = tr.dataset.prAbrir; prospF.abertos[k] = !prospF.abertos[k]; rerender(); });
   const liga = (id, campo, ev) => { const i = el.querySelector('#'+id); if(i) i.addEventListener(ev||'change', ()=>{ prospF[campo] = i.type==='checkbox' ? i.checked : i.value; if(id==='prBusca'){ clearTimeout(window.__prT); window.__prT = setTimeout(()=>{ rerender(); setTimeout(()=>{ const b = document.getElementById('prBusca'); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } }, 30); }, 350); } else rerender(); }); };
-  liga('prPais','pais'); liga('prNcm','ncm'); liga('prSeg','seg'); liga('prConf','conf'); liga('prEvid','soEvid'); liga('prNovos','soNovos'); liga('prBusca','busca','input');
+  liga('prPais','pais'); liga('prNcm','ncm'); liga('prSeg','seg'); liga('prConf','conf'); liga('prPer','per'); liga('prComForn','comForn'); liga('prEvid','soEvid'); liga('prNovos','soNovos'); liga('prBusca','busca','input');
   el.querySelector('#prRecarregar').onclick = async ()=>{ await prospCarregar(true); rerender(); toast('↻ Pesquisa recarregada.'); };
   el.querySelector('#prExcel').onclick = ()=>{
     if(typeof XLSX==='undefined'){ toast('Biblioteca do Excel não carregou.'); return; }
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['EMPRESA','NOME FANTASIA','PAÍS','CIDADE','SEGMENTO','PRODUTOS','NCMs','CONFIANÇA','JÁ É CLIENTE','REGISTROS DE IMPORTAÇÃO','POR QUE É PROSPECT','ID FISCAL','SITE','FONTES']]
-      .concat(lista.map(e=>[e.empresa, e.nome_fantasia||'', e.pais, e.cidade||'', e.segmento||'', e.produtos||'', (e.ncms_provaveis||[]).join(', '), e.confianca||'', e._cliente||'', (e.evidencias||[]).map(v=>v.descricao + (v.fonte?' ('+v.fonte+')':'')).join(' | '), e.por_que_e_prospect||'', e.id_fiscal||'', e.site||'', (e.fontes||[]).join(' ')]))), 'Empresas');
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['EMPRESA','NOME FANTASIA','PAÍS','CIDADE','SEGMENTO','PRODUTOS','NCMs','CONFIANÇA','JÁ É CLIENTE','FORNECEDORES','PERÍODO DA INFORMAÇÃO','ÚLTIMO REGISTRO','REGISTROS DE IMPORTAÇÃO','POR QUE É PROSPECT','ID FISCAL','SITE','FONTES']]
+      .concat(lista.map(e=>[e.empresa, e.nome_fantasia||'', e.pais, e.cidade||'', e.segmento||'', e.produtos||'', (e.ncms_provaveis||[]).join(', '), e.confianca||'', e._cliente||'', prospFornecedores(e).join('; '), prospPeriodo(e).txt, prospPeriodo(e).ult, (e.evidencias||[]).map(v=>v.descricao + (v.fonte?' ('+v.fonte+')':'')).join(' | '), e.por_que_e_prospect||'', e.id_fiscal||'', e.site||'', (e.fontes||[]).join(' ')]))), 'Empresas');
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['NCM','PRODUTO','FORNECEDOR(ES)','ORIGEM DA INFORMAÇÃO']].concat(ncms.map(x=>[prospFmtNcm(x.ncm), x.produto||'', (x.fornecedores||[]).join(', '), x.base||'']))), 'NCMs');
     XLSX.writeFile(wb, 'PROSPECCAO_' + new Date().toISOString().slice(0,10) + '.xlsx');
   };
