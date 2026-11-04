@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261104-194916';</script>
+<script>window.VERSAO_SISTEMA = '20261104-213032';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -210,6 +210,8 @@ html,body{height:100%;}
 .pl-venc.ds-vendas b{color:#4A55A8;}
 .pl-tag{display:inline-block;font-size:8px;font-weight:700;background:rgba(0,0,0,.08);border-radius:4px;padding:0 3px;margin-left:3px;vertical-align:middle;}
 .pl-venc.atrasado{background:#FBE3DC;border-color:#E7B7A6;}
+.pl-venc.pl-entrada{background:#E4F5EE;border-color:#B5E0CC;} .pl-venc.pl-entrada b{color:#127A55;}
+.pl-venc.pl-entrada.atrasado{background:#FFF1D6;border-color:#EBC77A;} .pl-venc.pl-entrada.atrasado b{color:#9A6200;}
 .pl-venc.atrasado b{color:#A8341F;}
 .pl-venc .pl-pago{float:right;border:1px solid var(--line);background:var(--white);color:var(--ink-soft);border-radius:4px;
   font-size:8.5px;font-weight:600;cursor:pointer;padding:1px 5px;margin-left:3px;text-transform:lowercase;}
@@ -1173,6 +1175,8 @@ td.sum-pick,th.sum-pick{background:rgba(96,165,250,.28) !important;box-shadow:in
 .pl-venc b{color:var(--coral);}
 .pl-venc.ds-vendas{background:rgba(129,140,248,.16);border-color:rgba(129,140,248,.4);} .pl-venc.ds-vendas b{color:#A5B4FC;}
 .pl-venc.atrasado{background:rgba(251,113,133,.24);border-color:rgba(251,113,133,.5);} .pl-venc.atrasado b{color:#FDA4AF;}
+.pl-venc.pl-entrada{background:rgba(52,211,153,.14);border-color:rgba(52,211,153,.4);} .pl-venc.pl-entrada b{color:#6EE7B7;}
+.pl-venc.pl-entrada.atrasado{background:rgba(251,191,36,.16);border-color:rgba(251,191,36,.45);} .pl-venc.pl-entrada.atrasado b{color:#FCD34D;}
 .pl-venc .pl-pago{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:var(--ink-soft);}
 .pl-venc .pl-pago:hover{background:var(--teal);color:#0B1030;}
 .pl-nota{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.35);}
@@ -6373,6 +6377,18 @@ function plVencimentosDoMes(ano, mes){
   return out;
 }
 
+// entradas (sinal/adiantamento) ainda sem data de pagamento, pelo "Vencimento da entrada"
+function plEntradasDoMes(ano, mes){
+  const out = {};
+  plTodosProcessos().forEach(p=>{
+    if(['ENCERRADO','CANCELADO'].includes(p.status) || p.dataEntradaPg) return;
+    const d = vencimentoEntrada(p); if(!d) return;
+    const [a,m] = d.split('-').map(Number);
+    if(a!==ano || m!==mes+1) return;
+    (out[d] = out[d] || []).push(p);
+  });
+  return out;
+}
 // ---- tarefas do dia: cada anotação do planner é uma tarefa com "feita" ----
 function plNovaTarefa(iso, texto, tipo){
   (plannerNotes[iso] = plannerNotes[iso] || []).push({ id:'pn_'+Date.now()+'_'+Math.random().toString(36).slice(2,6), texto: texto.trim(), feita:false, tipo: tipo||'tarefa' });
@@ -6422,6 +6438,7 @@ function renderPlannerView(){
   const nomeMes = plannerMonth.toLocaleDateString('pt-BR', {month:'long', year:'numeric'});
   const hoje = plISO(new Date());
   const vencs = plVencimentosDoMes(ano, mes);
+  const ents = plEntradasDoMes(ano, mes);
 
   const primeiro = new Date(ano, mes, 1);
   const inicio = new Date(primeiro);
@@ -6455,6 +6472,9 @@ function renderPlannerView(){
              + ` <span class="venc-muted">(${nJ} Vendas JBS · ${nV} Vendas)</span>`
              + (atrasados? ` · <span style="color:var(--coral);font-weight:700">${atrasados} já vencido(s)</span>` : '')
            : 'Nenhum vencimento em aberto neste mês.'; })()}
+      ${(()=>{ const le = Object.values(ents).flat(); if(!le.length) return '';
+         const tot = le.reduce((s,p)=>s+(p.entrada||0),0);
+         return ` · <b style="color:var(--teal)">💵 ${le.length} entrada(s) a receber</b>${tot>0?` — USD ${fmt(tot)}`:''}`; })()}
       — <b>tudo que aparece aqui está EM ABERTO</b>. Use "dar baixa" no chip (ou lance a parcela dentro do processo) e ele sai do calendário. Passe o mouse num dia e clique em ＋ pra anotar uma tarefa.
     </div>
     ${plPainelTarefas(hoje)}
@@ -6463,7 +6483,13 @@ function renderPlannerView(){
       ${diasVis.map(d=>{
         const iso = plISO(d);
         const fora = d.getMonth()!==mes;
-        const chips = (vencs[iso]||[]).map(p=>`
+        const chipsEnt = (ents[iso]||[]).map(p=>`
+          <div class="pl-venc pl-entrada ${iso < hoje ? 'atrasado':''}" data-pl-open="${p.id}" data-pl-ds="${p._ds}" title="Entrada · ${plRotuloAba(p._ds)} — clique pra abrir o processo">
+            <b>${rotuloProcesso(p)}</b> ${p.cliente||''}<br>💵 Entrada ${(p.entrada||0)>0 ? 'USD '+fmt(p.entrada) : '<i>sem valor</i>'}
+            <span class="pl-tag">${p._ds==='vendas'?'V':'JBS'}</span>
+            <button class="pl-pago" data-pl-entpg="${p.id}" data-pl-ds="${p._ds}" title="Clique para dar baixa: marca a entrada como paga hoje">dar baixa</button>
+          </div>`).join('');
+        const chips = chipsEnt + (vencs[iso]||[]).map(p=>`
           <div class="pl-venc ${iso < hoje ? 'atrasado':''} ${p._ds==='vendas'?'ds-vendas':''}" data-pl-open="${p.id}" data-pl-ds="${p._ds}" title="${plRotuloAba(p._ds)} · ${(p.condPagto||'')} — clique pra abrir o processo">
             <b>${rotuloProcesso(p)}</b> ${p.cliente||''}<br>USD ${fmt(saldoUsd(p))}
             <span class="pl-tag">${p._ds==='vendas'?'V':'JBS'}</span>
@@ -6541,7 +6567,7 @@ function renderPlannerView(){
   // abrir o processo
   el.querySelectorAll('[data-pl-open]').forEach(chip=>{
     chip.addEventListener('click', async (e)=>{
-      if(e.target.closest('[data-pl-pago]')) return;
+      if(e.target.closest('[data-pl-pago],[data-pl-entpg]')) return;
       const ds = chip.dataset.plDs;
       const id = chip.dataset.plOpen;
       if(ds && ds !== activeDataset){
@@ -6551,6 +6577,28 @@ function renderPlannerView(){
         toast('Abrindo na aba '+plRotuloAba(ds)+'…');
       }
       openModal(id);
+    });
+  });
+  // baixa da entrada (senha): grava a data de pagamento da entrada → sai do planner
+  el.querySelectorAll('[data-pl-entpg]').forEach(btn=>{
+    btn.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      if(!editMode){ toast('Digite a senha de edição pra registrar pagamento.'); openEditUnlockModal(); return; }
+      const dsBtn = btn.dataset.plDs;
+      if(dsBtn && dsBtn !== activeDataset){
+        await switchDataset(dsBtn);
+        document.querySelectorAll('.view-tab').forEach(t=>t.classList.toggle('active', t.dataset.view===(dsBtn==='vendas'?'vendas':'processos')));
+      }
+      const p = processos.find(x=>x.id===btn.dataset.plEntpg);
+      if(!p){ toast('Não encontrei esse processo — abra a aba '+plRotuloAba(dsBtn)+' e tente de novo.'); return; }
+      if(!await confirmarAcao(`Marcar a entrada${(p.entrada||0)>0?` de <b>USD ${fmt(p.entrada)}</b>`:''} do processo <b>#${p.processo||'?'}</b> (${p.cliente||''}) como paga hoje?`,
+                              {titulo:'Dar baixa na entrada', confirmar:'Registrar pagamento'})) return;
+      p.dataEntradaPg = plISO(new Date());
+      saveData();
+      await plCarregarOutraAba();
+      renderPlannerView();
+      renderAll();
+      toast(`✅ Entrada registrada — #${p.processo||'?'} saiu do planner.`);
     });
   });
   // marcar pago (senha): registra o saldo em aberto como pago hoje → sai do planner
@@ -12575,7 +12623,13 @@ function pdfSecaoPlanner(hoje){
   Object.keys(vencs).sort().forEach(iso => (vencs[iso]||[]).forEach(p => lv.push([
     fmtDateBR(iso) + (iso < hojeIso ? ' (vencido)' : ''), p._ds==='vendas' ? 'Vendas' : 'Vendas JBS', '#'+(p.processo||'?'),
     p.cliente||'', p.fornecedor||'', p.condPagto||'', fmt(saldoUsd(p)) ])));
-  const tot = Object.values(vencs).flat().reduce((s,p)=>s+saldoUsd(p),0);
+  const ents = plEntradasDoMes(ano, mes);
+  Object.keys(ents).forEach(iso => (ents[iso]||[]).forEach(p => lv.push([
+    fmtDateBR(iso) + (iso < hojeIso ? ' (vencida)' : ''), p._ds==='vendas' ? 'Vendas' : 'Vendas JBS', '#'+(p.processo||'?'),
+    p.cliente||'', p.fornecedor||'', 'ENTRADA', (p.entrada||0)>0 ? fmt(p.entrada) : 'sem valor', iso ])));
+  Object.keys(vencs).forEach(iso => lv.filter(l=>!l[7] && l[0].startsWith(fmtDateBR(iso))).forEach(l=>l[7]=iso));
+  lv.sort((a,b)=>String(a[7]).localeCompare(String(b[7]))); lv.forEach(l=>l.length=7);
+  const tot = Object.values(vencs).flat().reduce((s,p)=>s+saldoUsd(p),0) + Object.values(ents).flat().reduce((s,p)=>s+(p.entrada||0),0);
   const pref = `${ano}-${String(mes+1).padStart(2,'0')}-`;
   const ln = [];
   Object.keys(plannerNotes||{}).sort().forEach(k=>{ if(k.startsWith(pref)) (plannerNotes[k]||[]).forEach(n=> ln.push([
