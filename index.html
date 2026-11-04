@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261104-194344';</script>
+<script>window.VERSAO_SISTEMA = '20261104-194446';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -8365,7 +8365,7 @@ function condPagtoDoTexto(t){
   return String(t||'').toUpperCase().replace(/\s+/g,' ').trim()
     .replace(/\bADVANCED?\b|\bADVANCE PAYMENT\b|\bPREPAYMENT\b|\bPREPAID\b|\bANTICIPADO\b|\bADELANTADO\b/g,'ADIANTADO')
     .replace(/\s*\bDAYS?\b\s*(?:AFTER|FROM)?\s*(?:THE\s*)?B\s*\/?\s*L\b(?:\s*DATE)?/g,' D/BL').replace(/\s*\bDIAS?\b\s*(?:DESPU[EÉ]S DE|DE LA FECHA DEL?|DESDE)?\s*(?:LA\s*)?B\s*\/?\s*L\b/g,' D/BL')
-    .replace(/\bAGAINST (?:COPY OF )?(?:B\s*\/\s*L|DOCUMENTS?)\b/g,'C/BL').replace(/\bBALANCE\b|\bSALDO\b/g,'SALDO').replace(/\b(WILL BE DONE|IS|ARE|AND THE|AND|THE|WITHIN|OF)\b/g,' ').replace(/\bDAYS?\b/g,'DIAS').replace(/,\s*/g,' ').replace(/\s*\+\s*/g,' + ').replace(/\s{2,}/g,' ').trim();
+    .replace(/\bB\s*\/?\s*L\s*\+\s*(\d+)\s*DAYS?\b/g,'$1 D/BL').replace(/\bBEFORE\s+SHIPMENT\b/g,'ANTES DO EMBARQUE').replace(/\bAGAINST (?:COPY OF )?(?:B\s*\/\s*L|DOCUMENTS?)\b/g,'C/BL').replace(/\bBALANCE\b|\bSALDO\b/g,'SALDO').replace(/\b(WILL BE DONE|IS|ARE|AND THE|AND|THE|WITHIN|OF)\b/g,' ').replace(/\bDAYS?\b/g,'DIAS').replace(/,\s*/g,' ').replace(/\s*\+\s*/g,' + ').replace(/\s{2,}/g,' ').trim();
 }
 function nomeClienteDoDoc(v){
   const limpo = String(v||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
@@ -8413,7 +8413,11 @@ function camposDoContrato(linhas){
         if(k==='data'){ const d = dataDoTexto(v); if(d) out.data = d; }
         else if(k==='etd'){ const d = dataDoTexto(v); out.etd = d || mesDoTexto(v) || ''; }
         else if(k==='incoterm'){ const c = (v.toUpperCase().match(/\b(EXW|FCA|FAS|FOB|CFR|CNF|C&F|CIF|CPT|CIP|DAP|DPU|DDP)\b/)||[])[1]; if(c) out.incoterm = (c==='CNF'||c==='C&F') ? 'CFR' : c; }
-        else if(k==='condPagto'){ out.condPagto = condPagtoDoTexto(v); }
+        else if(k==='condPagto'){
+          // condição em várias linhas ("25% before shipment" / "25% BL + 30 days" / …): junta as linhas seguintes que começam com %
+          let t = v;
+          for(let j=ir+1; j<Math.min((linhas||[]).length, ir+6); j++){ const lt = (linhas[j]||[]).map(c=>c==null?'':String(c).trim()).filter(Boolean).join(' '); if(/^\d{1,3}\s*%/.test(lt) && lt.length<60) t += ' ' + lt; else break; }
+          out.condPagto = condPagtoDoTexto(t); }
         else if(k==='pais'){ const p = paisDoTexto(v); if(p) out.pais = p; }
         else if(k==='cliente'){
           if(/STAMP|SIGNATURE|FIRMA|SELLO|CARIMBO|ASSINATURA/i.test(v) || /^\(/.test(v)) break;   // "(STAMP AND SIGNATURE)" não é nome
