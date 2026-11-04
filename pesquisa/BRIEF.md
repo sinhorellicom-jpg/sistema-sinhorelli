@@ -34,6 +34,9 @@ ver o arquivo a lista de empresas já existentes em prospeccao.json (campo "empr
 
 Meta: 10 a 20 empresas NOVAS por país grande (México, Colômbia, Peru, Brasil, Argentina, Equador), 4 a 10 por país menor. Qualidade > quantidade.
 
+## Fornecedores e período (importante)
+Para cada empresa, procure DE QUEM ela compra (nome do exportador/fornecedor nos registros de importação) e preencha "fornecedores_conhecidos" e o campo "fornecedor" de cada evidência. Em toda evidência, preencha "periodo" com a data do registro (dd/mm/aaaa quando houver, ou o intervalo de anos, ex.: "2024-2026"). Registro sem data perde valor: prefira registros datados.
+
 ## Saída
 Grave UM arquivo JSON (lista) no caminho indicado na sua tarefa, cada item exatamente com estas chaves:
 {"empresa": str, "nome_fantasia": str|null, "pais": "MEXICO|COLOMBIA|EQUADOR|PERU|BOLIVIA|CHILE|ARGENTINA|PARAGUAI|URUGUAI|VENEZUELA|GUATEMALA|EL SALVADOR|HONDURAS|NICARAGUA|COSTA RICA|PANAMA|REP DOMINICANA|BRASIL", "cidade": str|null, "id_fiscal": str|null, "site": str|null, "contato": null, "segmento": "calçado de segurança|calçado geral|bota PVC/borracha|curtume|solados|couro sintético/tecido revestido|marroquinaria/estofados|distribuidor de insumos|adesivos/químicos", "produtos": str, "porte": "pequeno|médio|grande"|null, "ncms_provaveis": [códigos da tabela acima, formato "4104.11"], "evidencias": [{"descricao": str, "ncm": str, "origem": str, "fornecedor": str|null, "periodo": str, "valor": str|null, "unidade": str|null, "fonte": url}], "fornecedores_conhecidos": str|null, "por_que_e_prospect": str (1 frase, português), "confianca": "alta|média|baixa", "fontes": [urls], "atualiza_existente": bool}
