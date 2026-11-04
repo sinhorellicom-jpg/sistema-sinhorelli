@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261103-151001';</script>
+<script>window.VERSAO_SISTEMA = '20261104-190236';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1305,6 +1305,34 @@ td.sum-pick,th.sum-pick{background:rgba(96,165,250,.28) !important;box-shadow:in
 .dpl-saldo-tag{display:inline-block;font:700 10.5px 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#E9C46A;padding:6px;}
 .dpl-livro td.dpl-data-fora .dpl-in{color:#F5B041;font-weight:700;}
 .dpl-livro td.dpl-data-fora{box-shadow:inset 3px 0 0 #F5B041;}
+/* prospecção */
+body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
+.pr-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.pr-tab{border-collapse:collapse;width:100%;font-size:12.5px;}
+.pr-tab th{position:sticky;top:0;background:var(--white);text-align:left;font:700 10.5px 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);padding:8px;border-bottom:2px solid var(--line);z-index:1;}
+.pr-tab td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top;}
+.pr-ncm{font-family:'IBM Plex Mono',monospace;font-weight:700;white-space:nowrap;}
+.pr-tag{display:inline-block;padding:1px 8px;border-radius:999px;background:rgba(91,124,250,.16);font-size:11.5px;font-weight:600;margin:1px 0;}
+.pr-base{white-space:nowrap;font-size:12px;}
+.pr-paises{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;}
+.pr-pais{text-align:left;border:1px solid var(--line);background:rgba(127,127,127,.04);color:inherit;border-radius:10px;padding:9px 11px;cursor:pointer;display:flex;flex-direction:column;gap:2px;font:inherit;}
+.pr-pais b{font-family:'Space Grotesk',sans-serif;font-size:13.5px;} .pr-pais span{font-size:11.5px;color:var(--ink-soft);}
+.pr-pais.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent);}
+.pr-merc{font-size:11px;color:#34D399;}
+.pr-filtros{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
+.pr-filtros select,.pr-filtros input{font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--white);color:inherit;}
+.pr-filtros input#prBusca{min-width:220px;} .pr-filtros label{font-size:12.5px;display:flex;gap:5px;align-items:center;}
+.pr-emp{cursor:pointer;} .pr-emp:hover td{background:rgba(91,124,250,.07);} .pr-emp.aberta td{background:rgba(91,124,250,.10);}
+.pr-det td{background:rgba(127,127,127,.05);font-size:12.5px;line-height:1.55;} .pr-det a{color:#8FB4FF;text-decoration:underline;} .pr-det ul{margin:4px 0 4px 18px;padding:0;}
+.pr-n{display:inline-block;font:600 10.5px 'IBM Plex Mono',monospace;border:1px solid var(--line);border-radius:5px;padding:0 5px;margin:1px 2px 1px 0;color:var(--ink-soft);}
+.pr-n.nossa{border-color:#34D399;color:#34D399;}
+.pr-ncms{max-width:260px;}
+.pr-conf{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;}
+.pr-conf.alta{background:rgba(52,211,153,.18);color:#34D399;} .pr-conf.média{background:rgba(245,176,65,.18);color:#F5B041;} .pr-conf.baixa{background:rgba(127,127,127,.18);color:var(--ink-soft);}
+.pr-cli{font-size:10.5px;font-weight:700;color:#0B1220;background:#34D399;border-radius:999px;padding:1px 7px;margin-left:4px;}
+.pr-novo{font-size:10.5px;font-weight:700;color:#fff;background:#5B7CFA;border-radius:999px;padding:1px 7px;margin-left:4px;}
+.pr-ev{font-size:12px;white-space:nowrap;}
+
 .dpl-livro .dpl-in.num{min-width:112px;}
 .dpl-ano{font-size:12px;}
 .dpl-ano .dpl-in.num{min-width:86px;width:86px;padding:4px 3px;font-size:11.5px;}
@@ -1630,6 +1658,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
       <button class="view-tab" data-view="analytics">📊 Análises</button>
       <button class="view-tab" data-view="vendedores">👤 Vendedores</button>
       <button class="view-tab" data-view="notasfiscais">📄 Notas Fiscais</button>
+      <button class="view-tab" data-view="prospeccao">🎯 Prospecção</button>
       <button class="view-tab" data-view="planner">📅 Planner</button>
       <button class="view-tab" data-view="historico">🕘 Histórico</button>
       <button class="view-tab" data-view="despesas">💰 Despesas</button>
@@ -1816,6 +1845,10 @@ html,body{overflow-x:hidden;overflow-x:clip;}
     <div class="cards-row" id="nfKpis"></div>
     <div id="nfContent"></div>
   </div>
+</div>
+
+<div id="viewProspeccao" style="display:none;">
+  <div class="analytics-wrap"><div id="prospContent"></div></div>
 </div>
 
 <div id="viewPlanner" style="display:none;">
@@ -15047,6 +15080,188 @@ function copiarTexto(t, ok){
   else prompt('Copie:', t);
 }
 
+/* ===== PROSPECÇÃO — compradores das nossas NCMs na América Latina =====
+   A pesquisa fica no arquivo prospeccao.json publicado junto com o sistema (atualizado periodicamente).
+   As NCMs vendidas também são lidas dos processos (materiais com "NCM 1234.56..." no nome). */
+let prospDados = null, prospErro = '';
+const prospF = { pais:'', ncm:'', seg:'', conf:'', busca:'', soEvid:false, soNovos:false, abertos:{} };
+async function prospCarregar(forcar){
+  if(prospDados && !forcar) return prospDados;
+  try{
+    const r = await fetch('prospeccao.json?v=' + encodeURIComponent(window.VERSAO_SISTEMA||'') + (forcar?'&t='+Date.now():''), { cache:'no-store' });
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    prospDados = await r.json(); prospErro = '';
+  }catch(e){ prospErro = /^https?:$/.test(location.protocol) ? 'Não consegui carregar a pesquisa (' + (e.message||'erro') + ').' : 'A pesquisa abre pelo link do sistema (site), não pelo arquivo no computador.'; }
+  return prospDados;
+}
+function prospEsc(v){ return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function prospNorm(x){ return String(x||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\b(S\.?\s*A\.?\s*S|S\.?\s*A\.?(\s*DE\s*C\.?\s*V)?|S\.?\s*R\.?\s*L|LTDA|CIA|INC|LLC|E\.?I\.?R\.?L|C\.?\s*I\.?)\b\.?/g,' ').replace(/[^A-Z0-9 ]/g,' ').replace(/\s+/g,' ').trim(); }
+function prospNcm4(n){ return String(n||'').replace(/[^\d]/g,'').slice(0,4); }
+function prospNcm6(n){ return String(n||'').replace(/[^\d]/g,'').slice(0,6); }
+function prospFmtNcm(n){ const d = String(n||'').replace(/[^\d]/g,''); return d.length>=6 ? d.slice(0,4)+'.'+d.slice(4,6)+(d.length>6?'.'+d.slice(6):'') : (d.length===4 ? d : n); }
+// todos os processos que estão na memória (aba aberta + a outra, se já carregada)
+function prospProcessos(){
+  const out = (processos||[]).slice();
+  try{ ['jbs','vendas'].forEach(k=>{ const L = datasetCache && datasetCache[k] && datasetCache[k].processos; if(Array.isArray(L) && L!==processos) L.forEach(p=>out.push(p)); }); }catch(e){}
+  return out;
+}
+// clientes que já temos (para marcar "já é cliente")
+function prospClientes(){
+  const m = new Map();
+  prospProcessos().forEach(p=>{ const c = String(p && p.cliente || '').trim(); if(c){ const n = prospNorm(c); if(n && !m.has(n)) m.set(n, c); } });
+  return m;
+}
+function prospEhCliente(e, clientes){
+  const nomes = [e.empresa, e.nome_fantasia].filter(Boolean).map(prospNorm).filter(Boolean);
+  for(const [n, original] of clientes){
+    if(n.length < 4) continue;
+    for(const a of nomes){
+      if(a===n || a.startsWith(n+' ') || n.startsWith(a+' ')) return original;
+      if(n.length>=6 && (' '+a+' ').indexOf(' '+n+' ')>=0) return original;   // "BOTAS TORINO" ⊃ "TORINO"
+      const pa = a.split(' '), pc = n.split(' ');
+      if(pa.length===pc.length && pc.every((w,i)=>pa[i].startsWith(w))) return original;
+    }
+  }
+  return '';
+}
+// NCMs vendidas: base publicada + as que aparecem nos materiais dos processos
+function prospNcms(){
+  const base = ((prospDados && prospDados.ncms) || []).map(x=>Object.assign({}, x, { fornecedores:(x.fornecedores||[]).slice(), noSistema:0 }));
+  const idx = {}; base.forEach(x=>{ idx[prospNcm6(x.ncm)||prospNcm4(x.ncm)] = x; });
+  prospProcessos().forEach(p=>{
+    (p.materiais||[]).forEach(m=>{
+      const nome = String(m && (m.nome||m.material) || '');
+      const mm = nome.match(/\bNCM\s*[:.]?\s*(\d{4})\.?(\d{2})\.?(\d{0,4})/i); if(!mm) return;
+      const k6 = mm[1]+mm[2];
+      let x = idx[k6] || idx[mm[1]];
+      if(!x){ x = { ncm: mm[1]+'.'+mm[2], produto: nome.replace(/\s*-?\s*NCM.*$/i,'').slice(0,60), fornecedores:[], base:'processo', noSistema:0 }; base.push(x); idx[k6] = x; }
+      x.noSistema++;
+      const f = String(p.fornecedor||'').trim().toUpperCase(); if(f && x.fornecedores.indexOf(f)<0) x.fornecedores.push(f);
+    });
+  });
+  return base;
+}
+function prospEmpresaTemNcm(e, ncm){
+  const a6 = prospNcm6(ncm), a4 = prospNcm4(ncm);
+  return (e.ncms_provaveis||[]).some(n=>{ const b6 = prospNcm6(n), b4 = prospNcm4(n); return (a6.length===6 && b6.length===6) ? a6===b6 : a4===b4; })
+      || (e.evidencias||[]).some(v=>{ const b6 = prospNcm6(v.ncm); return a6.length===6 && b6===a6; });
+}
+function prospFiltrar(lista){
+  const q = prospNorm(prospF.busca);
+  return lista.filter(e=>{
+    if(prospF.pais && e.pais!==prospF.pais) return false;
+    if(prospF.ncm && !prospEmpresaTemNcm(e, prospF.ncm)) return false;
+    if(prospF.seg && e.segmento!==prospF.seg) return false;
+    if(prospF.conf && e.confianca!==prospF.conf) return false;
+    if(prospF.soEvid && !(e.evidencias||[]).length) return false;
+    if(prospF.soNovos && e._cliente) return false;
+    if(q){ const t = prospNorm([e.empresa,e.nome_fantasia,e.cidade,e.produtos,e.segmento,(e.ncms_provaveis||[]).join(' ')].join(' ')); if(t.indexOf(q)<0) return false; }
+    return true;
+  });
+}
+const PROSP_ORDEM_CONF = { 'alta':0, 'média':1, 'baixa':2 };
+async function renderProspeccaoView(){
+  const el = document.getElementById('prospContent'); if(!el) return;
+  if(!prospDados){ el.innerHTML = '<div class="an-panel" style="padding:20px;">Carregando a pesquisa…</div>'; await prospCarregar(); }
+  if(!prospDados){ el.innerHTML = `<div class="an-panel" style="padding:20px;">${prospEsc(prospErro)}</div>`; return; }
+  const D = prospDados;
+  const clientes = prospClientes();
+  const empresas = (D.empresas||[]).map(e=>{ e._cliente = prospEhCliente(e, clientes); return e; });
+  const ncms = prospNcms();
+  const paises = Array.from(new Set(empresas.map(e=>e.pais))).sort((a,b)=>a.localeCompare(b,'pt'));
+  const segs = Array.from(new Set(empresas.map(e=>e.segmento).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'pt'));
+  const lista = prospFiltrar(empresas).sort((a,b)=>(PROSP_ORDEM_CONF[a.confianca]??3)-(PROSP_ORDEM_CONF[b.confianca]??3) || (b.evidencias||[]).length-(a.evidencias||[]).length || a.empresa.localeCompare(b.empresa,'pt'));
+  const nossas = new Set(ncms.map(x=>prospNcm6(x.ncm)||prospNcm4(x.ncm)));
+  const ehNossa = n => nossas.has(prospNcm6(n)) || nossas.has(prospNcm4(n)) || Array.from(nossas).some(k=>k.length===4 && prospNcm4(n)===k);
+  const cntPais = {}; empresas.forEach(e=>{ const c = cntPais[e.pais] = cntPais[e.pais] || { n:0, alta:0, evid:0, cli:0 }; c.n++; if(e.confianca==='alta') c.alta++; if((e.evidencias||[]).length) c.evid++; if(e._cliente) c.cli++; });
+  const merc = D.mercado || {};
+  const fmtUsd = v => v==null ? '—' : 'US$ ' + (v>=1e6 ? (v/1e6).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mi' : Math.round(v/1e3).toLocaleString('pt-BR')+' mil');
+  const card = (l,v,s,cls) => `<div class="card ${cls||''}"><div class="label">${l}</div><div class="value">${v}</div><div class="sub">${s||''}</div></div>`;
+  const kpis = card('NCMs que vendemos', ncms.length, 'por fornecedor, abaixo', 'accent-navy')
+    + card('Países pesquisados', paises.length, 'América Latina', 'accent-steel')
+    + card('Empresas compradoras', empresas.length, empresas.filter(e=>(e.evidencias||[]).length).length + ' com registro de importação', 'accent-teal')
+    + card('Já são clientes', empresas.filter(e=>e._cliente).length, 'aparecem nos processos', 'accent-amber')
+    + card('Atualizado em', prospEsc(D.atualizadoEm ? fmtDateBR(D.atualizadoEm) : '—'), prospEsc(D.coleta ? 'coleta ' + D.coleta : ''), 'accent-violet');
+  const linhasNcm = ncms.map(x=>{
+    const nEmp = empresas.filter(e=>prospEmpresaTemNcm(e, x.ncm)).length;
+    const baseTxt = { documento:'📄 documento', embarque:'🚢 embarque real', processo:'📋 processo', inferida:'🔎 a confirmar' }[x.base] || prospEsc(x.base||'');
+    return `<tr><td class="pr-ncm">${prospEsc(prospFmtNcm(x.ncm))}</td><td>${prospEsc(x.produto)}</td><td>${(x.fornecedores||[]).map(f=>`<span class="pr-tag">${prospEsc(f)}</span>`).join(' ')}</td><td class="pr-base">${baseTxt}${x.noSistema?` <span class="an-panel-sub">· ${x.noSistema} item(ns) nos processos</span>`:''}</td><td style="text-align:right;"><button class="link-btn" data-pr-ncm="${prospEsc(x.ncm)}">${nEmp} empresa(s) →</button></td></tr>`;
+  }).join('');
+  const cardsPais = paises.map(p=>{
+    const c = cntPais[p]; const m = Object.values(merc).find(x=>x && x.pais===p);
+    let mercTxt = '';
+    if(m && m.hs6){
+      let tot = 0, br = 0, ano = '';
+      Object.keys(m.hs6).forEach(h=>{ const anos = Object.keys(m.hs6[h]).sort(); const a = anos[anos.length-1]; if(!a) return; const r = m.hs6[h][a]; tot += +r.total||0; ano = ano && ano>a ? ano : a; const b = (r.origens||[]).find(o=>/brasil/i.test(o.p)); if(b) br += +b.v||0; });
+      if(tot) mercTxt = `<div class="pr-merc">Importa ${fmtUsd(tot)}/ano das nossas NCMs${ano?` (${ano})`:''}${br?` · do Brasil ${fmtUsd(br)}`:''}</div>`;
+    }
+    return `<button class="pr-pais ${prospF.pais===p?'on':''}" data-pr-pais="${prospEsc(p)}"><b>${prospEsc(p)}</b><span>${c.n} empresa(s)${c.alta?` · ${c.alta} alta confiança`:''}${c.cli?` · ${c.cli} cliente(s)`:''}</span>${mercTxt}</button>`;
+  }).join('');
+  const opt = (arr, sel, todos) => `<option value="">${todos}</option>` + arr.map(v=>`<option value="${prospEsc(v)}" ${v===sel?'selected':''}>${prospEsc(v)}</option>`).join('');
+  const ncmOpts = `<option value="">Todas as NCMs</option>` + ncms.map(x=>`<option value="${prospEsc(x.ncm)}" ${x.ncm===prospF.ncm?'selected':''}>${prospEsc(prospFmtNcm(x.ncm))} — ${prospEsc(String(x.produto||'').slice(0,40))}</option>`).join('');
+  const linhaEmp = e => {
+    const id = prospEsc(e.pais + '|' + e.empresa); const aberto = !!prospF.abertos[e.pais + '|' + e.empresa];
+    const ncmsHtml = (e.ncms_provaveis||[]).map(n=>`<span class="pr-n ${ehNossa(n)?'nossa':''}">${prospEsc(n)}</span>`).join('');
+    const det = aberto ? `<tr class="pr-det"><td colspan="6">
+        ${e.produtos?`<div><b>Produz / compra:</b> ${prospEsc(e.produtos)}</div>`:''}
+        ${e.por_que_e_prospect?`<div><b>Por que é prospect:</b> ${prospEsc(e.por_que_e_prospect)}</div>`:''}
+        ${e.fornecedores_conhecidos?`<div><b>Fornecedores atuais:</b> ${prospEsc(e.fornecedores_conhecidos)}</div>`:''}
+        ${[e.id_fiscal?`ID fiscal: ${prospEsc(e.id_fiscal)}`:'', e.site?`<a href="${prospEsc(e.site)}" target="_blank" rel="noopener">${prospEsc(e.site)}</a>`:'', e.porte?`Porte: ${prospEsc(e.porte)}`:''].filter(Boolean).join(' · ')}
+        ${(e.evidencias||[]).length?`<div style="margin-top:6px;"><b>Registros / evidências:</b><ul>${e.evidencias.map(v=>`<li>${prospEsc(v.descricao)}${v.ncm?` <span class="pr-n">${prospEsc(v.ncm)}</span>`:''}${v.periodo?` · ${prospEsc(v.periodo)}`:''}${v.fonte?` · <a href="${prospEsc(v.fonte)}" target="_blank" rel="noopener">fonte</a>`:''}</li>`).join('')}</ul></div>`:''}
+        ${(e.fontes||[]).length?`<div class="an-panel-sub">Fontes: ${e.fontes.map((u,i)=>`<a href="${prospEsc(u)}" target="_blank" rel="noopener">${i+1}</a>`).join(' · ')}</div>`:''}
+      </td></tr>` : '';
+    return `<tr class="pr-emp ${aberto?'aberta':''}" data-pr-abrir="${id}">
+      <td><b>${prospEsc(e.empresa)}</b>${e.nome_fantasia?` <span class="an-panel-sub">(${prospEsc(e.nome_fantasia)})</span>`:''}${e._cliente?` <span class="pr-cli" title="Aparece nos processos como ${prospEsc(e._cliente)}">✓ cliente</span>`:''}${e.novo?` <span class="pr-novo">novo</span>`:''}</td>
+      <td>${prospEsc(e.pais)}${e.cidade?`<div class="an-panel-sub">${prospEsc(e.cidade)}</div>`:''}</td>
+      <td>${prospEsc(e.segmento||'')}</td>
+      <td class="pr-ncms">${ncmsHtml}</td>
+      <td>${(e.evidencias||[]).length?`<span class="pr-ev">🚢 ${e.evidencias.length}</span>`:'<span class="an-panel-sub">—</span>'}</td>
+      <td><span class="pr-conf ${prospEsc(e.confianca)}">${prospEsc(e.confianca||'')}</span></td></tr>${det}`;
+  };
+  el.innerHTML = `
+    <div class="pr-head"><div><div class="eyebrow">Pesquisa de mercado</div><h1 class="dpl-h1">Prospecção <span>América Latina</span></h1></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn btn-outline btn-sm" id="prRecarregar">↻ Recarregar</button><button class="btn btn-primary btn-sm" id="prExcel">⬇ Excel (lista filtrada)</button></div></div>
+    <div class="cards-row">${kpis}</div>
+    <div class="an-panel" style="margin-top:14px;">
+      <div class="an-panel-title">📦 NCMs que vendemos e de qual fornecedor</div>
+      <div style="overflow:auto;"><table class="pr-tab"><thead><tr><th>NCM</th><th>Produto</th><th>Fornecedor</th><th>Origem da informação</th><th></th></tr></thead><tbody>${linhasNcm}</tbody></table></div>
+    </div>
+    <div class="an-panel" style="margin-top:14px;">
+      <div class="an-panel-title">🌎 Países <span class="an-panel-sub">clique para filtrar as empresas</span></div>
+      <div class="pr-paises">${cardsPais}</div>
+    </div>
+    <div class="an-panel" style="margin-top:14px;">
+      <div class="an-panel-title">🏭 Empresas que compram as nossas NCMs <span class="an-panel-sub">${lista.length} de ${empresas.length} · clique numa linha para ver evidências e fontes</span></div>
+      <div class="pr-filtros">
+        <select id="prPais">${opt(paises, prospF.pais, 'Todos os países')}</select>
+        <select id="prNcm">${ncmOpts}</select>
+        <select id="prSeg">${opt(segs, prospF.seg, 'Todos os segmentos')}</select>
+        <select id="prConf">${opt(['alta','média','baixa'], prospF.conf, 'Toda confiança')}</select>
+        <input id="prBusca" placeholder="Buscar empresa, cidade, produto…" value="${prospEsc(prospF.busca)}">
+        <label><input type="checkbox" id="prEvid" ${prospF.soEvid?'checked':''}> só com registro de importação</label>
+        <label><input type="checkbox" id="prNovos" ${prospF.soNovos?'checked':''}> esconder quem já é cliente</label>
+      </div>
+      <div style="overflow:auto;max-height:70vh;"><table class="pr-tab pr-emps"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>NCMs (as nossas em destaque)</th><th>Importações</th><th>Confiança</th></tr></thead>
+        <tbody>${lista.map(linhaEmp).join('') || '<tr><td colspan="6" class="an-panel-sub" style="padding:16px;">Nenhuma empresa com esses filtros.</td></tr>'}</tbody></table></div>
+      <div class="an-panel-sub" style="margin-top:8px;">Confiança: <b>alta</b> = registro de importação da NCM ou fonte oficial clara · <b>média</b> = fabricante confirmado do segmento · <b>baixa</b> = citação fraca. Confira na fonte antes de usar numa negociação.</div>
+    </div>`;
+  const rerender = ()=>{ const sc = document.querySelector('.main-scroll'); const top = sc ? sc.scrollTop : 0; renderProspeccaoView().then(()=>{ if(sc) sc.scrollTop = top; }); };
+  el.querySelectorAll('[data-pr-pais]').forEach(b=>b.onclick = ()=>{ prospF.pais = prospF.pais===b.dataset.prPais ? '' : b.dataset.prPais; rerender(); });
+  el.querySelectorAll('[data-pr-ncm]').forEach(b=>b.onclick = ()=>{ prospF.ncm = b.dataset.prNcm; rerender(); });
+  el.querySelectorAll('[data-pr-abrir]').forEach(tr=>tr.onclick = ev=>{ if(ev.target.closest('a')) return; const k = tr.dataset.prAbrir; prospF.abertos[k] = !prospF.abertos[k]; rerender(); });
+  const liga = (id, campo, ev) => { const i = el.querySelector('#'+id); if(i) i.addEventListener(ev||'change', ()=>{ prospF[campo] = i.type==='checkbox' ? i.checked : i.value; if(id==='prBusca'){ clearTimeout(window.__prT); window.__prT = setTimeout(()=>{ rerender(); setTimeout(()=>{ const b = document.getElementById('prBusca'); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } }, 30); }, 350); } else rerender(); }); };
+  liga('prPais','pais'); liga('prNcm','ncm'); liga('prSeg','seg'); liga('prConf','conf'); liga('prEvid','soEvid'); liga('prNovos','soNovos'); liga('prBusca','busca','input');
+  el.querySelector('#prRecarregar').onclick = async ()=>{ await prospCarregar(true); rerender(); toast('↻ Pesquisa recarregada.'); };
+  el.querySelector('#prExcel').onclick = ()=>{
+    if(typeof XLSX==='undefined'){ toast('Biblioteca do Excel não carregou.'); return; }
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['EMPRESA','NOME FANTASIA','PAÍS','CIDADE','SEGMENTO','PRODUTOS','NCMs','CONFIANÇA','JÁ É CLIENTE','REGISTROS DE IMPORTAÇÃO','POR QUE É PROSPECT','ID FISCAL','SITE','FONTES']]
+      .concat(lista.map(e=>[e.empresa, e.nome_fantasia||'', e.pais, e.cidade||'', e.segmento||'', e.produtos||'', (e.ncms_provaveis||[]).join(', '), e.confianca||'', e._cliente||'', (e.evidencias||[]).map(v=>v.descricao + (v.fonte?' ('+v.fonte+')':'')).join(' | '), e.por_que_e_prospect||'', e.id_fiscal||'', e.site||'', (e.fontes||[]).join(' ')]))), 'Empresas');
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['NCM','PRODUTO','FORNECEDOR(ES)','ORIGEM DA INFORMAÇÃO']].concat(ncms.map(x=>[prospFmtNcm(x.ncm), x.produto||'', (x.fornecedores||[]).join(', '), x.base||'']))), 'NCMs');
+    XLSX.writeFile(wb, 'PROSPECCAO_' + new Date().toISOString().slice(0,10) + '.xlsx');
+  };
+}
+
 async function init(){
   try{ ligarRecolhiveisLateral(); }catch(e){}
   try{ ligarVerificacaoVersao(); }catch(e){}
@@ -15223,6 +15438,8 @@ async function init(){
       document.getElementById('viewPlanner').style.display = view==='planner' ? 'block':'none';
       document.getElementById('viewDespesas').style.display = view==='despesas' ? 'block':'none';
       document.getElementById('viewHistorico').style.display = view==='historico' ? 'block':'none';
+      document.getElementById('viewProspeccao').style.display = view==='prospeccao' ? 'block':'none';
+      if(view==='prospeccao'){ try{ renderProspeccaoView(); }catch(err){ console.error('prospeccao', err); } }
       if(view==='historico'){ try{ renderHistoricoView(); }catch(err){ console.error('historico render error', err); toast('Não foi possível carregar o histórico.'); } }
       if(isBoardView){
         try{ await switchDataset(view==='vendas' ? 'vendas' : 'jbs'); }
@@ -16880,7 +17097,7 @@ try{ const o3 = switchDataset; switchDataset = async function(){ desfVerificar()
 function desfRedesenhar(){
   try{ renderAll(); }catch(e){}
   const v = window.currentView;
-  const r = { analytics:()=>renderAnalytics(), vendedores:()=>renderVendedoresView(), notasfiscais:()=>renderNotasFiscaisView(),
+  const r = { analytics:()=>renderAnalytics(), vendedores:()=>renderVendedoresView(), notasfiscais:()=>renderNotasFiscaisView(), prospeccao:()=>renderProspeccaoView(),
     planner:()=>renderPlannerView(), historico:()=>renderHistoricoView(), despesas:()=>renderDespesasView(),
     despesas_planilha:()=>renderDespPlanilhaView() }[v];
   if(r){ try{ r(); }catch(e){} }
