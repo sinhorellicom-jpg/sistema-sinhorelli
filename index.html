@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261104-190236';</script>
+<script>window.VERSAO_SISTEMA = '20261104-191805';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1305,6 +1305,35 @@ td.sum-pick,th.sum-pick{background:rgba(96,165,250,.28) !important;box-shadow:in
 .dpl-saldo-tag{display:inline-block;font:700 10.5px 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#E9C46A;padding:6px;}
 .dpl-livro td.dpl-data-fora .dpl-in{color:#F5B041;font-weight:700;}
 .dpl-livro td.dpl-data-fora{box-shadow:inset 3px 0 0 #F5B041;}
+
+/* clientes */
+body.acesso-restrito .view-tab[data-view="clientes"]{display:none !important;}
+.cli-grid{display:grid;grid-template-columns:minmax(260px,330px) minmax(0,1fr);gap:14px;align-items:start;}
+@media (max-width:900px){ .cli-grid{grid-template-columns:1fr;} }
+.cli-lista{padding:10px !important;position:sticky;top:0;}
+.cli-busca{width:100%;box-sizing:border-box;font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--white);color:inherit;}
+.cli-chk{display:flex;gap:6px;align-items:center;font-size:11.5px;color:var(--ink-soft);margin:7px 2px;}
+.cli-itens{max-height:68vh;overflow:auto;display:flex;flex-direction:column;gap:3px;}
+.cli-item{display:grid;grid-template-columns:1fr auto;gap:0 8px;text-align:left;border:1px solid transparent;background:transparent;color:inherit;border-radius:8px;padding:6px 8px;cursor:pointer;font:inherit;}
+.cli-item b{font-size:12.5px;} .cli-item span{grid-column:1;font-size:11px;color:var(--ink-soft);} .cli-item i{grid-row:1 / span 2;grid-column:2;align-self:center;font-style:normal;font-size:10.5px;color:var(--ink-soft);}
+.cli-item:hover{background:rgba(91,124,250,.08);} .cli-item.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);}
+.cli-prog.ok{color:#34D399;font-weight:700;}
+.cli-semcad b{font-weight:500;color:var(--ink-soft);}
+.cli-sep{font:700 10px 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-soft);margin:10px 6px 4px;}
+.cli-ficha{padding:14px 16px !important;}
+.cli-ficha-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px;}
+.cli-cab{display:grid;grid-template-columns:minmax(220px,1fr) 160px;gap:10px;flex:1;min-width:280px;}
+.cli-acoes{display:flex;gap:6px;flex-wrap:wrap;}
+.cli-campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;}
+.cli-campo{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:rgba(127,127,127,.03);}
+.cli-campo label{display:flex;gap:7px;align-items:baseline;font-weight:600;font-size:12.5px;margin-bottom:6px;}
+.cli-num{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:50%;background:#1B365D;color:#fff;font-size:10.5px;font-weight:700;}
+.cli-linha{display:flex;gap:6px;}
+.cli-linha select{flex:0 0 72px;}
+.cli-linha input,.cli-linha textarea,.cli-linha select,.cli-obs textarea{width:100%;box-sizing:border-box;font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:7px;padding:6px 8px;background:var(--white);color:inherit;resize:vertical;}
+.cli-nota{font-size:10.5px;color:var(--ink-soft);margin-top:5px;}
+.cli-obs{grid-column:1 / -1;}
+.cli-vazio{padding:40px 20px;text-align:center;color:var(--ink-soft);}
 /* prospecção */
 body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 .pr-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
@@ -1658,6 +1687,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
       <button class="view-tab" data-view="analytics">📊 Análises</button>
       <button class="view-tab" data-view="vendedores">👤 Vendedores</button>
       <button class="view-tab" data-view="notasfiscais">📄 Notas Fiscais</button>
+      <button class="view-tab" data-view="clientes">👥 Clientes</button>
       <button class="view-tab" data-view="prospeccao">🎯 Prospecção</button>
       <button class="view-tab" data-view="planner">📅 Planner</button>
       <button class="view-tab" data-view="historico">🕘 Histórico</button>
@@ -1845,6 +1875,10 @@ html,body{overflow-x:hidden;overflow-x:clip;}
     <div class="cards-row" id="nfKpis"></div>
     <div id="nfContent"></div>
   </div>
+</div>
+
+<div id="viewClientes" style="display:none;">
+  <div class="analytics-wrap"><div id="cliContent"></div></div>
 </div>
 
 <div id="viewProspeccao" style="display:none;">
@@ -3137,7 +3171,7 @@ function abaDoDocNuvem(docId){
   if(/^resumo_jbs_v1/.test(d)) return 'jbs';
   return null;
 }
-function podeDocNuvem(docId){ if(String(docId)==='resumo_jbs_v1' && acessoRestrito()) return false; const a = abaDoDocNuvem(docId); return !a || temAba(a); }
+function podeDocNuvem(docId){ if((String(docId)==='resumo_jbs_v1' || String(docId)==='clientes_cadastro_v1') && acessoRestrito()) return false; const a = abaDoDocNuvem(docId); return !a || temAba(a); }
 // esconde do menu as abas que a pessoa não pode ver
 function aplicarAbasPermitidas(){
   document.querySelectorAll('.view-tab').forEach(t=>{ const k = abaDaView(t.dataset.view); if(k && !temAba(k)) t.style.display = 'none'; });
@@ -5332,6 +5366,7 @@ function aplicarRemoto(docId, raw){
       return;
     }
     if(docId==='resumo_jbs_v1'){ rjAplicarRemoto(remoto, raw); return; }
+    if(docId==='clientes_cadastro_v1'){ cliAplicarRemoto(remoto); return; }
     if(docId==='planner_notas_v1'){
       const localJson = JSON.stringify(plannerNotes);
       if(localJson === raw) return;
@@ -5392,7 +5427,7 @@ function startRealtimeSync(){
   if(!firebaseReady || !firestoreDb) return;
   _rtUnsubs.forEach(u=>{ try{ u(); }catch(e){} });
   _rtUnsubs = [];
-  ['processos_jbs_v1','processos_vendas_v1','notas_fiscais_v1','nf_fornecedores_v1','planner_notas_v1','despesas_v1','despesas_planilha_v1','resumo_jbs_v1'].forEach(docId=>{
+  ['processos_jbs_v1','processos_vendas_v1','notas_fiscais_v1','nf_fornecedores_v1','planner_notas_v1','despesas_v1','despesas_planilha_v1','resumo_jbs_v1','clientes_cadastro_v1'].forEach(docId=>{
     if(!podeDocNuvem(docId)) return;     // aba não liberada: não escuta
     if(FS_V2_KEYS.indexOf(docId) >= 0){
       try{ _rtUnsubs.push(v2Listen(docId)); }catch(e){ console.warn('tempo real v2: não consegui escutar', docId, e); }
@@ -13112,7 +13147,7 @@ async function exportarTudo(){
     window.STORAGE_KEY, window.STORAGE_KEY_VENDAS,
     'notas_fiscais_v1', 'nf_fornecedores_v1', 'planner_notas_v1', 'despesas_v1',
     MATERIAL_CATALOG_KEY, VENDOR_CATALOG_KEY, CLIENT_CATALOG_KEY, 'totais_manuais_v1',
-    'fornecedor_comissao_v1', 'fornecedor_cliente_comissao_v1', 'fornecedor_notas_v1', 'despesas_planilha_v1', 'resumo_jbs_v1'
+    'fornecedor_comissao_v1', 'fornecedor_cliente_comissao_v1', 'fornecedor_notas_v1', 'despesas_planilha_v1', 'resumo_jbs_v1', 'clientes_cadastro_v1'
   ];
   for(const k of chaves){
     if(!k) continue;
@@ -15103,6 +15138,7 @@ function prospFmtNcm(n){ const d = String(n||'').replace(/[^\d]/g,''); return d.
 function prospProcessos(){
   const out = (processos||[]).slice();
   try{ ['jbs','vendas'].forEach(k=>{ const L = datasetCache && datasetCache[k] && datasetCache[k].processos; if(Array.isArray(L) && L!==processos) L.forEach(p=>out.push(p)); }); }catch(e){}
+  try{ if(typeof anOutraAba!=='undefined' && Array.isArray(anOutraAba) && anOutraAba!==processos) anOutraAba.forEach(p=>{ if(out.indexOf(p)<0) out.push(p); }); }catch(e){}
   return out;
 }
 // clientes que já temos (para marcar "já é cliente")
@@ -15162,7 +15198,7 @@ function prospFiltrar(lista){
 const PROSP_ORDEM_CONF = { 'alta':0, 'média':1, 'baixa':2 };
 async function renderProspeccaoView(){
   const el = document.getElementById('prospContent'); if(!el) return;
-  if(!prospDados){ el.innerHTML = '<div class="an-panel" style="padding:20px;">Carregando a pesquisa…</div>'; await prospCarregar(); }
+  if(!prospDados){ el.innerHTML = '<div class="an-panel" style="padding:20px;">Carregando a pesquisa…</div>'; await Promise.all([prospCarregar(), anCarregarOutraAba().catch(()=>{})]); }
   if(!prospDados){ el.innerHTML = `<div class="an-panel" style="padding:20px;">${prospEsc(prospErro)}</div>`; return; }
   const D = prospDados;
   const clientes = prospClientes();
@@ -15260,6 +15296,205 @@ async function renderProspeccaoView(){
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['NCM','PRODUTO','FORNECEDOR(ES)','ORIGEM DA INFORMAÇÃO']].concat(ncms.map(x=>[prospFmtNcm(x.ncm), x.produto||'', (x.fornecedores||[]).join(', '), x.base||'']))), 'NCMs');
     XLSX.writeFile(wb, 'PROSPECCAO_' + new Date().toISOString().slice(0,10) + '.xlsx');
   };
+}
+
+/* ===== CLIENTES — cadastro com as instruções de embarque e documentação (formulário) + PDF ===== */
+const CLI_KEY = 'clientes_cadastro_v1';
+let cliDados = { clientes:[], removidos:[] };
+let cliSel = null, cliBusca = '', cliMostrarProc = true;
+// as 11 perguntas do formulário (texto do PDF em espanhol, como o formulário enviado ao cliente)
+const CLI_PERGUNTAS = [
+  { n:1,  k:'razaoSocial', pt:'Razão social (como deve sair na fatura)', es:'1. NOMBRE DEL CLIENTE', q:'¿Cuál es la Razón Social exacta que debe constar en la Factura Comercial?', nota:'Debe coincidir exactamente con el registro fiscal del país de destino.' },
+  { n:2,  k:'nit',         pt:'NIT / ID fiscal (com dígito verificador)', es:'2. NIT DEL CLIENTE', q:'¿Cuál es el número de NIT (con dígito de verificación)?', nota:'Obligatorio por la autoridad aduanera para la recepción de la factura comercial.' },
+  { n:3,  k:'consignee',   pt:'Consignee (razão social, NIT, endereço, telefone)', es:'3. DATOS DEL CONSIGNEE', q:'¿Quién es el Consignee que figurará en la Factura y BL (persona/empresa que retira la carga)?', nota:'Incluir Razón Social, NIT, Dirección física completa y Teléfono.', area:true },
+  { n:4,  k:'contratoPo',  pt:'Nº do contrato / PO deve sair na fatura?', es:'4. NÚMERO DE CONTRATO / PO', q:'¿El número de Contrato u Orden de Compra (PO) debe estar especificado en la Factura?', nota:'Importante para la posterior legalización del pago y cambio internacional.', simNao:true },
+  { n:5,  k:'frete',       pt:'Valor do frete e seguro desglosado na fatura?', es:'5. VALOR DEL FLETE Y SEGURO', q:'¿El valor del flete debe ir desglosado en la Factura Comercial?', nota:'Requerido según el Incoterm (CPT, CIP, CFR, CIF) para el cálculo de impuestos.', simNao:true },
+  { n:6,  k:'unidade',     pt:'Unidade de medida na fatura (kg, m², pés², caixas…)', es:'6. UNIDAD DE MEDIDA', q:'¿Existe alguna especificación sobre la Unidad de Medida que debe usarse en la Factura? (Ej: Kg, Ton, Cajas, Unidades)', nota:'La unidad debe ser compatible con la subpartida arancelaria (NCM/SH).' },
+  { n:7,  k:'descricao',   pt:'Descrição da mercadoria e subpartida (NCM/SH)', es:'7. DESCRIPCIÓN DE LA MERCADERÍA Y SUBPARTIDA (NCM/SH)', q:'¿Requiere algún detalle particular en la descripción o confirmación de la Subpartida Arancelaria?', nota:'Evita canal rojo o discrepancias con la declaración de importación.', area:true },
+  { n:8,  k:'certOrigem',  pt:'Certificado de origem (ACE 59 / Mercosul)?', es:'8. CERTIFICADO DE ORIGEN (ACE 59 / MERCOSUR)', q:'¿Requiere la emisión del Certificado de Origen para preferencia arancelaria?', nota:'Permite la exención o reducción del arancel de importación.', simNao:true },
+  { n:9,  k:'notify',      pt:'Notify party no BL', es:'9. NOTIFY PARTY EN EL BL', q:'¿Requiere incluir alguna empresa o agente de aduana específico como \'Notify Party\' en el BL?', nota:'Garantiza que su agente aduanero sea notificado al arribo de la nave.', area:true },
+  { n:10, k:'drafts',      pt:'Revisar os rascunhos (fatura, BL, certificado) antes?', es:'10. REVISIÓN DE BORRADORES (DRAFTS)', q:'¿Desea revisar y aprobar los borradores previos de Factura, BL y Certificado de Origen?', nota:'Evita re-emisiones y sobrecostos tras el embarque de la carga.', simNao:true },
+  { n:11, k:'emails',      pt:'E-mails para enviar os documentos', es:'11. DISTRIBUCIÓN Y ENVÍO DE DOCUMENTOS', q:'¿A qué correos electrónicos se deben enviar las copias digitales y avisos de los documentos? (Añadir todos los necesarios)', nota:'Garantiza que los documentos digitales lleguen a las personas correctas para iniciar el trámite de nacionalización.', area:true },
+];
+function cliPode(){ return !acessoRestrito(); }
+function cliPodeEditar(){ return cliPode() && editMode; }
+function cliEsc(v){ return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function cliNorm(x){ return String(x||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Z0-9 ]/g,' ').replace(/\s+/g,' ').trim(); }
+function cliNovo(nome){ return { id:'cli_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6), nome:String(nome||'').trim().toUpperCase(), pais:'', obs:'', resp:{}, simNao:{}, _upd:Date.now() }; }
+function cliNormalizar(d){
+  d = (d && typeof d==='object' && !Array.isArray(d)) ? d : {};
+  return { clientes:(Array.isArray(d.clientes)?d.clientes:[]).filter(c=>c && c.id).map(c=>Object.assign({ nome:'', pais:'', obs:'', resp:{}, simNao:{}, _upd:0 }, c)), removidos:Array.isArray(d.removidos)?d.removidos.slice(-2000):[] };
+}
+function cliMesclar(loc, rem){
+  const rm = new Set([].concat(loc.removidos||[], rem.removidos||[]));
+  const L = {}; (loc.clientes||[]).forEach(c=>L[c.id]=c);
+  const vistos = new Set(), out = [];
+  (rem.clientes||[]).forEach(c=>{ vistos.add(c.id); const a = L[c.id]; const v = (a && (a._upd||0)>(c._upd||0)) ? a : c; if(!rm.has(v.id)) out.push(v); });
+  (loc.clientes||[]).forEach(c=>{ if(!vistos.has(c.id) && !rm.has(c.id)) out.push(c); });
+  return { clientes:out, removidos:Array.from(rm) };
+}
+async function loadClientesCadastro(){
+  if(!cliPode()) return;
+  let raw = null;
+  if(typeof firebaseReady!=='undefined' && firebaseReady && firestoreDb){ try{ raw = await firestoreReadProcessos(CLI_KEY); }catch(e){} }
+  if(raw===null || raw===undefined){ try{ const r = await storageGet(CLI_KEY, true); raw = r && r.value ? r.value : null; }catch(e){} }
+  try{ cliDados = cliNormalizar(raw ? JSON.parse(raw) : null); }catch(e){ cliDados = cliNormalizar(null); }
+}
+let _cliSaveT = null;
+function saveClientesCadastro(){
+  if(!cliPode()) return;
+  if(typeof marcarPendente === 'function') marcarPendente();
+  clearTimeout(_cliSaveT);
+  _cliSaveT = setTimeout(()=>{
+    _cliSaveT = null;
+    const json = JSON.stringify(cliDados);
+    if(typeof firebaseReady!=='undefined' && firebaseReady && firestoreDb){
+      firestoreWriteProcessos(json, CLI_KEY).then(()=>{ if(typeof marcarSalvo==='function') marcarSalvo(); }).catch(()=>{ if(typeof marcarFalha==='function') marcarFalha('falha ao salvar clientes'); });
+    } else if(typeof marcarSalvo==='function') marcarSalvo();
+    storageSet(CLI_KEY, json, true);
+  }, 600);
+}
+function cliAplicarRemoto(remoto){
+  if(!cliPode()) return;
+  const rem = cliNormalizar(remoto);
+  const antes = JSON.stringify(cliDados.clientes.map(c=>[c.id,c._upd]).sort()), dep = JSON.stringify(rem.clientes.map(c=>[c.id,c._upd]).sort());
+  if(antes===dep && cliDados.removidos.length===rem.removidos.length) return;
+  cliDados = cliMesclar(cliDados, rem);
+  const el = document.getElementById('cliContent');
+  if(el && el.offsetParent!==null && !(document.activeElement && el.contains(document.activeElement))) renderClientesView();
+}
+// clientes que aparecem nos processos (para cadastrar a partir deles)
+function cliDosProcessos(){
+  const m = new Map();
+  const todos = (processos||[]).slice();
+  try{ ['jbs','vendas'].forEach(k=>{ const L = datasetCache && datasetCache[k] && datasetCache[k].processos; if(Array.isArray(L) && L!==processos) L.forEach(p=>todos.push(p)); }); }catch(e){}
+  try{ if(typeof anOutraAba!=='undefined' && Array.isArray(anOutraAba) && anOutraAba!==processos) anOutraAba.forEach(p=>{ if(todos.indexOf(p)<0) todos.push(p); }); }catch(e){}
+  todos.forEach(p=>{ const c = String(p && p.cliente || '').trim(); if(!c) return; const k = cliNorm(c); const x = m.get(k) || { nome:c.toUpperCase(), n:0, pais:'' }; x.n++; if(!x.pais && p.pais) x.pais = p.pais; m.set(k, x); });
+  return m;
+}
+function cliCompleto(c){ return CLI_PERGUNTAS.filter(p=>String((c.resp||{})[p.k]||'').trim() || (p.simNao && (c.simNao||{})[p.k])).length; }
+function renderClientesView(){
+  const el = document.getElementById('cliContent'); if(!el) return;
+  if(!cliPode()){ el.innerHTML = ''; return; }
+  if(!window.__cliOutraAba){ window.__cliOutraAba = true; anCarregarOutraAba().then(()=>{ if(el.offsetParent!==null && !(document.activeElement && el.contains(document.activeElement))) renderClientesView(); }).catch(()=>{}); }
+  const ed = cliPodeEditar();
+  const proc = cliDosProcessos();
+  const cad = new Set(cliDados.clientes.map(c=>cliNorm(c.nome)));
+  const q = cliNorm(cliBusca);
+  const lista = cliDados.clientes.slice().sort((a,b)=>a.nome.localeCompare(b.nome,'pt'))
+    .filter(c=>!q || cliNorm([c.nome, (c.resp||{}).razaoSocial, c.pais, (c.resp||{}).nit].join(' ')).indexOf(q)>=0);
+  const semCad = cliMostrarProc ? Array.from(proc.values()).filter(x=>!cad.has(cliNorm(x.nome)) && (!q || cliNorm(x.nome+' '+x.pais).indexOf(q)>=0)).sort((a,b)=>b.n-a.n) : [];
+  if(cliSel && !cliDados.clientes.some(c=>c.id===cliSel)) cliSel = null;
+  const sel = cliDados.clientes.find(c=>c.id===cliSel);
+  const itens = lista.map(c=>{ const pr = proc.get(cliNorm(c.nome)); const comp = cliCompleto(c);
+      return `<button class="cli-item ${c.id===cliSel?'on':''}" data-cli="${c.id}"><b>${cliEsc(c.nome)}</b><span>${cliEsc(c.pais||'')}${pr?` · ${pr.n} processo(s)`:''}</span><i class="cli-prog ${comp===11?'ok':''}">${comp}/11</i></button>`; }).join('')
+    + (semCad.length ? `<div class="cli-sep">Nos processos, sem cadastro (${semCad.length})</div>` + semCad.map(x=>`<button class="cli-item cli-semcad" data-cli-novo="${cliEsc(x.nome)}" data-cli-pais="${cliEsc(x.pais)}"><b>${cliEsc(x.nome)}</b><span>${cliEsc(x.pais)} · ${x.n} processo(s)</span><i class="cli-prog">${ed?'+ cadastrar':''}</i></button>`).join('') : '');
+  const campo = p => {
+    const v = (sel.resp||{})[p.k] || '';
+    const sn = p.simNao ? `<select data-cli-sn="${p.k}" ${ed?'':'disabled'}><option value="">—</option><option value="SI" ${(sel.simNao||{})[p.k]==='SI'?'selected':''}>Sim</option><option value="NO" ${(sel.simNao||{})[p.k]==='NO'?'selected':''}>Não</option></select>` : '';
+    const inp = p.area ? `<textarea data-cli-r="${p.k}" rows="3" ${ed?'':'readonly'} placeholder="${p.simNao?'detalhes (opcional)':''}">${cliEsc(v)}</textarea>` : `<input data-cli-r="${p.k}" value="${cliEsc(v)}" ${ed?'':'readonly'} placeholder="${p.simNao?'detalhes (opcional)':''}">`;
+    return `<div class="cli-campo"><label><span class="cli-num">${p.n}</span> ${cliEsc(p.pt)}</label><div class="cli-linha">${sn}${inp}</div><div class="cli-nota">${cliEsc(p.nota)}</div></div>`;
+  };
+  const ficha = sel ? `
+      <div class="cli-ficha-top">
+        <div class="cli-cab">
+          <div class="field"><label>Cliente (nome usado nos processos)</label><input data-cli-f="nome" value="${cliEsc(sel.nome)}" ${ed?'':'readonly'}></div>
+          <div class="field"><label>País</label><input data-cli-f="pais" value="${cliEsc(sel.pais)}" ${ed?'':'readonly'} list="cliPaises"></div>
+        </div>
+        <div class="cli-acoes">
+          <button class="btn btn-primary btn-sm" id="cliPdf">⬇ PDF do formulário</button>
+          ${ed?`<button class="btn btn-outline btn-sm" id="cliImportar">📥 Importar formulário (Excel)</button><button class="btn btn-outline btn-sm" id="cliExcluir" style="color:#F87171;">🗑 Excluir</button>`:''}
+        </div>
+      </div>
+      <div class="cli-campos">${CLI_PERGUNTAS.map(campo).join('')}
+        <div class="cli-campo cli-obs"><label>Observações internas <span class="an-panel-sub">(não sai no PDF)</span></label><textarea data-cli-f="obs" rows="2" ${ed?'':'readonly'}>${cliEsc(sel.obs||'')}</textarea></div>
+      </div>`
+    : `<div class="cli-vazio">Escolha um cliente na lista ou clique em <b>+ Novo cliente</b>.<br><br>O formulário em branco (para mandar a um cliente novo preencher) sai em <b>⬇ PDF em branco</b>.</div>`;
+  el.innerHTML = `
+    <div class="pr-head"><div><div class="eyebrow">Cadastro</div><h1 class="dpl-h1">Clientes <span>instruções de embarque</span></h1></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">${ed?`<button class="btn btn-primary btn-sm" id="cliNovoBtn">+ Novo cliente</button>`:''}<button class="btn btn-outline btn-sm" id="cliPdfBranco">⬇ PDF em branco</button></div></div>
+    <div class="cli-grid">
+      <div class="cli-lista an-panel">
+        <input id="cliBuscaIn" class="cli-busca" placeholder="Buscar cliente, razão social, NIT…" value="${cliEsc(cliBusca)}">
+        <label class="cli-chk"><input type="checkbox" id="cliMostrarProc" ${cliMostrarProc?'checked':''}> mostrar clientes dos processos sem cadastro</label>
+        <div class="cli-itens">${itens || '<div class="an-panel-sub" style="padding:10px;">Nenhum cliente.</div>'}</div>
+      </div>
+      <div class="cli-ficha an-panel">${ficha}</div>
+    </div>
+    <datalist id="cliPaises">${['COLOMBIA','EQUADOR','PERU','MEXICO','BOLIVIA','CHILE','ARGENTINA','PARAGUAI','URUGUAI','VENEZUELA','GUATEMALA','EL SALVADOR','HONDURAS','NICARAGUA','COSTA RICA','PANAMA','REP DOMINICANA','BRASIL'].map(p=>`<option value="${p}">`).join('')}</datalist>
+    <input type="file" id="cliArq" accept=".xlsx,.xls" style="display:none;">`;
+  // eventos
+  const novoCom = (nome, pais) => { const c = cliNovo(nome); c.pais = pais||''; cliDados.clientes.push(c); cliSel = c.id; saveClientesCadastro(); renderClientesView(); setTimeout(()=>{ const i = document.querySelector('[data-cli-r="razaoSocial"]'); if(i) i.focus(); }, 30); };
+  el.querySelectorAll('[data-cli]').forEach(b=>b.onclick = ()=>{ cliSel = b.dataset.cli; renderClientesView(); });
+  el.querySelectorAll('[data-cli-novo]').forEach(b=>b.onclick = ()=>{ if(!cliPodeEditar()){ toast('Ative o modo edição para cadastrar.'); return; } novoCom(b.dataset.cliNovo, b.dataset.cliPais); });
+  const bn = el.querySelector('#cliNovoBtn'); if(bn) bn.onclick = ()=>{ const nome = prompt('Nome do cliente (como aparece nos processos):'); if(nome && nome.trim()) novoCom(nome.trim(), ''); };
+  el.querySelector('#cliPdfBranco').onclick = ()=>cliGerarPdf(null);
+  const bi = el.querySelector('#cliBuscaIn'); bi.oninput = ()=>{ cliBusca = bi.value; clearTimeout(window.__cliT); window.__cliT = setTimeout(()=>{ renderClientesView(); const b = document.getElementById('cliBuscaIn'); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } }, 300); };
+  el.querySelector('#cliMostrarProc').onchange = e=>{ cliMostrarProc = e.target.checked; renderClientesView(); };
+  if(!sel) return;
+  const tocar = ()=>{ sel._upd = Date.now(); saveClientesCadastro(); };
+  el.querySelectorAll('[data-cli-r]').forEach(i=>i.addEventListener('change', ()=>{ sel.resp = sel.resp||{}; sel.resp[i.dataset.cliR] = i.value.trim(); tocar(); const b = el.querySelector(`[data-cli="${sel.id}"] .cli-prog`); if(b){ const n = cliCompleto(sel); b.textContent = n+'/11'; b.classList.toggle('ok', n===11); } }));
+  el.querySelectorAll('[data-cli-sn]').forEach(s=>s.addEventListener('change', ()=>{ sel.simNao = sel.simNao||{}; sel.simNao[s.dataset.cliSn] = s.value; tocar(); }));
+  el.querySelectorAll('[data-cli-f]').forEach(i=>i.addEventListener('change', ()=>{ const k = i.dataset.cliF; sel[k] = (k==='nome' || k==='pais') ? i.value.trim().toUpperCase() : i.value; if(k!=='obs') i.value = sel[k]; tocar(); if(k==='nome' || k==='pais') renderClientesView(); }));
+  el.querySelector('#cliPdf').onclick = ()=>cliGerarPdf(sel);
+  const bx = el.querySelector('#cliExcluir'); if(bx) bx.onclick = async ()=>{ if(!await confirmarAcao(`Excluir o cadastro de <b>${cliEsc(sel.nome)}</b>? Os processos não são alterados.`, {titulo:'Excluir cliente', confirmar:'Excluir', perigo:true})) return; cliDados.clientes = cliDados.clientes.filter(c=>c.id!==sel.id); cliDados.removidos.push(sel.id); cliSel = null; saveClientesCadastro(); renderClientesView(); };
+  const bim = el.querySelector('#cliImportar'); if(bim) bim.onclick = ()=>el.querySelector('#cliArq').click();
+  el.querySelector('#cliArq').onchange = async e=>{ const f = e.target.files && e.target.files[0]; e.target.value = ''; if(f) await cliImportarExcel(f, sel); };
+}
+// formulário do cliente devolvido em Excel: a coluna B ("Respuesta") de cada pergunta 1..11 vai para a ficha (só preenche o que vier escrito)
+async function cliImportarExcel(file, sel){
+  if(typeof XLSX==='undefined'){ toast('Não consegui abrir o Excel (sem internet?).'); return; }
+  try{
+    const wb = XLSX.read(await file.arrayBuffer(), {type:'array'});
+    let n = 0;
+    wb.SheetNames.forEach(nm=>{
+      XLSX.utils.sheet_to_json(wb.Sheets[nm], {header:1, raw:false, defval:''}).forEach(row=>{
+        const m = String(row[0]||'').trim().match(/^(\d{1,2})\s*\./); if(!m) return;
+        const p = CLI_PERGUNTAS.find(x=>x.n===+m[1]); const v = String(row[1]||'').trim(); if(!p || !v) return;
+        sel.resp = sel.resp||{};
+        if(p.simNao){ const u = v.toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,''); if(/^(SI|SIM|YES)\b/.test(u)){ sel.simNao[p.k]='SI'; } else if(/^(NO|NAO)\b/.test(u)){ sel.simNao[p.k]='NO'; } const resto = v.replace(/^(s[ií]m?|yes|n[aã]?o)(?=[\s,.:;-]|$)[\s,.:;-]*/i,'').trim(); if(resto) sel.resp[p.k] = resto; }
+        else sel.resp[p.k] = v;
+        n++;
+      });
+    });
+    if(!n){ toast('Não encontrei respostas preenchidas no arquivo (coluna "Respuesta").'); return; }
+    sel._upd = Date.now(); saveClientesCadastro(); renderClientesView(); toast('📥 ' + n + ' resposta(s) importada(s) do formulário.');
+  }catch(e){ console.warn('importar formulário', e); toast('Não consegui ler este arquivo.'); }
+}
+function cliGerarPdf(c){
+  const E = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  const resp = p => { if(!c) return ''; const sn = (c.simNao||{})[p.k]; const t = (c.resp||{})[p.k]||''; return [sn==='SI'?'<b>SÍ</b>':sn==='NO'?'<b>NO</b>':'', E(t)].filter(Boolean).join(' — '); };
+  const hoje = new Date().toLocaleDateString('es-ES');
+  const html = `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Instrucciones de Embarque${c?' — '+E(c.nome):''}</title>
+  <style>
+    @page{ size:A4 portrait; margin:14mm 14mm 12mm; }
+    *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;} body{font-family:Arial,Helvetica,sans-serif;color:#1B2430;font-size:10.5px;margin:0;}
+    h1{font-size:15px;margin:0 0 4px;color:#1B365D;letter-spacing:.02em;}
+    .intro{margin:0 0 10px;color:#3B4656;}
+    .meta{display:flex;justify-content:space-between;gap:12px;margin:0 0 10px;font-size:11px;border:1px solid #C9D3E0;border-radius:4px;padding:6px 9px;}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;}
+    th{background:#1B365D;color:#fff;text-align:left;padding:7px 8px;font-size:10.5px;}
+    td{border:1px solid #C9D3E0;padding:7px 8px;vertical-align:top;line-height:1.35;}
+    tr:nth-child(even) td{background:#F0F4F8;}
+    td.q b{display:block;margin-bottom:3px;color:#1B365D;}
+    td.r{min-height:40px;font-size:11px;} td.nota{color:#55606E;font-size:9.5px;}
+    tr{page-break-inside:avoid;}
+    .rodape{margin-top:12px;font-size:9px;color:#7A8594;display:flex;justify-content:space-between;}
+    .assin{margin-top:28px;display:flex;gap:40px;} .assin div{flex:1;border-top:1px solid #1B2430;padding-top:4px;text-align:center;font-size:9.5px;}
+  </style></head><body>
+    <h1>FORMULARIO DE INSTRUCCIONES DE EMBARQUE Y DOCUMENTACIÓN</h1>
+    <p class="intro">Estimado cliente: Por favor confirme los datos e instrucciones requeridas para la emisión y envío de sus documentos aduaneros.</p>
+    <div class="meta"><span><b>Cliente:</b> ${c?E((c.resp||{}).razaoSocial || c.nome):'______________________________'}</span><span><b>País:</b> ${c?E(c.pais):'______________'}</span><span><b>Fecha:</b> ${hoje}</span></div>
+    <table><thead><tr><th style="width:36%">Campo / Pregunta Documental</th><th style="width:38%">Respuesta / Datos del Cliente</th><th style="width:26%">Nota Explicativa / Requisito Aduanero</th></tr></thead>
+    <tbody>${CLI_PERGUNTAS.map(p=>`<tr><td class="q"><b>${E(p.es)}</b>${E(p.q)}</td><td class="r">${resp(p) || (c?'':'<br><br>')}</td><td class="nota">${E(p.nota)}</td></tr>`).join('')}</tbody></table>
+    ${c?'':'<div class="assin"><div>Nombre y firma del cliente</div><div>Fecha</div></div>'}
+    <div class="rodape"><span>${typeof INVOICE_EMPRESA!=='undefined' && INVOICE_EMPRESA.nome ? E(INVOICE_EMPRESA.nome) : 'Sinhorelli'}</span><span>Instrucciones de embarque y documentación</span></div>
+    <script>window.addEventListener('load', function(){ setTimeout(function(){ window.focus(); window.print(); }, 250); });<\/script>
+  </body></html>`;
+  const w = window.open('', '_blank');
+  if(!w){ toast('O navegador bloqueou a janela do PDF. Libere pop-ups para o sistema e tente de novo.'); return; }
+  w.document.open(); w.document.write(html); w.document.close();
+  toast('Na janela de impressão, escolha "Salvar como PDF".');
 }
 
 async function init(){
@@ -15439,6 +15674,8 @@ async function init(){
       document.getElementById('viewDespesas').style.display = view==='despesas' ? 'block':'none';
       document.getElementById('viewHistorico').style.display = view==='historico' ? 'block':'none';
       document.getElementById('viewProspeccao').style.display = view==='prospeccao' ? 'block':'none';
+      document.getElementById('viewClientes').style.display = view==='clientes' ? 'block':'none';
+      if(view==='clientes'){ try{ renderClientesView(); }catch(err){ console.error('clientes', err); } }
       if(view==='prospeccao'){ try{ renderProspeccaoView(); }catch(err){ console.error('prospeccao', err); } }
       if(view==='historico'){ try{ renderHistoricoView(); }catch(err){ console.error('historico render error', err); toast('Não foi possível carregar o histórico.'); } }
       if(isBoardView){
@@ -15496,6 +15733,7 @@ async function init(){
     await loadNfFornCatalog();
     await loadPlannerNotes();
     try{ await loadResumoJbs(); rjAjustarSubabas(); }catch(e){ console.warn('resumo JBS: carga falhou', e); }
+    try{ await loadClientesCadastro(); }catch(e){ console.warn('clientes: carga falhou', e); }
     await loadTotaisManuais();
     await loadDespesas();
     try{ await loadDespPlanilha(); }catch(e){ console.warn('despesas planilha: carga falhou', e); dplState = dplState || dplSeed(); }
@@ -17097,7 +17335,7 @@ try{ const o3 = switchDataset; switchDataset = async function(){ desfVerificar()
 function desfRedesenhar(){
   try{ renderAll(); }catch(e){}
   const v = window.currentView;
-  const r = { analytics:()=>renderAnalytics(), vendedores:()=>renderVendedoresView(), notasfiscais:()=>renderNotasFiscaisView(), prospeccao:()=>renderProspeccaoView(),
+  const r = { analytics:()=>renderAnalytics(), vendedores:()=>renderVendedoresView(), notasfiscais:()=>renderNotasFiscaisView(), prospeccao:()=>renderProspeccaoView(), clientes:()=>renderClientesView(),
     planner:()=>renderPlannerView(), historico:()=>renderHistoricoView(), despesas:()=>renderDespesasView(),
     despesas_planilha:()=>renderDespPlanilhaView() }[v];
   if(r){ try{ r(); }catch(e){} }
