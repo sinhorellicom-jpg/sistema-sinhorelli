@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261104-213032';</script>
+<script>window.VERSAO_SISTEMA = '20261104-220400';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -6389,6 +6389,63 @@ function plEntradasDoMes(ano, mes){
   });
   return out;
 }
+// PDF do planner: o calendário do mês (A4 deitado) + a lista de entradas, vencimentos e anotações
+function plGerarPdf(ano, mes, diasVis, vencs, ents){
+  const E = t => String(t==null?'':t).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const hoje = plISO(new Date());
+  const nomeMes = new Date(ano, mes, 1).toLocaleDateString('pt-BR', {month:'long', year:'numeric'});
+  const tag = p => p._ds==='vendas' ? 'V' : 'JBS';
+  const cel = d => {
+    const iso = plISO(d), fora = d.getMonth()!==mes;
+    const it = [];
+    (ents[iso]||[]).forEach(p=>it.push(`<div class="c ent ${iso<hoje?'atr':''}"><b>${E(rotuloProcesso(p))}</b> ${E(p.cliente||'')}<br>Entrada ${(p.entrada||0)>0?'USD '+fmt(p.entrada):'s/ valor'} <i>${tag(p)}</i></div>`));
+    (vencs[iso]||[]).forEach(p=>it.push(`<div class="c ${p._ds==='vendas'?'v':'j'} ${iso<hoje?'atr':''}"><b>${E(rotuloProcesso(p))}</b> ${E(p.cliente||'')}<br>USD ${fmt(saldoUsd(p))} <i>${tag(p)}</i></div>`));
+    (plannerNotes[iso]||[]).forEach(n=>it.push(`<div class="c nota ${n.feita?'feita':''}">${(n.tipo||'tarefa')==='registro'?'📌':(n.feita?'☑':'☐')} ${E(n.texto)}</div>`));
+    return `<td class="${fora?'fora':''} ${iso===hoje?'hoje':''}"><div class="n">${d.getDate()}</div>${it.join('')}</td>`;
+  };
+  const semanas = []; for(let i=0;i<diasVis.length;i+=7) semanas.push(diasVis.slice(i,i+7));
+  const lista = [];
+  Object.keys(ents).forEach(iso=>(ents[iso]||[]).forEach(p=>lista.push({iso, p, tipo:'Entrada', v:(p.entrada||0)})));
+  Object.keys(vencs).forEach(iso=>(vencs[iso]||[]).forEach(p=>lista.push({iso, p, tipo:'Vencimento', v:saldoUsd(p)})));
+  lista.sort((a,b)=>a.iso.localeCompare(b.iso));
+  const tot = lista.reduce((t,x)=>t+(x.v||0),0);
+  const html = `<!doctype html><html><head><meta charset="utf-8"><title>Planner ${E(nomeMes)}</title><style>
+    @page{size:A4 landscape;margin:9mm;}
+    *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    body{font-family:Arial,Helvetica,sans-serif;color:#1B2430;font-size:9px;margin:0;}
+    h1{font-size:16px;margin:0 0 2px;text-transform:capitalize;} .sub{color:#5B6578;margin-bottom:6px;font-size:10px;}
+    table.cal{width:100%;border-collapse:collapse;table-layout:fixed;}
+    .cal th{background:#14203A;color:#fff;padding:4px;font-size:9px;text-transform:uppercase;letter-spacing:.5px;}
+    .cal td{border:1px solid #CBD2DE;vertical-align:top;height:82px;padding:3px;}
+    .cal td.fora{background:#F3F5F9;color:#A0A8B8;} .cal td.hoje{outline:2px solid #12A27A;outline-offset:-2px;}
+    .n{font-weight:700;font-size:10px;margin-bottom:2px;}
+    .c{border-radius:3px;padding:2px 3px;margin-bottom:2px;line-height:1.25;border:1px solid;font-size:8px;page-break-inside:avoid;}
+    .c i{font-style:normal;font-weight:700;font-size:7px;background:#fff;border-radius:2px;padding:0 2px;}
+    .c.j{background:#FCEFE9;border-color:#F0C9B4;} .c.j b{color:#B4402B;}
+    .c.v{background:#EEF0FB;border-color:#CDD3F0;} .c.v b{color:#4A55A8;}
+    .c.ent{background:#E4F5EE;border-color:#A9DCC4;} .c.ent b{color:#127A55;}
+    .c.atr{background:#FFF1D6;border-color:#EBC77A;}
+    .c.nota{background:#FFF8E6;border-color:#EAD9A6;} .c.nota.feita{text-decoration:line-through;color:#8A93A3;}
+    h2{font-size:12px;margin:12px 0 4px;page-break-before:always;}
+    table.lst{width:100%;border-collapse:collapse;font-size:9.5px;} .lst th{background:#14203A;color:#fff;text-align:left;padding:4px;}
+    .lst td{border-bottom:1px solid #E1E5EC;padding:3px 4px;} .lst td.r{text-align:right;white-space:nowrap;} .lst tr.t td{font-weight:700;border-top:2px solid #14203A;}
+    .leg span{display:inline-block;padding:1px 5px;border-radius:3px;border:1px solid;margin-right:6px;}
+  </style></head><body>
+    <h1>📅 Planner — ${E(nomeMes)}</h1>
+    <div class="sub">Vendas JBS + Vendas · gerado em ${fmtDateBR(hoje)} · <span class="leg"><span class="c ent">Entrada</span><span class="c j">Vencimento JBS</span><span class="c v">Vencimento Vendas</span><span class="c atr">Vencido</span><span class="c nota">Anotação</span></span></div>
+    <table class="cal"><thead><tr>${['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(d=>`<th>${d}</th>`).join('')}</tr></thead>
+      <tbody>${semanas.map(w=>`<tr>${w.map(cel).join('')}</tr>`).join('')}</tbody></table>
+    ${lista.length ? `<h2>Entradas e vencimentos em aberto — ${lista.length} · USD ${fmt(tot)}</h2>
+    <table class="lst"><thead><tr><th>Data</th><th>Tipo</th><th>Aba</th><th>Processo</th><th>Cliente</th><th>Fornecedor</th><th>Cond. pagto</th><th style="text-align:right">USD</th></tr></thead><tbody>
+      ${lista.map(x=>`<tr><td>${fmtDateBR(x.iso)}${x.iso<hoje?' (vencido)':''}</td><td>${x.tipo}</td><td>${plRotuloAba(x.p._ds)}</td><td>${E(rotuloProcesso(x.p))}</td><td>${E(x.p.cliente||'')}</td><td>${E(x.p.fornecedor||'')}</td><td>${E(x.p.condPagto||'')}</td><td class="r">${x.v>0?fmt(x.v):'sem valor'}</td></tr>`).join('')}
+      <tr class="t"><td colspan="7">TOTAL</td><td class="r">${fmt(tot)}</td></tr></tbody></table>` : ''}
+    <script>window.addEventListener('load', function(){ setTimeout(function(){ window.focus(); window.print(); }, 300); });<\/script>
+  </body></html>`;
+  const w = window.open('', '_blank');
+  if(!w){ toast('O navegador bloqueou a janela do PDF. Libere pop-ups para o sistema e tente de novo.'); return; }
+  w.document.open(); w.document.write(html); w.document.close();
+  toast('Na janela que abriu, escolha "Salvar como PDF".');
+}
 // ---- tarefas do dia: cada anotação do planner é uma tarefa com "feita" ----
 function plNovaTarefa(iso, texto, tipo){
   (plannerNotes[iso] = plannerNotes[iso] || []).push({ id:'pn_'+Date.now()+'_'+Math.random().toString(36).slice(2,6), texto: texto.trim(), feita:false, tipo: tipo||'tarefa' });
@@ -6459,6 +6516,7 @@ function renderPlannerView(){
         <select id="plAnoSel" class="pl-sel" title="Ir para o ano">${(()=>{ const a=[]; for(let y=ano-3;y<=ano+3;y++) a.push(`<option value="${y}" ${y===ano?'selected':''}>${y}</option>`); return a.join(''); })()}</select>
         <button class="btn btn-outline btn-sm" id="plHoje">Hoje</button>
         <button class="btn btn-outline btn-sm" id="plNext" title="Próximo mês">▶</button>
+        <button class="btn btn-primary btn-sm" id="plPdf" title="Baixar o calendário deste mês em PDF">⬇ Baixar PDF</button>
         ${editMode? '' : '<span class="an-panel-sub">🔒 anotações pedem a senha de edição</span>'}
       </div>
     </div>
@@ -6514,6 +6572,7 @@ function renderPlannerView(){
   document.getElementById('plPrev').addEventListener('click', ()=>{ plannerMonth = new Date(ano, mes-1, 1); renderPlannerView(); });
   document.getElementById('plNext').addEventListener('click', ()=>{ plannerMonth = new Date(ano, mes+1, 1); renderPlannerView(); });
   document.getElementById('plHoje').addEventListener('click', ()=>{ plannerMonth = new Date(); renderPlannerView(); });
+  document.getElementById('plPdf').addEventListener('click', ()=>plGerarPdf(ano, mes, diasVis, vencs, ents));
   document.getElementById('plMesSel').addEventListener('change', e=>{ plannerMonth = new Date(ano, +e.target.value, 1); renderPlannerView(); });
   document.getElementById('plAnoSel').addEventListener('change', e=>{ plannerMonth = new Date(+e.target.value, mes, 1); renderPlannerView(); });
   // editar anotação (tarefa ou registro) ao clicar no texto
