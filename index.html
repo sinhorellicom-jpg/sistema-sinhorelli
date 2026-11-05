@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261105-165022';</script>
+<script>window.VERSAO_SISTEMA = '20261105-165725';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -15349,12 +15349,14 @@ async function ncmArquivarDoDoc(lido, arquivo){
   if(window.currentView==='prospeccao'){ try{ renderProspeccaoView(); }catch(e){} }
 }
 const prospF = { pais:'', ncm:'', seg:'', conf:'', per:'', busca:'', soEvid:false, soNovos:false, comForn:false, abertos:{} };
+let prospCarregadoEm = 0;
 async function prospCarregar(forcar){
-  if(prospDados && !forcar) return prospDados;
+  // a pesquisa é atualizada várias vezes por dia: relê se a cópia tem mais de 2 minutos
+  if(prospDados && !forcar && Date.now() - prospCarregadoEm < 120000) return prospDados;
   try{
-    const r = await fetch('prospeccao.json?v=' + encodeURIComponent(window.VERSAO_SISTEMA||'') + (forcar?'&t='+Date.now():''), { cache:'no-store' });
+    const r = await fetch('prospeccao.json?t=' + Date.now(), { cache:'no-store' });   // ?t= novo a cada leitura: o servidor não devolve versão antiga
     if(!r.ok) throw new Error('HTTP ' + r.status);
-    prospDados = await r.json(); prospErro = '';
+    prospDados = await r.json(); prospErro = ''; prospCarregadoEm = Date.now();
   }catch(e){ prospErro = /^https?:$/.test(location.protocol) ? 'Não consegui carregar a pesquisa (' + (e.message||'erro') + ').' : 'A pesquisa abre pelo link do sistema (site), não pelo arquivo no computador.'; }
   return prospDados;
 }
@@ -15471,6 +15473,7 @@ const PROSP_ORDEM_CONF = { 'alta':0, 'média':1, 'baixa':2 };
 async function renderProspeccaoView(){
   const el = document.getElementById('prospContent'); if(!el) return;
   if(!prospDados){ el.innerHTML = '<div class="an-panel" style="padding:20px;">Carregando a pesquisa…</div>'; await Promise.all([prospCarregar(), anCarregarOutraAba().catch(()=>{})]); }
+  else if(Date.now() - prospCarregadoEm >= 120000){ await prospCarregar(); }
   if(!prospDados){ el.innerHTML = `<div class="an-panel" style="padding:20px;">${prospEsc(prospErro)}</div>`; return; }
   if(!ncmDocs) await ncmDocsCarregar();
   if(!embMeus) await embCarregarMeus();
