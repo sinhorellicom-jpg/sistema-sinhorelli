@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261105-153037';</script>
+<script>window.VERSAO_SISTEMA = '20261105-153137';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1362,6 +1362,10 @@ body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 .pr-ncms{max-width:260px;}
 .pr-conf{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;}
 .pr-conf.alta{background:rgba(52,211,153,.18);color:#34D399;} .pr-conf.média{background:rgba(245,176,65,.18);color:#F5B041;} .pr-conf.baixa{background:rgba(127,127,127,.18);color:var(--ink-soft);}
+.emb-scroll{overflow:auto;max-height:calc(100vh - 150px);border:1px solid var(--line);border-radius:10px;}
+.emb-tab th:nth-child(1),.emb-tab td:nth-child(1){position:sticky;left:0;z-index:2;background:var(--white);min-width:88px;}
+.emb-tab th:nth-child(2),.emb-tab td:nth-child(2){position:sticky;left:88px;z-index:2;background:var(--white);min-width:170px;max-width:220px;box-shadow:6px 0 8px -6px rgba(0,0,0,.35);}
+.emb-tab thead th:nth-child(1),.emb-tab thead th:nth-child(2){z-index:4;}
 .emb-resumo{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:8px 0 10px;}
 .emb-res{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--soft);}
 .emb-res-v{font-size:17px;font-weight:800;color:var(--ink);} .emb-res-v small{font-size:11px;font-weight:600;color:var(--ink-soft);}
@@ -15751,11 +15755,11 @@ function embRender(){
       <div style="display:flex;gap:8px;justify-content:flex-end;"><button class="btn btn-ghost btn-sm" id="embCancelar">Cancelar</button><button class="btn btn-primary btn-sm" id="embSalvar">Salvar embarque</button></div>
     </div>` : ''}
     ${resumo ? `<div class="emb-resumo">${resumo}</div>` : ''}
-    <div style="overflow:auto;max-height:70vh;"><table class="pr-tab"><thead><tr><th>Data</th><th>Importador</th><th>País</th><th>Fornecedor / exportador</th><th>NCM</th><th>Produto</th><th style="text-align:right">Quantidade</th><th style="text-align:right">Valor</th><th>Preço unitário (calculado)</th><th></th></tr></thead>
+    <div class="emb-scroll"><table class="pr-tab emb-tab"><thead><tr><th>Data</th><th>Importador</th><th>País</th><th>Fornecedor / exportador</th><th>NCM</th><th>Produto</th><th style="text-align:right">Quantidade</th><th style="text-align:right">Valor</th><th>Preço unitário (calculado)</th><th></th></tr></thead>
       <tbody>${vis.map(linha).join('') || `<tr><td colspan="10" class="an-panel-sub" style="padding:16px;">${todos.length ? 'Nenhum embarque com esses filtros.' : 'Ainda não há embarques. A coleta automática traz os registros a cada 15 dias; você também pode ler um BL / certificado de origem em PDF ou lançar à mão.'}</td></tr>`}</tbody></table></div>
     ${lista.length > vis.length ? `<div style="text-align:center;margin-top:8px;"><button class="btn btn-outline btn-sm" id="embMais">Mostrar mais (${lista.length - vis.length})</button></div>` : ''}
     <div class="an-panel-sub" style="margin-top:8px;">Couro: preço por m² e por pé² (1 m² = 10,76 pé²) · químicos e componentes: por kg (ton e lb convertidos) · peças/pares: por unidade. FOB não inclui frete; CIF inclui frete e seguro. Embarques "lançados por nós" ficam só para quem tem acesso total.</div>`;
-  const re = ()=>{ const sc = box.querySelector('[style*="max-height:70vh"]'); const t = sc ? sc.scrollTop : 0; embRender(); const s2 = box.querySelector('[style*="max-height:70vh"]'); if(s2) s2.scrollTop = t; };
+  const re = ()=>{ const sc = box.querySelector('.emb-scroll'); const t = sc ? sc.scrollTop : 0, l = sc ? sc.scrollLeft : 0; embRender(); const s2 = box.querySelector('.emb-scroll'); if(s2){ s2.scrollTop = t; s2.scrollLeft = l; } };
   const liga = (id, k, ev) => { const i = box.querySelector('#'+id); if(i) i.addEventListener(ev||'change', ()=>{ embF[k] = i.type==='checkbox' ? i.checked : i.value; embF.limite = 200;
     if(id==='embBusca'){ clearTimeout(window.__embT); window.__embT = setTimeout(()=>{ embRender(); const b = document.getElementById('embBusca'); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } }, 250); } else embRender(); }); };
   liga('embPais','pais'); liga('embNcm','ncm'); liga('embAno','ano'); liga('embSoMeus','soMeus'); liga('embSoCli','soCli'); liga('embBusca','busca','input');
