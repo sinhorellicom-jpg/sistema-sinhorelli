@@ -1,0 +1,1283 @@
+[
+ {
+  "empresa": "Acopol S.A. de C.V. (Grupo Acopol)",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Forros/malhas de poliéster (urdume), feltro, laminado PU celular com suporte têxtil para calçado",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "3921.13",
+   "5602",
+   "5603.14",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "FIELTRO INCLUSO IMPREGNADO RECUBIERTO REVESTIDO O ESTRATIFICADO OBTENIDOS MEDIANTE COSTURA POR CADENETA (fracc. 56021002)",
+    "ncm": "5602.10",
+    "origem": "China",
+    "fornecedor": "JINJIANG ZHENGHAN IMPORT&EXP",
+    "periodo": "19/08/2026",
+    "valor": "7316.3",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/62660240"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE DE FIBRAS SINTETICAS TENIDOS (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG ZHENGHAN IMPORT&EXP",
+    "periodo": "19/08/2026",
+    "valor": "123.02",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/62660240"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE DE FIBRAS SINTETICAS TENIDOS (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG ZHENGHAN IMPORT&EXP",
+    "periodo": "19/08/2026",
+    "valor": "197.56",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/62660240"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE DE FIBRAS SINTETICAS TENIDOS (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG ZHENGHAN IMPORT&EXP",
+    "periodo": "19/08/2026",
+    "valor": "1274.43",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/62660240"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE DE FIBRAS SINTETICAS TENIDOS (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG ZHENGHAN IMPORT&EXP",
+    "periodo": "19/08/2026",
+    "valor": "142.32",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/62660240"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE DE FIBRAS SINTETICAS TENIDOS (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG ZHENGHAN IMPORT&EXP",
+    "periodo": "19/08/2026",
+    "valor": "1280.77",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/62660240"
+   },
+   {
+    "descricao": "PRODUCTOS CELULARES DE POLIURETANO (fracc. 39211302)",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "FUJIAN HONGDA LEATHER INDUSTRIES CO.LTD.",
+    "periodo": "25/08/2026",
+    "valor": "5593.72",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/8778221"
+   },
+   {
+    "descricao": "PRODUCTOS CELULARES DE POLIURETANO (fracc. 39211302)",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "FUJIAN HONGDA LEATHER INDUSTRIES CO.LTD.",
+    "periodo": "25/08/2026",
+    "valor": "10835.57",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/8778221"
+   },
+   {
+    "descricao": "PRODUCTOS CELULARES DE POLIURETANO (fracc. 39211302)",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "FUJIAN HONGDA LEATHER INDUSTRIES CO.LTD.",
+    "periodo": "25/08/2026",
+    "valor": "1842.52",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/8778221"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE DE FIBRAS SINTETICAS TENIDOS (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "FUJIAN HONGDA LEATHER INDUSTRIES CO.LTD.",
+    "periodo": "25/08/2026",
+    "valor": "20408.17",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/8778221"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE DE FIBRAS SINTETICAS TENIDOS (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "FUJIAN HONGDA LEATHER INDUSTRIES CO.LTD.",
+    "periodo": "25/08/2026",
+    "valor": "266.89",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/8778221"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE DE FIBRAS SINTETICAS TENIDOS (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "25/08/2026",
+    "valor": "1292.85",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/62027566"
+   },
+   {
+    "descricao": "Perfil 52wmb do fornecedor Hangzhou Xuerun: Grupo Acopol SA de CV é o principal comprador (801 transações), última em 16/05/2025",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "HANGZHOU XUERUN IMP EXPORT CO",
+    "periodo": "16/05/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/34036349"
+   }
+  ],
+  "fornecedores_conhecidos": "Fujian Hongda Leather Industries; Jinjiang Zhenghan Imp&Exp; Quanzhou Xuanlong Textiles; Jinjiang Hengdeli Shoes Material; Hangzhou Xuerun",
+  "por_que_e_prospect": "Importador recorrente (centenas de embarques) de mesh, feltro e PU laminado da China para a indústria calçadista, com compras em ago/2026.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/supplier/62660240",
+   "https://en.52wmb.com/supplier/8778221",
+   "https://en.52wmb.com/supplier/62027566",
+   "https://en.52wmb.com/supplier/34036349"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Dimuvi S.A. de C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Malha de urdume de poliéster e laminado PU com suporte têxtil (materiais para calçado)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.13",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Tejido de punto por urdimbre de poliester (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG HENGDELI SHOES MATERIAL",
+    "periodo": "20/07/2026",
+    "valor": "2211.86",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/7539712"
+   },
+   {
+    "descricao": "Tejido de punto por urdimbre de poliester (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG HENGDELI SHOES MATERIAL",
+    "periodo": "20/07/2026",
+    "valor": "3492.23",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/7539712"
+   },
+   {
+    "descricao": "Tejido de punto por urdimbre de poliester (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG HENGDELI SHOES MATERIAL",
+    "periodo": "20/07/2026",
+    "valor": "8534.98",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/7539712"
+   },
+   {
+    "descricao": "Tejido de punto por urdimbre de poliester (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG HENGDELI SHOES MATERIAL",
+    "periodo": "20/07/2026",
+    "valor": "3971.7",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/7539712"
+   },
+   {
+    "descricao": "Tejido de punto por urdimbre de poliester (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG HENGDELI SHOES MATERIAL",
+    "periodo": "20/07/2026",
+    "valor": "3459.07",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/7539712"
+   },
+   {
+    "descricao": "Hoja de poliuretano con soporte textil (fracc. 39211302)",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "JINJIANG HENGDELI SHOES MATERIAL",
+    "periodo": "20/07/2026",
+    "valor": "10521.92",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/7539712"
+   }
+  ],
+  "fornecedores_conhecidos": "Jinjiang Hengdeli Shoes Material (China)",
+  "por_que_e_prospect": "Importou mesh e sintético PU de fornecedor chinês de materiais para calçado em jul/2026 (embarque de ~17 t).",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/supplier/7539712"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Tejidos del Bajío S.A. de C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Malhas/forros de poliéster (urdume, tingidas e alvejadas) e folhas de PU para calçado; descarga em Manzanillo",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "3921.13",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Tejido de punto por urdimbre de fibras sinteticas, tenido (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "03/08/2026",
+    "valor": "611.59",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/64254508"
+   },
+   {
+    "descricao": "Tejido de punto por urdimbre de fibras sinteticas, tenido (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "03/08/2026",
+    "valor": "1019.73",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/64254508"
+   },
+   {
+    "descricao": "Tejido de punto por urdimbre de fibras sinteticas, tenido (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "03/08/2026",
+    "valor": "3047.74",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/64254508"
+   },
+   {
+    "descricao": "Tejido de punto por urdimbre de fibras sinteticas, tenido (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "03/08/2026",
+    "valor": "1819.3",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/64254508"
+   },
+   {
+    "descricao": "Tejido de punto por urdimbre de fibras sinteticas, tenido (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "03/08/2026",
+    "valor": "1940.35",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/64254508"
+   },
+   {
+    "descricao": "Tejido de punto por urdimbre de fibras sinteticas, tenido (fracc. 60053791)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "03/08/2026",
+    "valor": "1722.8",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/64254508"
+   }
+  ],
+  "fornecedores_conhecidos": "Quanzhou Xuanlong Textiles (45,8% das transações); Quanzhou Tongman; Jinjiang Hengdeli; Jinjiang Zhenghan; Zhangping Tianxiang",
+  "por_que_e_prospect": "Grande importador de mesh e PU (HS 39211302 com 290 transações) para o cluster calçadista do Bajío, último embarque 03/08/2026.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/64254508",
+   "https://en.52wmb.com/supplier/68353709"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Calzado Mi Lord S.A. de C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fábrica de calçado (De la Juventud 149, Guanajuatito, León); importa não-tecidos, malhas, PU e moldes de solado",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.13",
+   "5603.14",
+   "6005.37",
+   "8480.71"
+  ],
+  "evidencias": [
+   {
+    "descricao": "TELA HILADA NO TEJIDA DE 110 GRAMOS METRO 100% POLIPROPILENO ACABADO BLANQUEADO",
+    "ncm": "5603.13",
+    "origem": "China",
+    "fornecedor": "WENZHOU JIECHENG INTERNACIONAL TRADE CO.LTD.",
+    "periodo": "27/02/2024",
+    "valor": "2055.42",
+    "unidade": "kg",
+    "fonte": "https://en.52wmb.com/buyer/35217301"
+   },
+   {
+    "descricao": "TELA HILADA NO TEJIDA DE 40 GRAMOS METRO 100% POLIPROPILENO ACABADO TEBIDO",
+    "ncm": "5603.12",
+    "origem": "China",
+    "fornecedor": "WENZHOU JIECHENG INTERNACIONAL TRADE CO.LTD.",
+    "periodo": "27/02/2024",
+    "valor": "1940.82",
+    "unidade": "kg",
+    "fonte": "https://en.52wmb.com/buyer/35217301"
+   },
+   {
+    "descricao": "TELA HILADA NO TEJIDA DE 70 GRAMOS METRO 100% POLIPROPILENO ACABADO TEBIDO",
+    "ncm": "5603.12",
+    "origem": "China",
+    "fornecedor": "WENZHOU JIECHENG INTERNACIONAL TRADE CO.LTD.",
+    "periodo": "27/02/2024",
+    "valor": "1193.13",
+    "unidade": "kg",
+    "fonte": "https://en.52wmb.com/buyer/35217301"
+   },
+   {
+    "descricao": "TELA HILADA NO TEJIDA DE 70 GRAMOS METRO 100% POLIPROPILENO ACABADO BLANQUEADO",
+    "ncm": "5603.12",
+    "origem": "China",
+    "fornecedor": "WENZHOU JIECHENG INTERNACIONAL TRADE CO.LTD.",
+    "periodo": "27/02/2024",
+    "valor": "1310.49",
+    "unidade": "kg",
+    "fonte": "https://en.52wmb.com/buyer/35217301"
+   },
+   {
+    "descricao": "TELA HILADA NO TEJIDA DE 110 GRAMOS METRO 100% POLIPROPILENO ACABADO TEBIDO",
+    "ncm": "5603.13",
+    "origem": "China",
+    "fornecedor": "WENZHOU JIECHENG INTERNACIONAL TRADE CO.LTD.",
+    "periodo": "27/02/2024",
+    "valor": "3136.65",
+    "unidade": "kg",
+    "fonte": "https://en.52wmb.com/buyer/35217301"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO ELABORADO CON FILAMENTOS CONTINUOS 100% POIESTER TEBIDO",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "WENZHOU JIECHENG INTERNACIONAL TRADE CO.LTD.",
+    "periodo": "27/02/2024",
+    "valor": "1100.05",
+    "unidade": "kg",
+    "fonte": "https://en.52wmb.com/buyer/35217301"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO ELABORADO CON FILAMENTOS CONTINUOS 100% POIESTER TEBIDO",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "WENZHOU JIECHENG INTERNACIONAL TRADE CO.LTD.",
+    "periodo": "27/02/2024",
+    "valor": "1628.79",
+    "unidade": "kg",
+    "fonte": "https://en.52wmb.com/buyer/35217301"
+   },
+   {
+    "descricao": "Moldes de aço para calçado / moldes de injeção (HS 84807103)",
+    "ncm": "8480.71",
+    "origem": "China",
+    "fornecedor": "GROUP AZATRU IMPORTS EXP LTD.",
+    "periodo": "31/03/2022",
+    "valor": "14117.51",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/7971630"
+   }
+  ],
+  "fornecedores_conhecidos": "Wenzhou Jiecheng Internacional Trade; Group Azatru Imports Exp (moldes); Quanzhou Tongman; Zhejiang Kangle; Jinjiang Hengdeli",
+  "por_que_e_prospect": "Fabricante de calçado em León que importa diretamente não-tecido, mesh, PU (39211302) e moldes de solado (84807103).",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/35217301",
+   "https://en.52wmb.com/supplier/7971630",
+   "https://trademarks.justia.com/owners/calzado-mi-lord-s-a-de-c-v-3289737"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Bondexpress S.A. de C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Não-tecidos, feltro agulhado, malhas de urdume/mesh de poliéster e laminados PU para calçado",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.13",
+   "5602",
+   "5603.14",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE TENIDO DE HILADOS 100% DE FILAMENTOS SINTETICOS DE POLIESTER",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "2680.69",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   },
+   {
+    "descricao": "TELA SIN TEJER INCLUSO IMPREGNADA RECUBIERTA REVESTIDA O ESTRATIFICADA DE PESO SUPERIOR A 25G M2 PERO... (fracc. 56031202)",
+    "ncm": "5603.12",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "673.47",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   },
+   {
+    "descricao": "TELA SIN TEJER INCLUSO IMPREGNADA RECUBIERTA REVESTIDA O ESTRATIFICADA DE PESO INFERIOR O IGUAL A 25 G M2",
+    "ncm": "5603.11",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "2066.24",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   },
+   {
+    "descricao": "FIELTRO PUNZONADO BLANQUEADO 100% DE FIBRAS SINTETICAS DE POLIESTER UNIDO MEDIANTE ADHESIVO A UN TEJIDO DE URDIMBRE Y TRAMA",
+    "ncm": "5602.10",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "5229.47",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   },
+   {
+    "descricao": "FIELTRO PUNZONADO BLANQUEADO 100% DE FIBRAS SINTETICAS DE POLIESTER",
+    "ncm": "5602.10",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "1301.01",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE TENIDO DE HILADOS 100% DE FILAMENTOS SINTETICOS DE POLIESTER",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "3903.1",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO CON COSTURA POR CADENETA TENIDO DE HILADOS 100% DE FIBRAS SINTETICAS DE POLIESTER",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "1607.11",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO DE MALLAS POR URDIMBRE TENIDO DE HILADOS 100% DE FILAMENTOS SINTETICOS DE POLIESTER",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "917.89",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   },
+   {
+    "descricao": "TELA SIN TEJER INCLUSO IMPREGNADA RECUBIERTA REVESTIDA O ESTRATIFICADA DE PESO INFERIOR O IGUAL A 25 G M2",
+    "ncm": "5603.11",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "1377.49",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   },
+   {
+    "descricao": "TELA SIN TEJER INCLUSO IMPREGNADA RECUBIERTA REVESTIDA O ESTRATIFICADA DE PESO SUPERIOR A 70G M2 PERO... (fracc. 56031302)",
+    "ncm": "5603.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "26/08/2026",
+    "valor": "1683.6",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/68000672"
+   }
+  ],
+  "fornecedores_conhecidos": "Quanzhou Xuanlong Textiles; Jinjiang Zhenghan; Fujian Hongda Leather; Quanzhou Tongman; Quanzhou Hengdali",
+  "por_que_e_prospect": "Compra em contêiner não-tecido, feltro e mesh (exatamente a linha Yantai), último embarque 26/08/2026.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/68000672"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Pelytex del Centro S.A. de C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "couro sintético/tecido revestido",
+  "produtos": "Película PU com aparência de couro (0,5–1,4 mm), laminado PU, malhas de poliéster e lâmina EVA com feltro para calçado",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "3921.13",
+   "3921.90",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 3 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "1432.06",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 0 5 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "1457.69",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 3 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "3200.02",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 0 8 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "1668.5",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 4 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "1564.59",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 3 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "3577.02",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 3 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "1278.01",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 2 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "1467.13",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 2 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "2139.97",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 2 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "3280.88",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 2 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU ASTERISM NEW MATERIAL CO.LTD",
+    "periodo": "19/08/2026",
+    "valor": "1786.02",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "PELICULA CON APARIENCIA DE PIEL DE ESPESOR 1 2 MM DE POLIURETANO",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "27/07/2026",
+    "valor": "25143.26",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE CON HILADOS 100% DE FILAMENTOS SINTETICO DE POLIESTER TENIDOS",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "27/07/2026",
+    "valor": "4102.24",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "TEJIDO DE PUNTO POR URDIMBRE TENIDO DE HILADOS DE FILAMENTOS SINTETICOS DE POLIESTER",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "27/07/2026",
+    "valor": "1973.06",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   },
+   {
+    "descricao": "LAMINA NO CELULAR DE MATERIA PLASTICA COPOLIMERO ETILENOACETATO DE VINILO RECUBIERTA CON MATERIA TEXTIL POR UNA DE SUS CARAS DE FIELTRO DE FIBRAS SINTETICAS DE POLIESTER",
+    "ncm": "3921.90",
+    "origem": "China",
+    "fornecedor": "QUANZHOU XUANLONG TEXTILES SCIENCE&TECHNOLOGIES CO.LTD.",
+    "periodo": "27/07/2026",
+    "valor": "9055.31",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/147984686"
+   }
+  ],
+  "fornecedores_conhecidos": "Fujian Hongda Leather (717 transações); Hangzhou Xuerun; Quanzhou Xuanlong; Quanzhou Asterism New Material; Tongxiang Lightex; Zhejiang Buleni",
+  "por_que_e_prospect": "Cerca de 3.600 importações de sintético PU/materiais de calçado da China, com embarques de 25 t em ago/2026.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/147984686"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "TRC Protective Footwear S.A. de C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçado de proteção/segurança (Cardadores 202, Ind. Julián de Obregón, León); importa tecido de nylon revestido PU, alma de aço e componentes",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.13",
+   "5901.90",
+   "6005.37",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Alma/palmilha de aço com banho cobre-níquel para calçado (HS 64069099)",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "Tianjin Tradelink Imp. and Exp. Co., Ltd.",
+    "periodo": "17/06/2026",
+    "valor": "19854.99",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/10321217"
+   },
+   {
+    "descricao": "Tecido de nylon/poliamida revestido de poliuretano (HS 59032002), 23.000 kg",
+    "ncm": "5903.20",
+    "origem": "China",
+    "fornecedor": "CTA Hi-Tech Textiles Co. Ltd.",
+    "periodo": "08/07/2026",
+    "valor": "209604.85",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/10321217"
+   },
+   {
+    "descricao": "Malha felpuda (HS 60019201)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "Xiamen Sunton Trading Company Limited",
+    "periodo": "11/11/2025",
+    "valor": "346.90",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/10321217"
+   }
+  ],
+  "fornecedores_conhecidos": "Tianjin Tradelink Imp. and Exp. (alma de aço); CTA Hi-Tech Textiles (tecido PU); Xiamen Sunton Trading",
+  "por_que_e_prospect": "Fábrica de bota de segurança em León que já importa componentes 6406.90 e tecido revestido PU da China (2025–2026).",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/10321217"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Calzado Coqueta y Audaz S.A. de C.V.",
+  "nome_fantasia": "Calzados Coqueta",
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Calçado infantil e feminino; importa palmilhas strobel/plantillas e cortes (cabedais) da China (razão social nos registros: Calzados Coqueta S.A. de C.V., Justo Sierra 721, León)",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "5603.14",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "PLANTILLAS TIPO STROBEL (fracc. 64069099)",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "AOWAY CO.LTD.",
+    "periodo": "11/06/2026",
+    "valor": "649.43",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/3148701"
+   },
+   {
+    "descricao": "PLANTILLAS (fracc. 64069099)",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "HANGZHOU BENEFIT IMP&EXP",
+    "periodo": "29/05/2026",
+    "valor": "6502.57",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/3148701"
+   },
+   {
+    "descricao": "PLANTA DE CALZADO (fracc. 64069099)",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "HANGZHOU BENEFIT IMP&EXP",
+    "periodo": "07/04/2026",
+    "valor": "308.01",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/3148701"
+   },
+   {
+    "descricao": "PLANTILLA (fracc. 64069099)",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "HANGZHOU BENEFIT IMP&EXP",
+    "periodo": "07/04/2026",
+    "valor": "1694.05",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/3148701"
+   },
+   {
+    "descricao": "PLANTILLA (fracc. 64069099)",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "SHAREMORE IMPORTS&EXPORT CO",
+    "periodo": "06/04/2026",
+    "valor": "2083.79",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/3148701"
+   },
+   {
+    "descricao": "PLANTILLA TIPO STROBEL (fracc. 64069099)",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "SHAREMORE IMPORTS&EXPORT CO",
+    "periodo": "06/04/2026",
+    "valor": "3125.69",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/3148701"
+   },
+   {
+    "descricao": "PLANTILLA PLANTILLA TIPO STROBEL (fracc. 64069099)",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "AOWAY CO.LTD.",
+    "periodo": "30/03/2026",
+    "valor": "1301.39",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/3148701"
+   },
+   {
+    "descricao": "Cortes para calzado (cabedais, HS 64061008), 4.616 kg",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "AOWAY CO.LTD.",
+    "periodo": "15/08/2026",
+    "valor": "212298.64",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/65198009"
+   }
+  ],
+  "fornecedores_conhecidos": "Aoway Co. Ltd.; Hangzhou Benefit Imp&Exp; Sharemore Imports&Export; Tecnodornos del Sureste (Espanha, 2023)",
+  "por_que_e_prospect": "Novos registros 2026 de importação de palmilhas strobel (6406.90) da China confirmam compra ativa de componentes.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/3148701",
+   "https://en.52wmb.com/supplier/65198009",
+   "https://en.52wmb.com/supplier/71915435"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "Calzado Industrial Duramax S.A. de C.V.",
+  "nome_fantasia": "Duramax",
+  "pais": "MEXICO",
+  "cidade": "Pachuca de Soto, Hidalgo",
+  "id_fiscal": null,
+  "site": "http://www.calzadoduramax.com",
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçado de segurança industrial (ISO 9001, laboratório próprio, +75 anos)",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "4107",
+   "5603.14",
+   "5901.90",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Diretório industrial: fabricante de calçado de segurança com distribuição nacional",
+    "ncm": "6406.90",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "2025-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://mexicoindustry.com/empresa/calzado-industrial-duramax-sa-de-cv"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Grande fabricante mexicano de botas de segurança: usa biqueira, palmilha antiperfuro, couro e sistema PU.",
+  "confianca": "média",
+  "fontes": [
+   "https://mexicoindustry.com/empresa/calzado-industrial-duramax-sa-de-cv",
+   "https://trademark.justia.com/owners/calzado-industrial-duramax-s-a-de-c-v-1147858"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Línea Industrial Otelan S.A. de C.V.",
+  "nome_fantasia": "Otelza",
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": "http://www.otelza.com.mx",
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Botas de segurança, dielétricas, de fundição, borceguí com biqueira, sapatos industriais e antiestáticos",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.90",
+   "4107",
+   "5603.14",
+   "5901.90",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil Cosmos: fabricação e venda de calçado de segurança e trabalho (borceguí con casquillo)",
+    "ncm": "6406.90",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "2025-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.cosmos.com.mx/empresa/linea-industrial-otelan-crxx.html"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fábrica de bota de segurança em León que usa biqueira de aço, couro e componentes de montagem.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.cosmos.com.mx/empresa/linea-industrial-otelan-crxx.html"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Toro Negro",
+  "nome_fantasia": "Botas Toro Negro",
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": "https://www.toronegro.com.mx",
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Botas de segurança com biqueira de aço, botas de fundição, calçado dielétrico e hospitalar; solas de borracha, PU ou PVC",
+  "porte": "pequeno",
+  "ncms_provaveis": [
+   "4107",
+   "5901.90",
+   "6406.20",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil Cosmos: produtor de calçado industrial (fundada 1996, 11–50 funcionários)",
+    "ncm": "6406.90",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "2025-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.cosmos.com.mx/empresa/toro-negro-3q1f.html"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de bota de segurança em León que compra biqueira, couro e solados.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.cosmos.com.mx/empresa/toro-negro-3q1f.html"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Botas y Zapatos de Seguridad Tony",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "Irapuato, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Botas de segurança com biqueira de aço, botas de borracha, dielétricas, bombeiro e militares",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "5901.90",
+   "6406.20",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil Cosmos: empresa mexicana fabricante de botas e sapatos de segurança e botas militares",
+    "ncm": "6406.90",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "2025-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.cosmos.com.mx/empresa/botas-y-zapatos-de-seguridad-tony-3w4z.html"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de bota de segurança e militar: público direto para biqueira, antiperfuro e couro.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.cosmos.com.mx/empresa/botas-y-zapatos-de-seguridad-tony-3w4z.html"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Corporación Work Shoe Mart S.A. de C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "Naucalpan, Estado de México",
+  "id_fiscal": null,
+  "site": "http://www.workshoemart.com",
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçado de proteção industrial, botas com biqueira de aço/composite, botas de borracha/neoprene/nitrilo, dielétricas, sandálias com sola PU",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "4107",
+   "5901.90",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil Cosmos: fabrica e distribui calçado de proteção, industrial, de trabalho e de serviço",
+    "ncm": "6406.90",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "2025-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.cosmos.com.mx/empresa/corporacion-work-shoe-mart-bplc.html"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de calçado de segurança com sola PU, comprador potencial de biqueira e sistema PU.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.cosmos.com.mx/empresa/corporacion-work-shoe-mart-bplc.html"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Comando Safety",
+  "nome_fantasia": "Comando",
+  "pais": "MEXICO",
+  "cidade": "Reynosa, Tamaulipas",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Botas de segurança dielétricas com biqueira de poliamida e sola de dupla densidade (modelo Advance 706, NOM-113-STPS)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "4107",
+   "5901.90",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Notícia: empresa tamaulipeca fabricante de botas de segurança, sola de dupla densidade",
+    "ncm": "6406.90",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "10/07/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.posta.com.mx/tamaulipas/este-es-el-calzado-de-seguridad-mas-vendido-por-la-empresa-comando-de-tamaulipas/vl2064133"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de bota de segurança com sola PU de dupla densidade: compra couro, biqueira e sistema PU.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.posta.com.mx/tamaulipas/este-es-el-calzado-de-seguridad-mas-vendido-por-la-empresa-comando-de-tamaulipas/vl2064133"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Riverline Ergonomic Corp",
+  "nome_fantasia": "Riverline",
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçado de trabalho e segurança (construção metal free, AIR TECHNOLOGY); duas fábricas em León, sede em San Diego (EUA)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "4107",
+   "5901.90",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Site institucional: duas plantas de fabricação em León, Guanajuato; calçado de trabalho e segurança",
+    "ncm": "5901.90",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "2025-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://riverlineergonomic.com.ergonomic.com.mx/aboutus.php"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de calçado de segurança metal free em León: público para biqueira composite e palmilha antiperfuro têxtil.",
+  "confianca": "média",
+  "fontes": [
+   "https://riverlineergonomic.com.ergonomic.com.mx/aboutus.php"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Tecnocuero",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume com planta de wet blue (3.000 peças/dia, até 145 mil/mês) que abastece couro automotivo (Bader, Toyota)",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "APLF: planta de wet blue em León atendendo fabricantes de couro automotivo nas Américas",
+    "ncm": "4104.11",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "21/03/2024",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://aplf.com/?p=42144"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume de wet blue de grande volume em León que pode complementar matéria-prima com wet blue/crust importado.",
+  "confianca": "média",
+  "fontes": [
+   "https://aplf.com/?p=42144"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Cinturones Dajer C. por A.",
+  "nome_fantasia": null,
+  "pais": "REP DOMINICANA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Fabricante de cintos; importa couro bovino acabado da Colômbia",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "OTHER (cuero, HS 4107990000)",
+    "ncm": "4107.99",
+    "origem": "COLOMBIA",
+    "fornecedor": "CURTIMBRES BUFALO S.A.S.",
+    "periodo": "02/01/2024",
+    "valor": "17746.57",
+    "unidade": "kg",
+    "fonte": "https://en.52wmb.com/supplier/4970770"
+   }
+  ],
+  "fornecedores_conhecidos": "Curtimbres Búfalo S.A.S. (Colômbia)",
+  "por_que_e_prospect": "Importou 1.168 kg de couro bovino acabado (4107.99) em jan/2024, comprador direto de couro JBS.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/supplier/4970770"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "Boombah Dominicana",
+  "nome_fantasia": null,
+  "pais": "REP DOMINICANA",
+  "cidade": "Santiago (Zona Franca Industrial)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Calçado esportivo (HTS 6404.11), capacetes, mochilas e vestuário exportados aos EUA",
+  "porte": null,
+  "ncms_provaveis": [
+   "3506.91",
+   "3921.13",
+   "6005.37",
+   "6406.20",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Registros de exportação aos EUA (324 embarques), incluindo calçado esportivo HTS 6404.11; últimos em 22/08, 29/08 e 01/09/2025",
+    "ncm": "6406.90",
+    "origem": "Rep. Dominicana",
+    "fornecedor": null,
+    "periodo": "2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Boombah-Dominicana/46712861"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fábrica de calçado esportivo em zona franca, consumidora de mesh, sintético PU, solados e adesivos.",
+  "confianca": "média",
+  "fontes": [
+   "https://panjiva.com/Boombah-Dominicana/46712861"
+  ],
+  "atualiza_existente": false
+ }
+]
