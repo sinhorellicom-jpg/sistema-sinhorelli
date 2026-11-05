@@ -5,6 +5,9 @@ Objetivo: montar um banco de embarques reais na América Latina (importador, exp
 ## Onde procurar (páginas gratuitas, use WebSearch + WebFetch)
 Veritrade (veritradecorp.com — perfis de empresa por país com amostras de embarques), Volza (volza.com — "import data" por HS e país, mostra linhas com data, importador, exportador, quantidade, valor), Panjiva, ImportGenius, Datasur, 52wmb, TradeAtlas, Seair/Infodriveindia/Zauba (lado exportador: China/Índia/Brasil → LatAm), Eximpedia, Tendata, ImportYeti, notícias. Pesquise por HS + país ("3909.50 import data Colombia", "wet blue 410411 Mexico importers shipment", "PU microfiber leather 392113 Peru import"), e por exportador ("JBS wet blue export Mexico shipment", "Yantai Joye Microfiber shipments", "Miracll TPU export Colombia", "Xuchuan PU system export Peru").
 
+## Prioridade: para quem os NOSSOS fornecedores vendem
+Toda rodada, procure também pelo lado do exportador: embarques de JBS (Brasil, Argentina/CSA-N, Uruguai, EUA), Zendaleather, Yantai Joye Microfiber, Miracll, Xuchuan, BIQ, Matrizaria Polako, Formello e Hiper Solados para importadores da América Latina (páginas de fornecedor no 52wmb, ImportGenius, Panjiva, Volza, TradeAtlas, Seair/Eximpedia). O campo "exportador" deve trazer o nome como aparece no registro.
+
 ## Regras
 - Só registre embarque que a fonte mostra de verdade: data (ou mês/ano), importador e pelo menos quantidade OU valor. Nunca invente nem estime números; se um campo não aparece, null.
 - Quantidade com a unidade exatamente como aparece (kg, ton, m2, sqft/pés², pcs, pares, rolos, unidades). Valor em USD, dizendo se é FOB, CIF ou "não informado".

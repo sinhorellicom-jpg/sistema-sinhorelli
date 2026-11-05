@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261105-154100';</script>
+<script>window.VERSAO_SISTEMA = '20261105-165022';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1366,6 +1366,9 @@ body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 .emb-tab th:nth-child(1),.emb-tab td:nth-child(1){position:sticky;left:0;z-index:2;background:var(--white);min-width:88px;}
 .emb-tab th:nth-child(2),.emb-tab td:nth-child(2){position:sticky;left:88px;z-index:2;background:var(--white);min-width:170px;max-width:220px;box-shadow:6px 0 8px -6px rgba(0,0,0,.35);}
 .emb-tab thead th:nth-child(1),.emb-tab thead th:nth-child(2){z-index:4;}
+.busca-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 8px;}
+.busca-chip{cursor:pointer;border:1px solid var(--line);} .busca-chip.sel{background:var(--teal);color:#0B1220;border-color:var(--teal);}
+.busca-sec{font-weight:700;font-size:13px;margin:6px 0;color:var(--ink);}
 .emb-resumo{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:8px 0 10px;}
 .emb-res{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--soft);}
 .emb-res-v{font-size:17px;font-weight:800;color:var(--ink);} .emb-res-v small{font-size:11px;font-weight:600;color:var(--ink-soft);}
@@ -15531,6 +15534,7 @@ async function renderProspeccaoView(){
     <div class="pr-head"><div><div class="eyebrow">Pesquisa de mercado</div><h1 class="dpl-h1">Prospecção <span>América Latina</span></h1></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn btn-outline btn-sm" id="prRecarregar">↻ Recarregar</button><button class="btn btn-primary btn-sm" id="prExcel">⬇ Excel (lista filtrada)</button></div></div>
     <div class="cards-row">${kpis}</div>
+    <div class="an-panel" id="prBuscaBox" style="margin-top:14px;"></div>
     <div class="an-panel" id="prEmbBox" style="margin-top:14px;"></div>
     <div class="an-panel" style="margin-top:14px;">
       <div class="an-panel-title">🌎 Países <span class="an-panel-sub">clique para filtrar as empresas</span></div>
@@ -15563,6 +15567,7 @@ async function renderProspeccaoView(){
   el.querySelectorAll('[data-pr-abrir]').forEach(tr=>tr.onclick = ev=>{ if(ev.target.closest('a')) return; const k = tr.dataset.prAbrir; prospF.abertos[k] = !prospF.abertos[k]; rerender(); });
   const liga = (id, campo, ev) => { const i = el.querySelector('#'+id); if(i) i.addEventListener(ev||'change', ()=>{ prospF[campo] = i.type==='checkbox' ? i.checked : i.value; if(id==='prBusca'){ clearTimeout(window.__prT); window.__prT = setTimeout(()=>{ rerender(); setTimeout(()=>{ const b = document.getElementById('prBusca'); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } }, 30); }, 350); } else rerender(); }); };
   try{ embRender(); }catch(e){ console.warn('embarques', e); }
+  try{ buscaRender(); }catch(e){ console.warn('busca', e); }
   liga('prPais','pais'); liga('prNcm','ncm'); liga('prSeg','seg'); liga('prConf','conf'); liga('prPer','per'); liga('prComForn','comForn'); liga('prEvid','soEvid'); liga('prNovos','soNovos'); liga('prBusca','busca','input');
   el.querySelector('#prRecarregar').onclick = async ()=>{ await prospCarregar(true); rerender(); toast('↻ Pesquisa recarregada.'); };
   el.querySelector('#prExcel').onclick = ()=>{
@@ -15798,6 +15803,95 @@ function embRender(){
       .concat(lista.map(x=>{ const p = embPreco(x); return [x.data||'', x.importador||'', ehCli(x.importador), x.pais||'', x.exportador||'', x.origem||'', x.ncm||'', x.produto||'', x.quantidade||'', x.unidade||'', x.valor||'', x.tipo_valor||'', p ? Math.round(p.base*10000)/10000 : '', p ? p.por : '', x.fonte||'']; }))), 'Embarques');
     XLSX.writeFile(wb, 'EMBARQUES_' + new Date().toISOString().slice(0,10) + '.xlsx');
   };
+}
+
+/* ===== BUSCA POR IMPORTADOR / EXPORTADOR — para quem os nossos fornecedores vendem (e de quem um cliente compra) ===== */
+const buscaF = { exp:'', imp:'' };
+// apelidos dos nossos fornecedores → como o nome aparece nos registros
+const BUSCA_APELIDOS = {
+  'JBS': /\bJBS\b|FRIBOI|CSA-?N\b/, 'JBS BR': /\bJBS\b(?!.*ARGENTIN)|JBS\s+COUROS|FRIBOI/, 'JBS AR': /JBS.*ARGENTIN|CSA-?N\b/, 'JBS US': /JBS.*(USA|US\b)/, 'JBS UR': /JBS.*URUGUA/,
+  'YANTAI': /YANTAI|JOYE/, 'MIRACLL': /MIRACLL/, 'XUCHUAN': /XUCHUAN/, 'ZENDALEATHER': /ZENDA/, 'BIQ': /\bBIQ\b/, 'POLAKO': /POLAKO/, 'FORMELLO': /FORMELLO/, 'HIPER SOLADOS': /HIPER\s*SOLADOS/
+};
+function buscaCasa(texto, q){
+  if(!q) return true;
+  const t = prospNorm(texto); if(!t) return false;
+  const ap = BUSCA_APELIDOS[String(q).toUpperCase().trim()];
+  if(ap) return ap.test(String(texto||'').toUpperCase());
+  return prospNorm(q).split(' ').filter(Boolean).every(w=>t.indexOf(w)>=0);
+}
+function buscaRender(){
+  const box = document.getElementById('prBuscaBox'); if(!box) return;
+  const E = prospEsc;
+  const embs = embTodos();
+  const D = prospDados || {};
+  const clientes = prospClientes();
+  const ehCli = nome => { const n = prospNorm(nome); if(n.length<4) return ''; for(const [k,orig] of clientes){ if(k.length>=4 && (n===k || n.startsWith(k+' ') || k.startsWith(n+' ') || (k.length>=6 && (' '+n+' ').indexOf(' '+k+' ')>=0))) return orig; } return ''; };
+  // nossos fornecedores (das NCMs) para os atalhos
+  const nossos = [...new Set(prospNcms().flatMap(x=>x.fornecedores||[]).filter(f=>f && !/^—/.test(f)))];
+  const sugExp = [...new Set(embs.map(x=>x.exportador).filter(Boolean).map(x=>String(x).replace(/\s*\(.*$/,'').trim()))].sort();
+  const sugImp = [...new Set(embs.map(x=>x.importador).concat((D.empresas||[]).map(e=>e.empresa)).filter(Boolean))].sort();
+  const temBusca = buscaF.exp || buscaF.imp;
+  let corpo = '';
+  if(temBusca){
+    const lista = embs.filter(x=>buscaCasa(x.exportador, buscaF.exp) && buscaCasa(x.importador, buscaF.imp));
+    // agrupa: buscando exportador → por importador; buscando só importador → por exportador
+    const porImp = !!buscaF.exp || !buscaF.imp;
+    const g = {};
+    lista.forEach(x=>{
+      const k = porImp ? (x.importador||'—') : (String(x.exportador||'—').replace(/\s*\(.*$/,''));
+      const r = g[k] = g[k] || { nome:k, pais:new Set(), n:0, ult:'', ncms:new Set(), v:0, qb:{}, vb:{}, outros:new Set() };
+      r.n++; if(x.pais) r.pais.add(x.pais); if(String(x.data||'') > r.ult) r.ult = String(x.data||''); if(x.ncm) r.ncms.add(prospFmtNcm(prospNcm6(x.ncm)||x.ncm));
+      if(+x.valor>0) r.v += +x.valor;
+      const pr = embPreco(x); if(pr && pr.por){ const u = embUnidade(x.unidade); const q = +x.quantidade * (u && (u.g==='peso'||u.g==='area') ? u.f : 1); r.qb[pr.por] = (r.qb[pr.por]||0) + q; r.vb[pr.por] = (r.vb[pr.por]||0) + (+x.valor); }
+      r.outros.add(porImp ? String(x.exportador||'').replace(/\s*\(.*$/,'') : x.importador);
+    });
+    const grupos = Object.values(g).sort((a,b)=>b.n-a.n || String(b.ult).localeCompare(String(a.ult)));
+    const linhaG = r=>{ const cli = porImp ? ehCli(r.nome) : '';
+      const precos = Object.keys(r.qb).map(por=>`US$ ${fmt(r.vb[por]/r.qb[por])}/${E(por)}`).join(' · ');
+      return `<tr data-busca-ir="${E(r.nome)}" style="cursor:pointer;" title="Ver os embarques na tabela abaixo">
+        <td><b>${E(r.nome)}</b>${cli?' <span class="pr-cli">✓ cliente</span>':''}</td><td>${E([...r.pais].join(', '))}</td>
+        <td style="text-align:center;">${r.n}</td><td style="white-space:nowrap;">${E(/^\d{4}-\d{2}-\d{2}$/.test(r.ult)?fmtDateBR(r.ult):r.ult)}</td>
+        <td>${[...r.ncms].map(n=>`<span class="pr-n">${E(n)}</span>`).join(' ')}</td>
+        <td style="text-align:right;white-space:nowrap;">${r.v>0?'US$ '+fmt(r.v):'—'}</td><td class="emb-preco">${precos||'<span class="an-panel-sub" style="font-weight:400;">—</span>'}</td>
+        <td class="an-panel-sub">${E([...r.outros].filter(Boolean).slice(0,3).join(' · '))}</td></tr>`; };
+    // empresas da base que citam esse fornecedor / esse nome
+    const emps = (D.empresas||[]).filter(e=>{
+      if(buscaF.imp && !buscaCasa([e.empresa, e.nome_fantasia].join(' '), buscaF.imp)) return false;
+      if(buscaF.exp && !prospFornecedores(e).some(f=>buscaCasa(f, buscaF.exp))) return false;
+      return true; }).slice(0, 150);
+    const linhaE = e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp));
+      const v = evs[0] || (e.evidencias||[])[0] || {};
+      const cli = ehCli(e.empresa);
+      return `<tr><td><b>${E(e.empresa)}</b>${cli?' <span class="pr-cli">✓ cliente</span>':''}${e.novo?' <span class="pr-novo">novo</span>':''}</td><td>${E(e.pais)}</td><td>${E(e.segmento||'')}</td>
+        <td>${prospFornecedores(e).filter(f=>!buscaF.exp || buscaCasa(f, buscaF.exp)).map(f=>`<span class="pr-tag">${E(f)}</span>`).join(' ')}</td>
+        <td class="an-panel-sub">${E(v.descricao||'')}${v.periodo?` <b>(${E(v.periodo)})</b>`:''}</td><td style="white-space:nowrap;">${(()=>{ const pr = prospPeriodo(e); return pr.txt ? E(pr.txt) + (pr.ult?`<div class="an-panel-sub">último: ${E(pr.ult)}</div>`:'') : '<span class="an-panel-sub">sem data</span>'; })()}</td></tr>`; };
+    const tituloG = porImp ? `🏭 Compradores${buscaF.exp?` de <b>${E(buscaF.exp)}</b>`:''} nos embarques` : `🚢 Fornecedores de <b>${E(buscaF.imp)}</b> nos embarques`;
+    corpo = `
+      <div class="busca-sec">${tituloG} <span class="an-panel-sub">${grupos.length} · ${lista.length} embarque(s) de 2026 · clique numa linha para ver os embarques</span></div>
+      ${grupos.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>${porImp?'Importador':'Exportador'}</th><th>País</th><th>Embarques</th><th>Último</th><th>NCMs</th><th style="text-align:right">Valor total</th><th>Preço médio</th><th>${porImp?'Fornecedor(es)':'Comprador(es)'}</th></tr></thead><tbody>${grupos.map(linhaG).join('')}</tbody></table></div>`
+        : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhum embarque de 2026 com essa busca ainda — a coleta diária vai acrescentando. Veja abaixo as empresas da base.</div>'}
+      <div class="busca-sec" style="margin-top:12px;">📋 Empresas da base ${buscaF.exp?`que compram de <b>${E(buscaF.exp)}</b>`:`com esse nome`} <span class="an-panel-sub">${emps.length} · registros de qualquer período (o período está na última coluna)</span></div>
+      ${emps.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>Fornecedor citado</th><th>Registro</th><th>Período</th></tr></thead><tbody>${emps.map(linhaE).join('')}</tbody></table></div>`
+        : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhuma empresa da base cita esse fornecedor.</div>'}`;
+  }
+  box.innerHTML = `
+    <div class="an-panel-title">🔎 Pesquisar por importador e exportador <span class="an-panel-sub">para quem os nossos fornecedores vendem — e de quem cada cliente compra</span></div>
+    <div class="pr-filtros">
+      <input id="buscaExp" list="buscaExpL" placeholder="Exportador / fornecedor (ex.: JBS, Yantai, Miracll)" value="${E(buscaF.exp)}" style="min-width:260px;">
+      <input id="buscaImp" list="buscaImpL" placeholder="Importador / comprador" value="${E(buscaF.imp)}" style="min-width:240px;">
+      <button class="btn btn-primary btn-sm" id="buscaIr">Pesquisar</button>
+      ${temBusca?'<button class="btn btn-ghost btn-sm" id="buscaLimpar">Limpar</button>':''}
+      <datalist id="buscaExpL">${nossos.concat(sugExp).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
+      <datalist id="buscaImpL">${sugImp.slice(0,800).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
+    </div>
+    <div class="busca-chips"><span class="an-panel-sub">Nossos fornecedores:</span> ${nossos.map(f=>`<button class="pr-tag busca-chip ${buscaF.exp===f?'sel':''}" data-busca-exp="${E(f)}">${E(f)}</button>`).join(' ')}</div>
+    ${corpo}`;
+  const ir = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaRender(); };
+  box.querySelector('#buscaIr').onclick = ir;
+  box.querySelectorAll('#buscaExp,#buscaImp').forEach(i=>i.addEventListener('keydown', ev=>{ if(ev.key==='Enter') ir(); }));
+  const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ buscaF.exp = ''; buscaF.imp = ''; buscaRender(); };
+  box.querySelectorAll('[data-busca-exp]').forEach(b=>b.onclick = ()=>{ buscaF.exp = buscaF.exp===b.dataset.buscaExp ? '' : b.dataset.buscaExp; buscaF.imp = ''; buscaRender(); });
+  box.querySelectorAll('[data-busca-ir]').forEach(tr=>tr.onclick = ()=>{ embF.busca = tr.dataset.buscaIr; embF.limite = 200; embRender(); const eb = document.getElementById('prEmbBox'); if(eb) eb.scrollIntoView({behavior:'smooth', block:'start'}); });
 }
 
 /* ===== CLIENTES — cadastro com as instruções de embarque e documentação (formulário) + PDF ===== */
