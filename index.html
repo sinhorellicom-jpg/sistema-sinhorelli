@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261105-153137';</script>
+<script>window.VERSAO_SISTEMA = '20261105-154100';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -15531,10 +15531,6 @@ async function renderProspeccaoView(){
     <div class="pr-head"><div><div class="eyebrow">Pesquisa de mercado</div><h1 class="dpl-h1">Prospecção <span>América Latina</span></h1></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn btn-outline btn-sm" id="prRecarregar">↻ Recarregar</button><button class="btn btn-primary btn-sm" id="prExcel">⬇ Excel (lista filtrada)</button></div></div>
     <div class="cards-row">${kpis}</div>
-    <div class="an-panel" style="margin-top:14px;">
-      <div class="an-panel-title">📦 NCMs que vendemos e de qual fornecedor</div>
-      <div style="overflow:auto;"><table class="pr-tab"><thead><tr><th>NCM</th><th>Produto</th><th>Fornecedor</th><th>Origem da informação</th><th></th></tr></thead><tbody>${linhasNcm}</tbody></table></div>
-    </div>
     <div class="an-panel" id="prEmbBox" style="margin-top:14px;"></div>
     <div class="an-panel" style="margin-top:14px;">
       <div class="an-panel-title">🌎 Países <span class="an-panel-sub">clique para filtrar as empresas</span></div>
@@ -15556,6 +15552,10 @@ async function renderProspeccaoView(){
       <div style="overflow:auto;max-height:70vh;"><table class="pr-tab pr-emps"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>NCMs (as nossas em destaque)</th><th>Fornecedores</th><th>Período da informação</th><th>Confiança</th></tr></thead>
         <tbody>${lista.map(linhaEmp).join('') || '<tr><td colspan="7" class="an-panel-sub" style="padding:16px;">Nenhuma empresa com esses filtros.</td></tr>'}</tbody></table></div>
       <div class="an-panel-sub" style="margin-top:8px;">Confiança: <b>alta</b> = registro de importação da NCM ou fonte oficial clara · <b>média</b> = fabricante confirmado do segmento · <b>baixa</b> = citação fraca. Confira na fonte antes de usar numa negociação.</div>
+    </div>
+    <div class="an-panel" style="margin-top:14px;">
+      <div class="an-panel-title">📦 NCMs que vendemos e de qual fornecedor</div>
+      <div style="overflow:auto;"><table class="pr-tab"><thead><tr><th>NCM</th><th>Produto</th><th>Fornecedor</th><th>Origem da informação</th><th></th></tr></thead><tbody>${linhasNcm}</tbody></table></div>
     </div>`;
   const rerender = ()=>{ const sc = document.querySelector('.main-scroll'); const top = sc ? sc.scrollTop : 0; renderProspeccaoView().then(()=>{ if(sc) sc.scrollTop = top; }); };
   el.querySelectorAll('[data-pr-pais]').forEach(b=>b.onclick = ()=>{ prospF.pais = prospF.pais===b.dataset.prPais ? '' : b.dataset.prPais; rerender(); });
