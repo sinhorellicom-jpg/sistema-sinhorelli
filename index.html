@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261104-220400';</script>
+<script>window.VERSAO_SISTEMA = '20261105-140544';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1362,6 +1362,15 @@ body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 .pr-ncms{max-width:260px;}
 .pr-conf{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;}
 .pr-conf.alta{background:rgba(52,211,153,.18);color:#34D399;} .pr-conf.média{background:rgba(245,176,65,.18);color:#F5B041;} .pr-conf.baixa{background:rgba(127,127,127,.18);color:var(--ink-soft);}
+.emb-resumo{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:8px 0 10px;}
+.emb-res{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--soft);}
+.emb-res-v{font-size:17px;font-weight:800;color:var(--ink);} .emb-res-v small{font-size:11px;font-weight:600;color:var(--ink-soft);}
+.emb-prod{min-width:200px;max-width:280px;font-size:11.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.emb-preco{white-space:nowrap;font-weight:700;color:var(--teal);} .emb-preco small{font-weight:500;color:var(--ink-soft);}
+.emb-form{border:1px solid var(--teal);border-radius:12px;padding:12px;margin:8px 0 12px;background:var(--soft);}
+.emb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;}
+.emb-f{display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:var(--ink-soft);} .emb-f input,.emb-f select{padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--white);color:var(--ink);font-size:13px;}
+.emb-calc{margin:10px 0;font-size:13px;color:var(--ink);}
 .pr-cli{font-size:10.5px;font-weight:700;color:#0B1220;background:#34D399;border-radius:999px;padding:1px 7px;margin-left:4px;}
 .pr-novo{font-size:10.5px;font-weight:700;color:#fff;background:#5B7CFA;border-radius:999px;padding:1px 7px;margin-left:4px;}
 .pr-ev{font-size:12px;white-space:nowrap;}
@@ -15457,6 +15466,7 @@ async function renderProspeccaoView(){
   if(!prospDados){ el.innerHTML = '<div class="an-panel" style="padding:20px;">Carregando a pesquisa…</div>'; await Promise.all([prospCarregar(), anCarregarOutraAba().catch(()=>{})]); }
   if(!prospDados){ el.innerHTML = `<div class="an-panel" style="padding:20px;">${prospEsc(prospErro)}</div>`; return; }
   if(!ncmDocs) await ncmDocsCarregar();
+  if(!embMeus) await embCarregarMeus();
   const D = prospDados;
   const clientes = prospClientes();
   const empresas = (D.empresas||[]).map(e=>{ e._cliente = prospEhCliente(e, clientes); return e; });
@@ -15521,6 +15531,7 @@ async function renderProspeccaoView(){
       <div class="an-panel-title">📦 NCMs que vendemos e de qual fornecedor</div>
       <div style="overflow:auto;"><table class="pr-tab"><thead><tr><th>NCM</th><th>Produto</th><th>Fornecedor</th><th>Origem da informação</th><th></th></tr></thead><tbody>${linhasNcm}</tbody></table></div>
     </div>
+    <div class="an-panel" id="prEmbBox" style="margin-top:14px;"></div>
     <div class="an-panel" style="margin-top:14px;">
       <div class="an-panel-title">🌎 Países <span class="an-panel-sub">clique para filtrar as empresas</span></div>
       <div class="pr-paises">${cardsPais}</div>
@@ -15547,6 +15558,7 @@ async function renderProspeccaoView(){
   el.querySelectorAll('[data-pr-ncm]').forEach(b=>b.onclick = ()=>{ prospF.ncm = b.dataset.prNcm; rerender(); });
   el.querySelectorAll('[data-pr-abrir]').forEach(tr=>tr.onclick = ev=>{ if(ev.target.closest('a')) return; const k = tr.dataset.prAbrir; prospF.abertos[k] = !prospF.abertos[k]; rerender(); });
   const liga = (id, campo, ev) => { const i = el.querySelector('#'+id); if(i) i.addEventListener(ev||'change', ()=>{ prospF[campo] = i.type==='checkbox' ? i.checked : i.value; if(id==='prBusca'){ clearTimeout(window.__prT); window.__prT = setTimeout(()=>{ rerender(); setTimeout(()=>{ const b = document.getElementById('prBusca'); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } }, 30); }, 350); } else rerender(); }); };
+  try{ embRender(); }catch(e){ console.warn('embarques', e); }
   liga('prPais','pais'); liga('prNcm','ncm'); liga('prSeg','seg'); liga('prConf','conf'); liga('prPer','per'); liga('prComForn','comForn'); liga('prEvid','soEvid'); liga('prNovos','soNovos'); liga('prBusca','busca','input');
   el.querySelector('#prRecarregar').onclick = async ()=>{ await prospCarregar(true); rerender(); toast('↻ Pesquisa recarregada.'); };
   el.querySelector('#prExcel').onclick = ()=>{
@@ -15556,6 +15568,231 @@ async function renderProspeccaoView(){
       .concat(lista.map(e=>[e.empresa, e.nome_fantasia||'', e.pais, e.cidade||'', e.segmento||'', e.produtos||'', (e.ncms_provaveis||[]).join(', '), e.confianca||'', e._cliente||'', prospFornecedores(e).join('; '), prospPeriodo(e).txt, prospPeriodo(e).ult, (e.evidencias||[]).map(v=>v.descricao + (v.fonte?' ('+v.fonte+')':'')).join(' | '), e.por_que_e_prospect||'', e.id_fiscal||'', e.site||'', (e.fontes||[]).join(' ')]))), 'Empresas');
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['NCM','PRODUTO','FORNECEDOR(ES)','ORIGEM DA INFORMAÇÃO']].concat(ncms.map(x=>[prospFmtNcm(x.ncm), x.produto||'', (x.fornecedores||[]).join(', '), x.base||'']))), 'NCMs');
     XLSX.writeFile(wb, 'PROSPECCAO_' + new Date().toISOString().slice(0,10) + '.xlsx');
+  };
+}
+
+/* ===== EMBARQUES — banco de registros de importação / BL / certificado de origem =====
+   Fonte 1: prospeccao.json → "embarques" (coleta automática a cada 15 dias)
+   Fonte 2: lançados aqui (manual ou lendo BL / certificado de origem em PDF) → nuvem, mesmo nível de proteção do Resumo JBS
+   O preço unitário é sempre calculado: valor ÷ quantidade, convertido pela unidade (kg, m², pé², peças). */
+const EMB_KEY = 'resumo_jbs_v1_embarques';
+let embMeus = null;
+const embF = { busca:'', pais:'', ncm:'', ano:'', grupo:'', soMeus:false, soCli:false, limite:200 };
+let embForm = null;     // embarque em edição (null = fechado)
+const EMB_PE2 = 0.09290304;    // 1 pé² = 0,0929 m²
+function embUnidade(u){
+  const t = String(u||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'');
+  if(!t) return null;
+  if(/^(kg|kgs|kilo|kilos|kilogram|kilogramos?|quilos?|nw|n\.w\.|netweight|pesoneto)/.test(t)) return { g:'peso', f:1, r:'kg' };
+  if(/^(t|ton|tons|tonne|tonnes|tonelada|toneladas|mt|tm)$/.test(t)) return { g:'peso', f:1000, r:'ton' };
+  if(/^(lb|lbs|libras?)$/.test(t)) return { g:'peso', f:0.45359237, r:'lb' };
+  if(/^(m2|m²|sqm|sq\.?m|metros?cuadrados?|metros?quadrados?|mts2|mt2)/.test(t)) return { g:'area', f:1, r:'m²' };
+  if(/^(sqft|sq\.?ft|ft2|ft²|sf|pe2|pes2|pe²|pes²|pies2|pies²|piescuadrados|pesquadrados|squarefeet|squarefoot)/.test(t)) return { g:'area', f:EMB_PE2, r:'pé²' };
+  if(/^(dm2|dm²)$/.test(t)) return { g:'area', f:0.01, r:'dm²' };
+  if(/^(pcs|pc|pieces?|pecas?|piezas?|unid|unidades?|units?|un|u)$/.test(t)) return { g:'peca', f:1, r:'pç' };
+  if(/^(pares?|pairs?|prs)$/.test(t) || /\(pares?\)|pares|pairs/.test(t)) return { g:'par', f:1, r:'par' };
+  if(/^(rolls?|rolos?|rollos?)$/.test(t)) return { g:'rolo', f:1, r:'rolo' };
+  if(/^(m|mts|metros?|meters?|yd|yds|yards?)$/.test(t)) return { g:'metro', f:/^y/.test(t)?0.9144:1, r:'m' };
+  return { g:'outro', f:1, r:String(u) };
+}
+// preço calculado: { txt:'US$ 2,45/kg', base:2.45, por:'kg' } — área mostra m² e pé²
+function embPreco(x){
+  const q = +x.quantidade, v = +x.valor;
+  if(!(q>0) || !(v>0)) return null;
+  const u = embUnidade(x.unidade); if(!u) return { txt:'US$ '+fmt(v/q)+' / un.', base:v/q, por:'' };
+  const porBase = v / (q * u.f);
+  if(u.g==='peso') return { txt:'US$ '+fmt(porBase)+'/kg' + (u.r!=='kg' ? ' <small>(US$ '+fmt(v/q)+'/'+u.r+')</small>' : ''), base:porBase, por:'kg' };
+  if(u.g==='area') return { txt:'US$ '+fmt(porBase)+'/m² · US$ '+fmt(porBase*EMB_PE2)+'/pé²', base:porBase, por:'m²' };
+  return { txt:'US$ '+fmt(v/q)+'/'+u.r, base:v/q, por:u.r };
+}
+async function embCarregarMeus(){
+  if(typeof acessoRestrito==='function' && acessoRestrito()){ embMeus = { itens:[], removidos:[] }; return; }
+  let raw = null;
+  if(typeof firebaseReady!=='undefined' && firebaseReady && firestoreDb){ try{ raw = await firestoreReadProcessos(EMB_KEY); }catch(e){} }
+  if(raw===null || raw===undefined){ try{ const r = await storageGet(EMB_KEY, true); raw = r && r.value ? r.value : null; }catch(e){} }
+  try{ embMeus = raw ? JSON.parse(raw) : null; }catch(e){ embMeus = null; }
+  if(!embMeus || !Array.isArray(embMeus.itens)) embMeus = { itens:[], removidos:[] };
+}
+async function embSalvarMeus(){
+  // relê antes de gravar, para não apagar o que outra pessoa lançou ao mesmo tempo
+  const locais = embMeus.itens.slice(), rm = new Set(embMeus.removidos||[]);
+  await embCarregarMeus();
+  (embMeus.removidos||[]).forEach(id=>rm.add(id));
+  const m = new Map(); embMeus.itens.concat(locais).forEach(x=>{ const a = m.get(x.id); if(!a || (x._upd||0) >= (a._upd||0)) m.set(x.id, x); });
+  embMeus = { itens: Array.from(m.values()).filter(x=>!rm.has(x.id)), removidos: Array.from(rm) };
+  const json = JSON.stringify(embMeus);
+  try{ if(typeof firebaseReady!=='undefined' && firebaseReady && firestoreDb) await firestoreWriteProcessos(json, EMB_KEY); }catch(e){ console.warn('embarques salvar', e); toast('Não consegui salvar na nuvem — tente de novo.'); }
+  try{ storageSet(EMB_KEY, json, true); }catch(e){}
+}
+function embTodos(){
+  const pub = ((prospDados && prospDados.embarques) || []).map((x,i)=>Object.assign({ id:'pub_'+i, _pub:true }, x));
+  const meus = ((embMeus && embMeus.itens) || []).map(x=>Object.assign({ _pub:false }, x));
+  return meus.concat(pub).sort((a,b)=>String(b.data||'').localeCompare(String(a.data||'')));
+}
+// leitura de BL / certificado de origem / invoice: importador, exportador, NCM, quantidade, unidade, valor, data
+async function embLerDocumento(file){
+  const lido = await lerProdutosInvoice(file);
+  if(!lido || !lido.texto) throw new Error('sem texto (PDF escaneado?)');
+  const t = String(lido.texto).replace(/\s+/g,' '), T = t.toUpperCase();
+  const cp = camposDoContrato(lido.linhas || []);
+  const out = { data:'', importador: cp.cliente || '', pais: cp.pais || '', exportador:'', origem:'', ncm:'', produto:'', quantidade:null, unidade:'', valor:null, tipo_valor:'', fonte:'📄 ' + (file.name||'documento') };
+  // exportador: um dos nossos fornecedores, ou o texto logo depois de SHIPPER / EXPORTER / CONSIGNOR
+  out.exportador = fornecedorPeloTexto(t) || '';
+  if(!out.exportador){ const m = t.match(/\b(?:SHIPPER|EXPORTER|EXPORTADOR|CONSIGNOR|GOODS CONSIGNED FROM)[^A-Z0-9]{0,40}?([A-Z][A-Z0-9&.,\- ]{3,60}?(?:CO\.?,?\s*LTD\.?|LTDA\.?|S\.?\s*A\.?|INC\.?|LIMITED|CORP\.?|GMBH|S\.?R\.?L\.?))/i); if(m) out.exportador = m[1].trim(); }
+  if(!out.importador){ const m = t.match(/\b(?:CONSIGNEE|IMPORTER|IMPORTADOR|GOODS CONSIGNED TO|NOTIFY)[^A-Z0-9]{0,40}?([A-Z][A-Z0-9&.,\- ]{3,60}?(?:S\.?\s*A\.?\s*S\.?|S\.?\s*A\.?(?:\s*DE\s*C\.?\s*V\.?)?|LTDA\.?|S\.?R\.?L\.?|E\.?I\.?R\.?L\.?|C\.?\s*A\.?|INC\.?|CIA\.?\s*LTDA\.?))/i); if(m) out.importador = m[1].trim(); }
+  // NCM: rotulada, ou um número de 6–10 dígitos que bate com uma das nossas NCMs (certificado de origem traz "390950" solto)
+  const nc = ncmsDoTexto(t); if(nc.length) out.ncm = nc[0];
+  if(!out.ncm){ const nossas = new Set(prospNcms().map(x=>prospNcm6(x.ncm)).filter(k=>k.length===6)); const m = (t.match(/\b\d{6,10}\b/g)||[]).find(d=>nossas.has(d.slice(0,6))); if(m) out.ncm = ncmFmt(m); }
+  // quantidade: área (couro) > peso líquido > peso bruto > soma dos itens
+  const num = s => contratoNum(String(s).replace(/\s/g,''));
+  let m = t.match(/([\d][\d.,]*)\s*(SQ\.?\s*FT|SQFT|FT2|FT²|PIES\s*(?:2|²|CUADRADOS)|P[EÉ]S\s*(?:2|²|QUADRADOS)|SQ\.?\s*M|SQM|M2|M²|METROS?\s*CUADRADOS)\b/i);
+  if(m){ out.quantidade = num(m[1]); out.unidade = /F|PIE|P[EÉ]S/i.test(m[2]) ? 'pé²' : 'm²'; }
+  if(!out.quantidade){ m = t.match(/\b(?:NET\s*WEIGHT|N\.\s*W\.|NW(?=\s*[:：(])|PESO\s*NETO|PESO\s*L[IÍ]QUIDO)\s*(?:\(KGS?\))?\s*[:：]?\s*([\d][\d.,]*)\s*(KGS?|KILOS?|TONS?|MT)?/i) || t.match(/([\d][\d.,]*)\s*(KGS?|KILOS?)\s*(?:N\.?\s*W|NET)/i);
+    if(m){ out.quantidade = num(m[1]); out.unidade = /TON|MT/i.test(m[2]||'') ? 'ton' : 'kg'; } }
+  if(!out.quantidade){ m = t.match(/\b(?:GROSS\s*WEIGHT|G\.\s*W\.|GW(?=\s*[:：(])|PESO\s*BRUTO)\s*(?:\(KGS?\))?\s*[:：]?\s*([\d][\d.,]*)\s*(KGS?|TONS?)?/i); if(m){ out.quantidade = num(m[1]); out.unidade = /TON/i.test(m[2]||'') ? 'ton' : 'kg'; out.obs = 'peso bruto'; } }
+  // soma dos itens só quando é tudo em kg (químicos); itens em metros/peças misturados não dão um total útil
+  if(!out.quantidade && (lido.produtos||[]).length && lido.produtos.length<=6 && /\bKGS?\b/i.test(t) && !/\b(PCS|PAIRS?|PARES|ROLLS?|M2|SQFT|METERS?|MTS)\b/i.test(t)){ out.quantidade = Math.round(lido.produtos.reduce((s,p)=>s+(+p.quantidade||0),0)*100)/100 || null; if(out.quantidade) out.unidade = 'kg'; }
+  // valor: total da invoice, ou FOB/CIF/TOTAL VALUE escrito no documento
+  m = t.match(/\b(FOB|CIF|CFR|CNF|FCA|EXW)\s*(?:VALUE|VALOR|AMOUNT|TOTAL)?\s*[:：]?\s*(?:US\$|USD|U\$S|\$)\s*([\d][\d.,]*)/i) || t.match(/\b(?:TOTAL\s*(?:VALUE|AMOUNT|INVOICE|FOB|CIF)?|INVOICE\s*VALUE|VALOR\s*TOTAL)\s*[:：]?\s*(?:US\$|USD|U\$S|\$)\s*([\d][\d.,]*)/i);
+  if(lido.totalDoc){ out.valor = lido.totalDoc; }
+  else if(m){ out.valor = num(m[m.length-1]); }
+  out.tipo_valor = (T.match(/\b(FOB|CIF|CFR|FCA|EXW)\b/)||[])[1] || 'não informado';
+  if(out.tipo_valor==='CFR' || out.tipo_valor==='FCA' || out.tipo_valor==='EXW') out.tipo_valor = out.tipo_valor;
+  // data: embarque/emissão
+  m = t.match(/(?:ON\s*BOARD|SHIPPED\s*ON\s*BOARD|DATE\s*OF\s*(?:ISSUE|SHIPMENT)|FECHA(?:\s*DE\s*EMBARQUE)?|ISSUE\s*DATE|DATE)\s*[:：]?\s*([0-9]{1,4}[\/.\-][0-9]{1,2}[\/.\-][0-9]{2,4}|[A-Z]{3,9}\.?\s*\d{1,2},?\s*20\d{2}|\d{1,2}\s*[A-Z]{3,9}\.?\s*20\d{2})/i);
+  if(m) out.data = dataDoTexto(m[1]) || '';
+  if(!out.data) out.data = dataDoTexto(t) || '';
+  { const dm = String(out.data).match(/^(\d{4})-(\d{2})-(\d{2})$/); if(!dm || +dm[2]<1 || +dm[2]>12 || +dm[3]<1 || +dm[3]>31) out.data = ''; }
+  out.importador = String(out.importador||'').replace(/^(OF|TO|DE|A)\s+/i,'').trim();
+  if(out.importador.split(/\s+/).length > 7 || /[a-z]{3,}\s+[a-z]{3,}\s+[a-z]{3,}/.test(out.importador)) out.importador = '';
+  if((lido.produtos||[]).length) out.produto = String(lido.produtos[0].nomeDoc || lido.produtos[0].nome || '').slice(0,80);
+  if(!out.produto){ const n = prospNcms().find(x=>prospNcm6(x.ncm)===prospNcm6(out.ncm)); if(n) out.produto = String(n.produto||'').split(/[:(—]/)[0].trim(); }
+  const o = (T.match(/COUNTRY\s*OF\s*ORIGIN\s*[:：]?\s*([A-Z ]{4,20})/)||[])[1]; if(o) out.origem = paisDoTexto(o) || o.trim();
+  return out;
+}
+function embRender(){
+  const box = document.getElementById('prEmbBox'); if(!box) return;
+  const E = prospEsc;
+  const todos = embTodos();
+  const clientes = prospClientes();
+  const ehCli = nome => { const n = prospNorm(nome); if(n.length<4) return ''; for(const [k,orig] of clientes){ if(k.length>=4 && (n===k || n.startsWith(k+' ') || k.startsWith(n+' ') || (k.length>=6 && (' '+n+' ').indexOf(' '+k+' ')>=0))) return orig; } return ''; };
+  const grupoNcm = n => prospNcm4(n);
+  const paises = [...new Set(todos.map(x=>x.pais).filter(Boolean))].sort();
+  const ncms4 = [...new Set(todos.map(x=>grupoNcm(x.ncm)).filter(Boolean))].sort();
+  const anos = [...new Set(todos.map(x=>String(x.data||'').slice(0,4)).filter(a=>/^\d{4}$/.test(a)))].sort().reverse();
+  const q = prospNorm(embF.busca);
+  const lista = todos.filter(x=>{
+    if(embF.pais && x.pais!==embF.pais) return false;
+    if(embF.ncm && grupoNcm(x.ncm)!==embF.ncm) return false;
+    if(embF.ano && String(x.data||'').slice(0,4)!==embF.ano) return false;
+    if(embF.soMeus && x._pub) return false;
+    if(embF.soCli && !ehCli(x.importador)) return false;
+    if(q && prospNorm([x.importador,x.exportador,x.produto,x.origem,x.ncm,x.pais].join(' ')).indexOf(q)<0) return false;
+    return true;
+  });
+  // resumo de preço por NCM (média ponderada: soma dos valores ÷ soma das quantidades na mesma base)
+  const res = {};
+  lista.forEach(x=>{ const p = embPreco(x); if(!p || !p.por) return; const u = embUnidade(x.unidade); const k = prospFmtNcm(prospNcm6(x.ncm)||x.ncm)+'|'+p.por;
+    const r = res[k] = res[k] || { ncm: prospFmtNcm(prospNcm6(x.ncm)||x.ncm), por:p.por, v:0, q:0, n:0, min:Infinity, max:0, prod: x.produto };
+    r.v += +x.valor; r.q += +x.quantidade * (u && (u.g==='peso'||u.g==='area') ? u.f : 1); r.n++; r.min = Math.min(r.min, p.base); r.max = Math.max(r.max, p.base); });
+  const resumo = Object.values(res).sort((a,b)=>b.n-a.n).slice(0,12).map(r=>{
+    const med = r.v/r.q;
+    return `<div class="emb-res"><div class="pr-ncm">${E(r.ncm)}</div><div class="emb-res-v">US$ ${fmt(med)}<small>/${E(r.por)}</small></div>
+      <div class="an-panel-sub">${r.n} embarque(s) · faixa ${fmt(r.min)}–${fmt(r.max)}${r.por==='m²'?` · US$ ${fmt(med*EMB_PE2)}/pé²`:''}</div></div>`; }).join('');
+  const vis = lista.slice(0, embF.limite);
+  const linha = x=>{
+    const p = embPreco(x), cli = ehCli(x.importador);
+    const qtd = x.quantidade ? Number(x.quantidade).toLocaleString("pt-BR",{maximumFractionDigits:2}) + ' ' + E(x.unidade||'') : '—';
+    const fonte = /^https?:/.test(String(x.fonte||'')) ? `<a href="${E(x.fonte)}" target="_blank" rel="noopener">${E(String(x.fonte).replace(/^https?:\/\/(www\.)?/,'').split('/')[0])}</a>` : E(x.fonte||'');
+    return `<tr>
+      <td style="white-space:nowrap;">${E(x.data ? (/^\d{4}-\d{2}-\d{2}$/.test(x.data) ? fmtDateBR(x.data) : x.data) : '—')}</td>
+      <td><b>${E(x.importador||'—')}</b>${cli?` <span class="pr-cli">✓ cliente</span>`:''}</td>
+      <td>${E(x.pais||'')}</td>
+      <td>${E(x.exportador||'—')}${x.origem?`<div class="an-panel-sub">${E(x.origem)}</div>`:''}</td>
+      <td class="pr-ncm">${E(x.ncm||'')}</td>
+      <td><div class="emb-prod" title="${E(x.produto||'')}">${E(x.produto||'')}</div></td>
+      <td style="text-align:right;white-space:nowrap;">${qtd}${x.obs?`<div class="an-panel-sub">${E(x.obs)}</div>`:''}</td>
+      <td style="text-align:right;white-space:nowrap;">${x.valor ? 'US$ '+fmt(x.valor) : '—'}${x.tipo_valor && x.valor?`<div class="an-panel-sub">${E(x.tipo_valor)}</div>`:''}</td>
+      <td class="emb-preco">${p ? p.txt : (x.preco_unit_fonte ? 'US$ '+fmt(x.preco_unit_fonte)+' <small>(fonte)</small>' : `<span class="an-panel-sub" style="font-weight:400;">sem ${!(+x.quantidade>0)?'quantidade':'valor'} na fonte</span>`)}</td>
+      <td>${fonte}${x._pub ? '' : `<div style="white-space:nowrap;margin-top:2px;"><button class="btn btn-ghost btn-sm" data-emb-ed="${E(x.id)}">✎</button><button class="btn btn-ghost btn-sm" data-emb-del="${E(x.id)}">✕</button></div>`}</td>
+    </tr>`; };
+  const opt = (arr, sel, todos) => `<option value="">${todos}</option>` + arr.map(v=>`<option value="${E(v)}" ${v===sel?'selected':''}>${E(v)}</option>`).join('');
+  const f = embForm;
+  const campo = (k, rot, tipo, extra) => `<label class="emb-f"><span>${rot}</span><input data-emb-c="${k}" type="${tipo||'text'}" value="${E(f && f[k]!=null ? f[k] : '')}" ${extra||''}></label>`;
+  const precoForm = f ? embPreco(f) : null;
+  const D = prospDados || {};
+  box.innerHTML = `
+    <div class="an-panel-title">🚢 Embarques — quem comprou, de quem e a que preço <span class="an-panel-sub">${lista.length} de ${todos.length} registro(s)${D.embarquesAtualizadoEm?` · coleta de ${E(fmtDateBR(D.embarquesAtualizadoEm))}`:''} · preço = valor ÷ quantidade, pela unidade</span></div>
+    <div class="pr-filtros">
+      <select id="embPais">${opt(paises, embF.pais, 'Todos os países')}</select>
+      <select id="embNcm">${opt(ncms4, embF.ncm, 'Todas as NCMs')}</select>
+      <select id="embAno">${opt(anos, embF.ano, 'Qualquer ano')}</select>
+      <input id="embBusca" placeholder="Buscar importador, fornecedor, produto…" value="${E(embF.busca)}">
+      <label><input type="checkbox" id="embSoCli" ${embF.soCli?'checked':''}> só nossos clientes (de quem mais eles compram)</label>
+      <label><input type="checkbox" id="embSoMeus" ${embF.soMeus?'checked':''}> só os lançados por nós</label>
+      <span style="flex:1"></span>
+      <button class="btn btn-outline btn-sm" id="embLer">📄 Ler BL / certificado (PDF)</button>
+      <button class="btn btn-outline btn-sm" id="embNovo">＋ Lançar embarque</button>
+      <button class="btn btn-outline btn-sm" id="embXls">⬇ Excel</button>
+      <input type="file" id="embArq" accept=".pdf,.xlsx,.xls,.xlsm" multiple style="display:none">
+    </div>
+    ${f ? `<div class="emb-form">
+      <div class="an-panel-title" style="margin-bottom:6px;">${f.id ? '✎ Editar embarque' : '＋ Novo embarque'} ${f.fonte && !/^https?:/.test(f.fonte) ? `<span class="an-panel-sub">${E(f.fonte)} — confira os campos lidos</span>` : ''}</div>
+      <div class="emb-grid">
+        ${campo('data','Data do embarque','date')}${campo('importador','Importador (cliente)')}${campo('pais','País')}${campo('exportador','Fornecedor / exportador')}
+        ${campo('origem','Origem')}${campo('ncm','NCM')}${campo('produto','Produto')}
+        ${campo('quantidade','Quantidade total','number','step="any"')}
+        <label class="emb-f"><span>Unidade</span><select data-emb-c="unidade">${['kg','ton','m²','pé²','pç','par','rolo','m'].map(u=>`<option ${String(f.unidade||'kg')===u?'selected':''}>${u}</option>`).join('')}</select></label>
+        ${campo('valor','Valor total (USD)','number','step="any"')}
+        <label class="emb-f"><span>Tipo de valor</span><select data-emb-c="tipo_valor">${['FOB','CIF','CFR','FCA','EXW','não informado'].map(u=>`<option ${String(f.tipo_valor||'FOB')===u?'selected':''}>${u}</option>`).join('')}</select></label>
+        ${campo('fonte','Fonte (link ou documento)')}
+      </div>
+      <div class="emb-calc">${precoForm ? '💲 Preço unitário calculado: <b>' + precoForm.txt + '</b>' : 'Preencha quantidade e valor para calcular o preço unitário.'}</div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;"><button class="btn btn-ghost btn-sm" id="embCancelar">Cancelar</button><button class="btn btn-primary btn-sm" id="embSalvar">Salvar embarque</button></div>
+    </div>` : ''}
+    ${resumo ? `<div class="emb-resumo">${resumo}</div>` : ''}
+    <div style="overflow:auto;max-height:70vh;"><table class="pr-tab"><thead><tr><th>Data</th><th>Importador</th><th>País</th><th>Fornecedor / exportador</th><th>NCM</th><th>Produto</th><th style="text-align:right">Quantidade</th><th style="text-align:right">Valor</th><th>Preço unitário (calculado)</th><th>Fonte</th></tr></thead>
+      <tbody>${vis.map(linha).join('') || `<tr><td colspan="10" class="an-panel-sub" style="padding:16px;">${todos.length ? 'Nenhum embarque com esses filtros.' : 'Ainda não há embarques. A coleta automática traz os registros a cada 15 dias; você também pode ler um BL / certificado de origem em PDF ou lançar à mão.'}</td></tr>`}</tbody></table></div>
+    ${lista.length > vis.length ? `<div style="text-align:center;margin-top:8px;"><button class="btn btn-outline btn-sm" id="embMais">Mostrar mais (${lista.length - vis.length})</button></div>` : ''}
+    <div class="an-panel-sub" style="margin-top:8px;">Couro: preço por m² e por pé² (1 m² = 10,76 pé²) · químicos e componentes: por kg (ton e lb convertidos) · peças/pares: por unidade. FOB não inclui frete; CIF inclui frete e seguro. Embarques "lançados por nós" ficam só para quem tem acesso total.</div>`;
+  const re = ()=>{ const sc = box.querySelector('[style*="max-height:70vh"]'); const t = sc ? sc.scrollTop : 0; embRender(); const s2 = box.querySelector('[style*="max-height:70vh"]'); if(s2) s2.scrollTop = t; };
+  const liga = (id, k, ev) => { const i = box.querySelector('#'+id); if(i) i.addEventListener(ev||'change', ()=>{ embF[k] = i.type==='checkbox' ? i.checked : i.value; embF.limite = 200;
+    if(id==='embBusca'){ clearTimeout(window.__embT); window.__embT = setTimeout(()=>{ embRender(); const b = document.getElementById('embBusca'); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } }, 250); } else embRender(); }); };
+  liga('embPais','pais'); liga('embNcm','ncm'); liga('embAno','ano'); liga('embSoMeus','soMeus'); liga('embSoCli','soCli'); liga('embBusca','busca','input');
+  const mais = box.querySelector('#embMais'); if(mais) mais.onclick = ()=>{ embF.limite += 200; re(); };
+  const exigeEdicao = ()=>{ if(!editMode){ toast('Digite a senha de edição para lançar embarques.'); openEditUnlockModal(); return false; } return true; };
+  box.querySelector('#embNovo').onclick = ()=>{ if(!exigeEdicao()) return; embForm = { unidade:'kg', tipo_valor:'FOB' }; embRender(); };
+  box.querySelector('#embLer').onclick = ()=>{ if(!exigeEdicao()) return; box.querySelector('#embArq').click(); };
+  box.querySelector('#embArq').onchange = async ev=>{
+    const fs = Array.from(ev.target.files||[]); ev.target.value = '';
+    for(const file of fs){
+      try{ const r = await embLerDocumento(file); embForm = r; embRender(); toast('📄 ' + file.name + ' lido — confira e salve.'); }
+      catch(e){ toast('Não consegui ler ' + file.name + ': ' + (e.message||e)); }
+      if(fs.length>1) break;
+    }
+  };
+  box.querySelectorAll('[data-emb-c]').forEach(i=> i.addEventListener('input', ()=>{ embForm[i.dataset.embC] = (i.type==='number') ? (i.value==='' ? null : +i.value) : i.value;
+    const c = box.querySelector('.emb-calc'); const p = embPreco(embForm); if(c) c.innerHTML = p ? '💲 Preço unitário calculado: <b>' + p.txt + '</b>' : 'Preencha quantidade e valor para calcular o preço unitário.'; }));
+  box.querySelectorAll('select[data-emb-c]').forEach(i=> i.addEventListener('change', ()=>{ embForm[i.dataset.embC] = i.value; const c = box.querySelector('.emb-calc'); const p = embPreco(embForm); if(c) c.innerHTML = p ? '💲 Preço unitário calculado: <b>' + p.txt + '</b>' : 'Preencha quantidade e valor para calcular o preço unitário.'; }));
+  const canc = box.querySelector('#embCancelar'); if(canc) canc.onclick = ()=>{ embForm = null; embRender(); };
+  const salv = box.querySelector('#embSalvar'); if(salv) salv.onclick = async ()=>{
+    const x = Object.assign({}, embForm);
+    if(!String(x.importador||'').trim()){ toast('Preencha o importador.'); return; }
+    x.importador = String(x.importador).trim().toUpperCase(); x.pais = String(x.pais||'').trim().toUpperCase(); x.exportador = String(x.exportador||'').trim().toUpperCase();
+    x.id = x.id || ('emb_' + Date.now().toString(36)); x._upd = Date.now(); delete x._pub;
+    const i = embMeus.itens.findIndex(y=>y.id===x.id); if(i>=0) embMeus.itens[i] = x; else embMeus.itens.push(x);
+    embForm = null; embRender(); await embSalvarMeus(); embRender(); toast('🚢 Embarque salvo.');
+  };
+  box.querySelectorAll('[data-emb-ed]').forEach(b=>b.onclick = ()=>{ if(!exigeEdicao()) return; const x = embMeus.itens.find(y=>y.id===b.dataset.embEd); if(x){ embForm = Object.assign({}, x); embRender(); box.scrollIntoView({block:'start'}); } });
+  box.querySelectorAll('[data-emb-del]').forEach(b=>b.onclick = async ()=>{ if(!exigeEdicao()) return;
+    if(!await confirmarAcao('Excluir este embarque lançado?', {titulo:'Excluir embarque', confirmar:'Excluir'})) return;
+    const id = b.dataset.embDel; embMeus.itens = embMeus.itens.filter(y=>y.id!==id); (embMeus.removidos = embMeus.removidos||[]).push(id); embRender(); await embSalvarMeus(); embRender(); });
+  box.querySelector('#embXls').onclick = ()=>{
+    if(typeof XLSX==='undefined'){ toast('Biblioteca do Excel não carregou.'); return; }
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['DATA','IMPORTADOR','JÁ É CLIENTE','PAÍS','FORNECEDOR / EXPORTADOR','ORIGEM','NCM','PRODUTO','QUANTIDADE','UNIDADE','VALOR USD','TIPO','PREÇO UNIT. CALCULADO','POR','FONTE']]
+      .concat(lista.map(x=>{ const p = embPreco(x); return [x.data||'', x.importador||'', ehCli(x.importador), x.pais||'', x.exportador||'', x.origem||'', x.ncm||'', x.produto||'', x.quantidade||'', x.unidade||'', x.valor||'', x.tipo_valor||'', p ? Math.round(p.base*10000)/10000 : '', p ? p.por : '', x.fonte||'']; }))), 'Embarques');
+    XLSX.writeFile(wb, 'EMBARQUES_' + new Date().toISOString().slice(0,10) + '.xlsx');
   };
 }
 
