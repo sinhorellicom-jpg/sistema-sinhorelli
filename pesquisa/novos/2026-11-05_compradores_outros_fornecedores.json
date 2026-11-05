@@ -1,0 +1,804 @@
+[
+  {
+    "empresa": "LA VARESINA S.A.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "solados",
+    "produtos": "Moldes de injeção para solado importados da Matrizaria Polako (modelos 'Mallorca', 'Cabo Blanco')",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Manifesto Callao: 'MOLDE PARA INYECCION, POLAKO, MALLORCA' (MFTO 235-2017-18810), Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LTDA",
+        "periodo": "30/06/2017",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://importstoperu2.blogspot.com/2017/08/30062017.html"
+      },
+      {
+        "descricao": "Manifesto Callao: 'MOLDE PARA INYECCION POLAKO CABO BLANCO' (MFTO 235-2018-22056), Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO EIRELI",
+        "periodo": "19/07/2018",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://importstoperu2.blogspot.com/2018/09/19072018.html"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2017-2018)",
+    "por_que_e_prospect": "Cliente recorrente de moldes Polako no Peru (2017-2018) — reativar para moldes Polako e oferecer sistema PU/solados.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://importstoperu2.blogspot.com/2017/08/30062017.html",
+      "https://importstoperu2.blogspot.com/2018/09/19072018.html"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "FORESTALY S.A.C.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Importou moldes de alumínio/injeção da Matrizaria Polako ('TITAN 4'); atividade exata não confirmada (provável calçado/solado injetado)",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Manifesto Callao: 'MOLDE DE ALUMINIO POLAKO', Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LTDA",
+        "periodo": "10/02/2013",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://importstoperu2.blogspot.com/2013/04/10022013_21.html"
+      },
+      {
+        "descricao": "Manifesto Callao: 'MOLDE PARA INYECCION TITAN 4' (MFTO 235-2015-18232), Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LTDA",
+        "periodo": "24/07/2015",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://importstoperu2.blogspot.com/2015/09/24072015.html"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2013-2015)",
+    "por_que_e_prospect": "Comprou moldes Polako em 2013 e 2015 — ex-cliente a reativar.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://importstoperu2.blogspot.com/2013/04/10022013_21.html",
+      "https://importstoperu2.blogspot.com/2015/09/24072015.html"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "INGENIERIA DEL PLASTICO S.A.C.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Importou moldes Polako para sandálias/chinelos injetados (art. 'Tira Thaina', '24 Horas'); atividade atual não confirmada",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Manifesto Callao: '1 (U) MOLDE MATRIZARIA POLAKO ART. 24 HORAS', Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LTDA",
+        "periodo": "10/02/2013",
+        "valor": null,
+        "unidade": "1 U",
+        "fonte": "https://importstoperu2.blogspot.com/2013/04/10022013_21.html"
+      },
+      {
+        "descricao": "Manifesto Callao: '2 (U) MOLDE MATRIZARIA POLAKO ART. TIRA THAINA', Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LTDA",
+        "periodo": "16/09/2012",
+        "valor": null,
+        "unidade": "2 U",
+        "fonte": "https://importstoperu2.blogspot.com/2012/11/16092012.html"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2012-2013)",
+    "por_que_e_prospect": "Injetora de calçado plástico que já comprou moldes Polako — ex-cliente a reativar.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://importstoperu2.blogspot.com/2013/04/10022013_21.html",
+      "https://importstoperu2.blogspot.com/2012/11/16092012.html"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "FABRICA DE CALZADO LIDER S.A.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Importou molde Polako (art. 'Vans')",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Manifesto Callao: '1 (U) MOLDE MATRIZARIA POLAKO ART. VANS', Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LTDA",
+        "periodo": "10/02/2013",
+        "valor": null,
+        "unidade": "1 U",
+        "fonte": "https://importstoperu2.blogspot.com/2013/04/10022013_21.html"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2013)",
+    "por_que_e_prospect": "Já comprou molde Polako — reforça vínculo com a Polako para reativação.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://importstoperu2.blogspot.com/2013/04/10022013_21.html"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "JUAN LENG DELGADO S.A.C.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": "Ate, Lima",
+    "id_fiscal": "RUC 20100282721",
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Importou moldes Polako (8480.79) em 2013; importa couro bovino 4104.41 do Brasil/Argentina em 2024",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Manifesto Callao: 'MOLDES POLAKO', Porto Alegre→Callao",
+        "ncm": "8480.79",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LTDA",
+        "periodo": "05/12/2013",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://importstoperu2.blogspot.com/2014/02/05122013.html"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2013); Couroquimica Couros e Acabamentos (couro, 2024)",
+    "por_que_e_prospect": "Já comprou moldes Polako — adiciona Polako como fornecedor histórico.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://importstoperu2.blogspot.com/2014/02/05122013.html",
+      "https://ruc.pe/juan-leng-delgado-sac/"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "LAS VEGAS SURF PLAST S.A.C.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "solados",
+    "produtos": "Moldes de alumínio para injeção de solado importados do Brasil (Polako 2014; outros matrizeiros brasileiros até 2025)",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Manifesto Callao: 'MOLDE PARA INYECCION DE SUELA', Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LTDA",
+        "periodo": "11/06/2014",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://importstoperu2.blogspot.com/2014/08/11062014.html"
+      },
+      {
+        "descricao": "ImportGenius: 'Molde Aluminio, S/M, S/M' do Brasil, HS 8480719000, FOB 2.000 USD (embarque-amostra; 2 e 6 UNIDAD, 95 e 198 kg); fornecedor não informado",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": null,
+        "periodo": "17/02/2025",
+        "valor": "FOB 2000 USD",
+        "unidade": null,
+        "fonte": "https://www.importgenius.com/peru/importers/las-vegas-surf-plast-sac"
+      },
+      {
+        "descricao": "ImportGenius: 'Moldes De Aluminio Para Moldeo' do Brasil, 1 UNIDAD, 27 kg; fornecedor não informado",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": null,
+        "periodo": "21/12/2024",
+        "valor": null,
+        "unidade": "1 UNIDAD",
+        "fonte": "https://www.importgenius.com/peru/importers/las-vegas-surf-plast-sac"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2014); Manopla Ind. de Matrizes (até 12/2021); Usimolde Matrizes (até 07/2021); Rogers Ind. Metalúrgica (2014)",
+    "por_que_e_prospect": "Comprador ativo (2024-2025) de moldes de solado do Brasil e ex-cliente Polako — alvo direto para moldes Polako.",
+    "confianca": "alta",
+    "fontes": [
+      "https://importstoperu2.blogspot.com/2014/08/11062014.html",
+      "https://www.importgenius.com/peru/importers/las-vegas-surf-plast-sac"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "INDUSTRIA DE CALZADO S.A.C.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Importou moldes de injeção de solado da Polako",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Manifesto Callao: 'MOLDES PARA INYECCION DE SUELA S/M S/M', Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LTDA",
+        "periodo": "11/07/2014",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://importstoperu2.blogspot.com/2014/09/11072014.html"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2014)",
+    "por_que_e_prospect": "Fábrica de calçado injetado que já comprou moldes Polako — ex-cliente a reativar.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://importstoperu2.blogspot.com/2014/09/11072014.html"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "E HINOS S.A.C.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Importou moldes para injeção da Polako; atividade não confirmada",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Manifesto Callao: 'MOLDES PARA INYECCION' (MFTO 235-2018-16619), Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO EIRELI",
+        "periodo": "31/05/2018",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://importstoperu2.blogspot.com/2018/07/31052018.html"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2018)",
+    "por_que_e_prospect": "Comprou moldes Polako em 2018 — ex-cliente a reativar.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://importstoperu2.blogspot.com/2018/07/31052018.html"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "BRITANN IMPORT EXPORT SRL",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Moldes de alumínio da Polako (papel de importador inferido pela ordem do manifesto); atividade não confirmada",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Manifesto Callao: '84.80.71.90.00 MOLDES DE ALUMINIO' — BRITANN IMPORT EXPORT SRL / MATRIZARIA POLAKO EIRELI (MFTO 235-2019-42533), Porto Alegre→Callao",
+        "ncm": "8480.71",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO EIRELI",
+        "periodo": "20/12/2019",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://importstoperu2.blogspot.com/2020/02/20122019.html"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2019)",
+    "por_que_e_prospect": "Importou moldes Polako em 2019 — verificar se é fábrica ou trading.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://importstoperu2.blogspot.com/2020/02/20122019.html"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "SINCHIGUANO DEFAZ ANGEL RUBEN",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Importou da Matrizaria Polako (370 kg) e amostras de solados/fôrmas do Brasil (RTM Solados, Retma) até 2020",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71",
+      "6406.20"
+    ],
+    "evidencias": [
+      {
+        "descricao": "ImportGenius: fornecedor MATRIZARIA POLAKO LT, 370 kg, último embarque",
+        "ncm": "",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO LT",
+        "periodo": "24/05/2012",
+        "valor": null,
+        "unidade": "370 kg",
+        "fonte": "https://www.importgenius.com/ecuador/importers/sinchiguano-defaz-angel-ruben"
+      },
+      {
+        "descricao": "ImportGenius: 'Muestra De Suelas (Pares)', 6 unidades, HS 9807204000 (amostra), FOB 9 USD",
+        "ncm": "",
+        "origem": "Brasil",
+        "fornecedor": "RTM IND E COM DE SOLADOS EIRELI",
+        "periodo": "09/03/2020",
+        "valor": "FOB 9 USD",
+        "unidade": "6 unidades",
+        "fonte": "https://www.importgenius.com/ecuador/importers/sinchiguano-defaz-angel-ruben"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (2012); RTM Ind. e Com. de Solados (2019-2020); Retma Ind. de Solados (2018); Placa S.A.S; Plastinova S.A; CJ Textiles",
+    "por_que_e_prospect": "Fabricante de calçado que já usou molde Polako e procura solados brasileiros — prospect para Polako e Hiper Solados.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://www.importgenius.com/ecuador/importers/sinchiguano-defaz-angel-ruben"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "MOYOLEMA SAILEMA WILSON RAMIRO",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "solados",
+    "produtos": "Fábrica de calçado/solado PU (perfis 'Moyolema Sailema Wilson Ramiro' e '/ Moyolsa'): importa sistema PU Elachem (ISO 180, Elapol) em 2026, moldes Matrizminas, amostras de fôrma Polako",
+    "porte": null,
+    "ncms_provaveis": [
+      "3909.50",
+      "3907.99",
+      "8480.71",
+      "3926.90"
+    ],
+    "evidencias": [
+      {
+        "descricao": "ImportGenius (Moyolsa): 'Muestra De Forma-Visual-Puntera', 13 unidades, HS 9807204000, FOB 8 USD / CIF 19,75 USD",
+        "ncm": "",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO EIRELI",
+        "periodo": "23/04/2018",
+        "valor": "FOB 8 USD",
+        "unidade": "13 unidades",
+        "fonte": "https://es.importgenius.com/ecuador/importers/moyolema-sailema-wilson-ramiro-moyolsa"
+      },
+      {
+        "descricao": "ImportGenius: 'Iso 180 I 10', 7.725 kg bruto (B/L HLCUGOA2603AQWL8)",
+        "ncm": "",
+        "origem": "Itália",
+        "fornecedor": "ELACHEM SPA",
+        "periodo": "11/05/2026",
+        "valor": null,
+        "unidade": "7725 kg bruto",
+        "fonte": "https://es.importgenius.com/ecuador/importers/moyolema-sailema-wilson-ramiro"
+      },
+      {
+        "descricao": "ImportGenius: 'Elapol V355/100', 10.825 kg bruto (B/L HLCUGOA2603AQWL8)",
+        "ncm": "",
+        "origem": "Itália",
+        "fornecedor": "ELACHEM SPA",
+        "periodo": "11/05/2026",
+        "valor": null,
+        "unidade": "10825 kg bruto",
+        "fonte": "https://es.importgenius.com/ecuador/importers/moyolema-sailema-wilson-ramiro"
+      }
+    ],
+    "fornecedores_conhecidos": "Elachem S.p.A. (sistema PU, até 05/2026; 37,4 t); Matrizaria Polako Eireli (2018); Matrizminas Ltda (moldes, 2022); Manah Group S.A.S. (2022); Metalúrgica Açoreal (2016); Yiyang Jianger; Jin Heng Yuan; Xiamen Baolun",
+    "por_que_e_prospect": "Importa sistema PU para solado em 2026 (Elachem) e já comprou da Polako — alvo para sistema PU Xuchuan e moldes Polako.",
+    "confianca": "média",
+    "fontes": [
+      "https://es.importgenius.com/ecuador/importers/moyolema-sailema-wilson-ramiro-moyolsa",
+      "https://es.importgenius.com/ecuador/importers/moyolema-sailema-wilson-ramiro"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "INDUCALSA INDUSTRIA NACIONAL DE CALZADO S.A.",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Fábrica de calçado; aparece como principal comprador da Matrizaria Polako no Equador",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71",
+      "3926.90"
+    ],
+    "evidencias": [
+      {
+        "descricao": "ImportGenius (lista de fornecedores do Equador): MATRIZARIA POLAKO — 86 embarques, último 26/03/2024; principais parceiros: INDUCALSA e EPSILON TECHNOLOGY SCC (data por comprador não mostrada)",
+        "ncm": "",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO",
+        "periodo": "até 26/03/2024",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://www.importgenius.com/ecuador/tradebase/supplier/latest/3338"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako (principal parceiro, até 2024); Novaplast S.A; Herrajes Elyon; Proquinal; Nuvant (Colômbia)",
+    "por_que_e_prospect": "Principal cliente equatoriano da Polako — prioridade para moldes Polako e insumos.",
+    "confianca": "média",
+    "fontes": [
+      "https://www.importgenius.com/ecuador/tradebase/supplier/latest/3338",
+      "https://www.importgenius.com/colombia/buyers/inducalsa-industria-nacional-de-calzado-s-a"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "EPSILON TECHNOLOGY SCC",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Comprador da Matrizaria Polako no Equador (moldes/fôrmas); atividade não confirmada",
+    "porte": null,
+    "ncms_provaveis": [
+      "8480.71",
+      "3926.90"
+    ],
+    "evidencias": [
+      {
+        "descricao": "ImportGenius (lista de fornecedores do Equador): MATRIZARIA POLAKO — 86 embarques, último 26/03/2024; EPSILON TECHNOLOGY SCC entre os principais parceiros (data por comprador não mostrada)",
+        "ncm": "",
+        "origem": "Brasil",
+        "fornecedor": "MATRIZARIA POLAKO",
+        "periodo": "até 26/03/2024",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://www.importgenius.com/ecuador/tradebase/supplier/latest/3338"
+      }
+    ],
+    "fornecedores_conhecidos": "Matrizaria Polako",
+    "por_que_e_prospect": "Um dos dois principais clientes da Polako no Equador — confirmar atividade e reativar.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://www.importgenius.com/ecuador/tradebase/supplier/latest/3338"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "BOTAS AGROINDL S A S",
+    "nome_fantasia": null,
+    "pais": "COLOMBIA",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "bota PVC/borracha",
+    "produtos": "Fabricante de botas (exporta 6402.91 ao Equador 2025-2026); importa malha 6005.37, feltro 5602 e não-tecido 5603 da China (Yantai Joye) e máquina de corte Comelz",
+    "porte": null,
+    "ncms_provaveis": [
+      "6005.37",
+      "5602",
+      "5603.14",
+      "3909.50",
+      "3907.99"
+    ],
+    "evidencias": [
+      {
+        "descricao": "NBD: importação da China, contraparte 'Y***.' (parceiro listado: YANTAI JOYE MICROFIBER MATERIAL CO., LTD.), DO 2023-07899, declarações 1-4/4, fatura 23FP121: HS 6005370000, 5602100000, 5602290000, 5603940000",
+        "ncm": "6005.37",
+        "origem": "China",
+        "fornecedor": "YANTAI JOYE MICROFIBER MATERIAL CO., LTD. (inferido)",
+        "periodo": "28/11/2023",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://vn.nbd.ltd/trader/info/NBDX1H138033626"
+      },
+      {
+        "descricao": "NBD: parceiros comerciais listados incluem XUCHUAN CHEMICAL (SUZHOU) CO., LTD.; exportações de calçado 6402910000 ao Equador (último 11/08/2026)",
+        "ncm": "",
+        "origem": "China",
+        "fornecedor": "XUCHUAN CHEMICAL (SUZHOU) CO., LTD.",
+        "periodo": "2025-2026 (exportações); data da compra Xuchuan não mostrada",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://vn.nbd.ltd/trader/info/NBDX1H138033626"
+      }
+    ],
+    "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co., Ltd. (2023); Xuchuan Chemical (Suzhou) Co., Ltd.; Comelz S.p.A. (máquina de corte, 2025)",
+    "por_que_e_prospect": "Cliente de DOIS fornecedores representados (Yantai Joye e Xuchuan) e exportador ativo de botas em 2026 — prioridade.",
+    "confianca": "média",
+    "fontes": [
+      "https://vn.nbd.ltd/trader/info/NBDX1H138033626"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "IMPORTACIONES PINO ROJO S.A. DE C.V.",
+    "nome_fantasia": null,
+    "pais": "MEXICO",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Importa cuchillas de aço para máquina de cortar e máquina de moldes para cuchillas (China, 2026); Yantai Joye listada entre os parceiros",
+    "porte": null,
+    "ncms_provaveis": [
+      "6406.90",
+      "3921.13"
+    ],
+    "evidencias": [
+      {
+        "descricao": "NBD: 'YANTAI JOYE MICROFIBER MATERIAL CO., LTD.' entre os 5 fornecedores relacionados; últimos registros 12/08/2026 (HS 8208909900 'CUCHILLAS DE ACERO PARA MAQUINA DE CORTAR'; 8462490200) — fornecedor de cada linha mascarado",
+        "ncm": "",
+        "origem": "China",
+        "fornecedor": "YANTAI JOYE MICROFIBER MATERIAL CO., LTD.",
+        "periodo": "registros até 12/08/2026; data da compra Yantai não mostrada",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://en.nbd.ltd/trader/info/NBDX1H169518484"
+      }
+    ],
+    "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co., Ltd. (parceiro listado)",
+    "por_que_e_prospect": "Cliente mexicano da Yantai Joye (fornecedor representado) ativo em 2026 — confirmar segmento.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://en.nbd.ltd/trader/info/NBDX1H169518484"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "KADESH CALCADOS PROFISSIONAIS LTDA",
+    "nome_fantasia": null,
+    "pais": "BRASIL",
+    "cidade": "Imbituva/PR",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado de segurança",
+    "produtos": "Calçado de segurança injetado em PU; importa sistema PU Xuchuan (XC 6002D / XC 8280), pré-polímero Huafon e microfibra PU/air mesh/biqueira da China; exporta botinas ao Equador",
+    "porte": null,
+    "ncms_provaveis": [
+      "3907.99",
+      "3909.50",
+      "3921.13",
+      "6005.37",
+      "6406.90"
+    ],
+    "evidencias": [
+      {
+        "descricao": "NBD (KADESH EQUIPAMENTOS PROFISSIONAIS LTDA., Imbituva-PR): '2 X 40 CONTAINERS CONTAINING 216 DRUMS OF POLYURETHANE SYSTEM FOR SHOE SOLE XC 6002D XC 8280' (contraparte 'X***.'; parceiro listado XUCHUAN CHEMICAL (SUZHOU))",
+        "ncm": "3909.50",
+        "origem": "China",
+        "fornecedor": "XUCHUAN CHEMICAL (SUZHOU) CO., LTD.",
+        "periodo": "14/11/2023",
+        "valor": null,
+        "unidade": "216 tambores",
+        "fonte": "https://en.nbd.ltd/trader/info/NBDD3Y534709325"
+      },
+      {
+        "descricao": "NBD: '1 X 40 CONTAINERS CONTAINING 110 DRUMS OF POLYURETHANE PREPOLYMER JF 2067 ELASTOPAN', HS 39095019 (contraparte 'Z***.' — Zhejiang Huafon listada)",
+        "ncm": "3909.50",
+        "origem": "China",
+        "fornecedor": "ZHEJIANG HUAFON NEW MATERIALS CO., LTD. (inferido)",
+        "periodo": "30/11/2023",
+        "valor": null,
+        "unidade": "110 tambores",
+        "fonte": "https://en.nbd.ltd/trader/info/NBDD3Y534709325"
+      },
+      {
+        "descricao": "NBD: materiais de cabedal — air mesh, microfibra PU e biqueiras de aço, contêiner 40'",
+        "ncm": "3921.13",
+        "origem": "China",
+        "fornecedor": null,
+        "periodo": "16/11/2023",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://en.nbd.ltd/trader/info/NBDD3Y534709325"
+      }
+    ],
+    "fornecedores_conhecidos": "Xuchuan Chemical (Suzhou) (sistema PU, 2023); Zhejiang Huafon New Materials (pré-polímero, 2023); Aurora International Logistic",
+    "por_que_e_prospect": "Cliente confirmado do sistema PU Xuchuan (XC-6002/XC-8280) e comprador de microfibra/mesh da China — alvo para Xuchuan e Yantai.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.nbd.ltd/trader/info/NBDD3Y534709325"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "PRODUCTOS LISBON S.A. DE C.V.",
+    "nome_fantasia": null,
+    "pais": "MEXICO",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Fabricante de componentes para calçado (exporta punteras não metálicas 6406.90 para a Colômbia em 2026); importa poliol poliéster modificado e isocianato MDI da Kairos (Itália)",
+    "porte": null,
+    "ncms_provaveis": [
+      "3907.99",
+      "3909.50",
+      "6406.90"
+    ],
+    "evidencias": [
+      {
+        "descricao": "NBD: 'POLIMERO DE DIFENILMETAN DIISOCIANATO Y POLIMETILEN POLIFENIL ISOCIANATO ISOCIANATO ISN 13 KAIROS', HS 3909500400",
+        "ncm": "3909.50",
+        "origem": "Itália",
+        "fornecedor": "KAIROS S.R.L.",
+        "periodo": "23/02/2026",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://en.nbd.ltd/trader/info/NBDD3Y534778258"
+      },
+      {
+        "descricao": "NBD: 'POLI TER MODIFICADO POLIOL HDR S39 KAIROS', HS 3907290300",
+        "ncm": "3907.29",
+        "origem": "Itália",
+        "fornecedor": "KAIROS S.R.L.",
+        "periodo": "23/02/2026",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://en.nbd.ltd/trader/info/NBDD3Y534778258"
+      },
+      {
+        "descricao": "NBD: XUCHUAN CHEMICAL (SUZHOU) CO., LTD. listada entre os parceiros comerciais relacionados (data não mostrada)",
+        "ncm": "",
+        "origem": "China",
+        "fornecedor": "XUCHUAN CHEMICAL (SUZHOU) CO., LTD.",
+        "periodo": "não informado",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://en.nbd.ltd/trader/info/NBDD3Y534778258"
+      }
+    ],
+    "fornecedores_conhecidos": "Kairos S.r.l. (poliol/isocianato, 2025-2026); Xuchuan Chemical (Suzhou) (parceiro listado)",
+    "por_que_e_prospect": "Usa sistema poliol+isocianato em 2026 e já tem vínculo com a Xuchuan — alvo direto para o sistema PU Xuchuan.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.nbd.ltd/trader/info/NBDD3Y534778258"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "PINTURAS LTDA",
+    "nome_fantasia": null,
+    "pais": "COLOMBIA",
+    "cidade": "Autopista Medellín-Bogotá km 29, Vda. Toldas (Antioquia)",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "adesivos/químicos",
+    "produtos": "Indústria química (tintas/adesivos); importou TPU/poliuretano 3909.50 da Miracll em 2024",
+    "porte": null,
+    "ncms_provaveis": [
+      "3909.50",
+      "3506.91"
+    ],
+    "evidencias": [
+      {
+        "descricao": "ImportGenius: 15.500 kg, HS 3909500000, origem China, 'Mercancia Nueva, Nos Acogemos Al Decreto 188' — FOB 39.175 USD / CIF 42.388 USD (frete 3.050)",
+        "ncm": "3909.50",
+        "origem": "China",
+        "fornecedor": "Miracll Chemicals Co Ltd",
+        "periodo": "27/11/2024",
+        "valor": "CIF 42388 USD",
+        "unidade": "15500 kg",
+        "fonte": "https://www.importgenius.com/colombia/importers/pinturas-ltda"
+      }
+    ],
+    "fornecedores_conhecidos": "Miracll Chemicals Co Ltd (2024); Pangs Chem HK (2024); KH Chemicals BV (2024); Bayer MaterialScience; Merquinsa; Xinxiang T.N.C. Chemical",
+    "por_que_e_prospect": "Cliente direto da Miracll (15,5 t de 3909.50 em 11/2024) — manter e ampliar volume de TPU Miracll.",
+    "confianca": "alta",
+    "fontes": [
+      "https://www.importgenius.com/colombia/importers/pinturas-ltda"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "COMPOSTOS DO BRASIL",
+    "nome_fantasia": null,
+    "pais": "BRASIL",
+    "cidade": "Cotia/SP",
+    "id_fiscal": null,
+    "site": "https://www.compostos.com.br",
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Distribuidora oficial no Brasil do TPU Miracll (linha Mirathane: solados, calçado especial, mangueiras, cabos)",
+    "porte": null,
+    "ncms_provaveis": [
+      "3909.50"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Notícia (Revista PI / Arandanet): acordo de distribuição dos TPU Miracll (Mirathane, poliéster) no Brasil; página atualizada em 22/10/2024",
+        "ncm": "3909.50",
+        "origem": "China",
+        "fornecedor": "Miracll Chemicals Co., Ltd.",
+        "periodo": "2024",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://www.arandanet.com.br/revista/pi/noticia/3555-Acordo-ampliara-oferta-de-poliuretano-termoplastico-no-Brasil.html"
+      }
+    ],
+    "fornecedores_conhecidos": "Miracll Chemicals Co., Ltd. (distribuição)",
+    "por_que_e_prospect": "Canal da Miracll no Brasil — alinhar a representação (evitar conflito) e usar como referência de preço/clientes de TPU.",
+    "confianca": "média",
+    "fontes": [
+      "https://www.arandanet.com.br/revista/pi/noticia/3555-Acordo-ampliara-oferta-de-poliuretano-termoplastico-no-Brasil.html",
+      "https://www.compostos.com.br/linha-miracll-tpu"
+    ],
+    "atualiza_existente": false
+  }
+]
