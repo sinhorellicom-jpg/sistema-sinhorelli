@@ -8,7 +8,7 @@ Veritrade (veritradecorp.com — perfis de empresa por país com amostras de emb
 ## Regras
 - Só registre embarque que a fonte mostra de verdade: data (ou mês/ano), importador e pelo menos quantidade OU valor. Nunca invente nem estime números; se um campo não aparece, null.
 - Quantidade com a unidade exatamente como aparece (kg, ton, m2, sqft/pés², pcs, pares, rolos, unidades). Valor em USD, dizendo se é FOB, CIF ou "não informado".
-- Prefira 2024–2026. Registros mais antigos só se não houver nada recente para aquela empresa/NCM.
+- SÓ registros com data de 2026 em diante (data do embarque/BL/declaração). Registro sem data ou anterior a 2026 não entra.
 - Importador na América Latina (inclui Brasil e México). Exportador: qualquer país.
 
 ## Saída

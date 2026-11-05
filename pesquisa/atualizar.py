@@ -18,12 +18,14 @@ if arqs_emp:   # só limpa as etiquetas "novo" quando chega pesquisa nova de emp
 idx = {(e['pais'], norm(e['empresa'])): i for i, e in enumerate(emp)}
 novas = reforcadas = 0
 emb = d.setdefault('embarques', [])
+emb[:] = [x for x in emb if str(x.get('data') or '')[:4] >= str(d.get('embarquesDesde') or '2026-01-01')[:4]]
 def chave_emb(x): return (str(x.get('data') or ''), norm(x.get('importador')), str(x.get('ncm') or '')[:7], str(x.get('quantidade') or ''), str(x.get('valor') or ''))
 vistos_emb = {chave_emb(x) for x in emb}
 novos_emb = 0
 for f in sorted(glob.glob(os.path.join(RAIZ, 'pesquisa', 'novos', 'embarques*.json'))):
     for x in json.load(open(f, encoding='utf-8')):
         if not x.get('importador') or not x.get('fonte') or not (x.get('quantidade') or x.get('valor')): continue
+        if str(x.get('data') or '')[:4] < str(d.get('embarquesDesde') or '2026-01-01')[:4]: continue   # só registros de 2026 em diante
         x['pais'] = str(x.get('pais') or '').upper().strip()
         k = chave_emb(x)
         if k in vistos_emb: continue

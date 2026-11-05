@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261105-140544';</script>
+<script>window.VERSAO_SISTEMA = '20261105-152423';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -15625,7 +15625,8 @@ async function embSalvarMeus(){
   try{ storageSet(EMB_KEY, json, true); }catch(e){}
 }
 function embTodos(){
-  const pub = ((prospDados && prospDados.embarques) || []).map((x,i)=>Object.assign({ id:'pub_'+i, _pub:true }, x));
+  const desde = String((prospDados && prospDados.embarquesDesde) || '2026-01-01').slice(0,4);   // registros coletados: só de 2026 em diante
+  const pub = ((prospDados && prospDados.embarques) || []).filter(x=>String(x.data||'').slice(0,4) >= desde).map((x,i)=>Object.assign({ id:'pub_'+i, _pub:true }, x));
   const meus = ((embMeus && embMeus.itens) || []).map(x=>Object.assign({ _pub:false }, x));
   return meus.concat(pub).sort((a,b)=>String(b.data||'').localeCompare(String(a.data||'')));
 }
@@ -15722,7 +15723,7 @@ function embRender(){
   const precoForm = f ? embPreco(f) : null;
   const D = prospDados || {};
   box.innerHTML = `
-    <div class="an-panel-title">🚢 Embarques — quem comprou, de quem e a que preço <span class="an-panel-sub">${lista.length} de ${todos.length} registro(s)${D.embarquesAtualizadoEm?` · coleta de ${E(fmtDateBR(D.embarquesAtualizadoEm))}`:''} · preço = valor ÷ quantidade, pela unidade</span></div>
+    <div class="an-panel-title">🚢 Embarques — quem comprou, de quem e a que preço <span class="an-panel-sub">${lista.length} de ${todos.length} registro(s)${D.embarquesAtualizadoEm?` · coleta de ${E(fmtDateBR(D.embarquesAtualizadoEm))}`:''} · registros de ${E(String(D.embarquesDesde||'2026-01-01').slice(0,4))} em diante · preço = valor ÷ quantidade, pela unidade</span></div>
     <div class="pr-filtros">
       <select id="embPais">${opt(paises, embF.pais, 'Todos os países')}</select>
       <select id="embNcm">${opt(ncms4, embF.ncm, 'Todas as NCMs')}</select>
