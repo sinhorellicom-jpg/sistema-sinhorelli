@@ -1,0 +1,165 @@
+[
+ {
+  "empresa": "CURTIDURIA TUNGURAHUA S.A.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Ambato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume; importa wet blue/divididos da JBS S.A. (Brasil) e couro da JBS Leather Argentina (CSA-N), além de químicos (Trumpler, Cromogenia, Union Specialties)",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "JBS S.A.: 'KWB.2 A/B DIVBLUE 22+ GRANDE CF PCS', BL 721581491, 3 linhas de 75.845 / 75.838 / 76.550 m2; em 16/08/2026 56.644 kg do mesmo produto; 30/08/2026 61.260 kg (sem descrição). Página do fornecedor JBS SA no Equador: 296 embarques, top parceiro Tungurahua (1.338.877 kg, último 30/08/2026)",
+    "ncm": "",
+    "origem": "Brasil",
+    "fornecedor": "JBS S.A.",
+    "periodo": "16/08/2026-30/08/2026",
+    "valor": null,
+    "unidade": "m2 / kg",
+    "fonte": "https://www.importgenius.com/ecuador/suppliers/jbs-sa"
+   },
+   {
+    "descricao": "JBS Leather Argentina SAU: 'CSA-N SAN DIEGO 1.4/1.6 TR2 COGNAC' 9.094 m2 e 'CSA-N SAN DIEGO 14/16 TR2 P BLACK SDS' 10.226,25 m2 (BL EABUE2607398-1); 'CUEROS VACUNOS SIN ACABADO' 3.622 + 3.497 m2 (BL BUEGYE2603001, 22/04/2026); 1.325 kg em 30/08/2026. 10 embarques no total, único comprador equatoriano",
+    "ncm": "",
+    "origem": "Argentina",
+    "fornecedor": "JBS LEATHER ARGENTINA SAU",
+    "periodo": "22/04/2026-30/08/2026",
+    "valor": null,
+    "unidade": "m2",
+    "fonte": "https://www.importgenius.com/ecuador/suppliers/jbs-leather-argentina-sau"
+   }
+  ],
+  "fornecedores_conhecidos": "JBS S.A. (Brasil); JBS Leather Argentina SAU (CSA-N); Trumpler Española; Cromogenia-Units; Union Specialties; Mosconi",
+  "por_que_e_prospect": "Maior comprador equatoriano de couro JBS (Brasil e Argentina) com embarques mensais em 2026.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/ecuador/suppliers/jbs-sa",
+   "https://www.importgenius.com/ecuador/suppliers/jbs-leather-argentina-sau",
+   "https://www.importgenius.com/ecuador/importers/curtiduria-tungurahua-s-a"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "LEAR MEXICAN SEATING CORPORATION",
+  "nome_fantasia": "Lear",
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Revestimentos automotivos (assentos); compra couro crust bovino da JBS S/A (Brasil) e da JBS Leather Argentina, via BL dos EUA (Houston/Douglas AZ)",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "4104.41",
+   "4104.49",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Embarque JBS S/A: 'Crust Bovine Leather' (descrição HTS de couro preparado após curtimento ou crust), 22 PKG, 17.060 kg, BL ONEYSAOG52593500. JBS S A é o maior fornecedor: 2.334 contêineres, 24.153.854 kg, último 30/10/2026",
+    "ncm": "",
+    "origem": "Brasil",
+    "fornecedor": "JBS S/A",
+    "periodo": "30/10/2026",
+    "valor": null,
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/importers/lear-mexican-seating-corp"
+   },
+   {
+    "descricao": "JBS Leather Argentina S.A. → Lear Mexican Seating Corp (Houston): crust leather HS 410441/410449, 7 embarques de 2.504 a 6.407 kg (POs 207737-209429), último 17/03/2024",
+    "ncm": "4104.41",
+    "origem": "Argentina",
+    "fornecedor": "JBS LEATHER ARGENTINA S.A.",
+    "periodo": "26/06/2023-17/03/2024",
+    "valor": null,
+    "unidade": "kg",
+    "fonte": "https://www.seair.co.in/us-import/product-leather-crust/e-jbs-leather-argentina-s-a.aspx"
+   }
+  ],
+  "fornecedores_conhecidos": "JBS S/A (Brasil); JBS Leather Argentina S.A.; JBS Leather Uruguay S.A. (2017-2018); Vancouros; Viposa",
+  "por_que_e_prospect": "Grande comprador recorrente de crust JBS para assentos automotivos, com embarque em 30/10/2026.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/importers/lear-mexican-seating-corp",
+   "https://www.seair.co.in/us-import/product-leather-crust/e-jbs-leather-argentina-s-a.aspx"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "T.G. CUIR INTERNATIONAL S.A.",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": null,
+  "id_fiscal": "800193687",
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Importa couro bovino acabado (HS 4107.12.20) da Zendaleather (JBS) do Uruguai, por caminhão até Asunción",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Registro de importação do Paraguai: embarcador 'ZENDALEATHER S.A. (JBS) 019D CUE', HS 41071220, 70.000 p2, 6.985 kg brutos, CIF US$ 179.787 / FOB US$ 176.668, marca ZENDA; outros embarques em 20/10/2015 e 01/04/2016",
+    "ncm": "4107",
+    "origem": "Uruguai",
+    "fornecedor": "ZENDALEATHER S.A. (JBS)",
+    "periodo": "21/07/2015-01/04/2016",
+    "valor": "CIF US$ 179.787",
+    "unidade": "70000 p2",
+    "fonte": "https://panjiva.com/Zendaleather-S-A/35658643"
+   }
+  ],
+  "fornecedores_conhecidos": "Zendaleather S.A. (JBS, Uruguai)",
+  "por_que_e_prospect": "Comprou couro acabado da Zendaleather/JBS em volume (US$ 180 mil por embarque), mas o registro é antigo.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://panjiva.com/Zendaleather-S-A/35658643"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "ANDINA TRIM S.A.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Importou couro da Zendaleather (Uruguai) em 2011; nome sugere revestimentos/acabamentos automotivos (não confirmado)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cliente da Zendaleather S.A. em registros de importação da Colômbia (detalhes ocultos): 09/09/2011, 23/11/2011, 26/12/2011",
+    "ncm": "",
+    "origem": "Uruguai",
+    "fornecedor": "ZENDALEATHER S.A.",
+    "periodo": "09/09/2011-26/12/2011",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Zendaleather-S-A/1329739"
+   }
+  ],
+  "fornecedores_conhecidos": "Zendaleather S.A. (Uruguai)",
+  "por_que_e_prospect": "Já comprou couro da Zendaleather, mas só há registros de 2011.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://panjiva.com/Zendaleather-S-A/1329739"
+  ],
+  "atualiza_existente": false
+ }
+]
