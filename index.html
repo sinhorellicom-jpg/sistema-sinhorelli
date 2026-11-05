@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261105-165725';</script>
+<script>window.VERSAO_SISTEMA = '20261105-170225';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -15809,7 +15809,7 @@ function embRender(){
 }
 
 /* ===== BUSCA POR IMPORTADOR / EXPORTADOR — para quem os nossos fornecedores vendem (e de quem um cliente compra) ===== */
-const buscaF = { exp:'', imp:'' };
+const buscaF = { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false };
 // apelidos dos nossos fornecedores → como o nome aparece nos registros
 const BUSCA_APELIDOS = {
   'JBS': /\bJBS\b|FRIBOI|CSA-?N\b/, 'JBS BR': /\bJBS\b(?!.*ARGENTIN)|JBS\s+COUROS|FRIBOI/, 'JBS AR': /JBS.*ARGENTIN|CSA-?N\b/, 'JBS US': /JBS.*(USA|US\b)/, 'JBS UR': /JBS.*URUGUA/,
@@ -15833,10 +15833,19 @@ function buscaRender(){
   const nossos = [...new Set(prospNcms().flatMap(x=>x.fornecedores||[]).filter(f=>f && !/^—/.test(f)))];
   const sugExp = [...new Set(embs.map(x=>x.exportador).filter(Boolean).map(x=>String(x).replace(/\s*\(.*$/,'').trim()))].sort();
   const sugImp = [...new Set(embs.map(x=>x.importador).concat((D.empresas||[]).map(e=>e.empresa)).filter(Boolean))].sort();
-  const temBusca = buscaF.exp || buscaF.imp;
+  const temBusca = buscaF.exp || buscaF.imp || buscaF.pais || buscaF.ncm || buscaF.ano || buscaF.soCli || buscaF.semCli;
+  const filtroExtra = (pais, ncms, data, nome) => {
+    if(buscaF.pais && pais !== buscaF.pais) return false;
+    if(buscaF.ncm && !(ncms||[]).some(n=>prospNcm4(n)===buscaF.ncm)) return false;
+    if(buscaF.ano && data!==null && String(data||'').slice(0,4)!==buscaF.ano) return false;
+    const c = ehCli(nome); if(buscaF.soCli && !c) return false; if(buscaF.semCli && c) return false;
+    return true; };
+  const paisesB = [...new Set(embs.map(x=>x.pais).concat((D.empresas||[]).map(e=>e.pais)).filter(Boolean))].sort();
+  const ncmsB = [...new Set(embs.map(x=>prospNcm4(x.ncm)).concat(prospNcms().map(x=>prospNcm4(x.ncm))).filter(n=>n && n.length===4))].sort();
+  const anosB = [...new Set(embs.map(x=>String(x.data||'').slice(0,4)).filter(a=>/^\d{4}$/.test(a)))].sort().reverse();
   let corpo = '';
   if(temBusca){
-    const lista = embs.filter(x=>buscaCasa(x.exportador, buscaF.exp) && buscaCasa(x.importador, buscaF.imp));
+    const lista = embs.filter(x=>buscaCasa(x.exportador, buscaF.exp) && buscaCasa(x.importador, buscaF.imp) && filtroExtra(x.pais, [x.ncm], x.data, x.importador));
     // agrupa: buscando exportador → por importador; buscando só importador → por exportador
     const porImp = !!buscaF.exp || !buscaF.imp;
     const g = {};
@@ -15861,7 +15870,9 @@ function buscaRender(){
     const emps = (D.empresas||[]).filter(e=>{
       if(buscaF.imp && !buscaCasa([e.empresa, e.nome_fantasia].join(' '), buscaF.imp)) return false;
       if(buscaF.exp && !prospFornecedores(e).some(f=>buscaCasa(f, buscaF.exp))) return false;
-      return true; }).slice(0, 150);
+      if(!filtroExtra(e.pais, (e.ncms_provaveis||[]).concat((e.evidencias||[]).map(v=>v.ncm)), null, e.empresa)) return false;
+      if(buscaF.ano){ const pr = prospPeriodo(e); if(pr.max===null || pr.max < +buscaF.ano || (pr.min!==null && pr.min > +buscaF.ano)) return false; }
+      return true; }).slice(0, 300);
     const linhaE = e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp));
       const v = evs[0] || (e.evidencias||[])[0] || {};
       const cli = ehCli(e.empresa);
@@ -15873,7 +15884,7 @@ function buscaRender(){
       <div class="busca-sec">${tituloG} <span class="an-panel-sub">${grupos.length} · ${lista.length} embarque(s) de 2026 · clique numa linha para ver os embarques</span></div>
       ${grupos.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>${porImp?'Importador':'Exportador'}</th><th>País</th><th>Embarques</th><th>Último</th><th>NCMs</th><th style="text-align:right">Valor total</th><th>Preço médio</th><th>${porImp?'Fornecedor(es)':'Comprador(es)'}</th></tr></thead><tbody>${grupos.map(linhaG).join('')}</tbody></table></div>`
         : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhum embarque de 2026 com essa busca ainda — a coleta diária vai acrescentando. Veja abaixo as empresas da base.</div>'}
-      <div class="busca-sec" style="margin-top:12px;">📋 Empresas da base ${buscaF.exp?`que compram de <b>${E(buscaF.exp)}</b>`:`com esse nome`} <span class="an-panel-sub">${emps.length} · registros de qualquer período (o período está na última coluna)</span></div>
+      <div class="busca-sec" style="margin-top:12px;">📋 Empresas da base ${buscaF.exp?`que compram de <b>${E(buscaF.exp)}</b>`:(buscaF.imp?`com esse nome`:`com esses filtros`)} <span class="an-panel-sub">${emps.length} · registros de qualquer período (o período está na última coluna)</span></div>
       ${emps.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>Fornecedor citado</th><th>Registro</th><th>Período</th></tr></thead><tbody>${emps.map(linhaE).join('')}</tbody></table></div>`
         : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhuma empresa da base cita esse fornecedor.</div>'}`;
   }
@@ -15883,6 +15894,11 @@ function buscaRender(){
       <input id="buscaExp" list="buscaExpL" placeholder="Exportador / fornecedor (ex.: JBS, Yantai, Miracll)" value="${E(buscaF.exp)}" style="min-width:260px;">
       <input id="buscaImp" list="buscaImpL" placeholder="Importador / comprador" value="${E(buscaF.imp)}" style="min-width:240px;">
       <button class="btn btn-primary btn-sm" id="buscaIr">Pesquisar</button>
+      <select id="buscaPais"><option value="">Todos os países</option>${paisesB.map(v=>`<option ${v===buscaF.pais?'selected':''}>${E(v)}</option>`).join('')}</select>
+      <select id="buscaNcm"><option value="">Todas as NCMs</option>${ncmsB.map(v=>`<option ${v===buscaF.ncm?'selected':''}>${E(v)}</option>`).join('')}</select>
+      <select id="buscaAno"><option value="">Qualquer ano</option>${anosB.map(v=>`<option ${v===buscaF.ano?'selected':''}>${E(v)}</option>`).join('')}</select>
+      <label><input type="checkbox" id="buscaSoCli" ${buscaF.soCli?'checked':''}> só clientes</label>
+      <label><input type="checkbox" id="buscaSemCli" ${buscaF.semCli?'checked':''}> só quem ainda não é cliente</label>
       ${temBusca?'<button class="btn btn-ghost btn-sm" id="buscaLimpar">Limpar</button>':''}
       <datalist id="buscaExpL">${nossos.concat(sugExp).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
       <datalist id="buscaImpL">${sugImp.slice(0,800).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
@@ -15892,7 +15908,8 @@ function buscaRender(){
   const ir = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaRender(); };
   box.querySelector('#buscaIr').onclick = ir;
   box.querySelectorAll('#buscaExp,#buscaImp').forEach(i=>i.addEventListener('keydown', ev=>{ if(ev.key==='Enter') ir(); }));
-  const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ buscaF.exp = ''; buscaF.imp = ''; buscaRender(); };
+  const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ Object.assign(buscaF, { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false }); buscaRender(); };
+  [['buscaPais','pais'],['buscaNcm','ncm'],['buscaAno','ano'],['buscaSoCli','soCli'],['buscaSemCli','semCli']].forEach(([id,k])=>{ const i = box.querySelector('#'+id); if(i) i.onchange = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaF[k] = i.type==='checkbox' ? i.checked : i.value; if(k==='soCli' && i.checked) buscaF.semCli = false; if(k==='semCli' && i.checked) buscaF.soCli = false; buscaRender(); }; });
   box.querySelectorAll('[data-busca-exp]').forEach(b=>b.onclick = ()=>{ buscaF.exp = buscaF.exp===b.dataset.buscaExp ? '' : b.dataset.buscaExp; buscaF.imp = ''; buscaRender(); });
   box.querySelectorAll('[data-busca-ir]').forEach(tr=>tr.onclick = ()=>{ embF.busca = tr.dataset.buscaIr; embF.limite = 200; embRender(); const eb = document.getElementById('prEmbBox'); if(eb) eb.scrollIntoView({behavior:'smooth', block:'start'}); });
 }
