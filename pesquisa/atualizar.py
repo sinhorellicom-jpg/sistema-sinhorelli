@@ -13,8 +13,11 @@ emp = d['empresas']
 arqs_emp = [f for f in sorted(glob.glob(os.path.join(RAIZ, 'pesquisa', 'novos', '*.json'))) if not os.path.basename(f).startswith('embarques')]
 ja = set(d.get('arquivosProcessados') or [])
 arqs_emp = [f for f in arqs_emp if os.path.basename(f) not in ja]
-if arqs_emp:   # só limpa as etiquetas "novo" quando chega pesquisa nova de empresas
-    for e in emp: e.pop('novo', None); e.pop('atualizado', None)
+# etiqueta "novo"/"atualizado" fica 30 dias
+_lim = (datetime.date.today() - datetime.timedelta(days=30)).isoformat()
+for e in emp:
+    if (e.get('novo') or e.get('atualizado')) and str(e.get('novoEm') or '') < _lim:
+        e.pop('novo', None); e.pop('atualizado', None); e.pop('novoEm', None)
 idx = {(e['pais'], norm(e['empresa'])): i for i, e in enumerate(emp)}
 novas = reforcadas = 0
 emb = d.setdefault('embarques', [])
@@ -47,9 +50,9 @@ for f in arqs_emp:
             if e.get('confianca') == 'alta': a['confianca'] = 'alta'
             for c in ('cidade','id_fiscal','site','porte','produtos','por_que_e_prospect','fornecedores_conhecidos','nome_fantasia'):
                 if not a.get(c) and e.get(c): a[c] = e[c]
-            a['atualizado'] = True; reforcadas += 1
+            a['atualizado'] = True; a['novoEm'] = datetime.date.today().isoformat(); reforcadas += 1
         else:
-            e['novo'] = True; idx[k] = len(emp); emp.append(e); novas += 1
+            e['novo'] = True; e['novoEm'] = datetime.date.today().isoformat(); idx[k] = len(emp); emp.append(e); novas += 1
 hoje = datetime.date.today()
 d['arquivosProcessados'] = sorted(ja | {os.path.basename(f) for f in arqs_emp})
 if arqs_emp:
