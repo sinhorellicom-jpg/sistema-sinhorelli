@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261105-152423';</script>
+<script>window.VERSAO_SISTEMA = '20261105-153037';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -15704,7 +15704,6 @@ function embRender(){
   const linha = x=>{
     const p = embPreco(x), cli = ehCli(x.importador);
     const qtd = x.quantidade ? Number(x.quantidade).toLocaleString("pt-BR",{maximumFractionDigits:2}) + ' ' + E(x.unidade||'') : '—';
-    const fonte = /^https?:/.test(String(x.fonte||'')) ? `<a href="${E(x.fonte)}" target="_blank" rel="noopener">${E(String(x.fonte).replace(/^https?:\/\/(www\.)?/,'').split('/')[0])}</a>` : E(x.fonte||'');
     return `<tr>
       <td style="white-space:nowrap;">${E(x.data ? (/^\d{4}-\d{2}-\d{2}$/.test(x.data) ? fmtDateBR(x.data) : x.data) : '—')}</td>
       <td><b>${E(x.importador||'—')}</b>${cli?` <span class="pr-cli">✓ cliente</span>`:''}</td>
@@ -15715,7 +15714,7 @@ function embRender(){
       <td style="text-align:right;white-space:nowrap;">${qtd}${x.obs?`<div class="an-panel-sub">${E(x.obs)}</div>`:''}</td>
       <td style="text-align:right;white-space:nowrap;">${x.valor ? 'US$ '+fmt(x.valor) : '—'}${x.tipo_valor && x.valor?`<div class="an-panel-sub">${E(x.tipo_valor)}</div>`:''}</td>
       <td class="emb-preco">${p ? p.txt : (x.preco_unit_fonte ? 'US$ '+fmt(x.preco_unit_fonte)+' <small>(fonte)</small>' : `<span class="an-panel-sub" style="font-weight:400;">sem ${!(+x.quantidade>0)?'quantidade':'valor'} na fonte</span>`)}</td>
-      <td>${fonte}${x._pub ? '' : `<div style="white-space:nowrap;margin-top:2px;"><button class="btn btn-ghost btn-sm" data-emb-ed="${E(x.id)}">✎</button><button class="btn btn-ghost btn-sm" data-emb-del="${E(x.id)}">✕</button></div>`}</td>
+      <td>${x._pub ? '' : `<div style="white-space:nowrap;"><button class="btn btn-ghost btn-sm" data-emb-ed="${E(x.id)}">✎</button><button class="btn btn-ghost btn-sm" data-emb-del="${E(x.id)}">✕</button></div>`}</td>
     </tr>`; };
   const opt = (arr, sel, todos) => `<option value="">${todos}</option>` + arr.map(v=>`<option value="${E(v)}" ${v===sel?'selected':''}>${E(v)}</option>`).join('');
   const f = embForm;
@@ -15752,7 +15751,7 @@ function embRender(){
       <div style="display:flex;gap:8px;justify-content:flex-end;"><button class="btn btn-ghost btn-sm" id="embCancelar">Cancelar</button><button class="btn btn-primary btn-sm" id="embSalvar">Salvar embarque</button></div>
     </div>` : ''}
     ${resumo ? `<div class="emb-resumo">${resumo}</div>` : ''}
-    <div style="overflow:auto;max-height:70vh;"><table class="pr-tab"><thead><tr><th>Data</th><th>Importador</th><th>País</th><th>Fornecedor / exportador</th><th>NCM</th><th>Produto</th><th style="text-align:right">Quantidade</th><th style="text-align:right">Valor</th><th>Preço unitário (calculado)</th><th>Fonte</th></tr></thead>
+    <div style="overflow:auto;max-height:70vh;"><table class="pr-tab"><thead><tr><th>Data</th><th>Importador</th><th>País</th><th>Fornecedor / exportador</th><th>NCM</th><th>Produto</th><th style="text-align:right">Quantidade</th><th style="text-align:right">Valor</th><th>Preço unitário (calculado)</th><th></th></tr></thead>
       <tbody>${vis.map(linha).join('') || `<tr><td colspan="10" class="an-panel-sub" style="padding:16px;">${todos.length ? 'Nenhum embarque com esses filtros.' : 'Ainda não há embarques. A coleta automática traz os registros a cada 15 dias; você também pode ler um BL / certificado de origem em PDF ou lançar à mão.'}</td></tr>`}</tbody></table></div>
     ${lista.length > vis.length ? `<div style="text-align:center;margin-top:8px;"><button class="btn btn-outline btn-sm" id="embMais">Mostrar mais (${lista.length - vis.length})</button></div>` : ''}
     <div class="an-panel-sub" style="margin-top:8px;">Couro: preço por m² e por pé² (1 m² = 10,76 pé²) · químicos e componentes: por kg (ton e lb convertidos) · peças/pares: por unidade. FOB não inclui frete; CIF inclui frete e seguro. Embarques "lançados por nós" ficam só para quem tem acesso total.</div>`;
