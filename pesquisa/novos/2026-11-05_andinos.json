@@ -1,0 +1,2018 @@
+[
+ {
+  "empresa": "WORK GROUP MACHINERY S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": "Lima",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Importa biqueiras de aço e de plástico para calçado de segurança, granulado de PVC para solados, máquina de moldagem de cabedal e planta de EVA",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.90",
+   "3921.12",
+   "8480.71"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Punteras de acero para calzado de seguridad (6406909000), 140,108 kg",
+    "ncm": "6406.90",
+    "origem": "China (Shanghai→Callao)",
+    "fornecedor": "Gaomi Shengyuna Metal Products Co",
+    "periodo": "06/05/2026",
+    "valor": "1938",
+    "unidade": "kg 140.108 (valor sem moeda na fonte)",
+    "fonte": "https://en.52wmb.com/buyer/61433356"
+   },
+   {
+    "descricao": "Punteras plásticas para calzado de seguridad (6406909000), 339,642 kg",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "Gaomi Shengyuna Metal Products Co",
+    "periodo": "06/05/2026",
+    "valor": "4698",
+    "unidade": "kg 339.642 (valor sem moeda na fonte)",
+    "fonte": "https://en.52wmb.com/buyer/61433356"
+   },
+   {
+    "descricao": "Punteras de acero inoxidable para calzado de seguridad (6406909000), 4.575,2 kg",
+    "ncm": "6406.90",
+    "origem": "China (Qingdao→Callao)",
+    "fornecedor": null,
+    "periodo": "25/08/2025",
+    "valor": "9500",
+    "unidade": "kg 4575.2 (valor sem moeda na fonte)",
+    "fonte": "https://en.52wmb.com/buyer/61433356"
+   },
+   {
+    "descricao": "PVC granulado para suelas de calzado (3904210000), 2 x 500 kg",
+    "ncm": "3904.21",
+    "origem": "China",
+    "fornecedor": "Gaomi Shengyuna Metal Products Co",
+    "periodo": "06/05/2026",
+    "valor": "845 (cada linha)",
+    "unidade": "kg 500",
+    "fonte": "https://en.52wmb.com/buyer/61433356"
+   },
+   {
+    "descricao": "Planta/molde de EVA (8480719000)",
+    "ncm": "8480.71",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "10/10/2023",
+    "valor": "5403.98",
+    "unidade": "kg 570",
+    "fonte": "https://en.52wmb.com/buyer/61433356"
+   }
+  ],
+  "fornecedores_conhecidos": "Gaomi Shengyuna Metal Products Co (China)",
+  "por_que_e_prospect": "Comprador recorrente (2025–2026) de biqueiras para bota de segurança e PVC para solado — encaixa direto em biqueira/palmilha (Yantai) e moldes (Polako).",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/61433356"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "SINTECUEROS JF S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importa cuero sintético PVC (linhas EXP 2000 Mercury, Cueran) para revenda à indústria de calçado/marroquinaria; ~615 transações em 2025 e 480 em 2026",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.12",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cuero sintético PVC EXP 2000 Mercury Hock brillo jaspeado (3921120000), 2.020 kg",
+    "ncm": "3921.12",
+    "origem": "Equador (Huaquillas)",
+    "fornecedor": "SINTECUERO S.A.",
+    "periodo": "15/09/2026",
+    "valor": "4960.37",
+    "unidade": "kg 2020 (valor sem moeda na fonte)",
+    "fonte": "https://en.52wmb.com/buyer/69371141"
+   },
+   {
+    "descricao": "Cuero sintético PVC EXP 2000 Mercury Cabra brillo (3921120000), 1.200 kg",
+    "ncm": "3921.12",
+    "origem": "Equador",
+    "fornecedor": "SINTECUERO S.A.",
+    "periodo": "15/09/2026",
+    "valor": "2757.82",
+    "unidade": "kg 1200",
+    "fonte": "https://en.52wmb.com/buyer/69371141"
+   },
+   {
+    "descricao": "Cuero sintético PVC EXP 2000 Mercury Marruecos semimate negro (3921120000), 1.150,3 kg",
+    "ncm": "3921.12",
+    "origem": "Equador",
+    "fornecedor": "SINTECUERO S.A.",
+    "periodo": "15/09/2026",
+    "valor": "2684.38",
+    "unidade": "kg 1150.3",
+    "fonte": "https://en.52wmb.com/buyer/69371141"
+   }
+  ],
+  "fornecedores_conhecidos": "SINTECUERO S.A. (Equador)",
+  "por_que_e_prospect": "Grande importador recorrente de sintético 3921.12 (2025–2026); alvo para sintético PVC/PU e microfibra da Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/69371141"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CALZADO CHOSICA S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": "Lurigancho-Chosica (Lima)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "bota PVC/borracha",
+  "produtos": "Fabricante de botas de borracha (6401) e calçado com cabedal têxtil/couro e sola de borracha; exporta para Bata Chile e Holanda",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20",
+   "3506.91",
+   "5603.14",
+   "6005.37",
+   "3921.12"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Exportação de botas de borracha (6401100000/6401920000) para Bata Chile S.A. — comprova fábrica ativa",
+    "ncm": "6401.10",
+    "origem": "Peru → Chile",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "07/08/2023",
+    "valor": "28992.82",
+    "unidade": "kg 5816.61",
+    "fonte": "https://en.52wmb.com/supplier/24705142"
+   },
+   {
+    "descricao": "Exportação de calçado têxtil com sola de borracha (6404190000) para Mipacha Footwear B.V.",
+    "ncm": "6404.19",
+    "origem": "Peru → Holanda",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "25/09/2023",
+    "valor": "16780.82",
+    "unidade": "kg 1190.151",
+    "fonte": "https://en.52wmb.com/supplier/24705142"
+   },
+   {
+    "descricao": "BL de exportação de calçado 6403.99 para Nriu USA Inc.; endereço Carretera Central Km 40.5, Chosica, Lurigancho, Lima",
+    "ncm": "6403.99",
+    "origem": "Peru → EUA",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "23/02/2016",
+    "valor": null,
+    "unidade": "42 packages / 480 kg",
+    "fonte": "https://es.panjiva.com/Calzado-Chosica-Sac/24046218"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fábrica exportadora de botas de borracha e calçado vulcanizado; consome solados, adesivos, forros e não-tecidos.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/supplier/24705142",
+   "https://es.panjiva.com/Calzado-Chosica-Sac/24046218"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "INDUSTRIAS WINDSOR S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fabricante/exportador peruano de calçado (6404.19) para Calzatodo (Colômbia)",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20",
+   "3506.91",
+   "6005.37",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Exportação de calçado 6404190000 para Calzatodo S.A. (Colômbia), 2.567,5 kg",
+    "ncm": "6404.19",
+    "origem": "Peru → Colômbia",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "06/08/2024",
+    "valor": "69269.16",
+    "unidade": "kg 2567.5",
+    "fonte": "https://en.52wmb.com/supplier/3517458"
+   },
+   {
+    "descricao": "Exportação de calçado 6404190000 para Calzatodo S.A. (Colômbia), 1.853 kg",
+    "ncm": "6404.19",
+    "origem": "Peru → Colômbia",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "06/08/2024",
+    "valor": "47966.13",
+    "unidade": "kg 1853",
+    "fonte": "https://en.52wmb.com/supplier/3517458"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de calçado ativo em 2024 (exporta à Colômbia) — comprador potencial de solados, forros/mesh, sintéticos e adesivos.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/supplier/3517458"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "INDUSTRIA DEL POLIMERO DEL PERU",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Importador de poliuretano líquido (3º maior do Peru no período, 13% de participação, 18 embarques)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Volza: comprador de 'Polyurethane Liquid' no Peru, 13% das importações, 18 embarques (mar/2023–fev/2024); NCM exata não exibida",
+    "ncm": "3909.50",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "03/2023-02/2024",
+    "valor": null,
+    "unidade": "18 embarques",
+    "fonte": "https://volza.com/p/polyurethane-liquid/buyers/buyers-in-peru"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Importador relevante de PU líquido — possível usuário/sistema PU; validar se atende solado/calçado.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://volza.com/p/polyurethane-liquid/buyers/buyers-in-peru"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "SILVER ARROW S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Maior importador de poliuretano líquido no Peru no período (17% de participação, 23 embarques)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Volza: comprador nº1 de 'Polyurethane Liquid' no Peru, 17% das importações, 23 embarques (mar/2023–fev/2024); NCM exata não exibida",
+    "ncm": "3909.50",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "03/2023-02/2024",
+    "valor": null,
+    "unidade": "23 embarques",
+    "fonte": "https://volza.com/p/polyurethane-liquid/buyers/buyers-in-peru"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Maior importador de PU líquido do Peru — checar se distribui sistema PU para solados (Xuchuan/Miracll).",
+  "confianca": "baixa",
+  "fontes": [
+   "https://volza.com/p/polyurethane-liquid/buyers/buyers-in-peru"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "INDUSTRIAS WVVALENTES E.I.R.L.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Importa tecido de malha (mesh) para indústria de calçado (6005370000)",
+  "porte": null,
+  "ncms_provaveis": [
+   "6005.37",
+   "6406.90",
+   "5603.14"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Tejido de punto para industria del calzado (6005370000), 4.359,42 kg",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "FUJIAN ZHANGPING XIELONG",
+    "periodo": "08/02/2022",
+    "valor": "15790",
+    "unidade": "kg 4359.42",
+    "fonte": "https://en.52wmb.com/supplier/67959970"
+   },
+   {
+    "descricao": "Tejido de punto para industria del calzado (6005370000), 3.491,19 kg",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "FUJIAN ZHANGPING XIELONG",
+    "periodo": "08/02/2022",
+    "valor": "12837.5",
+    "unidade": "kg 3491.19",
+    "fonte": "https://en.52wmb.com/supplier/67959970"
+   },
+   {
+    "descricao": "Mesh material for knitwear/shoe industry (6005370000), 1.970,2 kg",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "JINJIANG HUAYU ZHENGYING IMPORTS&EXP",
+    "periodo": "20/09/2023",
+    "valor": "5877.77",
+    "unidade": "kg 1970.2",
+    "fonte": "https://en.52wmb.com/supplier/7826475"
+   }
+  ],
+  "fornecedores_conhecidos": "FUJIAN ZHANGPING XIELONG; JINJIANG HUAYU ZHENGYING IMPORTS&EXP",
+  "por_que_e_prospect": "Importador recorrente de mesh 6005.37 para calçado (2022–2023) — alvo direto para mesh/forros da Yantai.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/supplier/67959970",
+   "https://en.52wmb.com/supplier/7826475"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "SENSEI SPORTS S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Importa sistema integral de piso esportivo de poliuretano (3909.50)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Sistema Integral De Piso Deportivo De Poliuretano (HS 3909500000), 5.625 kg",
+    "ncm": "3909.50",
+    "origem": "França",
+    "fornecedor": "Stockmeier Urethanes France SAS",
+    "periodo": "08/11/2022",
+    "valor": "18384.9",
+    "unidade": "kg 5625",
+    "fonte": "https://www.importgenius.com/peru/suppliers/stockmeier-urethanes-france-sas"
+   },
+   {
+    "descricao": "Sistema Integral De Piso Deportivo De Poliuretano, 2.930 kg",
+    "ncm": "3909.50",
+    "origem": "França",
+    "fornecedor": "Stockmeier Urethanes France SAS",
+    "periodo": "07/06/2022",
+    "valor": null,
+    "unidade": "kg 2930",
+    "fonte": "https://www.importgenius.com/peru/suppliers/stockmeier-urethanes-france-sas"
+   }
+  ],
+  "fornecedores_conhecidos": "Stockmeier Urethanes France SAS",
+  "por_que_e_prospect": "Usuário de sistema PU 3909.50 (pisos esportivos) — prospect secundário para pré-polímero/isocianato Xuchuan/Miracll.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/stockmeier-urethanes-france-sas"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "RECUPERACION MATERIALES DIVERSOS PERU S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Importa ligante de poliuretano Stobicoll (3909.50)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Poliuretano Stobicoll R 352.00, 7.350 kg",
+    "ncm": "3909.50",
+    "origem": "França",
+    "fornecedor": "Stockmeier Urethanes France SAS",
+    "periodo": "04/04/2022",
+    "valor": null,
+    "unidade": "kg 7350",
+    "fonte": "https://www.importgenius.com/peru/suppliers/stockmeier-urethanes-france-sas"
+   },
+   {
+    "descricao": "Poliuretano Stobicoll R 382.01 (Noir), 2.300 kg",
+    "ncm": "3909.50",
+    "origem": "França",
+    "fornecedor": "Stockmeier Urethanes France SAS",
+    "periodo": "04/04/2022",
+    "valor": null,
+    "unidade": "kg 2300",
+    "fonte": "https://www.importgenius.com/peru/suppliers/stockmeier-urethanes-france-sas"
+   }
+  ],
+  "fornecedores_conhecidos": "Stockmeier Urethanes France SAS",
+  "por_que_e_prospect": "Usuário de pré-polímero PU 3909.50 — prospect secundário para Miracll/Xuchuan.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/stockmeier-urethanes-france-sas"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "TEXPIEL S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importa adesivo reforçado Unlok (Nan Pao, fabricante de adesivos para calçado) em volumes de 16–48 t",
+  "porte": null,
+  "ncms_provaveis": [
+   "3506.91",
+   "3814.00"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Pegamento Reforzado Unlok (HS 3506910000), 16.146 kg",
+    "ncm": "3506.91",
+    "origem": "Taiwan",
+    "fornecedor": "Nan Pao Resins Chemical Co Ltd",
+    "periodo": "10/07/2019",
+    "valor": "29385.7",
+    "unidade": "kg 16146",
+    "fonte": "https://www.importgenius.com/peru/suppliers/nan-pao-resins-chemical-co-ltd"
+   },
+   {
+    "descricao": "Pegamento Reforzado Unlok, 48.438 kg",
+    "ncm": "3506.91",
+    "origem": "Taiwan",
+    "fornecedor": "Nan Pao Resins Chemical Co Ltd",
+    "periodo": "27/11/2017",
+    "valor": null,
+    "unidade": "kg 48438",
+    "fonte": "https://www.importgenius.com/peru/suppliers/nan-pao-resins-chemical-co-ltd"
+   }
+  ],
+  "fornecedores_conhecidos": "Nan Pao Resins Chemical Co Ltd (Taiwan)",
+  "por_que_e_prospect": "Importador de grande volume de adesivo de origem calçadista (Nan Pao) — alvo para adesivos/solventes BIQ.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/nan-pao-resins-chemical-co-ltd"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PRODUCTOS PARAISO DEL PERU S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Fabricante de colchões/estofados; importa adesivo Henkel (3506.91)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3506.91",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Adhesivo Henkel (HS 3506910000), 23.040 kg",
+    "ncm": "3506.91",
+    "origem": "Argentina",
+    "fornecedor": "Henkel Argentina SA",
+    "periodo": "04/08/2021",
+    "valor": "72576",
+    "unidade": "kg 23040",
+    "fonte": "https://www.importgenius.com/peru/suppliers/henkel-argentina-sa"
+   },
+   {
+    "descricao": "Adhesivo Henkel, 11.520 kg",
+    "ncm": "3506.91",
+    "origem": "Argentina",
+    "fornecedor": "Henkel Argentina SA",
+    "periodo": "07/07/2021",
+    "valor": null,
+    "unidade": "kg 11520",
+    "fonte": "https://www.importgenius.com/peru/suppliers/henkel-argentina-sa"
+   }
+  ],
+  "fornecedores_conhecidos": "Henkel Argentina SA",
+  "por_que_e_prospect": "Grande consumidor de adesivo 3506.91 — prospect para adesivos BIQ (segmento estofados).",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/henkel-argentina-sa"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CARTONES VILLA MARINA S.A.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Fabricante de embalagens de papelão; importa hot melt Adhimelt (3506.91)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Adhesivo Adhimelt A-2250-L (HS 3506910000), 23.200 kg",
+    "ncm": "3506.91",
+    "origem": "Espanha",
+    "fornecedor": "Forest Chemical Group (Sapol Ind.)",
+    "periodo": "21/10/2022",
+    "valor": "73373.8",
+    "unidade": "kg 23200",
+    "fonte": "https://www.importgenius.com/peru/suppliers/forest-chemical-group-sapol-ind-pla-de-la-vallonga"
+   },
+   {
+    "descricao": "Adhesivo Adhimelt A-2250-L, 23.200 kg",
+    "ncm": "3506.91",
+    "origem": "Espanha",
+    "fornecedor": "Forest Chemical Group (Sapol Ind.)",
+    "periodo": "18/08/2022",
+    "valor": null,
+    "unidade": "kg 23200",
+    "fonte": "https://www.importgenius.com/peru/suppliers/forest-chemical-group-sapol-ind-pla-de-la-vallonga"
+   }
+  ],
+  "fornecedores_conhecidos": "Forest Chemical Group (Sapol Ind.)",
+  "por_que_e_prospect": "Consumidor de hot melt 3506.91 em volume — prospect secundário para adesivos BIQ (fora do calçado).",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/forest-chemical-group-sapol-ind-pla-de-la-vallonga"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "AGRO MECANICA INDUSTRIAL PERU S.A.C. - AGROMECI PERU S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Importa hot melt Adhimelt (3506.91)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Adhimelt M-90SV (HS 3506910000), 8.120 kg",
+    "ncm": "3506.91",
+    "origem": "Espanha",
+    "fornecedor": "Forest Chemical Group (Sapol Ind.)",
+    "periodo": "09/05/2022",
+    "valor": "30774.8",
+    "unidade": "kg 8120",
+    "fonte": "https://www.importgenius.com/peru/suppliers/forest-chemical-group-sapolind-pla-de-la-vallongac"
+   },
+   {
+    "descricao": "Adhimelt A-2250L, 13.340 kg",
+    "ncm": "3506.91",
+    "origem": "Espanha",
+    "fornecedor": "Forest Chemical Group (Sapol Ind.)",
+    "periodo": "29/03/2022",
+    "valor": null,
+    "unidade": "kg 13340",
+    "fonte": "https://www.importgenius.com/peru/suppliers/forest-chemical-group-sapol-ind-pla-de-la-vallonga"
+   }
+  ],
+  "fornecedores_conhecidos": "Forest Chemical Group (Sapol Ind.)",
+  "por_que_e_prospect": "Comprador de hot melt 3506.91 — prospect secundário para adesivos BIQ.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/forest-chemical-group-sapolind-pla-de-la-vallongac",
+   "https://www.importgenius.com/peru/suppliers/forest-chemical-group-sapol-ind-pla-de-la-vallonga"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PERUPLAST S.A.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Importa dispersão de poliuretano NeoRez U-475 (3909.50)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "NeoRez U-475 (dispersão PU; HS 3909500000), 7.020 kg",
+    "ncm": "3909.50",
+    "origem": "Espanha",
+    "fornecedor": "Covestro Coating Resins B.V.",
+    "periodo": "05/05/2022",
+    "valor": "36388.64",
+    "unidade": "kg 7020",
+    "fonte": "https://www.importgenius.com/peru/suppliers/covestro-coating-resins-b-v"
+   },
+   {
+    "descricao": "NeoRez U-475, 7.200 kg",
+    "ncm": "3909.50",
+    "origem": "Espanha",
+    "fornecedor": "Covestro Coating Resins B.V.",
+    "periodo": "05/05/2022",
+    "valor": null,
+    "unidade": "kg 7200",
+    "fonte": "https://www.importgenius.com/peru/suppliers/covestro-coating-resins-b-v"
+   }
+  ],
+  "fornecedores_conhecidos": "Covestro Coating Resins B.V.",
+  "por_que_e_prospect": "Usuário de resina PU 3909.50 — prospect secundário para Miracll/Xuchuan.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/covestro-coating-resins-b-v"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "IMPORTACIONES Y REPRESENTACIONES SEGURIFILMS PERU S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Importa sistema bicomponente de poliuretano (revestimento) 3909.50",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Sistema Bicomponente De Poliuretano C-DULXT66B-BL (HS 3909500000), 7.276,08 kg",
+    "ncm": "3909.50",
+    "origem": "EUA",
+    "fornecedor": "Ultimate Linings Ltd",
+    "periodo": "26/01/2022",
+    "valor": "45268.2",
+    "unidade": "kg 7276.08",
+    "fonte": "https://www.importgenius.com/peru/suppliers/ultimate-linings-ltd"
+   },
+   {
+    "descricao": "Sistema Bicomponente De Poliuretano C-DULXT66A, 7.431,98 kg",
+    "ncm": "3909.50",
+    "origem": "EUA",
+    "fornecedor": "Ultimate Linings Ltd",
+    "periodo": "26/01/2022",
+    "valor": null,
+    "unidade": "kg 7431.98",
+    "fonte": "https://www.importgenius.com/peru/suppliers/ultimate-linings-ltd"
+   }
+  ],
+  "fornecedores_conhecidos": "Ultimate Linings Ltd",
+  "por_que_e_prospect": "Comprador de sistema PU bicomponente — prospect secundário para isocianato/pré-polímero.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/ultimate-linings-ltd"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "ALTERNATIVA QUIMICA E.I.R.L.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Importa TPU Pearlstick (Lubrizol) usado na fabricação de adesivos PU para calçado",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Poliuretano Lubrizol Pearlstick 48-60/30 (TPU p/ adesivo), 3.000 kg",
+    "ncm": "3909.50",
+    "origem": "México",
+    "fornecedor": "Interchemica S.A. de C.V.",
+    "periodo": "12/02/2020",
+    "valor": "14225.6",
+    "unidade": "kg 3000",
+    "fonte": "https://en.52wmb.com/supplier/25100609"
+   },
+   {
+    "descricao": "Poliuretano Lubrizol Pearlstick 48-60/25, 1.500 kg",
+    "ncm": "3909.50",
+    "origem": "México",
+    "fornecedor": "Interchemica S.A. de C.V.",
+    "periodo": "12/02/2020",
+    "valor": "7112.8",
+    "unidade": "kg 1500",
+    "fonte": "https://en.52wmb.com/supplier/25100609"
+   }
+  ],
+  "fornecedores_conhecidos": "Interchemica S.A. de C.V. (Lubrizol)",
+  "por_que_e_prospect": "Compra TPU para adesivo de calçado — alvo direto para TPU Miracll (3909.50).",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/supplier/25100609"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "WELLCO PERUANA S.A.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Fabricante de botas militares/segurança; importa couro acabado bovino",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "CUERO (4107990000), 4.514,77 kg",
+    "ncm": "4107",
+    "origem": "Colômbia",
+    "fornecedor": "CURTIMBRES BUFALO S.A.S.",
+    "periodo": "09/05/2024",
+    "valor": "38338.382",
+    "unidade": "kg 4514.77",
+    "fonte": "https://en.52wmb.com/supplier/4970770"
+   },
+   {
+    "descricao": "CUERO (4107990000), 1.569,23 kg",
+    "ncm": "4107",
+    "origem": "Colômbia",
+    "fornecedor": "CURTIMBRES BUFALO S.A.S.",
+    "periodo": "09/05/2024",
+    "valor": "13325.568",
+    "unidade": "kg 1569.23",
+    "fonte": "https://en.52wmb.com/supplier/4970770"
+   }
+  ],
+  "fornecedores_conhecidos": "CURTIMBRES BUFALO S.A.S. (Colômbia); Curtidos Bas S.A. (Chile, 2017)",
+  "por_que_e_prospect": "Nova evidência 2024 de importação de couro acabado 4107 — alvo para couro JBS.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/supplier/4970770"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "INDUSTRIAS MANRIQUE S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Fabricante de calçado de segurança; importa biqueiras de aço e fibra de vidro, palmilhas, couro bovino",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.90",
+   "4107",
+   "3921.13",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Puntera Acero MR459B, 50.600 unidades",
+    "ncm": "6406.90",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "18/09/2026",
+    "valor": null,
+    "unidade": "unidades 50600",
+    "fonte": "https://www.importgenius.com/peru/importers/industrias-manrique-sac"
+   },
+   {
+    "descricao": "Puntera De Fibra De Vidrio MR459, 42.000 unidades",
+    "ncm": "6406.90",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "18/09/2026",
+    "valor": null,
+    "unidade": "unidades 42000",
+    "fonte": "https://www.importgenius.com/peru/importers/industrias-manrique-sac"
+   },
+   {
+    "descricao": "Plantilla Espuma Holz & Stein, 76.900 pares",
+    "ncm": "6406.90",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "18/09/2026",
+    "valor": null,
+    "unidade": "pares 76900",
+    "fonte": "https://www.importgenius.com/peru/importers/industrias-manrique-sac"
+   },
+   {
+    "descricao": "Tradeint: Industrias Manrique SAC listada como importadora de couro bovino inteiro 'outros' (HS 410719), origem Índia (dados 2024)",
+    "ncm": "4107",
+    "origem": "Índia",
+    "fornecedor": null,
+    "periodo": "2024",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.tradeint.com/search/peru/import-data/hs-code/410719/"
+   }
+  ],
+  "fornecedores_conhecidos": "NINGBO BRIDGE SYNTHETIC LEATHER CO LTD (2022)",
+  "por_que_e_prospect": "Nova evidência 2026 de compra de biqueiras e palmilhas em grande volume — alvo direto para Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/peru/importers/industrias-manrique-sac",
+   "https://www.tradeint.com/search/peru/import-data/hs-code/410719/"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "GUZZPER CIA. LTDA.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fabricante de calçado; importa couro bovino crust/semi-acabado (4104.41/4104.49), solados (6406.20) e fibra de couro (4115)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.41",
+   "4104.49",
+   "6406.20",
+   "3921.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cuero bovino (4104410000), 1.047,49 kg",
+    "ncm": "4104.41",
+    "origem": "Argentina",
+    "fornecedor": "ANAN S.A.",
+    "periodo": "13/09/2026",
+    "valor": "23588.19",
+    "unidade": "kg 1047.49",
+    "fonte": "https://en.52wmb.com/buyer/21536089"
+   },
+   {
+    "descricao": "Cuero bovino (4104410000), 662,305 kg",
+    "ncm": "4104.41",
+    "origem": "Argentina",
+    "fornecedor": "ANAN S.A.",
+    "periodo": "08/03/2026",
+    "valor": "9947.28",
+    "unidade": "kg 662.305",
+    "fonte": "https://en.52wmb.com/buyer/21536089"
+   },
+   {
+    "descricao": "Centros de cuero al tanino (4104490000), 1.169 kg",
+    "ncm": "4104.49",
+    "origem": "Colômbia",
+    "fornecedor": "IND PROCESADORA DE PIELES LTD.",
+    "periodo": "29/04/2026",
+    "valor": "7912.3",
+    "unidade": "kg 1169",
+    "fonte": "https://en.52wmb.com/buyer/21536089"
+   },
+   {
+    "descricao": "Suela de calzado (6406200000), 141,38 kg",
+    "ncm": "6406.20",
+    "origem": null,
+    "fornecedor": "INDUSTRIA PROCESADORA DEL PLASTICO",
+    "periodo": "04/06/2026",
+    "valor": "2331.73",
+    "unidade": "kg 141.38",
+    "fonte": "https://en.52wmb.com/buyer/21536089"
+   }
+  ],
+  "fornecedores_conhecidos": "ANAN S.A. (Argentina); Ind. Procesadora de Pieles (Colômbia); Stick Fran Componentes para Calçado (Brasil); W&A Produtos Termoplásticos (Brasil); Lefa del Valle S.A.S.; Industria Procesadora del Plástico",
+  "por_que_e_prospect": "Comprador recorrente 2026 de couro crust (4104.41) e solados — alvo direto para crust JBS Argentina e solados Hiper.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/21536089"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "ATECMA CIA. LTDA.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Distribuidor de adesivos Henkel para calçado (Aquence XP 2020 FW, Technomelt hot melt, Aquence Lam)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3506.91",
+   "3814.00",
+   "3921.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Aquence XP 2020 FW 20 kg (HS 3506910010), 2.120 kg bruto",
+    "ncm": "3506.91",
+    "origem": "Chile",
+    "fornecedor": "Henkel Peruana S.A",
+    "periodo": "04/08/2026",
+    "valor": "10456.68 FOB / 10970.73 CIF",
+    "unidade": "kg 2120",
+    "fonte": "https://www.importgenius.com/ecuador/suppliers/henkel-peruana-s-a"
+   },
+   {
+    "descricao": "Technomelt Supra 100 BX-19 kg (hot melt), 4.405 kg",
+    "ncm": "3506.91",
+    "origem": "México",
+    "fornecedor": "Henkel Peruana S.A",
+    "periodo": "04/08/2026",
+    "valor": null,
+    "unidade": "kg 4405",
+    "fonte": "https://www.importgenius.com/ecuador/suppliers/henkel-peruana-s-a"
+   },
+   {
+    "descricao": "Aquence Lam 1500 IBC, 3.312 kg",
+    "ncm": "3506.91",
+    "origem": "Colômbia",
+    "fornecedor": "Henkel Peruana S.A",
+    "periodo": "04/08/2026",
+    "valor": null,
+    "unidade": "kg 3312",
+    "fonte": "https://www.importgenius.com/ecuador/suppliers/henkel-peruana-s-a"
+   }
+  ],
+  "fornecedores_conhecidos": "Henkel Peruana S.A",
+  "por_que_e_prospect": "Distribuidor ativo (2026) de adesivos para calçado — alvo para adesivos/solventes BIQ e termoadesivos.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/ecuador/suppliers/henkel-peruana-s-a"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "COMPAÑIA DE FABRICACION DE CALZADO LUIGI VALDINI SANTLUIGI C.A.",
+  "nome_fantasia": "Luigi Valdini",
+  "pais": "EQUADOR",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fábrica de calçado; importa couro acabado bovino (4107.99) e couro 'Combat WP' (4114.20)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cuero (4107990000), 689 kg",
+    "ncm": "4107",
+    "origem": "Colômbia",
+    "fornecedor": "CURTIMBRES BUFALO S.A.S.",
+    "periodo": "26/12/2023",
+    "valor": "8909.18",
+    "unidade": "kg 689",
+    "fonte": "https://en.52wmb.com/supplier/4970770"
+   },
+   {
+    "descricao": "Cuero bovino (4107990000), 1.011 kg",
+    "ncm": "4107",
+    "origem": "Colômbia",
+    "fornecedor": "CURTIMBRES BUFALO S.A.S.",
+    "periodo": "27/06/2023",
+    "valor": "15404.95",
+    "unidade": "kg 1011",
+    "fonte": "https://en.52wmb.com/supplier/4970770"
+   },
+   {
+    "descricao": "Cuero Combat WP T negro (4114200000), 689 kg",
+    "ncm": "4114.20",
+    "origem": "Colômbia",
+    "fornecedor": "CURTIMBRES BUFALO S.A.S.",
+    "periodo": "22/12/2023",
+    "valor": "9248.77",
+    "unidade": "kg 689",
+    "fonte": "https://en.52wmb.com/supplier/4970770"
+   }
+  ],
+  "fornecedores_conhecidos": "CURTIMBRES BUFALO S.A.S. (Colômbia)",
+  "por_que_e_prospect": "Fábrica de calçado que importa couro acabado (2023) — alvo para couro JBS 4107.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/supplier/4970770"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "DISTRISHOES S.A.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Ambato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importa grandes volumes de sintético PVC (3921.12) da Proquinal; também papel/papelão e fibras sintéticas",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.12",
+   "3921.13",
+   "5603.14"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Sintético PVC (HS 3921120000), 31.246,01 kg líquidos, por caminhão via Ipiales→Ambato",
+    "ncm": "3921.12",
+    "origem": "Colômbia",
+    "fornecedor": "PROQUINAL S.A.S.",
+    "periodo": "25/08/2025",
+    "valor": "131216 FOB",
+    "unidade": "kg 31246.01",
+    "fonte": "https://panjiva.com/Distrishoes-S-A/63408450"
+   }
+  ],
+  "fornecedores_conhecidos": "PROQUINAL S.A.S. (Colômbia); ROLLOS Y SOBRES S.A.S.",
+  "por_que_e_prospect": "Comprador de alto volume de sintético 3921.12 (US$131 mil num único embarque 2025) em Ambato — alvo para sintéticos/microfibra Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://panjiva.com/Distrishoes-S-A/63408450"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "SINTECUERO S.A.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "couro sintético/tecido revestido",
+  "produtos": "Fabricante equatoriano de couro sintético PVC (linhas Cueran, EXP 2000 Mercury, Tapiz, plantilla toalla) exportado a Peru e Colômbia",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.12",
+   "3921.13",
+   "5603.14",
+   "6005.37",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Exporta cuero sintético PVC (3921120000) a Sintecueros JF SAC (Peru), dezenas de linhas",
+    "ncm": "3921.12",
+    "origem": "Equador → Peru",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "15/09/2026",
+    "valor": "4960.37 (maior linha)",
+    "unidade": "kg 2020",
+    "fonte": "https://en.52wmb.com/buyer/69371141"
+   },
+   {
+    "descricao": "Exporta cuero sintético PVC (3921120000) a Plásticos y Sintéticos Distribuidores SAS (Colômbia)",
+    "ncm": "3921.12",
+    "origem": "Equador → Colômbia",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "21/09/2026",
+    "valor": "5581.07 (maior linha)",
+    "unidade": "kg 2156.6",
+    "fonte": "https://en.52wmb.com/supplier/8150208"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante ativo de sintético (2026) — consome tecidos-base (malha/não-tecido) e resinas PU/PVC; prospect para Yantai e Miracll.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/buyer/69371141",
+   "https://en.52wmb.com/supplier/8150208"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PLASTIVALLE CIA. LTDA.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Pichincha",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "couro sintético/tecido revestido",
+  "produtos": "Importa malhas (6005.90), não-tecidos/feltros (cap. 56), filamentos sintéticos e borracha; 324 embarques, 41 fornecedores",
+  "porte": null,
+  "ncms_provaveis": [
+   "5603.14",
+   "5602",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Tecido de malha (6005900000), 880 kg líquidos, Ipiales→Yaruquí",
+    "ncm": "6005.90",
+    "origem": "Colômbia",
+    "fornecedor": "TEJIDOS SINTETICOS DE COLOMBIA S.A.",
+    "periodo": "24/10/2025",
+    "valor": "3360 FOB",
+    "unidade": "kg 880",
+    "fonte": "https://panjiva.com/Plastivalle-Cia-Ltda/39999482"
+   }
+  ],
+  "fornecedores_conhecidos": "TEJIDOS SINTETICOS DE COLOMBIA S.A.",
+  "por_que_e_prospect": "Importador frequente de malhas e não-tecidos (2025) — segmento a confirmar; prospect para não-tecido/feltro/mesh Yantai.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://panjiva.com/Plastivalle-Cia-Ltda/39999482"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "INDUSUELAS SIERRA-SERRANO S.A.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Ambato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Fabricação de calçado/solados (Ambato, Av. Indoamérica)",
+  "porte": "pequeno",
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "6406.20",
+   "8480.71"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil EMIS: atividade fabricação de calçado, sede em Ambato; 4 empregados (2024)",
+    "ncm": "6406.20",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "2024",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.emis.cn/php/company-profile/EC/Indusuelas_Sierra-Serrano_SA_en_4122392.html"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de solas/calçado no polo de Ambato — prospect para sistema PU e moldes.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.emis.cn/php/company-profile/EC/Indusuelas_Sierra-Serrano_SA_en_4122392.html"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "ANDINASHOES S.A.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Ambato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fabricação de calçado (Ambato)",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20",
+   "3921.13",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil EMIS: atividade fabricação de calçado, Ambato (Tungurahua)",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "2024-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.emis.cn/php/company-profile/EC/Andinashoes_SA_en_3988050.html"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de calçado em Ambato — prospect para solados, sintéticos e adesivos.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.emis.cn/php/company-profile/EC/Andinashoes_SA_en_3988050.html"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CURTIEMBRE QUISAPINCHA",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Quisapincha (Ambato)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume familiar (1997) que produz couro acabado, roupas e calçado de couro; 26 empregados; clientes nacionais e internacionais",
+  "porte": "pequeno",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil ConnectAmericas: curtume em Quisapincha (Tungurahua), couro acabado e calçado, 26 empregados",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "s/d",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://connectamericas.com/es/company/curtiembre-quisapincha"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume do polo de Quisapincha/Ambato — prospect para wet blue/crust JBS.",
+  "confianca": "média",
+  "fontes": [
+   "https://connectamericas.com/es/company/curtiembre-quisapincha"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CALZADO TERRANO S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fabricante de calçado que importa poliol poliéster para solado PU da Xuchuan; top HS 39, 84, 38, 29; 12 fornecedores",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "8480.71"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Poliol (HS 3907990000), 2.100 kg líquidos, desembarque Buenaventura",
+    "ncm": "3907.99",
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical (Suzhou) Co., Ltd.",
+    "periodo": "04/11/2020",
+    "valor": "2877 FOB / 3273 CIF",
+    "unidade": "kg 2100",
+    "fonte": "https://panjiva.com/Calzado-Terrano-S-A-S/33393254"
+   }
+  ],
+  "fornecedores_conhecidos": "Xuchuan Chemical (Suzhou) Co., Ltd.",
+  "por_que_e_prospect": "Já compra sistema PU da Xuchuan (fornecedor representado) — alvo direto para poliol/isocianato Xuchuan e moldes.",
+  "confianca": "média",
+  "fontes": [
+   "https://panjiva.com/Calzado-Terrano-S-A-S/33393254"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PLASTICOS Y SINTETICOS DISTRIBUIDORES S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Distribuidor de couro sintético PVC (Cueran, EXP Estándar, plantilla toalla) importado do Equador",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.12",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cueran económico mate Bimbo blanco (3921120000), 2.156,6 kg",
+    "ncm": "3921.12",
+    "origem": "Equador",
+    "fornecedor": "SINTECUERO S.A.",
+    "periodo": "21/09/2026",
+    "valor": "5581.07",
+    "unidade": "kg 2156.6",
+    "fonte": "https://en.52wmb.com/supplier/8150208"
+   },
+   {
+    "descricao": "Cueran económico TRN mate Bimbo negro (3921120000), 1.592,4 kg",
+    "ncm": "3921.12",
+    "origem": "Equador",
+    "fornecedor": "SINTECUERO S.A.",
+    "periodo": "21/09/2026",
+    "valor": "4232.28",
+    "unidade": "kg 1592.4",
+    "fonte": "https://en.52wmb.com/supplier/8150208"
+   },
+   {
+    "descricao": "Plantilla toalla terry mate blanco (3921120000), 416,4 kg",
+    "ncm": "3921.12",
+    "origem": "Equador",
+    "fornecedor": "SINTECUERO S.A.",
+    "periodo": "21/09/2026",
+    "valor": "1193.49",
+    "unidade": "kg 416.4",
+    "fonte": "https://en.52wmb.com/supplier/8150208"
+   }
+  ],
+  "fornecedores_conhecidos": "SINTECUERO S.A. (Equador)",
+  "por_que_e_prospect": "Distribuidor importando sintético 3921.12 em 2026 — alvo para sintéticos PVC/PU e microfibra Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/supplier/8150208"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PRO CALZADO S.A.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": "800233989",
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Fabricante de calçado/solados (borracha e PVC); importa composto de PVC; exporta solados 6406.20 ao Equador; top HS 40, 84, 39, 35",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20",
+   "3506.91",
+   "8480.71",
+   "3921.12"
+  ],
+  "evidencias": [
+   {
+    "descricao": "PVC (HS 3904220000), 20.000 kg líquidos, Buenaventura",
+    "ncm": "3904.22",
+    "origem": "Peru",
+    "fornecedor": "Andina Plast S.R.L.",
+    "periodo": "04/11/2010",
+    "valor": "35780 FOB / 36811 CIF",
+    "unidade": "kg 20000",
+    "fonte": "https://panjiva.com/Pro-Calzado-S-A/24376033"
+   },
+   {
+    "descricao": "Exportação de solados (6406200000), 2.640 unidades, Ipiales→Guayaquil",
+    "ncm": "6406.20",
+    "origem": "Colômbia → Equador",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "19/09/2008",
+    "valor": "3524 FOB",
+    "unidade": "unidades 2640",
+    "fonte": "https://panjiva.com/Procalzado-SA/22094573"
+   }
+  ],
+  "fornecedores_conhecidos": "Andina Plast S.R.L. (Peru)",
+  "por_que_e_prospect": "Fábrica de solados/calçado de borracha-PVC com 22 fornecedores — prospect para moldes, adesivos e insumos.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://panjiva.com/Pro-Calzado-S-A/24376033",
+   "https://panjiva.com/Procalzado-SA/22094573"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "MUSSI ZAPATOS S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fábrica de calçado; importou solados de poliuretano (6406.20) da Venezuela",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20",
+   "3907.99"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Suelas de poliuretano ref. PR203 café (6406200000), 1.829,94 kg",
+    "ncm": "6406.20",
+    "origem": "Venezuela",
+    "fornecedor": "CREACIONES SUBLIM S.A.",
+    "periodo": "23/07/2013",
+    "valor": "18730",
+    "unidade": "kg 1829.94",
+    "fonte": "https://en.52wmb.com/supplier/8229677"
+   }
+  ],
+  "fornecedores_conhecidos": "CREACIONES SUBLIM S.A. (Venezuela)",
+  "por_que_e_prospect": "Comprador de solados PU importados — prospect para solados Hiper e sistema PU.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://en.52wmb.com/supplier/8229677"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CALZA 3 S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fabricante/exportador de calçado (cap. 64) para o Equador; 93 embarques sul-americanos",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20",
+   "3921.12",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Exportação de calçado 6402999000 para Comercial Etatex C.A. (Quito), 360 pares",
+    "ncm": "6402.99",
+    "origem": "Colômbia → Equador",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "09/06/2018",
+    "valor": "5040 FOB",
+    "unidade": "pares 360",
+    "fonte": "https://panjiva.com/Calza-3-S-A-S/38891843"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de calçado sintético exportador — prospect para solados, sintéticos e adesivos.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://panjiva.com/Calza-3-S-A-S/38891843"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "TSUELAS S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Bogotá",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Fabricação de calçado/solados (Bogotá); vendas +12,7% em 2025",
+  "porte": "pequeno",
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "6406.20",
+   "8480.71"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil EMIS: Footwear Manufacturing, Bogotá (Cl 27 Sur # 29 B 65), 6 empregados (2026)",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "2025-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.emis.cn/php/company-profile/CO/Tsuelas_Sas_en_12800082.html"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Pequeno fabricante de solas em Bogotá — prospect para sistema PU e moldes.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.emis.cn/php/company-profile/CO/Tsuelas_Sas_en_12800082.html"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PARTES Y COMPLEMENTOS PARA FLEXIBLES S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Medellín",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Fabricação de calçado e de produtos plásticos; atacado de químicos (Medellín)",
+  "porte": "pequeno",
+  "ncms_provaveis": [
+   "6406.20",
+   "3907.99",
+   "3909.50",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil EMIS: atividade principal fabricação de calçado; secundárias produtos plásticos e atacado de químicos; 7 empregados (2026)",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.emis.cn/php/company-profile/CO/Partes_Y_Complementos_Para_Flexibles_SAS_en_4915612.html"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de componentes plásticos para calçado em Medellín — prospect para sistema PU/TPU e moldes.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.emis.cn/php/company-profile/CO/Partes_Y_Complementos_Para_Flexibles_SAS_en_4915612.html"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CURTIEMBRES DEL VALLE",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume (citado como cliente principal da Cooperativa Integral de Curtidores, Bogotá)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Citado como cliente principal da Cooperativa Integral de Curtidores (fornecedora de insumos de curtimento)",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": "Cooperativa Integral de Curtidores",
+    "periodo": "s/d",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://connectamericas.com/es/company/cooperativa-integral-de-curtidores"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume do cluster de Bogotá — prospect para wet blue/crust JBS; validar porte e importação.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://connectamericas.com/es/company/cooperativa-integral-de-curtidores"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "SOTERCUEROS",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume (citado como cliente principal da Cooperativa Integral de Curtidores, Bogotá)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Citado como cliente principal da Cooperativa Integral de Curtidores (fornecedora de insumos de curtimento)",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": "Cooperativa Integral de Curtidores",
+    "periodo": "s/d",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://connectamericas.com/es/company/cooperativa-integral-de-curtidores"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume do cluster de Bogotá — prospect para wet blue/crust JBS; validar porte e importação.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://connectamericas.com/es/company/cooperativa-integral-de-curtidores"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "INDUSTRIA DE CURTIDOS LA SABANA",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume (citado como cliente principal da Cooperativa Integral de Curtidores, Bogotá)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Citado como cliente principal da Cooperativa Integral de Curtidores (fornecedora de insumos de curtimento)",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": "Cooperativa Integral de Curtidores",
+    "periodo": "s/d",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://connectamericas.com/es/company/cooperativa-integral-de-curtidores"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume do cluster de Bogotá — prospect para wet blue/crust JBS; validar porte e importação.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://connectamericas.com/es/company/cooperativa-integral-de-curtidores"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PRO C PIELES",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume (citado como cliente principal da Cooperativa Integral de Curtidores, Bogotá)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Citado como cliente principal da Cooperativa Integral de Curtidores (fornecedora de insumos de curtimento)",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": "Cooperativa Integral de Curtidores",
+    "periodo": "s/d",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://connectamericas.com/es/company/cooperativa-integral-de-curtidores"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume do cluster de Bogotá — prospect para wet blue/crust JBS; validar porte e importação.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://connectamericas.com/es/company/cooperativa-integral-de-curtidores"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "TELAS Y POLIURETANOS S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Bogotá (Cundinamarca)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "couro sintético/tecido revestido",
+  "produtos": "Importa isocianato (2929.10); top HS 39, 29, 72, 60 (malhas), 32; 25 fornecedores",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99",
+   "6005.37",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Isocianato (HS 2929101000), 20.000 kg líquidos, Buenaventura",
+    "ncm": "2929.10",
+    "origem": "Coreia do Sul",
+    "fornecedor": "Miraechem Co., Ltd.",
+    "periodo": "20/11/2021",
+    "valor": "10060 FOB / 11720 CIF",
+    "unidade": "kg 20000",
+    "fonte": "https://es.panjiva.com/Telas-Y-Poliuretanos-Sas/39696372"
+   }
+  ],
+  "fornecedores_conhecidos": "Miraechem Co., Ltd. (Coreia)",
+  "por_que_e_prospect": "Usuário de química PU e malhas (perfil de tecido revestido/PU) — prospect para pré-polímero Xuchuan/Miracll e malhas Yantai.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://es.panjiva.com/Telas-Y-Poliuretanos-Sas/39696372"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "APF CUEROS COLOMBIA S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Importa couro bovino acabado (4107.92) da Itália",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cuero de origen bovino (HS 4107920000), 1.325,06 m2",
+    "ncm": "4107",
+    "origem": "Itália",
+    "fornecedor": "GRUPPO MASTROTTO SPA",
+    "periodo": "26/06/2026",
+    "valor": "41950.19",
+    "unidade": "m2 1325.06",
+    "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+   }
+  ],
+  "fornecedores_conhecidos": "GRUPPO MASTROTTO SPA (Itália)",
+  "por_que_e_prospect": "Nova evidência 2026 de importação de couro acabado 4107 — alvo para couro JBS.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "INVERSIONES JORINACHA C.A.",
+  "nome_fantasia": null,
+  "pais": "VENEZUELA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Importa solas/saltos de couro (6406.90.10), calçado com sola de couro e calçado PU/lona da China",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.90",
+   "6406.20",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Suelas y tacos de cuero natural o regenerado (6406901000), 13.552",
+    "ncm": "6406.90",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "01/08/2024",
+    "valor": "32020",
+    "unidade": "13552 (unidade não indicada)",
+    "fonte": "https://en.52wmb.com/buyer/433201"
+   },
+   {
+    "descricao": "Suelas y tacos de cuero (6406901000), 3.968",
+    "ncm": "6406.90",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "01/07/2024",
+    "valor": "14304",
+    "unidade": "3968 (unidade não indicada)",
+    "fonte": "https://en.52wmb.com/buyer/433201"
+   },
+   {
+    "descricao": "PU shoes no marks, 10.856 kg",
+    "ncm": "6402.99",
+    "origem": "China",
+    "fornecedor": "Wenzhou N.& A. Foreign Trade Co. Ltd.",
+    "periodo": "28/10/2024",
+    "valor": null,
+    "unidade": "kg 10856",
+    "fonte": "https://en.52wmb.com/buyer/433201"
+   }
+  ],
+  "fornecedores_conhecidos": "Wenzhou N.& A. Foreign Trade Co. Ltd.; Ruijin Haolun Technologies Co. Ltd.; Foshan Pulitzer Trading Co. Ltd.",
+  "por_que_e_prospect": "Importador recorrente (2024) de partes de calçado 6406.90 — prospect para palmilhas/partes Yantai e solados.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/433201"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CREACIONES SUBLIM S.A.",
+  "nome_fantasia": null,
+  "pais": "VENEZUELA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Fabricante venezuelano de solados de poliuretano (exportou 6406.20 à Colômbia)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "8480.71"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Exportação de suelas de poliuretano ref. PR203 (6406200000) para Mussi Zapatos S.A.S. (Colômbia)",
+    "ncm": "6406.20",
+    "origem": "Venezuela → Colômbia",
+    "fornecedor": "n/a (exportação)",
+    "periodo": "23/07/2013",
+    "valor": "18730",
+    "unidade": "kg 1829.94",
+    "fonte": "https://en.52wmb.com/supplier/8229677"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fábrica de solado PU — consumidor natural de poliol/isocianato (Xuchuan) e moldes; validar atividade atual.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://en.52wmb.com/supplier/8229677"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CUEROS PUNTO COM C.A.",
+  "nome_fantasia": null,
+  "pais": "VENEZUELA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Comprador de couro da Curtimbres Búfalo (Colômbia) — 149 transações registradas",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "52wmb: parceiro comprador da Curtimbres Búfalo S.A.S., 149 transações (relação desde 2012)",
+    "ncm": "4107",
+    "origem": "Colômbia",
+    "fornecedor": "CURTIMBRES BUFALO S.A.S.",
+    "periodo": "2012-",
+    "valor": null,
+    "unidade": "149 transações",
+    "fonte": "https://en.52wmb.com/supplier/4970770"
+   }
+  ],
+  "fornecedores_conhecidos": "CURTIMBRES BUFALO S.A.S. (Colômbia)",
+  "por_que_e_prospect": "Comprador histórico de couro colombiano — prospect para couro JBS; validar atividade atual.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://en.52wmb.com/supplier/4970770"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CURTIEMBRE VIS KULJIS S.A.",
+  "nome_fantasia": null,
+  "pais": "BOLIVIA",
+  "cidade": "Santa Cruz",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtimento e acabamento de couros (Andrés Ibáñez, Santa Cruz)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil EMIS: Leather and Hide Tanning and Finishing, sede em Andrés Ibáñez, Santa Cruz",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "s/d",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.emis.cn/php/company-profile/BO/Curtiembre_Vis_Kuljis_SA_en_3521713.html"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume em Santa Cruz — prospect para wet blue/crust JBS.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.emis.cn/php/company-profile/BO/Curtiembre_Vis_Kuljis_SA_en_3521713.html"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "ASOCIACION DE PRODUCTORES DE CALZADOS LA PAZ (APROCALPA)",
+  "nome_fantasia": "Aprocalpa",
+  "pais": "BOLIVIA",
+  "cidade": "La Paz",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Associação de 33 fabricantes de calçado de couro (infantil, feminino, masculino, militar e médico) — Gran Feria del Calzado de la Tumusla; importam linha, ilhoses, cadarços e forros do Peru/Brasil",
+  "porte": null,
+  "ncms_provaveis": [
+   "5609",
+   "6005.37",
+   "6406.90",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Artigo (Visión 360): linhas, ilhoses, cadarços e forros são importados do Peru ou Brasil; couro nacional de 3ª",
+    "ncm": null,
+    "origem": "Peru/Brasil",
+    "fornecedor": null,
+    "periodo": "11/04/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://bolivianthoughts.com/2026/04/11/zapateros-luchan-por-sobrevivir"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Grupo de compra de 33 fabricantes que já importam aviamentos/forros — prospect para cadarços, forros e couro.",
+  "confianca": "média",
+  "fontes": [
+   "https://bolivianthoughts.com/2026/04/11/zapateros-luchan-por-sobrevivir"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CALZADOS ANTONY",
+  "nome_fantasia": null,
+  "pais": "BOLIVIA",
+  "cidade": "La Paz",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fabricante de botinas femininas e outros calçados (rua Tumusla, La Paz); importa materiais do Peru e outros países",
+  "porte": "pequeno",
+  "ncms_provaveis": [
+   "4107",
+   "3921.13",
+   "6406.20"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Artigo (Visión 360): proprietária Antonia Quispe importa seus materiais do Peru e de outros países",
+    "ncm": null,
+    "origem": "Peru",
+    "fornecedor": null,
+    "periodo": "11/04/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://bolivianthoughts.com/2026/04/11/zapateros-luchan-por-sobrevivir"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Pequeno fabricante que já importa insumos — prospect marginal.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://bolivianthoughts.com/2026/04/11/zapateros-luchan-por-sobrevivir"
+  ],
+  "atualiza_existente": false
+ }
+]
