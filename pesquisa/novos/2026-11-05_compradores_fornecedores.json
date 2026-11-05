@@ -1,0 +1,796 @@
+[
+ {
+  "empresa": "SUPERIORES",
+  "nome_fantasia": "Industria de Calzado Superiores S.A.S.",
+  "pais": "COLOMBIA",
+  "cidade": "Bogotá",
+  "id_fiscal": "NIT 900461027",
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Industria de Calzado Superiores S.A.S. — fábrica de calçado (Bogotá, bairro Restrepo); 1.909 embarques de importação: microfibra/malha (Yantai Joye), sistema PU (Xuchuan, Zhejiang Huafon)",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "6005.37",
+   "3921.13",
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação da Yantai Joye: Do BUNI-1565-26, HS 6005370000, 4.776,1 kg, FOB US$ 19.312,92 / CIF US$ 25.528,37 (Buenaventura)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co., Ltd",
+    "periodo": "29/07/2026",
+    "valor": "19312.92 USD FOB",
+    "unidade": "kg 4776.1",
+    "fonte": "https://www.importgenius.com/colombia/importers/industria-de-calzado-superiores-s-a-s"
+   },
+   {
+    "descricao": "Importação da Yantai Joye: Do BUNI-1569-26, Pedido 26117, 8.510 kg (HS não exibido)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co., Ltd",
+    "periodo": "14/07/2026",
+    "valor": null,
+    "unidade": "kg 8510",
+    "fonte": "https://www.importgenius.com/colombia/importers/industria-de-calzado-superiores-s-a-s"
+   },
+   {
+    "descricao": "Xuchuan Chemical (Suzhou) é fornecedor da empresa: 4.871.960 kg acumulados, último embarque 04/12/2024 (sistema PU para solado)",
+    "ncm": "3907.99",
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical (Suzhou) Co., Ltd",
+    "periodo": "até 04/12/2024",
+    "valor": null,
+    "unidade": "kg 4871960 (acumulado)",
+    "fonte": "https://www.importgenius.com/colombia/importers/industria-de-calzado-superiores-s-a-s"
+   },
+   {
+    "descricao": "Yantai Joye: 2.922.403 kg acumulados como fornecedor, último embarque 29/07/2026",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co., Ltd",
+    "periodo": "até 29/07/2026",
+    "valor": null,
+    "unidade": "kg 2922403 (acumulado)",
+    "fonte": "https://www.importgenius.com/colombia/importers/industria-de-calzado-superiores-s-a-s"
+   },
+   {
+    "descricao": "Cliente listado na página Panjiva da Yantai Joye (Colombia Imports), registro de 04/11/2025",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co., Ltd.",
+    "periodo": "04/11/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Yantai-Joye-Microfiber-Material-Co/35507978"
+   }
+  ],
+  "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co., Ltd (microfibra/malha); Xuchuan Chemical (Suzhou) Co., Ltd (sistema PU, até 12/2024); Zhejiang Huafon New Materials (PU, 07/2026); Antonio Morón de Blas (2022)",
+  "por_que_e_prospect": "Cliente ativo de DOIS fornecedores representados (Yantai Joye em 2026 e Xuchuan até 2024), com volumes de milhares de toneladas — prospect prioritário para Yantai e para recuperar o sistema PU da Xuchuan.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/colombia/importers/industria-de-calzado-superiores-s-a-s",
+   "https://panjiva.com/Yantai-Joye-Microfiber-Material-Co/35507978",
+   "https://www.veritradecorp.com/en/colombia/imports-and-exports-industria-de-calzado-superiores-s-a-s/nit-900461027"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "INTERCALZADOS",
+  "nome_fantasia": "Intercalzados S.A.S.",
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Intercalzados S.A.S. — fábrica de calçado; cliente da Yantai Joye",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.13",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cliente listado na página Panjiva da Yantai Joye (Colombia Imports): INTERCALZADOS SAS, registro de 04/11/2025 (descrição mascarada)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co., Ltd.",
+    "periodo": "04/11/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Yantai-Joye-Microfiber-Material-Co/35507978"
+   }
+  ],
+  "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co., Ltd.",
+  "por_que_e_prospect": "Comprou da Yantai Joye em nov/2025 — já usa o fornecedor representado.",
+  "confianca": "média",
+  "fontes": [
+   "https://panjiva.com/Yantai-Joye-Microfiber-Material-Co/35507978"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "BOTAS TORINO LTDA",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Botas/calçado de segurança; cliente da Yantai Joye",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.13",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cliente listado na página Panjiva da Yantai Joye (Colombia Imports), registro de 04/11/2025 (descrição mascarada)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co., Ltd.",
+    "periodo": "04/11/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Yantai-Joye-Microfiber-Material-Co/35507978"
+   }
+  ],
+  "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co., Ltd.",
+  "por_que_e_prospect": "Confirmação independente (Panjiva) de compra da Yantai Joye em nov/2025.",
+  "confianca": "alta",
+  "fontes": [
+   "https://panjiva.com/Yantai-Joye-Microfiber-Material-Co/35507978"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "SAFETY 2011 S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Barranquilla",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçado de segurança (Barranquilla); importa microfibra/suede/vamp da Yantai Joye e partes plásticas (3926.20)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.13",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Yantai Joye, pedido SDBIMP1239-2 parcial 3, fatura 25FP113: 'Suede' 1.137,1 m², 'Vamp' 1.450 m², 'Microf…' 748,86 kg (BL 210GZH2505133; HS não exibido)",
+    "ncm": "3921.13",
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co.,Ltd",
+    "periodo": "08/04/2026",
+    "valor": null,
+    "unidade": "m2 2587.1 + kg 748.86",
+    "fonte": "https://www.importgenius.com/colombia/importers/safety-2011-s-a-s"
+   },
+   {
+    "descricao": "Yantai Joye é o principal parceiro da empresa: 15.724 kg acumulados, último embarque 08/04/2026",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co.,Ltd",
+    "periodo": "até 08/04/2026",
+    "valor": null,
+    "unidade": "kg 15724 (acumulado)",
+    "fonte": "https://www.importgenius.com/colombia/importers/safety-2011-s-a-s"
+   }
+  ],
+  "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co.,Ltd (principal); Elachem SpA; Haina Security Technology; Matrizminas Ltda; Fujian Smarter Trading; Arvind Limited",
+  "por_que_e_prospect": "Já compra microfibra da Yantai Joye (principal fornecedor, abr/2026) — conta ativa do fornecedor representado.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/colombia/importers/safety-2011-s-a-s"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "UNIFORMES INDUSTRIALES ROPA Y CALZADO QUINLOP S.A.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Uniformes industriais e calçado (Medellín, alfândega); importa tecidos de algodão (Jorpesa/Santanense), sintéticos (Lenard MX, Innopac) e materiais da Yantai Joye",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.13",
+   "6005.37",
+   "5603.14"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Yantai Joye, BL XMNS00127299 (pedido 'Yantai 3-2022', zona franca): 1.440 m² + 458,33 kg + 1.899,98 kg (HS não exibido)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co., Ltd",
+    "periodo": "15/05/2023",
+    "valor": null,
+    "unidade": "m2 1440 + kg 2358.31",
+    "fonte": "https://www.importgenius.com/colombia/importers/uniformes-industriales-ropa-y-calzado-quinlop-s-a"
+   },
+   {
+    "descricao": "Yantai Joye é o 3º maior fornecedor: 42.545 kg acumulados, último 15/05/2023",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Yantai Joye Microfiber Material Co., Ltd",
+    "periodo": "até 15/05/2023",
+    "valor": null,
+    "unidade": "kg 42545 (acumulado)",
+    "fonte": "https://www.importgenius.com/colombia/importers/uniformes-industriales-ropa-y-calzado-quinlop-s-a"
+   }
+  ],
+  "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co., Ltd; Lenard Mx S de RL de CV; Cia Tecidos Santanense; Jorge Peña S.A. Jorpesa; Antonio Morón de Blas; Innopac Korea",
+  "por_que_e_prospect": "Comprador recorrente da Yantai Joye (42,5 t acumuladas até 2023) e fabricante de uniformes/calçado industrial — reativar.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/colombia/importers/uniformes-industriales-ropa-y-calzado-quinlop-s-a",
+   "https://www.volza.com/company-profile/c-i-uniformes-industriales-ropa-y-calzado-quin-lop-s-a-56352594/"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "MANAH GROUP S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importa em grande volume insumos PU da Zhejiang Huafon (4.056 t; catalisador 3815.90), pigmentos/colorantes da REPI LLC e microfibra da Yantai Joye; também aparece como fornecedor de fabricante equatoriano de calçado (Moyolema Sailema)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Yantai Joye listada como fornecedor: 23.511 kg acumulados, último embarque 21/07/2025",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "YANTAI JOYE MICROFIBER MATERIAL CO.,LTD",
+    "periodo": "até 21/07/2025",
+    "valor": null,
+    "unidade": "kg 23511 (acumulado)",
+    "fonte": "https://www.importgenius.com/colombia/importers/manah-group-s-a-s"
+   },
+   {
+    "descricao": "Zhejiang Huafon: HS 3815900000, 700 kg, FOB US$ 1.242,43 (+ 12.220 kg e 13.000 kg na mesma BL)",
+    "ncm": "3909.50",
+    "origem": "China",
+    "fornecedor": "ZHEJIANG HUAFON NEW MATERIALS CO., LTD",
+    "periodo": "27/07/2026",
+    "valor": "1242.43 USD FOB",
+    "unidade": "kg 700",
+    "fonte": "https://www.importgenius.com/colombia/importers/manah-group-s-a-s"
+   }
+  ],
+  "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co.,Ltd (até 07/2025); Zhejiang Huafon New Materials (sistema PU, 2026); REPI LLC; Zhejiang Huafeng New Materials",
+  "por_que_e_prospect": "Grande importador de sistema PU (concorrente da Xuchuan) e já cliente da Yantai Joye — alvo para Xuchuan e Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/colombia/importers/manah-group-s-a-s"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CALZADO ANDINO-ANDICALZADO S.A.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fábrica de calçado; importa air mesh (malla de aire 240 g/m², 1,40 m) da Yantai Joye; ~3.999 embarques de importação",
+  "porte": null,
+  "ncms_provaveis": [
+   "6005.37",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Yantai Joye: 'Malla de Aire Global' 240 gsm (cores café, negro, gris, naranja), 4.991 kg + 930 + 1.146 + 186 + 2.729 kg brutos (BL XMNS00279833; Xiamen→Guayaquil)",
+    "ncm": "6005.37",
+    "origem": "China",
+    "fornecedor": "YANTAI JOYE MICROFIBER MATERIAL CO. LTD",
+    "periodo": "28/08/2026–31/08/2026",
+    "valor": null,
+    "unidade": "kg bruto 9982",
+    "fonte": "https://www.importgenius.com/ecuador/importers/calzado-andino-andicalzado-s-a"
+   }
+  ],
+  "fornecedores_conhecidos": "YANTAI JOYE MICROFIBER MATERIAL CO. LTD; Industria de Calzado Jovical S.A.S. (Colômbia); Pegatex Artecola; C.A. Mejía & Cía",
+  "por_que_e_prospect": "Cliente ativo da Yantai Joye (ago/2026, ~10 t de air mesh) — conta do fornecedor representado no Equador.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/ecuador/importers/calzado-andino-andicalzado-s-a"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "MEGA1000 S.A.S.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Importa TPU (Zhejiang Huafon TPU), aditivos (Excista Corporation, EUA) e materiais da Yantai Joye (segmento exato não confirmado)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Yantai Joye listada como fornecedor: 7.358 kg, último embarque 06/11/2024",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "YANTAI JOYE MICROFIBER MATERIAL CO.",
+    "periodo": "até 06/11/2024",
+    "valor": null,
+    "unidade": "kg 7358 (acumulado)",
+    "fonte": "https://es.importgenius.com/ecuador/importers/mega1000-s-a-s"
+   },
+   {
+    "descricao": "Poliuretano termoplástico (TPU) da Zhejiang Huafon TPU, 824 kg brutos (Ningbo→Guayaquil)",
+    "ncm": "3909.50",
+    "origem": "China",
+    "fornecedor": "ZHEJIANG HUAFON TPU CO. LTD",
+    "periodo": "10/03/2026",
+    "valor": null,
+    "unidade": "kg 824",
+    "fonte": "https://es.importgenius.com/ecuador/importers/mega1000-s-a-s"
+   }
+  ],
+  "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co. (até 11/2024); Zhejiang Huafon TPU Co. Ltd (2026); Excista Corporation (2025)",
+  "por_que_e_prospect": "Compra TPU (produto da Miracll) de concorrente chinês e já comprou da Yantai Joye — prospect para Miracll e Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://es.importgenius.com/ecuador/importers/mega1000-s-a-s"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "HECTOR VILLAMAR MIJARES",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importador (pessoa física com atividade empresarial) de mercadorias diversas da China via Manzanillo; a Yantai Joye é seu 3º maior parceiro",
+  "porte": null,
+  "ncms_provaveis": [
+   "3921.13",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Yantai Joye Microfiber Material é o 3º parceiro (83 transações, 9,49%), último comércio em 22/05/2024 (produtos não detalhados)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "yantai joye microfiber material co.ltd.",
+    "periodo": "até 22/05/2024",
+    "valor": null,
+    "unidade": "83 transações",
+    "fonte": "https://en.52wmb.com/buyer/25107638"
+   }
+  ],
+  "fornecedores_conhecidos": "Yantai Joye Microfiber Material Co.Ltd (83 transações até 05/2024); Putian Hengda Machinery; Cocreation Grass; Hangzhou Shengshideng Magnetics; Gofar Trade",
+  "por_que_e_prospect": "Único comprador mexicano identificado da Yantai Joye (83 transações até 2024) — verificar se revende materiais para calçado.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/buyer/25107638"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "LEAR MEXICAN SEATING CORPORATION",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Revestimento de assentos automotivos (Lear, operações no México); compra couro bovino crust/acabado da JBS (Argentina, Uruguai, Brasil). Registros são de entrada nos EUA (Houston/El Paso) em nome da subsidiária mexicana da Lear",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importador de JBS Leather Argentina S.A.: 8 contêineres, 39.950 kg, último embarque 14/07/2024",
+    "ncm": "4104.41",
+    "origem": "Argentina",
+    "fornecedor": "JBS Leather Argentina S.A.",
+    "periodo": "até 14/07/2024",
+    "valor": null,
+    "unidade": "kg 39950 (acumulado)",
+    "fonte": "https://www.importgenius.com/suppliers/jbs-leather-argentina-s-a"
+   },
+   {
+    "descricao": "'LEAR MEXICAN SEATING CORP.' (Houston) entre os principais importadores da JBS S/A (Brasil)",
+    "ncm": null,
+    "origem": "Brasil",
+    "fornecedor": "JBS S/A",
+    "periodo": "não informado",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.importgenius.com/suppliers/jbs-s-a"
+   },
+   {
+    "descricao": "Lear Mexican Corporation Mexico / Lear Mexican Trim Corporation importaram da JBS Leather Uruguay S.A. (20.669 kg até 01/10/2018; 8.855 kg até 06/09/2017)",
+    "ncm": "4104.41",
+    "origem": "Uruguai",
+    "fornecedor": "JBS Leather Uruguay S.A.",
+    "periodo": "2017-2018",
+    "valor": null,
+    "unidade": "kg 29524",
+    "fonte": "https://www.importgenius.com/suppliers/jbs-leather-uruguay-s-a"
+   },
+   {
+    "descricao": "Lear Corp Mexican (Trim Operations, El Paso): JBS Leather Uruguay S.A. 01/10/2018 (HTS 4104.41.30.10, 13 PKG, 9.443,8 kg), 26/02/2018; JBS S.A. 03/04/2017",
+    "ncm": "4104.41",
+    "origem": "Uruguai/Brasil",
+    "fornecedor": "JBS Leather Uruguay S.A.; JBS S.A.",
+    "periodo": "2017-2018",
+    "valor": null,
+    "unidade": "kg 9443.8",
+    "fonte": "https://panjiva.com/Lear-Corp-Mexican/30878776"
+   }
+  ],
+  "fornecedores_conhecidos": "JBS Leather Argentina S.A. (até 07/2024); JBS S/A (Brasil); JBS Leather Uruguay S.A. (2017-2018)",
+  "por_que_e_prospect": "Cliente histórico da JBS para couro automotivo (crust 4104.41) destinado às plantas da Lear no México — manter/reativar a conta.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/suppliers/jbs-leather-argentina-s-a",
+   "https://www.importgenius.com/suppliers/jbs-s-a",
+   "https://www.importgenius.com/suppliers/jbs-leather-uruguay-s-a",
+   "https://panjiva.com/Lear-Corp-Mexican/30878776"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "INDUSTRIAS LEAR DE ARGENTINA S.R.L.",
+  "nome_fantasia": null,
+  "pais": "ARGENTINA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Revestimentos automotivos (Lear); comprador de couro da Zendaleather",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Parceiro 'industraias lear de argentina s.r.l.' (Buyer, Argentina) na página 52wmb da Zendaleather S.A.: 938 transações desde 21/07/2017",
+    "ncm": null,
+    "origem": "Uruguai/Argentina",
+    "fornecedor": "Zendaleather S.A.",
+    "periodo": "desde 21/07/2017",
+    "valor": null,
+    "unidade": "938 transações",
+    "fonte": "https://en.52wmb.com/supplier/8998631"
+   }
+  ],
+  "fornecedores_conhecidos": "Zendaleather S.A. (938 transações desde 2017)",
+  "por_que_e_prospect": "Maior comprador da Zendaleather listado (938 transações) — conta-chave do fornecedor representado na Argentina.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/supplier/8998631"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "MORBACH PERU S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Importa resinas de poliuretano (XC-5301S, XC-6088W) e catalisadores (XC-10, XC-2, XC-100) da Xuchuan",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Xuchuan Chemical Kunshan: catalisador XC-10 (HS 3815900000) 20 kg FOB US$ 61,81; XC-2 210 kg; XC-100 150 kg; resina PU XC-5301S 3.375 kg; XC-6088W 4.275 kg",
+    "ncm": "3909.50",
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical Kunshan Co Ltd",
+    "periodo": "07/01/2022",
+    "valor": "61.81 USD FOB (só XC-10)",
+    "unidade": "kg 8030",
+    "fonte": "https://www.importgenius.com/peru/suppliers/xuchuan-chemical-kunshan-co-ltd"
+   },
+   {
+    "descricao": "Total como importador da Xuchuan Kunshan: 165.215 kg (Morbach Peru Sociedad Anónima Cerrada, último 07/01/2022) + 41.210 kg (Morbach Peru SAC, último 16/11/2016)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical Kunshan Co Ltd",
+    "periodo": "2016-2022",
+    "valor": null,
+    "unidade": "kg 206425 (acumulado)",
+    "fonte": "https://www.importgenius.com/peru/suppliers/xuchuan-chemical-kunshan-co-ltd"
+   }
+  ],
+  "fornecedores_conhecidos": "Xuchuan Chemical Kunshan Co Ltd (2016-2022)",
+  "por_que_e_prospect": "Maior cliente peruano da Xuchuan Kunshan (206 t) — reativar com o sistema PU da Xuchuan.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/xuchuan-chemical-kunshan-co-ltd"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "SUL POL S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Fabricante de solados de poliuretano; importou sistema PU da Xuchuan",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importador da Xuchuan Chemical Kunshan: 59.770 kg acumulados, último embarque 28/11/2016",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical Kunshan Co Ltd",
+    "periodo": "até 28/11/2016",
+    "valor": null,
+    "unidade": "kg 59770 (acumulado)",
+    "fonte": "https://www.importgenius.com/peru/suppliers/xuchuan-chemical-kunshan-co-ltd"
+   }
+  ],
+  "fornecedores_conhecidos": "Xuchuan Chemical Kunshan Co Ltd (até 2016)",
+  "por_que_e_prospect": "Já usou o sistema PU da Xuchuan (59,8 t até 2016) — reativar.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/xuchuan-chemical-kunshan-co-ltd"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "TENMINSTE S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Importou produtos PU da Xuchuan Kunshan (segmento não confirmado)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importador da Xuchuan Chemical Kunshan: 13.306 kg, último embarque 27/02/2017",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical Kunshan Co Ltd",
+    "periodo": "até 27/02/2017",
+    "valor": null,
+    "unidade": "kg 13306",
+    "fonte": "https://www.importgenius.com/peru/suppliers/xuchuan-chemical-kunshan-co-ltd"
+   }
+  ],
+  "fornecedores_conhecidos": "Xuchuan Chemical Kunshan Co Ltd (2017)",
+  "por_que_e_prospect": "Ex-comprador da Xuchuan (13 t em 2017); segmento a confirmar.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/xuchuan-chemical-kunshan-co-ltd"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "GLOBO S.R.L.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Importou produtos PU da Xuchuan Kunshan (segmento não confirmado)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importador 'Globo SRL' da Xuchuan Chemical Kunshan: 5.104 kg, último embarque 21/06/2017",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical Kunshan Co Ltd",
+    "periodo": "até 21/06/2017",
+    "valor": null,
+    "unidade": "kg 5104",
+    "fonte": "https://www.importgenius.com/peru/suppliers/xuchuan-chemical-kunshan-co-ltd"
+   }
+  ],
+  "fornecedores_conhecidos": "Xuchuan Chemical Kunshan Co Ltd (2017)",
+  "por_que_e_prospect": "Ex-comprador da Xuchuan (5 t em 2017); segmento a confirmar.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/xuchuan-chemical-kunshan-co-ltd"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "BSB (calçados, Lins/SP)",
+  "nome_fantasia": "BSB Produtora de Equipamentos de Protecao Individual Ltda.",
+  "pais": "BRASIL",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "BSB Produtora de Equipamentos de Proteção Individual Ltda. — calçado de segurança injetado em PU; importa sistema PU (Xuchuan, Huafon) e máquinas Desma/Gusbi",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Xuchuan Chemical Suzhou é o 3º parceiro de importação: 97 transações (4,28%); janela exibida mai/2025–fev/2026 (país do parceiro aparece errado como Rússia na fonte)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical Suzhou",
+    "periodo": "mai/2025–fev/2026 (janela da página)",
+    "valor": null,
+    "unidade": "97 transações",
+    "fonte": "https://en.52wmb.com/company/c8393753"
+   }
+  ],
+  "fornecedores_conhecidos": "Xuchuan Chemical (Suzhou) (97 transações); Zhejiang Huafon New Materials (221); Marseg S.A. (Paraguai, 1.548); Desma Schuhmaschinen; Gusbi",
+  "por_que_e_prospect": "Já compra sistema PU da Xuchuan — cliente ativo do fornecedor representado (razão social 'BSB Produtora de EPI Ltda.' — correspondência com o registro BSB/Lins provável, confirmar).",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/company/c8393753"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "SEPA TIRADO SALVADOR GONZALO",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Importador (pessoa física com atividade empresarial) de produtos PU da Xuchuan em tambores (provável sistema PU para solado — não confirmado)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cliente da Xuchuan Chemical (Kunshan) (Ecuador Imports, destino Guayaquil): 14/10/2017 — 290 tambores, 59.223 kg brutos; novo embarque 08/09/2018 (descrição mascarada)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical (Kunshan) Co., Ltd.",
+    "periodo": "2017-2018",
+    "valor": null,
+    "unidade": "290 tambores / 59223 kg",
+    "fonte": "https://panjiva.com/Xuchuan-Chemical-Kunshan-Co-Ltd/35367405"
+   }
+  ],
+  "fornecedores_conhecidos": "Xuchuan Chemical (Kunshan) Co., Ltd. (2017-2018)",
+  "por_que_e_prospect": "Comprou ~59 t da Xuchuan em 2017 — reativar.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://panjiva.com/Xuchuan-Chemical-Kunshan-Co-Ltd/35367405"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "VALVERDE MONTALVO ALVARO ANDRES",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Importador (pessoa física com atividade empresarial) de produtos da Xuchuan (descrição mascarada)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Cliente da Xuchuan Chemical (Kunshan) (Ecuador Imports), embarque de 10/05/2023 (descrição mascarada)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Xuchuan Chemical (Kunshan) Co., Ltd.",
+    "periodo": "10/05/2023",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Xuchuan-Chemical-Kunshan-Co-Ltd/35367405"
+   }
+  ],
+  "fornecedores_conhecidos": "Xuchuan Chemical (Kunshan) Co., Ltd. (2023)",
+  "por_que_e_prospect": "Comprador equatoriano da Xuchuan em 2023.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://panjiva.com/Xuchuan-Chemical-Kunshan-Co-Ltd/35367405"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "FERREIRA JULIO DAMIAN",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Importador (pessoa física com atividade empresarial) de solados de borracha/plástico do Brasil",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Hiper Industria de Solados Ltda: 'Las demás – suelas y tacos, de caucho o de plástico', HS 64062000, 4.340 unid., 729 kg, CIF US$ 4.622 (caminhão Brasil→Paraguai)",
+    "ncm": "6406.20",
+    "origem": "Brasil",
+    "fornecedor": "HIPER INDUSTRIA DE SOLADOS LTDA",
+    "periodo": "08/06/2020",
+    "valor": "4622 USD CIF",
+    "unidade": "unid. 4340",
+    "fonte": "https://es.importgenius.com/paraguay/suppliers/hiper-industria-de-solados-ltda"
+   }
+  ],
+  "fornecedores_conhecidos": "Hiper Industria de Solados Ltda (2020)",
+  "por_que_e_prospect": "Único comprador latino-americano identificado da Hiper Solados (2020) — reativar.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://es.importgenius.com/paraguay/suppliers/hiper-industria-de-solados-ltda"
+  ],
+  "atualiza_existente": false
+ }
+]
