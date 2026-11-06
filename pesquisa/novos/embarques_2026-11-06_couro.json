@@ -1,0 +1,47 @@
+[
+ {
+  "data": "2026-04-29",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": null,
+  "ncm": "",
+  "produto": "DO-PEL.20265617 SUB-DO.25262663 (couro acabado, provável 4107 como o embarque de 2026-06-26 do mesmo fornecedor; HS não mostrado na linha; mesmo fornecedor/unidade do embarque 4107920000 de 2026-06-26)",
+  "quantidade": 601.45,
+  "unidade": "M2",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ },
+ {
+  "data": "2026-03-26",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": null,
+  "ncm": "",
+  "produto": "DO-PEL.20262823 SUB-DO.25261434 (couro acabado, provável 4107 como o embarque de 2026-06-26 do mesmo fornecedor; HS não mostrado na linha)",
+  "quantidade": 1166.26,
+  "unidade": "M2",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ },
+ {
+  "data": "2026-02-24",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": null,
+  "ncm": "",
+  "produto": "DO-PEL.20260566 SUB-DO.25260325 (couro acabado, provável 4107 como o embarque de 2026-06-26 do mesmo fornecedor; HS não mostrado na linha)",
+  "quantidade": 615.18,
+  "unidade": "M2",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ }
+]
