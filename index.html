@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261109-143328';</script>
+<script>window.VERSAO_SISTEMA = '20261109-143555';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -15413,6 +15413,14 @@ async function ncmArquivarDoDoc(lido, arquivo){
   if(window.currentView==='prospeccao'){ try{ renderProspeccaoView(); }catch(e){} }
 }
 const prospF = { pais:'', ncm:'', seg:'', conf:'', per:'', busca:'', soEvid:false, soNovos:false, comForn:false, abertos:{} };
+// o PAÍS é um filtro só para a aba inteira: escolheu em qualquer lugar (busca, embarques, cartões, lista de empresas), vale para todos
+function prPaisMudou(v){
+  prospF.pais = v || '';
+  try{ buscaF.pais = prospF.pais; embF.pais = prospF.pais; embF.limite = 200; }catch(e){}
+  const sc = document.querySelector('.main-scroll'); const top = sc ? sc.scrollTop : 0;
+  renderProspeccaoView().then(()=>{ if(sc) sc.scrollTop = top; });
+}
+const prPaisLista = (arr, sel) => (!sel || arr.indexOf(sel) >= 0) ? arr : arr.concat(sel).sort((a,b)=>a.localeCompare(b,'pt'));
 let prospCarregadoEm = 0;
 async function prospCarregar(forcar){
   // a pesquisa é atualizada várias vezes por dia: relê se a cópia tem mais de 2 minutos
@@ -15610,7 +15618,7 @@ async function renderProspeccaoView(){
     <div class="an-panel" style="margin-top:14px;">
       <div class="an-panel-title">🏭 Empresas que compram as nossas NCMs <span class="an-panel-sub">${lista.length} de ${empresas.length} · clique numa linha para ver evidências e fontes</span></div>
       <div class="pr-filtros">
-        <select id="prPais">${opt(paises, prospF.pais, 'Todos os países')}</select>
+        <select id="prPais">${opt(prPaisLista(paises, prospF.pais), prospF.pais, 'Todos os países')}</select>
         <select id="prNcm">${ncmOpts}</select>
         <select id="prSeg">${opt(segs, prospF.seg, 'Todos os segmentos')}</select>
         <select id="prConf">${opt(['alta','média','baixa'], prospF.conf, 'Toda confiança')}</select>
@@ -15629,13 +15637,13 @@ async function renderProspeccaoView(){
       <div style="overflow:auto;"><table class="pr-tab"><thead><tr><th>NCM</th><th>Produto</th><th>Fornecedor</th><th>Origem da informação</th><th></th></tr></thead><tbody>${linhasNcm}</tbody></table></div>
     </div>`;
   const rerender = ()=>{ const sc = document.querySelector('.main-scroll'); const top = sc ? sc.scrollTop : 0; renderProspeccaoView().then(()=>{ if(sc) sc.scrollTop = top; }); };
-  el.querySelectorAll('[data-pr-pais]').forEach(b=>b.onclick = ()=>{ prospF.pais = prospF.pais===b.dataset.prPais ? '' : b.dataset.prPais; rerender(); });
+  el.querySelectorAll('[data-pr-pais]').forEach(b=>b.onclick = ()=>{ prPaisMudou(prospF.pais===b.dataset.prPais ? '' : b.dataset.prPais); });
   el.querySelectorAll('[data-pr-ncm]').forEach(b=>b.onclick = ()=>{ prospF.ncm = b.dataset.prNcm; rerender(); });
   el.querySelectorAll('[data-pr-abrir]').forEach(tr=>tr.onclick = ev=>{ if(ev.target.closest('a')) return; const k = tr.dataset.prAbrir; prospF.abertos[k] = !prospF.abertos[k]; rerender(); });
   const liga = (id, campo, ev) => { const i = el.querySelector('#'+id); if(i) i.addEventListener(ev||'change', ()=>{ prospF[campo] = i.type==='checkbox' ? i.checked : i.value; if(id==='prBusca'){ clearTimeout(window.__prT); window.__prT = setTimeout(()=>{ rerender(); setTimeout(()=>{ const b = document.getElementById('prBusca'); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } }, 30); }, 350); } else rerender(); }); };
   try{ embRender(); }catch(e){ console.warn('embarques', e); }
   try{ buscaRender(); }catch(e){ console.warn('busca', e); }
-  liga('prPais','pais'); liga('prNcm','ncm'); liga('prSeg','seg'); liga('prConf','conf'); liga('prPer','per'); liga('prComForn','comForn'); liga('prEvid','soEvid'); liga('prNovos','soNovos'); liga('prBusca','busca','input');
+  { const ps = el.querySelector('#prPais'); if(ps) ps.addEventListener('change', ()=>prPaisMudou(ps.value)); } liga('prNcm','ncm'); liga('prSeg','seg'); liga('prConf','conf'); liga('prPer','per'); liga('prComForn','comForn'); liga('prEvid','soEvid'); liga('prNovos','soNovos'); liga('prBusca','busca','input');
   el.querySelector('#prRecarregar').onclick = async ()=>{ await prospCarregar(true); rerender(); toast('↻ Pesquisa recarregada.'); };
   el.querySelector('#prExcel').onclick = ()=>{
     if(typeof XLSX==='undefined'){ toast('Biblioteca do Excel não carregou.'); return; }
@@ -15749,6 +15757,7 @@ async function embLerDocumento(file){
 }
 function embRender(){
   const box = document.getElementById('prEmbBox'); if(!box) return;
+  embF.pais = prospF.pais;   // país é o mesmo filtro da aba toda
   const E = prospEsc;
   const todos = embTodos();
   const clientes = prospClientes();
@@ -15800,7 +15809,7 @@ function embRender(){
   box.innerHTML = `
     <div class="an-panel-title">🚢 Embarques — quem comprou, de quem e a que preço <span class="an-panel-sub">${lista.length} de ${todos.length} registro(s)${D.embarquesAtualizadoEm?` · coleta de ${E(fmtDateBR(D.embarquesAtualizadoEm))}`:''} · registros de ${E(String(D.embarquesDesde||'2026-01-01').slice(0,4))} em diante · preço = valor ÷ quantidade, pela unidade</span></div>
     <div class="pr-filtros">
-      <select id="embPais">${opt(paises, embF.pais, 'Todos os países')}</select>
+      <select id="embPais">${opt(prPaisLista(paises, embF.pais), embF.pais, 'Todos os países')}</select>
       <select id="embNcm">${opt(ncms4, embF.ncm, 'Todas as NCMs')}</select>
       <select id="embAno">${opt(anos, embF.ano, 'Qualquer ano')}</select>
       <input id="embBusca" placeholder="Buscar importador, fornecedor, produto…" value="${E(embF.busca)}">
@@ -15834,7 +15843,7 @@ function embRender(){
   const re = ()=>{ const sc = box.querySelector('.emb-scroll'); const t = sc ? sc.scrollTop : 0, l = sc ? sc.scrollLeft : 0; embRender(); const s2 = box.querySelector('.emb-scroll'); if(s2){ s2.scrollTop = t; s2.scrollLeft = l; } };
   const liga = (id, k, ev) => { const i = box.querySelector('#'+id); if(i) i.addEventListener(ev||'change', ()=>{ embF[k] = i.type==='checkbox' ? i.checked : i.value; embF.limite = 200;
     if(id==='embBusca'){ clearTimeout(window.__embT); window.__embT = setTimeout(()=>{ embRender(); const b = document.getElementById('embBusca'); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } }, 250); } else embRender(); }); };
-  liga('embPais','pais'); liga('embNcm','ncm'); liga('embAno','ano'); liga('embSoMeus','soMeus'); liga('embSoCli','soCli'); liga('embBusca','busca','input');
+  { const ps = box.querySelector('#embPais'); if(ps) ps.addEventListener('change', ()=>prPaisMudou(ps.value)); } liga('embNcm','ncm'); liga('embAno','ano'); liga('embSoMeus','soMeus'); liga('embSoCli','soCli'); liga('embBusca','busca','input');
   const mais = box.querySelector('#embMais'); if(mais) mais.onclick = ()=>{ embF.limite += 200; re(); };
   const exigeEdicao = ()=>{ if(!editMode){ toast('Digite a senha de edição para lançar embarques.'); openEditUnlockModal(); return false; } return true; };
   box.querySelector('#embNovo').onclick = ()=>{ if(!exigeEdicao()) return; embForm = { unidade:'kg', tipo_valor:'FOB' }; embRender(); };
@@ -15888,6 +15897,7 @@ function buscaCasa(texto, q){
 }
 function buscaRender(){
   const box = document.getElementById('prBuscaBox'); if(!box) return;
+  buscaF.pais = prospF.pais;   // país é o mesmo filtro da aba toda
   const E = prospEsc;
   const embs = embTodos();
   const D = prospDados || {};
@@ -15972,8 +15982,8 @@ function buscaRender(){
   const ir = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaRender(); };
   box.querySelector('#buscaIr').onclick = ir;
   box.querySelectorAll('#buscaExp,#buscaImp').forEach(i=>i.addEventListener('keydown', ev=>{ if(ev.key==='Enter') ir(); }));
-  const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ Object.assign(buscaF, { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false }); buscaRender(); };
-  [['buscaPais','pais'],['buscaNcm','ncm'],['buscaAno','ano'],['buscaSoCli','soCli'],['buscaSemCli','semCli']].forEach(([id,k])=>{ const i = box.querySelector('#'+id); if(i) i.onchange = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaF[k] = i.type==='checkbox' ? i.checked : i.value; if(k==='soCli' && i.checked) buscaF.semCli = false; if(k==='semCli' && i.checked) buscaF.soCli = false; buscaRender(); }; });
+  const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ const tinhaPais = !!buscaF.pais; Object.assign(buscaF, { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false }); if(tinhaPais) prPaisMudou(''); else buscaRender(); };
+  [['buscaPais','pais'],['buscaNcm','ncm'],['buscaAno','ano'],['buscaSoCli','soCli'],['buscaSemCli','semCli']].forEach(([id,k])=>{ const i = box.querySelector('#'+id); if(i) i.onchange = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); if(k==='pais'){ prPaisMudou(i.value); return; } buscaF[k] = i.type==='checkbox' ? i.checked : i.value; if(k==='soCli' && i.checked) buscaF.semCli = false; if(k==='semCli' && i.checked) buscaF.soCli = false; buscaRender(); }; });
   box.querySelectorAll('[data-busca-exp]').forEach(b=>b.onclick = ()=>{ buscaF.exp = buscaF.exp===b.dataset.buscaExp ? '' : b.dataset.buscaExp; buscaF.imp = ''; buscaRender(); });
   box.querySelectorAll('[data-busca-ir]').forEach(tr=>tr.onclick = ()=>{ embF.busca = tr.dataset.buscaIr; embF.limite = 200; embRender(); const eb = document.getElementById('prEmbBox'); if(eb) eb.scrollIntoView({behavior:'smooth', block:'start'}); });
 }
