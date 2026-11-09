@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261105-170225';</script>
+<script>window.VERSAO_SISTEMA = '20261109-143328';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -768,7 +768,13 @@ body.arrastando-cartao, body.arrastando-cartao *{cursor:grabbing !important;user
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--steel);background:#fff;}
 .field textarea{resize:vertical;min-height:60px;}
 .status-select{font-weight:700;}
-.pay-row{display:grid;grid-template-columns:80px 1fr 110px 90px 1fr 1fr;gap:8px;align-items:end;margin-bottom:8px;}
+.pay-row{display:grid;grid-template-columns:80px 1fr 110px 90px 1fr 1fr 130px;gap:8px;align-items:end;margin-bottom:8px;}
+.swift-add{width:100%;padding:8px 6px;border-radius:7px;border:1px dashed #9DB6D6;background:#F7FAFE;color:#1E5AA8;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.swift-add:hover{background:#E3EEFB;border-style:solid;}
+.swift-box{display:flex;align-items:center;gap:4px;padding:6px 6px;border-radius:7px;border:1px solid #9FD3B4;background:#EEF8F2;font-size:12px;font-weight:600;color:#2E7D4F;white-space:nowrap;overflow:hidden;}
+.swift-box .swift-nome{flex:1;overflow:hidden;text-overflow:ellipsis;}
+.swift-box button{border:none;background:none;cursor:pointer;padding:0 2px;font-size:13px;}
+.ai-swift{font-size:10.5px;background:#EEF8F2;color:#2E7D4F;padding:2px 7px;border-radius:5px;font-weight:600;}
 .calc-inline{
   padding:8px 10px;border-radius:7px;border:1px solid var(--line);background:var(--slate-bg);
   font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--steel);
@@ -6808,6 +6814,22 @@ function entradaVencInfo(d){
   if(d.refEntrada){ const v = calcVencimentoParcela(d, d.refEntrada, d.prazoEntrada); return v ? 'pela referência: '+fmtDateBR(v) + (!resolveRefDate(d, d.refEntrada)? ' <span class="venc-warn">⚠ ref. sem data</span>':'') : ''; }
   return '<span class="venc-muted">escolha a data ou use a referência</span>';
 }
+// SWIFT (comprovante do pagamento) de cada entrada/parcela: fica guardado como anexo do processo, marcado com a parcela
+const SWIFT_ROTULO = { entrada:'Entrada', pg1:'1ª parcela', pg2:'2ª parcela', pg3:'3ª parcela', pg4:'4ª parcela' };
+function swiftCellHtml(d, slot){
+  const lista = (d && d.attachments) || [];
+  const i = lista.findIndex(a=>a && a.swift===slot);
+  let corpo;
+  if(i >= 0){
+    const a = lista[i];
+    corpo = `<div class="swift-box" title="${String(a.name||'').replace(/"/g,'&quot;')}">✓ <span class="swift-nome">SWIFT</span>`
+      + ((a.dados||a._anx) ? `<button type="button" data-swift-ver="${i}" title="Ver o SWIFT">👁</button>` : (a.url? `<a href="${a.url}" target="_blank" rel="noopener" title="Abrir">↗</a>`:''))
+      + `<button type="button" data-swift-remove="${i}" title="Remover o SWIFT desta parcela">✕</button></div>`;
+  } else {
+    corpo = `<button type="button" class="swift-add" data-swift-add="${slot}" title="Anexar o SWIFT (comprovante) do pagamento — PDF ou imagem">📎 Anexar SWIFT</button>`;
+  }
+  return `<div class="field swift-cell" data-swift-slot="${slot}"><label>SWIFT</label>${corpo}</div>`;
+}
 function entradaRowHtml(draft){
   const temValor = (draft.entrada||0) > 0;
   const refKey = draft.refEntrada || '';
@@ -6831,6 +6853,7 @@ function entradaRowHtml(draft){
       <input type="date" data-key="vencEntrada" value="${draft.vencEntrada||''}" title="Data em que o cliente deve pagar a entrada — aparece no cartão do processo">
       <div class="calc-inline" id="vencEntrada" style="font-size:11px;padding:2px 0 0;min-height:0;">${entradaVencInfo(draft)}</div></div>
     ${fieldRow('Data (pago)','dataEntradaPg','date')}
+    ${swiftCellHtml(draft,'entrada')}
   </div>`;
 }
 // vencimento de uma PARCELA (1 a 4): a data digitada direto vale primeiro; senão, a calculada pela referência + dias
@@ -6870,6 +6893,7 @@ function parcelaRowHtml(draft, n){
       <input type="date" data-key="vencPg${n}" value="${draft['vencPg'+n]||''}" title="Data em que o cliente deve pagar esta parcela. Se ficar vazio, usa a Referência + Dias.">
       <div class="calc-inline" id="vencPg${n}" style="font-size:11px;padding:2px 0 0;min-height:0;">${parcelaVencInfo(draft, n)}</div></div>
     ${fieldRow('Data (pago)','dataPg'+n,'date')}
+    ${swiftCellHtml(draft,'pg'+n)}
   </div>`;
 }
 
@@ -9236,7 +9260,7 @@ function renderModal(){
         <div class="attach-list" id="attachList">
           ${(draft.attachments||[]).map((a,i)=>`
             <div class="attach-item">
-              <span class="ai-stage">${STATUS_BY_KEY[a.stage]?STATUS_BY_KEY[a.stage].label:'Geral'}</span>
+              <span class="ai-stage">${STATUS_BY_KEY[a.stage]?STATUS_BY_KEY[a.stage].label:'Geral'}</span>${a.swift? `<span class="ai-swift">🏦 SWIFT ${SWIFT_ROTULO[a.swift]||''}</span>`:''}
               <span class="ai-name">${(a.dados||a._anx)? '📎 ':''}${a.name}${a.tamanho? ` <span class="venc-muted">(${a.tamanho})</span>`:''}</span>
               ${(a.dados||a._anx)
                 ? `<button type="button" class="link-btn" data-attach-ver="${i}" title="Ver aqui dentro">👁 ver</button> <button type="button" class="link-btn" data-attach-baixar="${i}" title="Baixar">⬇ baixar</button>`
@@ -9651,7 +9675,7 @@ function wireModalEvents(){
     if(!lista){ renderModal(); return; }
     lista.innerHTML = (draft.attachments||[]).map((a,i)=>`
       <div class="attach-item">
-        <span class="ai-stage">${STATUS_BY_KEY[a.stage]?STATUS_BY_KEY[a.stage].label:'Geral'}</span>
+        <span class="ai-stage">${STATUS_BY_KEY[a.stage]?STATUS_BY_KEY[a.stage].label:'Geral'}</span>${a.swift? `<span class="ai-swift">🏦 SWIFT ${SWIFT_ROTULO[a.swift]||''}</span>`:''}
         <span class="ai-name">${(a.dados||a._anx)? '📎 ':''}${a.name}${a.tamanho? ` <span class="venc-muted">(${a.tamanho})</span>`:''}</span>
         ${(a.dados||a._anx)
           ? `<button type="button" class="link-btn" data-attach-ver="${i}" title="Ver aqui dentro">👁 ver</button> <button type="button" class="link-btn" data-attach-baixar="${i}" title="Baixar">⬇ baixar</button>`
@@ -9669,7 +9693,47 @@ function wireModalEvents(){
   ligarAcoesAnexos();
   }
 
+  // redesenha só as caixinhas "SWIFT" das parcelas e liga os botões
+  function atualizarSwift(){
+    document.querySelectorAll('.swift-cell[data-swift-slot]').forEach(c=>{ c.outerHTML = swiftCellHtml(draft, c.dataset.swiftSlot); });
+    document.querySelectorAll('[data-swift-add]').forEach(el=>{
+      el.addEventListener('click', (e)=>{
+        e.preventDefault();
+        if(typeof editMode!=='undefined' && !editMode){ toast('Digite a senha de edição pra anexar o SWIFT.'); try{ openEditUnlockModal(); }catch(_){} return; }
+        const slot = el.dataset.swiftAdd;
+        const inp = document.createElement('input'); inp.type='file'; inp.accept='.pdf,image/*,.txt,.doc,.docx'; inp.style.display='none';
+        document.body.appendChild(inp);
+        inp.addEventListener('change', async ()=>{
+          const f = (inp.files||[])[0]; inp.remove(); if(!f) return;
+          const antes = (draft.attachments||[]).length;
+          try{ await anexarArquivo(f, true); }catch(err){ console.warn('swift', err); toast('Não consegui anexar o SWIFT.'); return; }
+          const lista = draft.attachments||[];
+          if(lista.length > antes){
+            lista.forEach(a=>{ if(a && a.swift===slot) delete a.swift; });   // um SWIFT por parcela: o novo substitui a marcação do antigo
+            lista[lista.length-1].swift = slot;
+            toast('🏦 SWIFT da ' + (SWIFT_ROTULO[slot]||'parcela').toLowerCase() + ' anexado. Clique em Salvar pra gravar.');
+            atualizarListaAnexos();
+          }
+        });
+        inp.click();
+      });
+    });
+    document.querySelectorAll('[data-swift-ver]').forEach(el=>{
+      el.addEventListener('click', async (e)=>{ e.preventDefault(); const a=(draft.attachments||[])[parseInt(el.dataset.swiftVer,10)]; const d = await obterDadosAnexo(draft, a); if(!d){ toast('Não encontrei este SWIFT nem neste computador nem na nuvem.'); return; } visualizarArquivo(a); });
+    });
+    document.querySelectorAll('[data-swift-remove]').forEach(el=>{
+      el.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const a = (draft.attachments||[])[parseInt(el.dataset.swiftRemove,10)];
+        if(!a || !confirm('Remover o SWIFT "' + (a.name||'') + '" desta parcela?')) return;
+        draft.attachments.splice(parseInt(el.dataset.swiftRemove,10), 1);
+        atualizarListaAnexos();
+      });
+    });
+  }
+
   function ligarAcoesAnexos(){
+    atualizarSwift();
     const raiz = document.getElementById('attachList');
     if(!raiz) return;
     raiz.querySelectorAll('[data-attach-ver]').forEach(el=>{
