@@ -1,0 +1,236 @@
+[
+  {
+    "empresa": "Curtiembre Paris, S.A.",
+    "nome_fantasia": "Curtiembre Paris",
+    "pais": "URUGUAI",
+    "cidade": "Montevideo",
+    "id_fiscal": null,
+    "site": "http://www.curtiembreparis.com",
+    "contato": null,
+    "segmento": "curtume",
+    "produtos": "Couro bovino flor integral (curtimento ao cromo e livre de cromo) para a indústria automotiva; processo de couro cru até crust",
+    "porte": "médio",
+    "ncms_provaveis": ["4104.11", "4104.41", "4107"],
+    "evidencias": [
+      {"descricao": "Curtume certificado LWG (Silver), categoria B (couro cru até crust), certificado continuamente desde 31/01/2023, auditoria válida até 21/10/2026; couro flor integral para automotivo", "ncm": "4107", "origem": "Leather Working Group (lista de fornecedores certificados)", "fornecedor": null, "periodo": "31/01/2023-21/10/2026", "valor": null, "unidade": null, "fonte": "https://www.leatherworkinggroup.com/get-involved/our-community/certified-suppliers/curtiembre-paris-sa/"},
+      {"descricao": "Notícia sobre crise: perdeu cliente Boxmark (estofamento automotivo), ~40 trabalhadores restantes; passou a exportar couro salgado à China", "ncm": "4107", "origem": "La Mañana (Uruguai)", "fornecedor": null, "periodo": "05/03/2020", "valor": null, "unidade": null, "fonte": "https://xn--lamaana-7za.uy/actualidad/la-industria-del-cuero-en-su-peor-momento-historico"},
+      {"descricao": "Demissão de 7 trabalhadores terceirizados (outubro 2023), confirmada pelo MTSS", "ncm": "4107", "origem": "SERMA news", "fornecedor": null, "periodo": "01/03/2024", "valor": null, "unidade": null, "fonte": "https://serma.net/news/reports/uruguay/layoffs-at-paris-tannery"}
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Curtume ativo e certificado LWG que processa até crust/acabado para automotivo; possível comprador de wet blue/crust complementar (JBS/Zenda) quando falta matéria-prima local.",
+    "confianca": "média",
+    "fontes": ["https://www.leatherworkinggroup.com/get-involved/our-community/certified-suppliers/curtiembre-paris-sa/", "https://xn--lamaana-7za.uy/actualidad/la-industria-del-cuero-en-su-peor-momento-historico", "https://serma.net/news/reports/uruguay/layoffs-at-paris-tannery"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "Bemor Calzados",
+    "nome_fantasia": "Bemor",
+    "pais": "PARAGUAI",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": "https://bemor.com.py/",
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Calçado feminino de couro com fábrica própria; linha Bemor Circular (reparo/restauração) e reaproveitamento de retalhos de couro",
+    "porte": "pequeno",
+    "ncms_provaveis": ["4107", "3506.91", "6406.20", "3921.13"],
+    "evidencias": [
+      {"descricao": "Marca paraguaia com fábrica própria de calçado feminino de couro; reaproveita retalhos de couro da fábrica", "ncm": "4107", "origem": "InfoNegocios Paraguay", "fornecedor": null, "periodo": "13/02/2024", "valor": null, "unidade": null, "fonte": "https://infonegocios.com.py/amp/infobrand/bemor-calzados-la-marca-comprometida-a-disminuir-el-impacto-ambiental-asociado-al-ciclo-de-vida-de-calzados-de-cuero"}
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Fabricante paraguaio de calçado de couro com produção própria, potencial comprador de couro acabado, adesivos e solados.",
+    "confianca": "média",
+    "fontes": ["https://infonegocios.com.py/amp/infobrand/bemor-calzados-la-marca-comprometida-a-disminuir-el-impacto-ambiental-asociado-al-ciclo-de-vida-de-calzados-de-cuero"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "Mike Mike",
+    "nome_fantasia": "Mike Mike / Go",
+    "pais": "EL SALVADOR",
+    "cidade": "San Salvador",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "marroquinaria/estofados",
+    "produtos": "Cintos, mochilas, pastas, bolsas escolares e médicas, carteiras, pochetes, bolsas femininas, capas de laptop (mais de 2.000 modelos), produção quase toda em El Salvador",
+    "porte": "médio",
+    "ncms_provaveis": ["4107", "3921.13", "3921.12", "3506.91"],
+    "evidencias": [
+      {"descricao": "Marroquinaria salvadorenha fundada em 1965; ~99% da produção feita em El Salvador; começou vendendo couro, solas e cola", "ncm": "4107", "origem": "El Diario de Hoy (elsalvador.com)", "fornecedor": null, "periodo": "06/12/2025", "valor": null, "unidade": null, "fonte": "https://www.elsalvador.com/?p=1253500"}
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Maior marroquinaria tradicional de El Salvador com produção local em escala, compradora natural de couro acabado e sintético PU/PVC.",
+    "confianca": "média",
+    "fontes": ["https://www.elsalvador.com/?p=1253500"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "Calzado Rivas",
+    "nome_fantasia": null,
+    "pais": "EL SALVADOR",
+    "cidade": "San Salvador",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Calçado artesanal de couro bovino (inclusive escolar), oficina no Centro Histórico desde 1987",
+    "porte": "pequeno",
+    "ncms_provaveis": ["4107", "6406.20", "3506.91"],
+    "evidencias": [
+      {"descricao": "Oficina artesanal de calçado de couro de res; equipe atual reduzida (2 pessoas, já teve 30 artesãos)", "ncm": "4107", "origem": "El Diario de Hoy", "fornecedor": null, "periodo": "18/08/2025", "valor": null, "unidade": null, "fonte": "https://www.eldiariodehoy.com/noticias/calzado-rivas-casi-40-anos-de-producir-zapatos-en-el-centro-historico/29396/2025/"}
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Fabricante artesanal ativo de calçado de couro; prospect pequeno, provavelmente via distribuidor local.",
+    "confianca": "baixa",
+    "fontes": ["https://www.eldiariodehoy.com/noticias/calzado-rivas-casi-40-anos-de-producir-zapatos-en-el-centro-historico/29396/2025/"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "Danilos",
+    "nome_fantasia": "Danilo's",
+    "pais": "HONDURAS",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "marroquinaria/estofados",
+    "produtos": "Artigos de couro feitos à mão (masculino, feminino, infantil), combinando couro com fibras naturais hondurenhas; atende designers e corporações",
+    "porte": "médio",
+    "ncms_provaveis": ["4107", "3506.91"],
+    "evidencias": [
+      {"descricao": "Membro da Leather Naturally; empresa familiar descrita como 'a mais proeminente empresa de couro de Honduras', clientes no mundo todo", "ncm": "4107", "origem": "Leather Naturally (perfil de membro)", "fornecedor": null, "periodo": "sem data (consultado 2026)", "valor": null, "unidade": null, "fonte": "https://www.leathernaturally.org/our-story/members/danilos/"}
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Principal fabricante de artigos de couro de Honduras, comprador potencial de couro acabado.",
+    "confianca": "média",
+    "fontes": ["https://www.leathernaturally.org/our-story/members/danilos/"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "Del Río",
+    "nome_fantasia": "Del Rio",
+    "pais": "COSTA RICA",
+    "cidade": "San José",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "marroquinaria/estofados",
+    "produtos": "Marroquinaria (carteiras, mochilas, bolsas, pastas de laptop, cintos, chaveiros, capas de celular) e calçados/botins; oficina desde 1978, 6 lojas",
+    "porte": "médio",
+    "ncms_provaveis": ["4107", "3921.13"],
+    "evidencias": [
+      {"descricao": "Pioneira em marroquinaria na Costa Rica, 45 anos, 6 lojas; usa couro e 'novos materiais' (conteúdo patrocinado)", "ncm": "4107", "origem": "La Nación – Brand Voice", "fornecedor": null, "periodo": "06/06/2024", "valor": null, "unidade": null, "fonte": "https://www.nacion.com/brandvoice/del-rio-celebrando-45-anos-de-innovacion-calidad-y/EGUIVZYC3RB3NLUMMFBEW5XPCE/story/"},
+      {"descricao": "Reportagem sobre curtumes costarriquenhos: Del Río importa 100% do seu material (couro)", "ncm": "4107", "origem": "El Financiero (CR)", "fornecedor": null, "periodo": "06/01/2013", "valor": null, "unidade": null, "fonte": "https://www.elfinancierocr.com/negocios/tenerias-giran-hacia-cuero-salado/65XS4KFZJJAZFOC65LDUDKW4CA/story"}
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Marroquinaria costarriquenha que declarou importar 100% do couro, compradora direta de couro acabado.",
+    "confianca": "média",
+    "fontes": ["https://www.nacion.com/brandvoice/del-rio-celebrando-45-anos-de-innovacion-calidad-y/EGUIVZYC3RB3NLUMMFBEW5XPCE/story/", "https://www.elfinancierocr.com/negocios/tenerias-giran-hacia-cuero-salado/65XS4KFZJJAZFOC65LDUDKW4CA/story"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "Calzado Torvic",
+    "nome_fantasia": "Torvic",
+    "pais": "COSTA RICA",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Calçado de couro",
+    "porte": null,
+    "ncms_provaveis": ["4107", "6406.20", "3506.91"],
+    "evidencias": [
+      {"descricao": "Fábrica de calçado que relatou receber só couro de baixa qualidade dos curtumes locais (Primenca), indicando dependência de couro externo", "ncm": "4107", "origem": "El Financiero (CR)", "fornecedor": "Primenca (curtume local)", "periodo": "06/01/2013", "valor": null, "unidade": null, "fonte": "https://www.elfinancierocr.com/negocios/tenerias-giran-hacia-cuero-salado/65XS4KFZJJAZFOC65LDUDKW4CA/story"}
+    ],
+    "fornecedores_conhecidos": "Primenca (2013)",
+    "por_que_e_prospect": "Fabricante costarriquenho de calçado com carência de couro de qualidade local; precisa confirmar se segue ativo.",
+    "confianca": "baixa",
+    "fontes": ["https://www.elfinancierocr.com/negocios/tenerias-giran-hacia-cuero-salado/65XS4KFZJJAZFOC65LDUDKW4CA/story"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "Primenca",
+    "nome_fantasia": null,
+    "pais": "COSTA RICA",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "curtume",
+    "produtos": "Curtume (couros acabados, verniz, camurça; migrou parte para couro salgado)",
+    "porte": null,
+    "ncms_provaveis": ["4104.11", "4107"],
+    "evidencias": [
+      {"descricao": "Curtume costarriquenho; gerente geral Roberto Rojas relata queda de demanda por couros acabados", "ncm": "4107", "origem": "El Financiero (CR)", "fornecedor": null, "periodo": "06/01/2013", "valor": null, "unidade": null, "fonte": "https://www.elfinancierocr.com/negocios/tenerias-giran-hacia-cuero-salado/65XS4KFZJJAZFOC65LDUDKW4CA/story"}
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Um dos poucos curtumes da Costa Rica; possível comprador de wet blue se ainda operar (fonte antiga).",
+    "confianca": "baixa",
+    "fontes": ["https://www.elfinancierocr.com/negocios/tenerias-giran-hacia-cuero-salado/65XS4KFZJJAZFOC65LDUDKW4CA/story"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "T E C Tecnologia En Calzado Sociedad Anonima",
+    "nome_fantasia": null,
+    "pais": "COSTA RICA",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Importador de calçado e partes (cap. 64), vestuário (61/62), chapéus (65) e artigos de couro (42); 1.978 embarques registrados",
+    "porte": "médio",
+    "ncms_provaveis": ["6406.90", "6406.20"],
+    "evidencias": [
+      {"descricao": "Registros de importação na Costa Rica: principal capítulo HS 64 (calçado e partes); amostra de 07/11/2025 do fornecedor Mopq LLC (EUA), HS 420299, CIF US$2.160,63; 447 fornecedores", "ncm": "6406.90", "origem": "Panjiva (Costa Rica Imports)", "fornecedor": "Mopq LLC (EUA)", "periodo": "07/11/2025", "valor": "2160.63", "unidade": "USD CIF", "fonte": "https://panjiva.com/T-E-C-Tecnologia-En-Calzado-Sociedad-Ano/156926912"}
+    ],
+    "fornecedores_conhecidos": "Mopq LLC (EUA)",
+    "por_que_e_prospect": "Importador ativo de capítulo 64 na Costa Rica em 2025; perfil parece mais de varejo/distribuição de calçado pronto, validar se compra partes (6406).",
+    "confianca": "baixa",
+    "fontes": ["https://panjiva.com/T-E-C-Tecnologia-En-Calzado-Sociedad-Ano/156926912"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "HR7 Marroquinería",
+    "nome_fantasia": "HR7",
+    "pais": "BOLIVIA",
+    "cidade": "Cochabamba",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado de segurança",
+    "produtos": "Calçado de couro puro e calçado industrial, bolsas e cintos; 90% fabricado na Bolívia",
+    "porte": "pequeno",
+    "ncms_provaveis": ["4107", "6406.90", "6406.20", "3506.91"],
+    "evidencias": [
+      {"descricao": "Expositora na Feria Internacional de Cochabamba com calçado de couro e industrial; gerente Ruddy Herrera", "ncm": "4107", "origem": "Los Tiempos (Bolívia)", "fornecedor": null, "periodo": "07/05/2017", "valor": null, "unidade": null, "fonte": "https://www.lostiempos.com/actualidad/economia/20170507/marroquineria-cueros-calidad"}
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Fabricante boliviano de calçado industrial em couro; fonte antiga, confirmar atividade.",
+    "confianca": "baixa",
+    "fontes": ["https://www.lostiempos.com/actualidad/economia/20170507/marroquineria-cueros-calidad"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "Bata Chile",
+    "nome_fantasia": "Bata",
+    "pais": "CHILE",
+    "cidade": "Santiago (escritórios em Vitacura)",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado de segurança",
+    "produtos": "Calçado (varejo, 350+ pontos de venda) e unidade de negócio industrial que atende de Codelco a Sodimac",
+    "porte": "grande",
+    "ncms_provaveis": ["6406.90", "4107"],
+    "evidencias": [
+      {"descricao": "Bata no Chile desde 1939, 1.500+ empregados, unidade industrial que atende clientes como Codelco e Sodimac; não fica claro se fabrica localmente", "ncm": "6406.90", "origem": "Forbes Chile (BrandVoice)", "fornecedor": null, "periodo": "25/03/2026", "valor": null, "unidade": null, "fonte": "https://forbes.cl/brandvoice/2026-03-25/re-ignite-por-que-chile-es-clave-en-la-estrategia-global-de-bata/"}
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Terceiro maior player de calçado no Chile com unidade industrial voltada a mineração; validar se há produção local de calçado de segurança.",
+    "confianca": "baixa",
+    "fontes": ["https://forbes.cl/brandvoice/2026-03-25/re-ignite-por-que-chile-es-clave-en-la-estrategia-global-de-bata/"],
+    "atualiza_existente": false
+  }
+]

@@ -1,0 +1,747 @@
+[
+ {
+  "empresa": "CALZADO VENETO (razão social não confirmada)",
+  "nome_fantasia": "Calzado Veneto",
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": "www.calzadoveneto.com",
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçado de segurança industrial NOM-113-STPS-2009: cabedal em couro bovino flor integral, biqueira de aço/poliamida, metatarsal, forros, palmilhas anatômicas, solados PU, TPU, bidensidade e borracha",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "3907.99",
+   "3909.50",
+   "6406.90",
+   "5603.14",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Catálogo no cadastro de fornecedores do Governo de San Luis Potosí (abr/2026): fabricante de calçado de segurança com solas PU/TPU/bidensidade e biqueiras (código do cadastro CVE0605035V1, possivelmente o RFC — não confirmado)",
+    "ncm": "3907.99",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "09/04/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://sitio.sanluis.gob.mx/DesarrolloDeProveedores/storage/EmpresasProv/CVE0605035V1/20260409_0102Catalogo_CVE0605035V1.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de bota de segurança em León com solado PU/TPU bidensidade e biqueira — perfil exato para sistema PU, couro e componentes.",
+  "confianca": "média",
+  "fontes": [
+   "https://sitio.sanluis.gob.mx/DesarrolloDeProveedores/storage/EmpresasProv/CVE0605035V1/20260409_0102Catalogo_CVE0605035V1.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "BERRENDO (razão social não confirmada)",
+  "nome_fantasia": "Berrendo",
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Botas e botins de uso rudo / calçado industrial",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "4104.41",
+   "3907.99",
+   "3909.50",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Expositor no portal Construex com linha de botas Berrendo de calçado industrial fabricadas em León (sem data de registro)",
+    "ncm": "6406.90",
+    "origem": "México",
+    "fornecedor": null,
+    "periodo": "sem data (página ativa 2026)",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.construex.com.mx/exhibidores/berrendo/producto/botas_berrendo_calzado_industrial_leon"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Marca de calçado industrial de León, cluster que consome couro, sistema PU e biqueiras.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.construex.com.mx/exhibidores/berrendo/producto/botas_berrendo_calzado_industrial_leon"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PRIME WET BLUE S.A. DE C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couro wet blue (pelo nome; conteúdo do registro não verificado)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil de comércio exterior (importações) na Veritrade, encontrado em busca por importadores de wet blue no México; página não pôde ser aberta para confirmar NCM/data",
+    "ncm": "4104.11",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "não verificado",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.veritradecorp.com/en/mexico/imports-y-exports-prime-wet-blue-sa-de-cv/rfc-b220622bq0"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Empresa mexicana com perfil de importador na Veritrade e nome ligado a wet blue — possível comprador de wet blue JBS.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.veritradecorp.com/en/mexico/imports-y-exports-prime-wet-blue-sa-de-cv/rfc-b220622bq0"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "UTOPIA LEATHERS MX S. DE R.L. DE C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couro (conteúdo do registro não verificado)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil de importações/exportações na Veritrade, encontrado em busca por compradores de wet blue no México; página não pôde ser aberta",
+    "ncm": "4104.41",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "não verificado",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.veritradecorp.com/es/mexico/importaciones-y-exportaciones-utopia-leathers-mx-s-de-rl-de-cv/rfc-m1811085l6"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Empresa de couro no México com registro de comércio exterior — possível comprador de wet blue/crust.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.veritradecorp.com/es/mexico/importaciones-y-exportaciones-utopia-leathers-mx-s-de-rl-de-cv/rfc-m1811085l6"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "STILLFLEX SHOES S.A.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Cundinamarca (CR 34 11 A 36)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Calçado; importou moldes (8480.71) e insumos plásticos da China",
+  "porte": null,
+  "ncms_provaveis": [
+   "8480.71",
+   "3907.99",
+   "3921.13",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de moldes HS 8480719000 (embarque de amostra Panjiva); 62 embarques, 26 fornecedores",
+    "ncm": "8480.71",
+    "origem": "China",
+    "fornecedor": "Fujian Jinrong Business Co., Ltd.",
+    "periodo": "09/07/2018",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Stillflex-Shoes-S-A/24357694"
+   }
+  ],
+  "fornecedores_conhecidos": "Fujian Jinrong Business Co., Ltd. (China)",
+  "por_que_e_prospect": "Fabricante colombiano que já importa moldes para solado — prospect para Polako e insumos de calçado.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://panjiva.com/Stillflex-Shoes-S-A/24357694"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "ARTESA S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Comprador de solados/partes de calçado do México",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importador de Hi Tech Soles S.A. de C.V. (solados/partes de calçado), 10.290 kg acumulados",
+    "ncm": "6406.20",
+    "origem": "México",
+    "fornecedor": "HI TECH SOLES S.A. DE C.V.",
+    "periodo": "último embarque 17/10/2015",
+    "valor": "10290",
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/colombia/suppliers/hi-tech-soles-s-a-de-c-v"
+   }
+  ],
+  "fornecedores_conhecidos": "Hi Tech Soles S.A. de C.V. (México)",
+  "por_que_e_prospect": "Já importou solados — prospect para Hiper Solados e sistema PU.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/colombia/suppliers/hi-tech-soles-s-a-de-c-v"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "BROMX S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Comprador de solados/partes de calçado do México",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importador de Hi Tech Soles S.A. de C.V. (147 kg)",
+    "ncm": "6406.20",
+    "origem": "México",
+    "fornecedor": "HI TECH SOLES S.A. DE C.V.",
+    "periodo": "último embarque 26/03/2018",
+    "valor": "147",
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/colombia/suppliers/hi-tech-soles-s-a-de-c-v"
+   }
+  ],
+  "fornecedores_conhecidos": "Hi Tech Soles S.A. de C.V. (México)",
+  "por_que_e_prospect": "Comprador pontual de solados importados — prospect secundário para solados.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/colombia/suppliers/hi-tech-soles-s-a-de-c-v"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "MASTER ANDINO S.A.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Bogotá",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Distribuidor de polímeros e pigmentos; importou poliésteres/poliéteres 3907.99",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de HS 3907990000 (outros poliésteres) e polietilenos; último registro",
+    "ncm": "3907.99",
+    "origem": "EUA",
+    "fornecedor": "Montachem International Inc.",
+    "periodo": "31/12/2018",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/8140619"
+   }
+  ],
+  "fornecedores_conhecidos": "Montachem International; Muehlstein International; Vinmar International",
+  "por_que_e_prospect": "Distribuidor de resinas em Bogotá com histórico na NCM 3907.99 — canal possível para poliol.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://en.52wmb.com/buyer/8140619"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "TACOSANLY S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Comprador de sistemas PU para solado Epaflex (Itália)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importador de Epaflex Polyurethanes SpA (sistemas PU para calçado), 20.480 kg acumulados",
+    "ncm": "3909.50",
+    "origem": "Itália",
+    "fornecedor": "EPAFLEX POLYURETHANES SPA",
+    "periodo": "último embarque 09/08/2016",
+    "valor": "20480",
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/peru/suppliers/epaflex-polyurethanes-spa-via-circonvallazione-est"
+   }
+  ],
+  "fornecedores_conhecidos": "Epaflex Polyurethanes SpA (Itália)",
+  "por_que_e_prospect": "Já comprou sistema PU de solado (Epaflex) — alvo direto para Xuchuan, se ainda ativo.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/epaflex-polyurethanes-spa-via-circonvallazione-est"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "MULTICAUCHOS S.R.L.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Pré-polímeros de PU (CPU-2172, CPU-2095)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Pre Polimero PTUCO CPU-2172 e CPU-2095, 540 kg cada",
+    "ncm": "3909.50",
+    "origem": "Taiwan",
+    "fornecedor": "TAIWAN PU CORPORATION",
+    "periodo": "19/09/2022",
+    "valor": "540",
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/peru/suppliers/taiwan-pu-corporation"
+   }
+  ],
+  "fornecedores_conhecidos": "Taiwan PU Corporation",
+  "por_que_e_prospect": "Importador recorrente de pré-polímero PU 3909.50 — prospect para Xuchuan/Miracll.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/taiwan-pu-corporation"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "KBR INGENIEROS S.A.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Poliuretano/pré-polímero TPUCO",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Poliuretano TPUCO, 1.980 kg; FOB US$ 10.056,50 (HS 3909500000)",
+    "ncm": "3909.50",
+    "origem": "Taiwan",
+    "fornecedor": "TAIWAN PU CORPORATION",
+    "periodo": "05/11/2022",
+    "valor": "10056.5 USD FOB",
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/peru/suppliers/taiwan-pu-corporation"
+   }
+  ],
+  "fornecedores_conhecidos": "Taiwan PU Corporation",
+  "por_que_e_prospect": "Maior comprador peruano da Taiwan PU (23 t) em 3909.50 — prospect para sistema PU, embora o uso final (industrial) não seja confirmado.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/taiwan-pu-corporation"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "FAMAIMPORT E.I.R.L.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Pré-polímero PU PPG",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Artículo RWCA-PPG/PPG PU Prepo, 1.800 kg",
+    "ncm": "3909.50",
+    "origem": "Taiwan",
+    "fornecedor": "TAIWAN PU CORPORATION",
+    "periodo": "13/09/2022",
+    "valor": "1800",
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/peru/suppliers/taiwan-pu-corporation"
+   }
+  ],
+  "fornecedores_conhecidos": "Taiwan PU Corporation",
+  "por_que_e_prospect": "Importador de pré-polímero PU — possível canal para Xuchuan.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/peru/suppliers/taiwan-pu-corporation"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "MIL COLORES CIA. LTDA.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Quito (Ulloa 650 y Marchena, Local 18)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Tecidos sintéticos, malhas de urdume (6005.37), têxteis laminados com PU (5903.20)",
+  "porte": null,
+  "ncms_provaveis": [
+   "6005.37",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de malha de urdume sintética tinta HS 6005370000 (e 5903200000, 6006.31/32) em BL de 20/11/2025",
+    "ncm": "6005.37",
+    "origem": "Colômbia",
+    "fornecedor": "IMPDORA TEXTILES Y MODA S.A.S.",
+    "periodo": "20/11/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/8565152"
+   },
+   {
+    "descricao": "Importação de têxteis impregnados/laminados com poliuretano HS 5903200000",
+    "ncm": "3921.13",
+    "origem": "Colômbia",
+    "fornecedor": "IMPDORA TEXTILES Y MODA S.A.S.",
+    "periodo": "20/11/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/8565152"
+   }
+  ],
+  "fornecedores_conhecidos": "Importadora Textiles y Moda S.A.S. (Colômbia); Art Home Textil S.A. (Colômbia, 16/06/2026); Rafsol S.L. (Espanha)",
+  "por_que_e_prospect": "Importa em 2025–2026 malha 6005.37 e têxtil com PU — canal para mesh/forro e sintético Yantai (distribuidor têxtil, não exclusivo de calçado).",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/8565152"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "ESPROM-PUR CIA. LTDA.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Tungurahua (RUC 18…; cidade não confirmada)",
+  "id_fiscal": "1891750338001",
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Poliuretano (pelo nome; atividade não confirmada)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil de importações na Veritrade (RUC 1891750338001), encontrado em busca por poliuretano para sola no Equador; conteúdo não pôde ser aberto",
+    "ncm": "3909.50",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "não verificado",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.veritradecorp.com/en/ecuador/imports-y-exports-esprompur--cia-ltda/ruc-1891750338001"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Empresa de PU em Tungurahua (polo calçadista de Ambato) com registro de importação — verificar se usa sistema PU.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.veritradecorp.com/en/ecuador/imports-y-exports-esprompur--cia-ltda/ruc-1891750338001"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "STARTEX (razão social não confirmada)",
+  "nome_fantasia": "ATT - Argentina Todo Terreno",
+  "pais": "ARGENTINA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": "attcalzados.com.ar",
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Botins e sapatos de segurança com solado PU bidensidade injetado (máquina Desma 522/24), biqueira de aço, couro e têxteis",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "4104.41",
+   "4107",
+   "6406.90",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Fabrica calçado de segurança com injeção direta de PU bidensidade (Desma 522/24)",
+    "ncm": "3907.99",
+    "origem": "Argentina",
+    "fornecedor": null,
+    "periodo": "21/11/2012",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://mercado.com.ar/protagonistas/calzado-argentina-todo-terreno"
+   },
+   {
+    "descricao": "Lançamento de calçado de segurança branco com sola PU bidensidade",
+    "ncm": "3909.50",
+    "origem": "Argentina",
+    "fornecedor": null,
+    "periodo": "07/02/2013",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://mercado.com.ar/protagonistas/att-lanza-su-primer-calzado-de-seguridad-blanco"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Injeta solado PU bidensidade em máquina Desma — consome sistema PU e couro; fonte antiga, confirmar se segue ativa.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://mercado.com.ar/protagonistas/att-lanza-su-primer-calzado-de-seguridad-blanco",
+   "https://mercado.com.ar/protagonistas/calzado-argentina-todo-terreno"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "OMBÚ (razão social não confirmada)",
+  "nome_fantasia": "Ombú",
+  "pais": "ARGENTINA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Botins de trabalho/segurança (ex.: Cobalto com biqueira composite), botas e sapatos de trabalho",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.90",
+   "4107",
+   "3907.99"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Botins Ombú de segurança com biqueira composite à venda na rede Easy (página ativa 2026); fabricante não confirmado na fonte",
+    "ncm": "6406.90",
+    "origem": "Argentina",
+    "fornecedor": null,
+    "periodo": "2026 (página ativa)",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.easy.com.ar/botin-cobalto-ombu-punta-composite-t43/p"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Marca argentina tradicional de calçado de trabalho com linha de segurança — prospect para biqueiras, couro e solados.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.easy.com.ar/botin-cobalto-ombu-punta-composite-t43/p"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "AMERICA LEATHER (razão social não confirmada)",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couro wet salted, wet blue, crust e acabado",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Curtume expositor na APLF 2026 (Hong Kong) com wet blue, crust e acabado",
+    "ncm": "4104.41",
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "06/01/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.aplf.com/2026/01/06/brazilian-tanneries-showcase-leather-excellence-at-aplf-2026-in-hong-kong/"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume integrado (wet blue a acabado) — pode complementar matéria-prima com wet blue/crust JBS.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.aplf.com/2026/01/06/brazilian-tanneries-showcase-leather-excellence-at-aplf-2026-in-hong-kong/"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "H.Y. LEATHEREX (razão social não confirmada)",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couro wet blue, crust e acabado",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Curtume expositor na APLF 2026 com wet blue, crust e acabado",
+    "ncm": "4104.41",
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "06/01/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.aplf.com/2026/01/06/brazilian-tanneries-showcase-leather-excellence-at-aplf-2026-in-hong-kong/"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume com etapas crust/acabado — comprador potencial de wet blue para recurtimento.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.aplf.com/2026/01/06/brazilian-tanneries-showcase-leather-excellence-at-aplf-2026-in-hong-kong/"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "LDK - LIDERKOLL (razão social não confirmada)",
+  "nome_fantasia": "LDK",
+  "pais": "BRASIL",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couro wet salted, wet blue, semiacabado, acabado e hair-on",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Curtume expositor na APLF 2026 com wet blue, semiacabado e acabado",
+    "ncm": "4104.11",
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "06/01/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.aplf.com/2026/01/06/brazilian-tanneries-showcase-leather-excellence-at-aplf-2026-in-hong-kong/"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume que processa até o acabado — prospect para wet blue/crust JBS.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.aplf.com/2026/01/06/brazilian-tanneries-showcase-leather-excellence-at-aplf-2026-in-hong-kong/"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "DURLICOUROS IND. E COM. DE COUROS EXP. E IMPORTACAO LTDA",
+  "nome_fantasia": "Durli Leathers",
+  "pais": "BRASIL",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couro wet blue, crust e acabado (automotivo e estofamento); plantas no Brasil, Paraguai e México",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Curtume expositor na APLF 2026 (wet blue, crust, acabado; plantas Brasil/Paraguai/México)",
+    "ncm": "4104.41",
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "06/01/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.aplf.com/2026/01/06/brazilian-tanneries-showcase-leather-excellence-at-aplf-2026-in-hong-kong/"
+   },
+   {
+    "descricao": "Fornecedor certificado Leather Working Group (razão social com 'exportação e importação')",
+    "ncm": "4104.11",
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "página ativa 2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.leatherworkinggroup.com/get-involved/our-community/certified-suppliers/durlicouros-ind-e-com-de-couros-exp-e-importacao-ltda/"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Grande curtume multiplanta (a planta México já está na base; a matriz Brasil não) — comprador potencial de wet blue/crust.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.aplf.com/2026/01/06/brazilian-tanneries-showcase-leather-excellence-at-aplf-2026-in-hong-kong/",
+   "https://www.leatherworkinggroup.com/get-involved/our-community/certified-suppliers/durlicouros-ind-e-com-de-couros-exp-e-importacao-ltda/"
+  ],
+  "atualiza_existente": false
+ }
+]
