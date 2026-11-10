@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-153243';</script>
+<script>window.VERSAO_SISTEMA = '20261110-153502';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1592,6 +1592,16 @@ body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 .nfx-sub{font-size:11px;color:#5A6472;margin-top:2px;white-space:nowrap;}
 .nfx-table td.nfx-r,.nfx-table th.nfx-r{text-align:right !important;white-space:nowrap;}
 .nfx-table td.nfx-c,.nfx-table th.nfx-c{text-align:center !important;white-space:nowrap;}
+/* ===== notas: a linha inteira cabe na tela + cabeçalho fixo ao rolar ===== */
+.nfx-scroll{overflow:visible !important;}
+.nfx-table{min-width:0 !important;width:100%;table-layout:auto;font-size:12px;}
+.nfx-table td, .nfx-table th{padding-left:7px !important;padding-right:7px !important;}
+.nfx-table thead th{position:sticky;top:var(--nfx-topo,0px);z-index:5;white-space:normal !important;line-height:1.2;vertical-align:bottom;font-size:10px;background:#1B2236 !important;color:#C9D3E6 !important;box-shadow:0 1px 0 var(--line);}
+:root[data-theme="light"] .nfx-table thead th{background:#EEF1F5 !important;color:#4A5463 !important;}
+.nfx-table .nfx-cli{max-width:180px;white-space:normal;}
+.nfx-table td.nfx-data{font-size:11.5px;}
+.nfx-table td[data-nf-status] .btn-sm{padding:3px 7px;font-size:11px;}
+.nfx-table td[data-nf-status]{white-space:nowrap;}
 .nfx-painel{color-scheme:light;background:#EAF1FA;color:#13243D;border:2px solid #2F7BD0;border-radius:14px;padding:14px;box-shadow:0 8px 28px rgba(0,0,0,.45);}
 .nfx-painel .nfx-resumo{background:#FFFFFF;border:1px solid #C9D8EC;}
 .nfx-painel .nfx-rt{border-right-color:#DCE6F3;}
