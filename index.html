@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-173930';</script>
+<script>window.VERSAO_SISTEMA = '20261110-174132';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -7298,21 +7298,22 @@ const REGRAS_CLASSE_FORNECEDOR = {
   // O material fica com o nome do artigo, sem o código numérico da frente ("626578 – ").
   'JBS AR': {
     exemplo: 'CSA-N SAN DIEGO 14/16 TR1 P TAN SDS → TR1 SAN DIEGO · CSA-N FORRO ML 1.0/1.2 TR4 → FORRO TR4',
-    detectar: /\bCSA-?N\b/i,
+    detectar: /\bCSA-?[AN]\b/i,
     material(nome){ return String(nome||'').replace(/^\s*\d{4,}\s*[-–—]\s*/,'').replace(/\s+/g,' ').trim(); },
     classe(nome){
       // abreviações do mesmo couro: "S DIEGO", "S.DIEGO", "SDIEGOFLX" → "SAN DIEGO", "SAN DIEGO FLX"
       const n = this.material(nome).toUpperCase()
-        .replace(/\bSDIEGO(FLX|FLEX)\b/g,'SAN DIEGO $1').replace(/\bSDIEGO\b/g,'SAN DIEGO').replace(/\bS\.?\s+DIEGO\b/g,'SAN DIEGO').replace(/\bS\.DIEGO\b/g,'SAN DIEGO')
+        .replace(/\bS\.?\s*(DIEGO|LUCAS)(FLX|FLEX)\b/g,'SAN $1 $2').replace(/\bS\.?\s*(DIEGO|LUCAS)\b/g,'SAN $1').replace(/\bSAN(DIEGO|LUCAS)/g,'SAN $1')
         .replace(/\s+/g,' ').trim();
       if(!n) return '';
-      if(/^(CSA-?N\s*)?DESVIO/.test(n)) return 'DESVIOS';
+      if(/^(CSA-?[AN]\s*)?DESVIO/.test(n)) return 'DESVIOS';
       // seleção misturada ("TR1/TR2") fica junta
       const tr = n.match(/\bTR\s*-?\s*([1-5])(?:\s*\/\s*TR\s*-?\s*([1-5]))?\b/);
       const sel = tr ? ('TR'+tr[1] + (tr[2] ? '/TR'+tr[2] : '')) : (/\bA\s*\/\s*B\b/.test(n) ? 'A/B' : '');
       const palavras = [];
-      for(const w of n.replace(/^CSA-?N\s*/,'').split(' ')){ if(/\d/.test(w) || w==='TR' || w==='A/B' || /^TR\d/.test(w)) break; palavras.push(w); }
-      const prod = palavras.join(' ').trim();
+      for(const w of n.replace(/^CSA-?[AN]\s*/,'').split(' ')){ if(/\d/.test(w) || w==='TR' || w==='A/B' || /^TR\d/.test(w)) break; palavras.push(w); }
+      // a classe fica só com o nome do couro: variações do artigo (FLX, FLEX, LRDJ…) não entram
+      const prod = palavras.filter(w=>!/^(FLX|FLEX|LRDJ|P)$/.test(w)).join(' ').trim();
       if(/^FORRO\b/.test(prod)) return ('FORRO ' + sel).trim();
       return [sel, prod].filter(Boolean).join(' ');
     }
@@ -8587,7 +8588,7 @@ function fornecedorPeloTexto(texto){
   if(/MIRACLL/.test(t)) return 'MIRACLL';
   if(/XUCHUAN/.test(t)) return 'XUCHUAN';
   if(/YANTAI\s+JOYE|JOYE\s+MICROFIBER/.test(t)) return 'YANTAI';
-  if(/JBS\s+LEATHER\s+ARGENTINA|CSA-?N\b/.test(t)) return 'JBS AR';
+  if(/JBS\s+LEATHER\s+ARGENTINA|CSA-?[AN]\b/.test(t)) return 'JBS AR';
   if(/JBS\s+S\s*\/?\s*A\b|JBS\s+COUROS|SALES\s+CONTRACT\s*-\s*JBS/.test(t)) return 'JBS BR';
   return Object.keys(REGRAS_CLASSE_FORNECEDOR).find(k=>t.indexOf(k)>=0)
       || Object.keys(REGRAS_CLASSE_FORNECEDOR).find(k=>REGRAS_CLASSE_FORNECEDOR[k].detectar && REGRAS_CLASSE_FORNECEDOR[k].detectar.test(t))
@@ -8841,8 +8842,19 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     const feito = aplicarCapaNoProcesso(draft, capa, { substituir: !modo || modo.value==='sub' });
     root.remove(); renderModal();
     try{ syncMaterialAndValorFromMateriais(); }catch(e){}
-    toast(`${feito.materiais} material(is) preenchido(s).`);
+    // valores da invoice valem mais que a soma arredondada linha a linha (diferença de centavos)
+    try{
+      if(lido.totalDoc>0 && Math.abs(materiaisValorTotal(draft) + (draft.freteModo==='embutido'?0:(+draft.frete||0)) - lido.totalDoc) < 1) draft.valorUsd = lido.totalDoc;
+      const uf = root.querySelector('#invFob');
+      if(lido.fobDoc>0 && (!uf || uf.checked)){ draft.valorFob = lido.fobDoc; draft._fobAuto = false; }
+      else aplicarFreteNoFob(draft);
+      mostrarValoresNaFicha();
+      const vu = document.querySelector('[data-key="valorUsd"][data-currency]'); if(vu && document.activeElement!==vu) vu.value = draft.valorUsd ? fmt(draft.valorUsd) : '';
+    }catch(e){}
+    toast(`${feito.materiais} material(is) preenchido(s) pela invoice.`);
   };
+  // ficha ainda sem materiais: preenche direto (frete, FOB e dados que faltam já vêm marcados); com materiais, pergunta antes de trocar
+  if(!temMat) root.querySelector('#invOk').click();
 }
 function lerArquivoCapa(file){
   return new Promise((res,rej)=>{ const r = new FileReader(); r.onload = ()=>{ try{ res(XLSX.read(new Uint8Array(r.result), {type:'array', cellDates:true})); }catch(e){ rej(e); } }; r.onerror = rej; r.readAsArrayBuffer(file); });
@@ -10147,7 +10159,7 @@ function renderValorHint(){
     const esperado = valorUsdPelosMateriais(draft);
     if(fr>0) partes.push(emb ? `Produtos USD ${fmt(mt)} (frete de USD ${fmt(fr)} já incluído) · FOB = USD ${fmt(arred2(esperado-fr))}`
                              : `Produtos USD ${fmt(mt)} + frete USD ${fmt(fr)} = USD ${fmt(esperado)} · FOB = USD ${fmt(mt)}`);
-    if(Math.abs(esperado - (+draft.valorUsd||0)) > 0.01)
+    if(Math.abs(esperado - (+draft.valorUsd||0)) > Math.max(0.05, (draft.materiais||[]).length*0.006))
       partes.push(`<span style="color:var(--amber,#C98A0B);font-weight:600;">⚠ Valor USD diferente da tabela de materiais${fr>0&&!emb?' + frete':''} (USD ${fmt(esperado)})</span> <button type="button" class="btn btn-outline btn-sm" id="usarValorMateriais">Usar USD ${fmt(esperado)}</button>`);
   } else if(fr>0 && (+draft.valorUsd||0)>0){
     partes.push(`FOB = Valor USD − frete = USD ${fmt(arred2(draft.valorUsd - fr))}`);
