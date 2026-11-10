@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-165930';</script>
+<script>window.VERSAO_SISTEMA = '20261110-170532';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -8670,6 +8670,29 @@ function camposDoContrato(linhas){
   }
   return out;
 }
+// campo da ficha "ainda sem informação" para o que veio do documento:
+// vazio, ou ETD/ETA só com o mês ("NOVEMBRO") quando o documento traz a data completa
+function campoFichaFalta(k, atual, novo){
+  const a = String(atual||'').trim();
+  if(!a) return true;
+  if((k==='etd'||k==='eta') && /^\d{4}-\d{2}-\d{2}$/.test(String(novo||'')) && !/\d/.test(a)) return true;
+  return false;
+}
+// preenche na hora tudo o que a ficha ainda não tem (não troca o que já foi digitado)
+function preencherFaltantesDoDoc(cp, lido){
+  const feitos = [];
+  ['contrato','pedido','cliente','pais','incoterm','condPagto','etd','eta','data'].forEach(k=>{
+    if(!cp || !cp[k]) return;
+    if(k==='data' && String(draft.data||'').trim()) return;
+    if(campoFichaFalta(k, draft[k], cp[k])){ draft[k] = cp[k]; feitos.push(k); }
+  });
+  if(lido && lido.frete>0 && !(+draft.frete>0)){
+    draft.frete = lido.frete; draft.freteModo = lido.freteModo==='embutido' ? 'embutido' : 'somar';
+    try{ aplicarFreteNoFob(draft); }catch(e){}
+    feitos.push('frete');
+  }
+  return feitos;
+}
 // chamado ao anexar um arquivo na ficha do processo
 async function oferecerMateriaisDaInvoice(file, avisar){
   let lido = null;
@@ -8680,7 +8703,7 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     const feitos = [];
     ['contrato','pedido','cliente','pais','incoterm','condPagto','etd','eta','data'].forEach(k=>{
       if(!cp[k]) return;
-      const vazio = !String(draft[k]||'').trim() || (k==='data' && ehNovo);
+      const vazio = campoFichaFalta(k, draft[k], cp[k]) || (k==='data' && ehNovo);
       if(vazio){ draft[k] = cp[k]; feitos.push(k); }
     });
     if(feitos.length){ renderModal(); try{ refreshVencimentos(); }catch(e){} toast('📄 ' + feitos.length + ' campo(s) preenchido(s) pelo documento.'); return; }
@@ -8697,14 +8720,23 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     if(comprador.length) lido.produtos.forEach(p=>{ const w = String(p.nome||'').split(/\s+/)[0].toUpperCase();
       if(w.length>=4 && comprador.some(c=>c.startsWith(w) || w.startsWith(c))){ p.nome = p.nome.replace(/^\S+\s+/,''); p.nomeDoc = String(p.nomeDoc||'').replace(/^\S+\s+/,''); } }); }
   const ehNovo = !(processos||[]).some(p=>p && p.id===draft.id);
+  // o que a ficha ainda não tem entra direto (ETD só com o mês vira a data do documento); o resto fica para conferir
+  const jaPreenchidos = preencherFaltantesDoDoc(cp, lido);
+  if(jaPreenchidos.length){
+    try{ renderModal(); refreshVencimentos(); }catch(e){}
+    const NOMES = {contrato:'contrato', pedido:'pedido', cliente:'cliente', pais:'país', incoterm:'incoterm', condPagto:'cond. de pagamento', etd:'ETD', eta:'ETA', data:'data', frete:'frete'};
+    toast('📄 Preenchido pela invoice: ' + jaPreenchidos.map(k=>NOMES[k]||k).join(', ') + '.');
+  }
   const CAMPOS_DOC = [['contrato','Contrato'],['pedido','Pedido'],['cliente','Cliente'],['pais','País'],['data','Data de abertura'],['incoterm','Incoterm'],['condPagto','Cond. de pagamento'],['etd','ETD'],['eta','ETA']];
   const escD = t => String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
   const mostrar = (k,v) => (k==='data' || ((k==='etd'||k==='eta') && /^\d{4}-\d{2}-\d{2}$/.test(v))) ? fmtDateBR(v) : v;
   const docCampos = CAMPOS_DOC.filter(([k])=>cp[k]).map(([k,rot])=>{
     const v = String(cp[k]), atual = String(draft[k]||'').trim();
-    const igual = atual && (atual.toUpperCase()===v.toUpperCase() || (k==='data' && atual.slice(0,10)===v));
+    const semAc = x => String(x).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+    const igual = atual && (semAc(atual)===semAc(v) || (k==='data' && atual.slice(0,10)===v));
     const marcar = k==='data' ? (ehNovo || !atual) : (!atual || igual);
-    return `<label style="display:flex;gap:6px;align-items:baseline;padding:3px 0;"><input type="checkbox" data-doc-campo="${k}" ${marcar?'checked':''}> <span style="min-width:150px;color:var(--ink-soft);">${rot}</span> <b>${escD(mostrar(k,v))}</b>${atual && !igual ? ` <span class="an-panel-sub">(hoje está ${escD(mostrar(k,atual))})</span>` : ''}</label>`;
+    const auto = jaPreenchidos.indexOf(k)>=0;
+    return `<label style="display:flex;gap:6px;align-items:baseline;padding:3px 0;"><input type="checkbox" data-doc-campo="${k}" ${marcar?'checked':''}> <span style="min-width:150px;color:var(--ink-soft);">${rot}</span> <b>${escD(mostrar(k,v))}</b>${auto ? ' <span style="color:var(--green,#2E9E6B);font-size:12px;font-weight:600;">✓ preenchido</span>' : (atual && !igual ? ` <span class="an-panel-sub">(hoje está ${escD(mostrar(k,atual))})</span>` : '')}</label>`;
   }).join('');
   const invAtual = String(draft.invoice||'').trim();
   const classeDe = nome => classeAutoFornecedor(nome, fornUsar)
