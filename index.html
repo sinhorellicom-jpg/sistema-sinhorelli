@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-173056';</script>
+<script>window.VERSAO_SISTEMA = '20261110-173539';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -7765,6 +7765,14 @@ function posicionarSemanaPop(btn, pop){
   pop.style.top = (r.bottom + 6) + 'px';
   pop.style.maxHeight = Math.max(160, vh - r.bottom - 20) + 'px';
 }
+document.addEventListener('click', e=>{
+  const b = e.target && e.target.closest && e.target.closest('#usarFobCalculado'); if(!b || typeof draft==='undefined' || !draft) return;
+  e.preventDefault();
+  if(typeof editMode!=='undefined' && !editMode){ toast('Digite a senha de edição.'); try{ openEditUnlockModal(); }catch(_){} return; }
+  draft.valorFob = Number(b.dataset.fob)||0; draft._fobAuto = (+draft.frete||0) > 0;
+  mostrarValoresNaFicha();
+  toast('Valor FOB atualizado — a comissão foi recalculada. Clique em Salvar pra gravar.');
+});
 (function ligarSemanaTopo(){
   const ligar = ()=>{
     [['semanaEntradasBtn','semanaEntradasPop'],['semanaParcelasBtn','semanaParcelasPop']].forEach(([b,pId])=>{
@@ -9358,6 +9366,7 @@ function renderModal(){
             <datalist id="nfNumeroLista">${(notasFiscais||[]).filter(n=>n.numero).map(n=>`<option value="${String(n.numero).replace(/"/g,'&quot;')}">${n.tipo==='nota'?'Nota':'Invoice'} · ${n.fornecedor||'—'} · USD ${fmt(n.valorUsd||0)}</option>`).join('')}</datalist>
           </div>
         </div>
+        <div id="baseComissao" class="an-panel-sub" style="margin-top:8px;">${baseComissaoHtml(draft)}</div>
         ${(()=>{ const ls = nfsDoProcesso(draft); return ls.length ? `<div class="an-panel-sub" style="margin-top:8px;">📄 Na aba Notas Fiscais: ${ls.map(n=>`<b>${n.tipo==='nota'?'Nota':'Invoice'} ${n.numero||'s/ nº'}</b> (${n.fornecedor||'—'} · USD ${fmt(n.valorUsd||0)}${n.finalizado?' · finalizada':(n.dataPagto?' · recebida':' · aguardando')})`).join(', ')}</div>` : ''; })()}
         <div class="an-panel-sub" style="margin-top:10px;">% efetivo recebido (comissão ÷ FOB): <b id="calcComissaoEfetiva" style="font-family:'IBM Plex Mono',monospace;color:var(--navy);">${fmt(comissaoEfetivaPct(draft))}%</b>
           ${draft.comissaoUsdManual? ' · <span style="color:var(--teal);font-weight:700;">valor digitado à mão</span> <button type="button" class="link-btn" id="voltarComissaoAuto">↺ voltar ao cálculo pelo %</button>' : ''}</div>
@@ -10066,6 +10075,17 @@ function valorUsdPelosMateriais(p){
   const mt = materiaisValorTotal(p); if(!(mt>0)) return 0;
   return arred2(mt + (p.freteModo==='embutido' ? 0 : (+p.frete||0)));
 }
+// mostra de onde sai a comissão (sempre sobre o FOB) e avisa quando o FOB guardado não bate com Valor USD − frete
+function baseComissaoHtml(d){
+  if(String(d.fornecedor||'').trim().toUpperCase()==='YANTAI') return '';
+  const vu = +d.valorUsd||0, fr = +d.frete||0, fob = +d.valorFob||0, pct = Number(d.comissaoPct)||0;
+  const esperado = vu>0 ? arred2(vu - fr) : 0;
+  const base = comissaoBase(d);
+  let h = `Base da comissão: <b>Valor FOB USD ${fmt(base)}</b>${fob>0 ? '' : (vu>0 ? ' <span class="venc-muted">(FOB não preenchido — usando o Valor USD'+(fr>0?'':'')+')</span>' : '')} × ${String(pct).replace('.',',')}% = <b>USD ${fmt(arred2(base*pct/100))}</b>`;
+  if(fob>0 && esperado>0 && Math.abs(fob - esperado) > Math.max(1, esperado*0.05))
+    h += `<div style="margin-top:4px;color:var(--amber,#C98A0B);font-weight:600;">⚠ O Valor FOB (USD ${fmt(fob)}) não bate com Valor USD${fr>0?' − frete':''} (USD ${fmt(esperado)}). <button type="button" class="btn btn-outline btn-sm" id="usarFobCalculado" data-fob="${esperado}">Usar FOB USD ${fmt(esperado)}</button></div>`;
+  return h;
+}
 function aplicarFreteNoFob(p){
   const fr = +p.frete||0;
   if(fr>0 && (+p.valorUsd||0)>0){ p.valorFob = arred2(p.valorUsd - fr); p._fobAuto = true; }
@@ -10166,6 +10186,8 @@ function refreshCalcStrips(){
   if(comRSEl) comRSEl.textContent = 'R$ ' + fmt(comissaoRS(draft));
   const comEfetivaEl = document.getElementById('calcComissaoEfetiva');
   if(comEfetivaEl) comEfetivaEl.textContent = fmt(comissaoEfetivaPct(draft)) + '%';
+  const baseEl = document.getElementById('baseComissao');
+  if(baseEl) baseEl.innerHTML = baseComissaoHtml(draft);
   if(String(draft.fornecedor||'').trim().toUpperCase()==='YANTAI'){
     const modo = yantaiComoCalcula(draft);
     const pctEl = document.getElementById('campoComissaoPct');
