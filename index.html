@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-153923';</script>
+<script>window.VERSAO_SISTEMA = '20261110-154058';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -774,6 +774,12 @@ body.arrastando-cartao, body.arrastando-cartao *{cursor:grabbing !important;user
 .swift-box{display:flex;align-items:center;gap:4px;padding:6px 6px;border-radius:7px;border:1px solid #9FD3B4;background:#EEF8F2;font-size:12px;font-weight:600;color:#2E7D4F;white-space:nowrap;overflow:hidden;}
 .swift-box .swift-nome{flex:1;overflow:hidden;text-overflow:ellipsis;}
 .swift-box button{border:none;background:none;cursor:pointer;padding:0 2px;font-size:13px;}
+.swift-box-v{flex-direction:column;align-items:stretch;gap:3px;padding:4px 6px;}
+.swift-acoes{display:flex;align-items:center;gap:4px;font-size:11.5px;}
+.swift-box button.swift-valor{display:block;width:100%;text-align:center;font:800 13.5px 'IBM Plex Mono',monospace;color:#0F5132;background:#C8EFD5;border:1px solid #7CC79A;border-radius:6px;padding:3px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.swift-box button.swift-valor:hover{background:#B3E6C4;}
+.swift-box button.swift-valor-dif{color:#7A4B00;background:#FCE9B8;border-color:#E2B649;}
+.swift-box button.swift-valor-vazio{font:600 11.5px 'Inter',sans-serif;color:#2E7D4F;background:transparent;border:1px dashed #7CC79A;}
 .ai-swift{font-size:10.5px;background:#EEF8F2;color:#2E7D4F;padding:2px 7px;border-radius:5px;font-weight:600;}
 .calc-inline{
   padding:8px 10px;border-radius:7px;border:1px solid var(--line);background:var(--slate-bg);
@@ -6843,15 +6849,33 @@ function entradaVencInfo(d){
 }
 // SWIFT (comprovante do pagamento) de cada entrada/parcela: fica guardado como anexo do processo, marcado com a parcela
 const SWIFT_ROTULO = { entrada:'Entrada', pg1:'1ª parcela', pg2:'2ª parcela', pg3:'3ª parcela', pg4:'4ª parcela' };
+// pergunta o valor que está no documento SWIFT (sugere o valor da parcela); vazio = sem valor
+function pedirValorSwift(a, sugestao){
+  const atual = Number(a.swiftValor)||0;
+  const ini = atual || sugestao;
+  const r = prompt('Valor do documento SWIFT (USD):', ini ? fmt(ini) : '');
+  if(r === null) return false;
+  const t = String(r).trim();
+  if(!t){ delete a.swiftValor; return true; }
+  const n = parseFloat(t.replace(/[^\d.,-]/g,'').replace(/\.(?=\d{3}(\D|$))/g,'').replace(',','.'));
+  if(isNaN(n)){ toast('Valor inválido.'); return false; }
+  a.swiftValor = Math.round(n*100)/100;
+  return true;
+}
 function swiftCellHtml(d, slot){
   const lista = (d && d.attachments) || [];
   const i = lista.findIndex(a=>a && a.swift===slot);
   let corpo;
   if(i >= 0){
     const a = lista[i];
-    corpo = `<div class="swift-box" title="${String(a.name||'').replace(/"/g,'&quot;')}">✓ <span class="swift-nome">SWIFT</span>`
+    // valor do documento em destaque: verde se bate com a parcela, âmbar se é diferente
+    const vSw = Number(a.swiftValor)||0, vParc = Number(d && d[slot])||0;
+    const difere = vSw && vParc && Math.abs(vSw - vParc) > 0.009;
+    const valorHtml = `<button type="button" class="swift-valor ${vSw? (difere?'swift-valor-dif':'') : 'swift-valor-vazio'}" data-swift-valor="${i}"
+        title="${vSw? 'Valor do documento SWIFT'+(difere? ' — diferente do valor da parcela (USD '+fmt(vParc)+')':'')+' · clique pra corrigir' : 'Clique pra informar o valor que está no SWIFT'}">${vSw? (difere?'⚠ ':'')+'USD '+fmt(vSw) : '+ valor do SWIFT'}</button>`;
+    corpo = `<div class="swift-box swift-box-v" title="${String(a.name||'').replace(/"/g,'&quot;')}">${valorHtml}<div class="swift-acoes">✓ <span class="swift-nome">SWIFT</span>`
       + ((a.dados||a._anx) ? `<button type="button" data-swift-ver="${i}" title="Ver o SWIFT">👁</button><button type="button" data-swift-baixar="${i}" title="Baixar o SWIFT para o computador">⬇</button>` : (a.url? `<a href="${a.url}" target="_blank" rel="noopener" title="Abrir">↗</a>`:''))
-      + `<button type="button" data-swift-remove="${i}" title="Remover o SWIFT desta parcela">✕</button></div>`;
+      + `<button type="button" data-swift-remove="${i}" title="Remover o SWIFT desta parcela">✕</button></div></div>`;
   } else {
     corpo = `<button type="button" class="swift-add" data-swift-add="${slot}" title="Anexar o SWIFT (comprovante) do pagamento — PDF ou imagem">📎 Anexar SWIFT</button>`;
   }
@@ -9738,6 +9762,7 @@ function wireModalEvents(){
           if(lista.length > antes){
             lista.forEach(a=>{ if(a && a.swift===slot) delete a.swift; });   // um SWIFT por parcela: o novo substitui a marcação do antigo
             lista[lista.length-1].swift = slot;
+            pedirValorSwift(lista[lista.length-1], Number(draft[slot])||0);
             toast('🏦 SWIFT da ' + (SWIFT_ROTULO[slot]||'parcela').toLowerCase() + ' anexado. Clique em Salvar pra gravar.');
             atualizarListaAnexos();
           }
@@ -9747,6 +9772,15 @@ function wireModalEvents(){
     });
     document.querySelectorAll('[data-swift-ver]').forEach(el=>{
       el.addEventListener('click', async (e)=>{ e.preventDefault(); const a=(draft.attachments||[])[parseInt(el.dataset.swiftVer,10)]; const d = await obterDadosAnexo(draft, a); if(!d){ toast('Não encontrei este SWIFT nem neste computador nem na nuvem.'); return; } visualizarArquivo(a); });
+    });
+    document.querySelectorAll('[data-swift-valor]').forEach(el=>{
+      el.addEventListener('click', (e)=>{
+        e.preventDefault();
+        if(typeof editMode!=='undefined' && !editMode){ toast('Digite a senha de edição pra informar o valor do SWIFT.'); try{ openEditUnlockModal(); }catch(_){} return; }
+        const a = (draft.attachments||[])[parseInt(el.dataset.swiftValor,10)]; if(!a) return;
+        pedirValorSwift(a, Number(draft[a.swift])||0);
+        atualizarListaAnexos();
+      });
     });
     document.querySelectorAll('[data-swift-baixar]').forEach(el=>{
       el.addEventListener('click', async (e)=>{ e.preventDefault(); const a=(draft.attachments||[])[parseInt(el.dataset.swiftBaixar,10)]; const d = await obterDadosAnexo(draft, a); if(!d){ toast('Não encontrei este SWIFT nem neste computador nem na nuvem.'); return; } baixarArquivo(a); });
