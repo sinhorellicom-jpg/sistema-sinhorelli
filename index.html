@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-154058';</script>
+<script>window.VERSAO_SISTEMA = '20261110-165930';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -8417,6 +8417,15 @@ function freteDaInvoice(linhas){
   });
   return achado;
 }
+// valor em dinheiro na mesma altura de um rótulo, à direita dele (ex.: JBS BR "FREIGHT   USD   2.000,00",
+// onde o número fica um pouquinho desalinhado e cai na linha de cima)
+function valorAoLadoDoRotulo(itens, re){
+  const rot = (itens||[]).find(it=>re.test(String(it.s).trim()));
+  if(!rot) return 0;
+  const cands = itens.filter(it=>it.pg===rot.pg && it.x > rot.x && Math.abs(it.y - rot.y) <= 4 && /^\s*(US\$|USD|\$)?\s*\d[\d.,]*\d\s*$/i.test(it.s))
+    .sort((a,b)=>Math.abs(a.y-rot.y)-Math.abs(b.y-rot.y) || a.x-b.x);
+  return cands.length ? contratoNum(String(cands[0].s).replace(/[^\d.,]/g,'')) : 0;
+}
 // números da linha TOTAL (invoices sem "$", como as da JBS BR): servem para conferir a soma
 function numerosDoTotal(linhas){
   const out = [];
@@ -8434,11 +8443,18 @@ async function lerProdutosInvoice(file){
   if(tipo.indexOf('pdf')>=0 || /\.pdf$/.test(nome)){
     const lib = await carregarPdfJs();
     const doc = await lib.getDocument({data:new Uint8Array(buf)}).promise;
-    const produtos = [], vistos = new Set(), todasLinhas = []; let texto = '';
+    const produtos = [], vistos = new Set(), todasLinhas = [], itensDoc = []; let texto = '';
     for(let pg=1; pg<=doc.numPages; pg++){
       const page = await doc.getPage(pg); const tc = await page.getTextContent();
-      const itens = tc.items.filter(it=>it.str && it.str.trim()).map(it=>({s:it.str, x:it.transform[4], y:it.transform[5], w:it.width||0}));
+      // página com o texto girado (ex.: invoice da JBS BR em paisagem): lê na direção do texto,
+      // senão cada coluna vira uma "linha" e os números ficam grudados
+      const itens = tc.items.filter(it=>it.str && it.str.trim()).map(it=>{
+        const t = it.transform, ex = Math.hypot(t[0],t[1])||1;
+        const dx = t[0]/ex, dy = t[1]/ex;          // direção da escrita; "para cima" = perpendicular (itálico não entorta a linha)
+        return {s:it.str, x:t[4]*dx + t[5]*dy, y:-t[4]*dy + t[5]*dx, w:it.width||0};
+      });
       itens.sort((a,b)=> (b.y-a.y) || (a.x-b.x));
+      itens.forEach(it=>itensDoc.push(Object.assign({pg}, it)));
       const linhas = [];
       itens.forEach(it=>{ const l = linhas.find(l=>Math.abs(l.y-it.y)<=2.5); if(l) l.itens.push(it); else linhas.push({y:it.y, itens:[it]}); });
       const rows = linhas.map(l=>{
@@ -8478,7 +8494,7 @@ async function lerProdutosInvoice(file){
     // (frete que veio como linha de produto sai dos materiais)
     const linhasFrete = produtos.filter(p=>/\b(FREIGHT|FRETE|FLETE)\b/i.test(p.nome||''));
     linhasFrete.forEach(f=>produtos.splice(produtos.indexOf(f),1));
-    let frete = linhasFrete.length ? Math.round(linhasFrete.reduce((t,f)=>t+(f.total||0),0)*100)/100 : freteDaInvoice(todasLinhas);
+    let frete = linhasFrete.length ? Math.round(linhasFrete.reduce((t,f)=>t+(f.total||0),0)*100)/100 : (freteDaInvoice(todasLinhas) || valorAoLadoDoRotulo(itensDoc, /^(OCEAN\s+|SEA\s+|INTERNATIONAL\s+)?(FREIGHT|FRETE|FLETE)\s*:?$/i));
     let freteModo = '';
     // seguro escrito ao lado do frete ("FREIGHT COST: 1250 · INSURANCE: 51") também sai do FOB
     if(frete>0){ const sg = (texto.replace(/\s+/g,' ').match(/INSURANCE\s*[:：]?\s*(?:US\$|USD)?\s*([\d][\d.,]*)/i)||[])[1]; const vs = sg ? contratoNum(sg) : 0; if(vs>0 && vs < frete*2) frete = Math.round((frete+vs)*100)/100; }
@@ -8553,6 +8569,7 @@ function mesDoTexto(t){ const u = String(t||'').toUpperCase().normalize('NFD').r
 function dataDoTexto(t){
   const u = String(t||'').trim();
   let m = u.match(/(\d{4})-(\d{2})-(\d{2})/); if(m) return `${m[1]}-${m[2]}-${m[3]}`;
+  m = u.match(/\b(20\d{2})[\/.](\d{1,2})[\/.](\d{1,2})\b/); if(m) return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;   // 2026/11/09
   m = u.match(/\b(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})\b/); if(m) return `${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`;
   const mes = mesDoTexto(u); if(!mes) return '';
   const nMes = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'].indexOf(mes)+1;
@@ -8561,9 +8578,9 @@ function dataDoTexto(t){
 }
 function condPagtoDoTexto(t){
   return String(t||'').toUpperCase().replace(/\s+/g,' ').trim()
-    .replace(/\bADVANCED?\b|\bADVANCE PAYMENT\b|\bPREPAYMENT\b|\bPREPAID\b|\bANTICIPADO\b|\bADELANTADO\b/g,'ADIANTADO')
+    .replace(/\bADVANCED?\s+PAYMENT\b|\bADVANCED?\b|\bPREPAYMENT\b|\bPREPAID\b|\bANTICIPADO\b|\bADELANTADO\b/g,'ADIANTADO')
     .replace(/\s*\bDAYS?\b\s*(?:AFTER|FROM)?\s*(?:THE\s*)?B\s*\/?\s*L\b(?:\s*DATE)?/g,' D/BL').replace(/\s*\bDIAS?\b\s*(?:DESPU[EÉ]S DE|DE LA FECHA DEL?|DESDE)?\s*(?:LA\s*)?B\s*\/?\s*L\b/g,' D/BL')
-    .replace(/\bB\s*\/?\s*L\s*\+\s*(\d+)\s*DAYS?\b/g,'$1 D/BL').replace(/\bBEFORE\s+SHIPMENT\b/g,'ANTES DO EMBARQUE').replace(/\bAGAINST (?:COPY OF )?(?:B\s*\/\s*L|DOCUMENTS?)\b/g,'C/BL').replace(/\bBALANCE\b|\bSALDO\b/g,'SALDO').replace(/\b(WILL BE DONE|IS|ARE|AND THE|AND|THE|WITHIN|OF)\b/g,' ').replace(/\bDAYS?\b/g,'DIAS').replace(/,\s*/g,' ').replace(/\s*\+\s*/g,' + ').replace(/\s{2,}/g,' ').trim();
+    .replace(/\bB\s*\/?\s*L\s*\+\s*(\d+)\s*DAYS?\b/g,'$1 D/BL').replace(/\bBEFORE\s+SHIPMENT\b/g,'ANTES DO EMBARQUE').replace(/\bTELEGRAPH(?:IC)?\s+TRANSFER\b|\bT\s*\/\s*T\b/g,'TT').replace(/\bAGAINST (?:COPY OF )?(?:B\s*\/\s*L|DOCUMENTS?|DOC'?S)(?=\s|$)/g,'C/BL').replace(/\bBALANCE\b|\bSALDO\b/g,'SALDO').replace(/\b(WILL BE DONE|IS|ARE|AND THE|AND|THE|WITHIN|OF)\b/g,' ').replace(/\bDAYS?\b/g,'DIAS').replace(/,\s*/g,' ').replace(/\s*\+\s*/g,' + ').replace(/\s{2,}/g,' ').trim();
 }
 function nomeClienteDoDoc(v){
   const limpo = String(v||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
@@ -8584,14 +8601,15 @@ function nomeClienteDoDoc(v){
   return achado || limpo;
 }
 function camposDoContrato(linhas){
-  const out = { contrato:'', pedido:'', cliente:'', pais:'', data:'', etd:'', condPagto:'', incoterm:'' };
+  const out = { contrato:'', pedido:'', cliente:'', pais:'', data:'', etd:'', eta:'', condPagto:'', incoterm:'' };
   const limpar = v => String(v||'').replace(/\s+/g,' ').trim().replace(/[.,;]+$/,'');
   const ROT = [
     ['contrato', /^CONTRACT(?:\s*(?:N[Oº°]\.?|NUMBER|#))?\s*[:：]\s*(.*)$/i],
     ['pedido',   /^(?:REF(?:ERENCE)?\.?|YOUR\s+REF(?:ERENCE)?\.?|P\.?\s*O\.?\s*(?:N[Oº°]\.?|NUMBER|#)?|PURCHASE\s+ORDER(?:\s*N[Oº°]\.?)?|ORDER\s*(?:N[Oº°]\.?|NUMBER|#)|PEDIDO(?:\s*N[Oº°]\.?)?)\s*[:：]\s*(.*)$/i],
     ['cliente',  /^(?:TO|BUYER|CONSIGNEE|CUSTOMER|SOLD\s+TO|BILL\s+TO|IMPORTER|COMPRADOR|CLIENTE|CONSIGNATARIO|MESSRS\.?)\s*[:：]\s*(.*)$/i],
     ['data',     /^(?:DATE\s+OF\s+(?:THE\s+)?CONTRACT|CONTRACT\s+DATE|FECHA\s+DEL?\s+CONTRATO|DATA\s+DO\s+CONTRATO)\s*[:：]\s*(.*)$/i],
-    ['etd',      /^(?:DELIVERY(?:\s+DATE|\s+TIME)?|SHIPMENT(?:\s+DATE|\s+TIME|\s+PERIOD)?|TIME\s+OF\s+SHIPMENT|DATE\s+OF\s+SHIPMENT|ETD|FECHA\s+DE\s+EMBARQUE|EMBARQUE|ENTREGA|EX[\s\-]*FACTORY|READY\s+DATE)\s*[:：]\s*(.*)$/i],
+    ['eta',      /^(?:ETA(?:\s+(?:DESTINATION|DESTINO|PORT))?|ESTIMATED\s+TIME\s+OF\s+ARRIVAL|DATE\s+OF\s+ARRIVAL|ARRIVAL\s+DATE|FECHA\s+DE\s+LLEGADA)\s*[:：]\s*(.*)$/i],
+    ['etd',      /^(?:DELIVERY(?:\s+DATE|\s+TIME)?|SHIPMENT(?:\s+DATE|\s+TIME|\s+PERIOD)?|TIME\s+OF\s+SHIPMENT|DATE\s+OF\s+SHIPMENT|ETD(?:\s+(?:ORIGIN|ORIGEN|PORT))?|FECHA\s+DE\s+EMBARQUE|EMBARQUE|ENTREGA|EX[\s\-]*FACTORY|READY\s+DATE)\s*[:：]\s*(.*)$/i],
     ['condPagto',/^(?:PAYMENT(?:\s+TERMS?|\s+CONDITIONS?)?|TERMS?\s+OF\s+PAYMENT|CONDICI[OÓ]N(?:ES)?\s+DE\s+PAGO|FORMA\s+DE\s+PAGO|CONDI[CÇ][AÃ]O\s+DE\s+PAGAMENTO)\s*[:：]\s*(.*)$/i],
     ['incoterm', /^(?:INCO?N?TERMS?(?:\s*20\d\d)?|PRICE\s+TERMS?|DELIVERY\s+TERMS?|TERMS?\s+OF\s+DELIVERY|CONDICI[OÓ]N\s+DE\s+VENTA)\s*[:：]\s*(.*)$/i],
     ['pais',     /^(?:(?:PORT\s+OF\s+)?DESTINATION(?:\s+PORT|\s+COUNTRY)?|COUNTRY(?:\s+OF\s+DESTINATION)?|PA[IÍ]S(?:\s+DE\s+DESTINO)?|DESTINO|FINAL\s+DESTINATION)\s*[:：]\s*(.*)$/i],
@@ -8607,14 +8625,21 @@ function camposDoContrato(linhas){
         if(!m) continue;
         let v = limpar(m[1]);
         if(!v && cel[i+1] && !ROT.some(([,r2])=>r2.test(cel[i+1]))) v = limpar(cel[i+1]);
+        // "PAYMENT:  30 %  ADVANCED PAYMENT" → o % e o texto ao lado
+        if(k==='condPagto' && /^\d{1,3}\s*%$/.test(v) && cel[i+2] && /[A-Z]/i.test(cel[i+2]) && !/^(TOTAL|FREIGHT|USD)\b/i.test(cel[i+2])) v += ' ' + limpar(cel[i+2]);
         if(!v || v.length > 80 || (out[k] && k!=='cliente')) break;
         if(k==='data'){ const d = dataDoTexto(v); if(d) out.data = d; }
         else if(k==='etd'){ const d = dataDoTexto(v); out.etd = d || mesDoTexto(v) || ''; }
+        else if(k==='eta'){ const d = dataDoTexto(v); if(d) out.eta = d; }
         else if(k==='incoterm'){ const c = (v.toUpperCase().match(/\b(EXW|FCA|FAS|FOB|CFR|CNF|C&F|CIF|CPT|CIP|DAP|DPU|DDP)\b/)||[])[1]; if(c) out.incoterm = (c==='CNF'||c==='C&F') ? 'CFR' : c; }
         else if(k==='condPagto'){
           // condição em várias linhas ("25% before shipment" / "25% BL + 30 days" / …): junta as linhas seguintes que começam com %
           let t = v;
-          for(let j=ir+1; j<Math.min((linhas||[]).length, ir+6); j++){ const lt = (linhas[j]||[]).map(c=>c==null?'':String(c).trim()).filter(Boolean).join(' '); if(/^\d{1,3}\s*%/.test(lt) && lt.length<60) t += ' ' + lt; else break; }
+          for(let j=ir+1; j<Math.min((linhas||[]).length, ir+6); j++){
+            const cs = (linhas[j]||[]).map(c=>c==null?'':String(c).trim()).filter(Boolean);
+            const corte = cs.findIndex((c,ci)=>ci>0 && (/^(TOTAL|FREIGHT|USD|DISCOUNT|ADVANCE PAYMENT)\b/i.test(c) || /^\d[\d.,]*$/.test(c)));
+            const lt = (corte>0 ? cs.slice(0,corte) : cs).join(' ');
+            if(/^\d{1,3}\s*%/.test(lt) && lt.length<70) t += (/%/.test(t) ? ' + ' : ' ') + lt; else break; }
           out.condPagto = condPagtoDoTexto(t); }
         else if(k==='pais'){ const p = paisDoTexto(v); if(p) out.pais = p; }
         else if(k==='cliente'){
@@ -8640,6 +8665,8 @@ function camposDoContrato(linhas){
   if(!out.incoterm){
     const todos = new Set(); (linhas||[]).forEach(r=>{ const t = (r||[]).map(c=>c==null?'':String(c)).join(' ').toUpperCase(); (t.match(/\b(EXW|FCA|FOB|CFR|CIF|CPT|CIP|DAP|DDP)\b/g)||[]).forEach(x=>todos.add(x)); });
     if(todos.size===1) out.incoterm = Array.from(todos)[0];
+    // "TOTAL FOB" + "TOTAL CFR - CARTAGENA" (JBS BR): o FOB é só a base do valor; o incoterm é o outro
+    else if(todos.size===2 && todos.has('FOB')){ const o = Array.from(todos).find(x=>x!=='FOB'); if(/^(CFR|CIF|CPT|CIP|DAP|DDP)$/.test(o)) out.incoterm = o; }
   }
   return out;
 }
@@ -8651,7 +8678,7 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     const cp = camposDoContrato(lido.linhas);
     const ehNovo = !(processos||[]).some(p=>p && p.id===draft.id);
     const feitos = [];
-    ['contrato','pedido','cliente','pais','incoterm','condPagto','etd','data'].forEach(k=>{
+    ['contrato','pedido','cliente','pais','incoterm','condPagto','etd','eta','data'].forEach(k=>{
       if(!cp[k]) return;
       const vazio = !String(draft[k]||'').trim() || (k==='data' && ehNovo);
       if(vazio){ draft[k] = cp[k]; feitos.push(k); }
@@ -8670,9 +8697,9 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     if(comprador.length) lido.produtos.forEach(p=>{ const w = String(p.nome||'').split(/\s+/)[0].toUpperCase();
       if(w.length>=4 && comprador.some(c=>c.startsWith(w) || w.startsWith(c))){ p.nome = p.nome.replace(/^\S+\s+/,''); p.nomeDoc = String(p.nomeDoc||'').replace(/^\S+\s+/,''); } }); }
   const ehNovo = !(processos||[]).some(p=>p && p.id===draft.id);
-  const CAMPOS_DOC = [['contrato','Contrato'],['pedido','Pedido'],['cliente','Cliente'],['pais','País'],['data','Data de abertura'],['incoterm','Incoterm'],['condPagto','Cond. de pagamento'],['etd','ETD']];
+  const CAMPOS_DOC = [['contrato','Contrato'],['pedido','Pedido'],['cliente','Cliente'],['pais','País'],['data','Data de abertura'],['incoterm','Incoterm'],['condPagto','Cond. de pagamento'],['etd','ETD'],['eta','ETA']];
   const escD = t => String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  const mostrar = (k,v) => (k==='data' || (k==='etd' && /^\d{4}-\d{2}-\d{2}$/.test(v))) ? fmtDateBR(v) : v;
+  const mostrar = (k,v) => (k==='data' || ((k==='etd'||k==='eta') && /^\d{4}-\d{2}-\d{2}$/.test(v))) ? fmtDateBR(v) : v;
   const docCampos = CAMPOS_DOC.filter(([k])=>cp[k]).map(([k,rot])=>{
     const v = String(cp[k]), atual = String(draft[k]||'').trim();
     const igual = atual && (atual.toUpperCase()===v.toUpperCase() || (k==='data' && atual.slice(0,10)===v));
@@ -16948,7 +16975,13 @@ async function rendLinhasDoArquivo(file){
     const out = [];
     for(let pg=1; pg<=doc.numPages; pg++){
       const page = await doc.getPage(pg); const tc = await page.getTextContent();
-      const itens = tc.items.filter(it=>it.str && it.str.trim()).map(it=>({s:it.str, x:it.transform[4], y:it.transform[5], w:it.width||0}));
+      // página com o texto girado (ex.: invoice da JBS BR em paisagem): lê na direção do texto,
+      // senão cada coluna vira uma "linha" e os números ficam grudados
+      const itens = tc.items.filter(it=>it.str && it.str.trim()).map(it=>{
+        const t = it.transform, ex = Math.hypot(t[0],t[1])||1;
+        const dx = t[0]/ex, dy = t[1]/ex;          // direção da escrita; "para cima" = perpendicular (itálico não entorta a linha)
+        return {s:it.str, x:t[4]*dx + t[5]*dy, y:-t[4]*dy + t[5]*dx, w:it.width||0};
+      });
       itens.sort((a,b)=> (b.y-a.y) || (a.x-b.x));
       const linhas = [];
       itens.forEach(it=>{ const l = linhas.find(l=>Math.abs(l.y-it.y)<=2.5); if(l) l.itens.push(it); else linhas.push({y:it.y, itens:[it]}); });
