@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261109-143555';</script>
+<script>window.VERSAO_SISTEMA = '20261110-152928';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1523,9 +1523,9 @@ body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 .nfx-scroll{overflow-x:auto;}
 .nfx-table td{vertical-align:middle;}
 .nfx-table th,.nfx-table td{text-align:left !important;}
-.nfx-table th:nth-child(7),.nfx-table th:nth-child(8),.nfx-table td[data-nf-usd],.nfx-table td[data-nf-liq],.nfx-table tfoot td.mt-calc{text-align:right !important;}
+.nfx-table td[data-nf-usd],.nfx-table td[data-nf-liq],.nfx-table tfoot td.mt-calc{text-align:right !important;}
 .nfx-table tr.nfx-grupo td{text-align:left !important;}
-.nfx-table th:nth-child(9),.nfx-table td[data-nf-status]{text-align:center !important;}
+.nfx-table td[data-nf-status]{text-align:center !important;}
 .nfx-num{white-space:nowrap;}
 .nfx-data{white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:12px;}
 .nfx-tipo{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;}
@@ -1575,6 +1575,23 @@ body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 /* ===== painel aberto da nota: tema claro (azul/branco) com borda, separado da lista ===== */
 .nfx-detail-td{background:transparent !important;border-left:0 !important;padding:8px 4px 18px !important;}
 .nfx-table tr.nf-compact.nf-open td{background:rgba(47,123,208,.22) !important;box-shadow:none !important;}
+/* ===== lista de notas no estilo da planilha: finalizada = verde · em aberto = cinza claro alternado ===== */
+.nfx-table tbody tr.nf-compact td{color:#1B2430 !important;}
+.nfx-table tbody tr.nf-compact.nf-linha-aberta td{background:#FFFFFF !important;}
+.nfx-table tbody tr.nf-compact.nf-linha-aberta.nf-zebra td{background:#E6E8EC !important;}
+.nfx-table tbody tr.nf-compact.nf-linha-ok td{background:#BFE8CC !important;}
+.nfx-table tbody tr.nf-compact.nf-linha-aberta:hover td{background:#D6E4F5 !important;}
+.nfx-table tbody tr.nf-compact.nf-linha-ok:hover td{background:#A9DFBA !important;}
+.nfx-table tbody tr.nf-compact.nf-open td{background:#CFE0F6 !important;}
+.nfx-table tbody tr.nf-compact td{border-bottom:1px solid #C9CED6 !important;}
+.nfx-table tbody tr.nf-compact td + td{border-left:1px solid #C9CED6 !important;}
+.nfx-table tbody tr.nf-compact .venc-muted,.nfx-table tbody tr.nf-compact .nfx-cli{color:#5A6472 !important;}
+.nfx-table tbody tr.nf-compact .nfx-chip{border-color:#9AA3AF;color:#1B2430;background:rgba(255,255,255,.55);}
+.nfx-table tbody tr.nf-compact .nfx-tipo-inv{background:#DCE4FF;color:#2C46B8;}
+.nfx-table tbody tr.nf-compact .nfx-tipo-nota{background:#FBEFC9;color:#8A5A00;}
+.nfx-sub{font-size:11px;color:#5A6472;margin-top:2px;white-space:nowrap;}
+.nfx-table td.nfx-r,.nfx-table th.nfx-r{text-align:right !important;white-space:nowrap;}
+.nfx-table td.nfx-c,.nfx-table th.nfx-c{text-align:center !important;white-space:nowrap;}
 .nfx-painel{color-scheme:light;background:#EAF1FA;color:#13243D;border:2px solid #2F7BD0;border-radius:14px;padding:14px;box-shadow:0 8px 28px rgba(0,0,0,.45);}
 .nfx-painel .nfx-resumo{background:#FFFFFF;border:1px solid #C9D8EC;}
 .nfx-painel .nfx-rt{border-right-color:#DCE6F3;}
@@ -11624,7 +11641,8 @@ function renderNotasFiscaisView(){
   const porTipo = baseFiltro.filter(n => F.tipo==='todas' || (F.tipo==='nota' ? n.tipo==='nota' : n.tipo!=='nota'));
   const contaSit = s => porTipo.filter(n => s==='todos' || situacao(n)===s).length;
   let lista = porTipo.filter(n => F.status==='todos' || situacao(n)===F.status);
-  lista.sort((a,b)=> chaveNum(b) - chaveNum(a) || String(b.emissao||'').localeCompare(String(a.emissao||'')));
+  // emitidas por último ficam em cima (sem data de emissão = recém-criada, fica no topo); empate → nº mais alto primeiro
+  lista.sort((a,b)=> String(b.emissao||'9999').localeCompare(String(a.emissao||'9999')) || chaveNum(b) - chaveNum(a));
 
   const totalUsd = lista.reduce((s,n)=>s+(n.valorUsd||0),0);
   const totalLiquido = lista.reduce((s,n)=>s+nfValorLiquido(n),0);
@@ -11753,7 +11771,9 @@ function renderNotasFiscaisView(){
             : '<span class="nf-badge nf-badge-received">💵 Recebida</span>')
         : '<span class="venc-muted" title="ainda sem data de pagamento">⏳ aguardando</span>');
 
-  const COLS = 9;
+  const COLS = 12;
+  // em aberto: alterna branco / cinza claro (contando só as em aberto, pra listra não "pular")
+  const zebra = {}; { let i=0; lista.forEach(n=>{ if(!n.finalizado){ zebra[n.id] = (i%2===1); i++; } }); }
   const linhaHtml = n => {
     const forns = nfFornecedoresDa(n);
     const ps = procsDa(n);
@@ -11762,15 +11782,19 @@ function renderNotasFiscaisView(){
       + (ps.length>3? `<span class="nfx-chip nfx-chip-mais" title="${esc(ps.slice(3).map(p=>p.processo).join(', '))}">+${ps.length-3}</span>` : '');
     const clientes = Array.from(new Set(ps.map(p=>p.cliente).filter(Boolean)));
     const compactRow = `
-      <tr data-nf-toggle="${n.id}" data-nf-row="${n.id}" class="nf-compact ${n.finalizado?'nf-linha-ok':'nf-linha-aberta'} ${aberto?'nf-open':''}" style="cursor:pointer;">
+      <tr data-nf-toggle="${n.id}" data-nf-row="${n.id}" class="nf-compact ${n.finalizado?'nf-linha-ok':'nf-linha-aberta'} ${zebra[n.id]?'nf-zebra':''} ${aberto?'nf-open':''}" style="cursor:pointer;">
         <td><span class="nf-caret" style="font-size:10px;display:inline-block;transition:transform .12s ease;${aberto?'transform:rotate(90deg);':''}">▸</span></td>
-        <td class="mt-produto nfx-num" data-nf-num>${n.numero? '<b>'+esc(n.numero)+'</b>' : '<span class="venc-muted">sem nº</span>'}${(n.arquivos&&n.arquivos.length)? ' <span title="'+n.arquivos.length+' arquivo(s) anexado(s)">📎</span>':''}</td>
-        <td><span class="nfx-tipo ${n.tipo==='nota'?'nfx-tipo-nota':'nfx-tipo-inv'}">${n.tipo==='nota'?'Nota':'Invoice'}</span></td>
-        <td class="mt-produto">${forns.length? esc(forns.join(', ')) : '<span class="venc-muted">—</span>'}</td>
-        <td class="nfx-data">${dataBR(n.emissao) || '<span class="venc-muted">—</span>'}</td>
-        <td class="nfx-procs">${chips || '<span class="venc-muted">—</span>'}${clientes.length? `<div class="nfx-cli">${esc(clientes.slice(0,2).join(', '))}${clientes.length>2?' +'+(clientes.length-2):''}</div>`:''}</td>
-        <td class="mt-calc" data-nf-usd>USD ${fmt(n.valorUsd||0)}</td>
-        <td class="mt-calc mt-lucro" data-nf-liq>${(nfCambioValido(n)||n.valorRsManual)? 'R$ '+fmt(nfValorLiquido(n)) : '<span style=\'color:#B08900\'>— a fechar</span>'}</td>
+        <td class="mt-produto nfx-num"><span data-nf-num>${n.numero? '<b>'+esc(n.numero)+'</b>' : '<span class="venc-muted">sem nº</span>'}</span>${(n.arquivos&&n.arquivos.length)? ' <span title="'+n.arquivos.length+' arquivo(s) anexado(s)">📎</span>':''}
+          <div class="nfx-sub"><span class="nfx-tipo ${n.tipo==='nota'?'nfx-tipo-nota':'nfx-tipo-inv'}">${n.tipo==='nota'?'Nota':'Invoice'}</span> ${forns.length? esc(forns.join(', ')) : ''}</div></td>
+        <td class="mt-produto"><div class="nfx-cli" style="font-size:12.5px;color:inherit;">${clientes.length? esc(clientes.slice(0,2).join(', '))+(clientes.length>2?' +'+(clientes.length-2):'') : '<span class="venc-muted">—</span>'}</div></td>
+        <td class="nfx-procs">${chips || '<span class="venc-muted">—</span>'}</td>
+        <td class="mt-calc nfx-r" data-nf-usd>USD ${fmt(n.valorUsd||0)}</td>
+        <td class="mt-calc nfx-r" data-nf-liq>${(nfCambioValido(n)||n.valorRsManual)? 'R$ '+fmt(nfValorLiquido(n)) : '<span style=\'color:#B08900\'>— a fechar</span>'}</td>
+        <td class="nfx-data" data-nf-c="emissao">${dataBR(n.emissao) || '<span class="venc-muted">—</span>'}</td>
+        <td class="nfx-data" data-nf-c="dataPagto">${dataBR(n.dataPagto) || '<span class="venc-muted">—</span>'}</td>
+        <td class="nfx-data nfx-r" data-nf-c="cambio">${nfCambioValido(n)? fmt(n.cambio) : '<span class="venc-muted">—</span>'}</td>
+        <td class="nfx-data" data-nf-c="dataFechCambio">${dataBR(n.dataFechCambio) || '<span class="venc-muted">—</span>'}</td>
+        <td data-nf-c="pagoJoao" style="white-space:nowrap;">${nfPagoJoao(n)? esc(nfPagoJoao(n)) : '<span class="venc-muted">—</span>'}</td>
         <td data-nf-status>${statusHtml(n)}</td>
       </tr>`;
     if(!aberto) return compactRow;
@@ -11840,13 +11864,16 @@ function renderNotasFiscaisView(){
             </div>
           </div></div>
           <div class="nfx-card nfx-c-indigo"><div class="nfx-card-h"><span class="nfx-ic">📅</span>Datas e situação</div><div class="nfx-card-b">
-            <div class="nfx-grid" style="grid-template-columns:repeat(4,minmax(130px,170px));">
+            <div class="nfx-grid" style="grid-template-columns:repeat(5,minmax(130px,170px));">
               <div class="field"><label>Data da emissão</label>
                 <input type="date" data-nf-field="emissao" data-nf-id="${n.id}" value="${n.emissao||''}" ${dis}></div>
               <div class="field"><label>Data do pagamento</label>
                 <input type="date" data-nf-field="dataPagto" data-nf-id="${n.id}" value="${n.dataPagto||''}" ${dis}></div>
               <div class="field"><label>Fechamento do câmbio</label>
                 <input type="date" data-nf-field="dataFechCambio" data-nf-id="${n.id}" value="${n.dataFechCambio||''}" ${dis}></div>
+              <div class="field"><label>Pago ao João</label>
+                <input type="text" data-nf-field="pagoJoao" data-nf-id="${n.id}" value="${esc(n.pagoJoao||'')}" placeholder="ex: 1º TRIMESTRAL" list="nfJoaoSugest" ${dis}>
+                <datalist id="nfJoaoSugest"><option value="1º TRIMESTRAL"><option value="2º TRIMESTRAL"><option value="3º TRIMESTRAL"><option value="4º TRIMESTRAL"></datalist></div>
               <div class="field"><label>Situação</label>
                 <select data-nf-field="finalizado" data-nf-id="${n.id}" ${dis}>
                   <option value="false" ${!n.finalizado?'selected':''}>Em andamento</option>
@@ -11881,46 +11908,33 @@ function renderNotasFiscaisView(){
     return compactRow + detailRow;
   };
 
-  // ---- grupos por situação ----
-  const GRUPOS = [
-    {k:'aguardando', t:'⏳ Aguardando pagamento', d:'sem data de pagamento'},
-    {k:'recebida',   t:'💵 Recebidas — falta finalizar', d:'já têm data de pagamento'},
-    {k:'finalizada', t:'✅ Finalizadas', d:'concluídas'},
-  ];
-  const corpo = GRUPOS.map(g=>{
-    const itens = lista.filter(n=>situacao(n)===g.k);
-    if(!itens.length) return '';
-    const aberto = F.status!=='todos' || !!F.busca.trim() || !!F.forn || window.nfGruposAbertos[g.k];
-    const usd = itens.reduce((s,n)=>s+(n.valorUsd||0),0);
-    return `<tr class="nfx-grupo" data-nfx-grupo="${g.k}"><td colspan="${COLS}">
-        <span class="nf-caret" style="display:inline-block;transition:transform .12s;${aberto?'transform:rotate(90deg);':''}">▸</span>
-        <b>${g.t}</b> <span class="nfx-qtd">${itens.length}</span>
-        <span class="nfx-grupo-tot">USD ${fmt(usd)}</span>
-        ${aberto? '' : '<span class="venc-muted" style="margin-left:8px;">clique para mostrar</span>'}
-      </td></tr>` + (aberto ? itens.map(linhaHtml).join('') : '');
-  }).join('');
+  // ---- lista única, como na planilha: emitidas por último em cima ----
+  const corpo = lista.map(linhaHtml).join('');
 
   el.innerHTML = toolbarHtml + quickAddHtml + `
-    <div class="an-panel-sub" style="margin-bottom:8px;">Clique numa linha pra ver os detalhes e editar — salva sozinho quando você sai de cada campo.</div>
+    <div class="an-panel-sub" style="margin-bottom:8px;">Clique numa linha pra ver os detalhes e editar — salva sozinho quando você sai de cada campo. <span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:#BFE8CC;vertical-align:-1px;margin-left:6px;"></span> finalizada · <span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:#E6E8EC;border:1px solid #C9CED6;vertical-align:-1px;"></span> em aberto</div>
     <div class="nfx-scroll"><table class="mat-table nf-table nfx-table">
       <thead><tr>
         <th style="width:24px;"></th>
-        <th class="mt-produto">Nº</th>
-        <th>Tipo</th>
-        <th class="mt-produto">Fornecedor</th>
-        <th>Emissão</th>
-        <th>Processos</th>
-        <th>Valor US$</th>
-        <th>Líquido R$</th>
-        <th>Situação</th>
+        <th class="mt-produto">Invoice</th>
+        <th class="mt-produto">Cliente</th>
+        <th>Fatura</th>
+        <th class="nfx-r">Valor US$</th>
+        <th class="nfx-r">R$ (líquido)</th>
+        <th>Emissão inv</th>
+        <th>Data de pagamento</th>
+        <th class="nfx-r">Taxa de câmbio</th>
+        <th>Fechamento do câmbio</th>
+        <th>Pago ao João</th>
+        <th class="nfx-c">Situação</th>
       </tr></thead>
       <tbody>${corpo}</tbody>
       <tfoot><tr>
         <td></td>
-        <td colspan="5" class="mt-produto">Total (${lista.length})</td>
+        <td colspan="3" class="mt-produto">Total (${lista.length})</td>
         <td class="mt-calc">USD ${fmt(totalUsd)}</td>
         <td class="mt-calc">R$ ${fmt(totalLiquido)}</td>
-        <td></td>
+        <td colspan="6"></td>
       </tr></tfoot>
     </table></div>` + totalRecebidoHtml;
 
@@ -12141,14 +12155,14 @@ function renderNotasFiscaisView(){
         input.style.transition='background .2s'; input.style.background='#EAF7F0';
         setTimeout(()=>{ input.style.background=''; }, 600);
       });
-    } else if(campo==='numero' || campo==='obs' || campo==='processosRef'){
+    } else if(campo==='numero' || campo==='obs' || campo==='processosRef' || campo==='pagoJoao'){
       input.addEventListener('change', ()=>{
         const n = notasFiscais.find(x=>x.id===input.dataset.nfId);
         if(!n) return;
         n[campo] = input.value;
         saveNotasFiscais();
         // atualiza só o resumo da linha, sem refazer a tela
-        const linha = document.querySelector(`tr[data-nf-row="${n.id}"] .mt-produto:nth-of-type(2)`);
+        if(campo==='pagoJoao') nfAtualizarLinha(n);
         if(campo==='numero'){
           const cel = document.querySelector(`tr[data-nf-row="${n.id}"] [data-nf-num]`);
           if(cel) cel.innerHTML = n.numero ? '<b>'+String(n.numero).replace(/</g,'&lt;')+'</b>' : '<span class="venc-muted">sem nº</span>';
@@ -12199,6 +12213,16 @@ function renderNotasFiscaisView(){
   });
 }
 
+// "Pago ao João": o que foi digitado na nota; se vazio, o que está na planilha de recebimentos JBS ligada a ela
+function nfPagoJoao(n){
+  if(n && String(n.pagoJoao||'').trim()) return String(n.pagoJoao).trim();
+  try{
+    const L = (rjDados && (rjDados.ar||[]).concat(rjDados.br||[])) || [];
+    const r = L.find(x=>(x.origens||[]).indexOf(n.id)>=0 && String(x.joao||'').trim());
+    return r ? String(r.joao).trim() : '';
+  }catch(e){ return ''; }
+}
+
 // atualiza só a linha compacta da nota, preservando o que está sendo digitado
 function nfAtualizarLinha(n){
   const linha = document.querySelector(`tr[data-nf-row="${n.id}"]`);
@@ -12225,6 +12249,15 @@ function nfAtualizarLinha(n){
   if(liq) liq.innerHTML = nfCambioValido(n)||n.valorRsManual ? 'R$ '+fmt(nfValorLiquido(n)) : '<span style="color:#B08900">— a fechar</span>';
   const usd = linha.querySelector('[data-nf-usd]');
   if(usd) usd.textContent = 'USD '+fmt(n.valorUsd||0);
+  // colunas no estilo da planilha (datas, câmbio, pago ao João)
+  const vazio = '<span class="venc-muted">—</span>';
+  const dBR = d => d && /^\d{4}-\d{2}-\d{2}$/.test(d) ? d.slice(8,10)+'/'+d.slice(5,7)+'/'+d.slice(2,4) : '';
+  const put = (c, html) => { const td = linha.querySelector(`[data-nf-c="${c}"]`); if(td) td.innerHTML = html || vazio; };
+  put('emissao', dBR(n.emissao));
+  put('dataPagto', dBR(n.dataPagto));
+  put('dataFechCambio', dBR(n.dataFechCambio));
+  put('cambio', nfCambioValido(n) ? fmt(n.cambio) : '');
+  put('pagoJoao', nfPagoJoao(n) ? String(nfPagoJoao(n)).replace(/[&<>"]/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])) : '');
 }
 
 // recalcula os campos dependentes do painel aberto, sem recriar os inputs
