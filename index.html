@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-171744';</script>
+<script>window.VERSAO_SISTEMA = '20261110-173056';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -8118,7 +8118,7 @@ function cardHtml(p, st){
   <div class="pcard ${overdue?'is-overdue':''}" data-id="${p.id}" style="border-left-color:${overdue?'#B5402B':st.color}">
     <div class="pnum"><span class="proc-badge">${(p.status==='AMOSTRA' && !String(p.processo||'').trim()) ? '🧪 Amostra' : '#'+(p.processo||'—')}</span><span class="pnum-right"><span class="proc-date">${p.data? p.data.split('-').reverse().join('/') : ''}</span>${(editMode && boardOrderMode==='manual')? `<button type="button" class="pcard-mv" data-mv="${p.id}|up" title="Subir uma posição">▲</button><button type="button" class="pcard-mv" data-mv="${p.id}|down" title="Descer uma posição">▼</button>` : ''}${editMode? `<button type="button" class="pcard-dup" data-dup="${p.id}" title="Copiar este processo (mesmo pedido/contrato, novo embarque)">⧉</button><button type="button" class="pcard-dup pcard-del" data-del="${p.id}" title="Excluir este processo">🗑</button>` : ''}</span></div>
     <div class="pclient">${p.cliente || 'Cliente não informado'}</div>
-    <div class="pfrom">${p.fornecedor||''}${p.pedido? ' · Pedido: '+p.pedido:''}${p.contrato? ' · Contrato: '+p.contrato:''}</div>
+    <div class="pfrom">${p.fornecedor||''}${p.pedido? ' · Pedido: '+p.pedido:''}${p.contrato? ' · Contrato: '+p.contrato:''}${String(p.invoice||'').trim()? ' · <b class="pinv">Invoice: '+String(p.invoice).trim().replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</b>':''}</div>
     ${p.etd? `<div class="petd">ETD: ${dataBR(p.etd)}</div>` : ''}
     ${p.embarque? `<div class="petd">Embarque: ${p.embarque.split('-').reverse().join('/')}</div>` : ''}
     ${(st && (st.key==='EMBARCADO' || st.key==='VENCIDO' || st.key==='AMOSTRA' || p.status==='EMBARCADO')) ? (()=>{ const v = activeVencimento(p); return `<div class="petd pvenc${overdue?' pvenc-atrasado':''}">Vencimento: ${v? v.split('-').reverse().join('/') : '-'}</div>`; })() : ''}
