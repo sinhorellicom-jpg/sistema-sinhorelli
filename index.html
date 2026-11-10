@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-173539';</script>
+<script>window.VERSAO_SISTEMA = '20261110-173930';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -8424,6 +8424,19 @@ function totalDaInvoice(linhas){
   });
   return melhor;
 }
+// frete, seguro e FOB escritos por extenso (JBS AR, nas "Observations": "VALOR FLETE 2000 VALOR SEGURO 58,15 VALOR FOB 126342,94";
+// e no quadro de totais: "Cargo 0,00 · Assurance 0,00") — o número é o que vem LOGO DEPOIS do rótulo
+function freteFobDoTexto(texto){
+  const t = String(texto||'').replace(/\s+/g,' ');
+  const num = re => { const m = t.match(re); return m ? contratoNum(m[1]) : 0; };
+  const N = '\\s*[:：]?\\s*(?:US\\$|USD|U\\$S)?\\s*(\\d[\\d.,]*\\d|\\d)';
+  let frete = num(new RegExp('VALOR\\s+(?:DEL?\\s+)?(?:FLETE|FRETE|FREIGHT)'+N,'i'));
+  let seguro = num(new RegExp('VALOR\\s+(?:DEL?\\s+)?(?:SEGURO|INSURANCE)'+N,'i'));
+  const fob = num(new RegExp('(?:VALOR\\s+FOB|FOB\\s+VALUE|TOTAL\\s+FOB)'+N,'i'));
+  if(!frete) frete = num(new RegExp('\\bCARGO'+N,'i'));
+  if(!seguro) seguro = num(new RegExp('\\bASSURANCE'+N,'i'));
+  return { frete, seguro, fob };
+}
 // frete escrito na invoice ("FREIGHT USD 2.500,00", "OCEAN FREIGHT 1,800.00", "FRETE")
 function freteDaInvoice(linhas){
   let achado = 0;
@@ -8433,6 +8446,8 @@ function freteDaInvoice(linhas){
     if(!/\b(FREIGHT|FRETE|FLETE)\b/i.test(t)) return;
     if(/PREPAID|COLLECT|FORWARD|PAYABLE|AGENT|TERMS?\b/i.test(t) && !/(US\$|USD|\$)\s*[\d]/i.test(t)) return;
     let v = 0;
+    const logo = t.match(/\b(?:FREIGHT|FRETE|FLETE)\b\s*(?:VALUE|COST|COSTS)?\s*[:：]?\s*(?:US\$|USD|U\$S|\$)?\s*(\d[\d.,]*)/i);
+    if(logo){ const n = contratoNum(logo[1]); if(n>0){ if(!achado) achado = n; return; } }
     const comMoeda = t.match(/(?:US\$|USD|\$)\s*([\d][\d.,]*)/i);
     if(comMoeda) v = contratoNum(comMoeda[1]);
     else { const nums = t.match(/\d[\d.,]*\d/g) || []; if(nums.length) v = contratoNum(nums[nums.length-1]); }
@@ -8517,6 +8532,19 @@ async function lerProdutosInvoice(file){
     // (frete que veio como linha de produto sai dos materiais)
     const linhasFrete = produtos.filter(p=>/\b(FREIGHT|FRETE|FLETE)\b/i.test(p.nome||''));
     linhasFrete.forEach(f=>produtos.splice(produtos.indexOf(f),1));
+    // FOB / frete / seguro escritos por extenso: valem mais que qualquer outra leitura
+    { const ff = freteFobDoTexto(texto);
+      if(ff.fob>0 || ff.frete>0 || ff.seguro>0){
+        let fr = Math.round(((ff.frete||0) + (ff.seguro||0))*100)/100;
+        if(!fr && ff.fob>0 && totalDoc>ff.fob) fr = Math.round((totalDoc - ff.fob)*100)/100;
+        const fobDoc = ff.fob>0 ? ff.fob : (totalDoc && fr ? Math.round((totalDoc - fr)*100)/100 : 0);
+        if(fr>0 || fobDoc>0){
+          const soma = produtos.reduce((t,p)=>t+(p.total||0),0);
+          const modo = (totalDoc && Math.abs(soma - totalDoc) < 0.05) ? 'embutido' : 'somar';
+          return { produtos, texto, totalDoc, frete:fr, freteModo: fr>0 ? modo : '', linhas:todasLinhas, fobDoc, seguroDoc: ff.seguro||0 };
+        }
+      }
+    }
     let frete = linhasFrete.length ? Math.round(linhasFrete.reduce((t,f)=>t+(f.total||0),0)*100)/100 : (freteDaInvoice(todasLinhas) || valorAoLadoDoRotulo(itensDoc, /^(OCEAN\s+|SEA\s+|INTERNATIONAL\s+)?(FREIGHT|FRETE|FLETE)\s*:?$/i));
     let freteModo = '';
     // seguro escrito ao lado do frete ("FREIGHT COST: 1250 · INSURANCE: 51") também sai do FOB
@@ -8709,10 +8737,16 @@ function preencherFaltantesDoDoc(cp, lido){
     if(k==='data' && String(draft.data||'').trim()) return;
     if(campoFichaFalta(k, draft[k], cp[k])){ draft[k] = cp[k]; feitos.push(k); }
   });
-  if(lido && lido.frete>0 && !(+draft.frete>0)){
+  // frete absurdo (metade do valor ou mais — leitura antiga que pegou o FOB como frete) também é trocado
+  const freteAbsurdo = (+draft.frete>0) && (+draft.valorUsd>0) && (+draft.frete >= (+draft.valorUsd)*0.5);
+  if(lido && lido.frete>0 && (!(+draft.frete>0) || freteAbsurdo)){
     draft.frete = lido.frete; draft.freteModo = lido.freteModo==='embutido' ? 'embutido' : 'somar';
     try{ aplicarFreteNoFob(draft); }catch(e){}
     feitos.push('frete');
+  }
+  // FOB escrito na invoice (ex.: JBS AR "VALOR FOB 126342,94"): é a base da comissão
+  if(lido && lido.fobDoc>0 && (!(+draft.valorFob>0) || draft._fobAuto || feitos.indexOf('frete')>=0)){
+    if(Math.abs((+draft.valorFob||0) - lido.fobDoc) > 0.009){ draft.valorFob = lido.fobDoc; draft._fobAuto = false; feitos.push('valorFob'); }
   }
   return feitos;
 }
@@ -8747,7 +8781,7 @@ async function oferecerMateriaisDaInvoice(file, avisar){
   const jaPreenchidos = preencherFaltantesDoDoc(cp, lido);
   if(jaPreenchidos.length){
     try{ renderModal(); refreshVencimentos(); }catch(e){}
-    const NOMES = {contrato:'contrato', pedido:'pedido', cliente:'cliente', pais:'país', incoterm:'incoterm', condPagto:'cond. de pagamento', etd:'ETD', eta:'ETA', data:'data', frete:'frete'};
+    const NOMES = {valorFob:'valor FOB', contrato:'contrato', pedido:'pedido', cliente:'cliente', pais:'país', incoterm:'incoterm', condPagto:'cond. de pagamento', etd:'ETD', eta:'ETA', data:'data', frete:'frete'};
     toast('📄 Preenchido pela invoice: ' + jaPreenchidos.map(k=>NOMES[k]||k).join(', ') + '.');
   }
   const CAMPOS_DOC = [['contrato','Contrato'],['pedido','Pedido'],['cliente','Cliente'],['pais','País'],['data','Data de abertura'],['incoterm','Incoterm'],['condPagto','Cond. de pagamento'],['etd','ETD'],['eta','ETA']];
@@ -8778,7 +8812,9 @@ async function oferecerMateriaisDaInvoice(file, avisar){
         <tbody>${linhas}</tbody>
         <tfoot><tr><td></td><td class="mt-produto">Total</td><td class="num">${fmt(totalQ)}</td><td></td><td class="num">USD ${fmt(totalV)}</td></tr></tfoot></table></div>
       ${lido.frete>0 ? `<div style="margin-top:10px;"><label><input type="checkbox" id="invFrete" checked> Frete${/INSURANCE/i.test(lido.texto||'')?' + seguro':''} da invoice: <b>USD ${fmt(lido.frete)}</b></label>
+          ${lido.seguroDoc>0 ? `<span class="an-panel-sub">(frete USD ${fmt(arred2(lido.frete - lido.seguroDoc))} + seguro USD ${fmt(lido.seguroDoc)})</span>` : ''}
           <select id="invFreteModo" style="margin-left:6px;"><option value="somar" ${lido.freteModo!=='embutido'?'selected':''}>somado ao valor dos produtos</option><option value="embutido" ${lido.freteModo==='embutido'?'selected':''}>já embutido no preço dos produtos</option></select></div>` : ''}
+      ${lido.fobDoc>0 ? `<div style="margin-top:8px;"><label><input type="checkbox" id="invFob" checked> Valor FOB da invoice (base da comissão): <b>USD ${fmt(lido.fobDoc)}</b></label></div>` : ''}
       ${lido.frete>0 && lido.freteModo==='somar' && lido.totalDoc && Math.abs(lido.totalDoc - totalV - lido.frete) < 0.05
         ? `<div style="margin-top:8px;color:var(--green,#2E9E6B);font-weight:600;">✓ Produtos USD ${fmt(totalV)} + frete USD ${fmt(lido.frete)} = total da invoice USD ${fmt(lido.totalDoc)}</div>`
         : lido.totalDoc ? (Math.abs(lido.totalDoc - totalV) < 0.05
@@ -8798,6 +8834,8 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     root.querySelectorAll('[data-doc-campo]').forEach(cb=>{ if(cb.checked && cp[cb.dataset.docCampo]) draft[cb.dataset.docCampo] = cp[cb.dataset.docCampo]; });
     const usarFrete = root.querySelector('#invFrete');
     if(lido.frete>0 && usarFrete && usarFrete.checked){ draft.frete = lido.frete; draft.freteModo = (root.querySelector('#invFreteModo')||{}).value || 'somar'; }
+    const usarFob = root.querySelector('#invFob');
+    if(lido.fobDoc>0 && usarFob && usarFob.checked){ draft.valorFob = lido.fobDoc; draft._fobAuto = false; }
     const capa = { campos: fornDet ? {fornecedor:fornDet} : {}, historico:[],
       materiais: lido.produtos.map(p=>({ nome:p.nome, material:p.nome, classe:classeDe(p.nomeDoc||p.nome), espGsm:'', containers:'', quantidade:p.quantidade, precoLista:p.precoLista, custo:0 })) };
     const feito = aplicarCapaNoProcesso(draft, capa, { substituir: !modo || modo.value==='sub' });
@@ -10082,7 +10120,9 @@ function baseComissaoHtml(d){
   const esperado = vu>0 ? arred2(vu - fr) : 0;
   const base = comissaoBase(d);
   let h = `Base da comissão: <b>Valor FOB USD ${fmt(base)}</b>${fob>0 ? '' : (vu>0 ? ' <span class="venc-muted">(FOB não preenchido — usando o Valor USD'+(fr>0?'':'')+')</span>' : '')} × ${String(pct).replace('.',',')}% = <b>USD ${fmt(arred2(base*pct/100))}</b>`;
-  if(fob>0 && esperado>0 && Math.abs(fob - esperado) > Math.max(1, esperado*0.05))
+  if(fr>0 && vu>0 && fr >= vu*0.5)
+    h += `<div style="margin-top:4px;color:var(--amber,#C98A0B);font-weight:600;">⚠ O frete (USD ${fmt(fr)}) está maior que metade do Valor USD — confira o campo Frete (ou anexe a invoice de novo pra ler frete e FOB).</div>`;
+  else if(fob>0 && esperado>0 && Math.abs(fob - esperado) > Math.max(1, esperado*0.05))
     h += `<div style="margin-top:4px;color:var(--amber,#C98A0B);font-weight:600;">⚠ O Valor FOB (USD ${fmt(fob)}) não bate com Valor USD${fr>0?' − frete':''} (USD ${fmt(esperado)}). <button type="button" class="btn btn-outline btn-sm" id="usarFobCalculado" data-fob="${esperado}">Usar FOB USD ${fmt(esperado)}</button></div>`;
   return h;
 }
