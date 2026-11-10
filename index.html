@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-170532';</script>
+<script>window.VERSAO_SISTEMA = '20261110-171744';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -608,6 +608,8 @@ td.sum-pick, th.sum-pick{ background:#DBEAFE !important; box-shadow:inset 0 0 0 
 .dtw-date{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--coral);font-weight:700;}
 .dtw-client{font-size:10.5px;font-weight:600;margin-top:0;}
 .dtw-proc{color:var(--ink-soft);font-weight:400;font-family:'IBM Plex Mono',monospace;font-size:9px;}
+.dtw-etapa{font-size:10.5px;color:var(--ink-soft);margin-top:2px;display:flex;align-items:center;gap:4px;white-space:nowrap;}
+.dtw-etapa-dot{width:7px;height:7px;border-radius:50%;flex:none;}
 .dtw-val{font-family:'IBM Plex Mono',monospace;font-size:10px;margin-top:0;color:var(--ink-soft);}
 
 /* ---------- document checklist ---------- */
@@ -7201,11 +7203,22 @@ function activeVencimento(p){
   return p.vencimento || "";
 }
 
+// vencimento das PARCELAS (1ª a 4ª) ainda não pagas — a entrada fica de fora
+function vencimentoSemEntrada(p){
+  for(const n of [1,2,3,4]){
+    const valor = p['pg'+n]||0, paga = !!p['dataPg'+n], fixa = p['vencPg'+n]||'', ref = p['refPg'+n];
+    if(valor>0 && !paga && fixa) return fixa;
+    if(valor>0 && !paga && ref){ const v = calcVencimentoParcela(p, ref, p['prazoPg'+n]); if(v) return v; }
+  }
+  return p.vencimento || "";
+}
 function isOverdue(p){
   // etapas depois do pagamento do cliente não contam como vencidas:
   // se a invoice já foi emitida (ou está no câmbio/comissão/vendedores), a cobrança do cliente já andou
   if(['ESPERANDO_COMISSAO','EMITIDO_INVOICE','FECHAMENTO_CAMBIO','PAGAMENTO_VENDEDOR','ENCERRADO','CANCELADO'].includes(p.status)) return false;
-  const venc = activeVencimento(p);
+  // ENTRADA vencida não tira o processo da etapa dele (não vai pra coluna Vencidos):
+  // ela aparece em cima, nos vencimentos da semana, como "em aberto" até ser paga
+  const venc = vencimentoSemEntrada(p);
   if(!venc) return false;
   // resto de centavos (ex.: USD 0,03 de arredondamento) não segura o processo como vencido
   if(saldoUsd(p) <= 1) return false;
@@ -7707,9 +7720,10 @@ function semanaListas(){
   const {ini, fim} = semanaISO();
   const ativos = processos.filter(p=>!['ENCERRADO','CANCELADO'].includes(p.status));
   // entrada com "Vencimento da entrada" nesta semana e ainda SEM data de pagamento (com ou sem valor)
+  // + entradas de semanas anteriores que venceram e continuam em aberto (ficam aqui até serem pagas)
   const entradas = ativos.filter(p=>!p.dataEntradaPg)
     .map(p=>({p, venc: vencimentoEntrada(p), valor: p.entrada||0, pago: ''}))
-    .filter(x=>x.venc && x.venc>=ini && x.venc<=fim)
+    .filter(x=>x.venc && x.venc<=fim && (x.venc>=ini || (x.valor>0 && !ETAPAS_CLIENTE_JA_PAGOU.includes(x.p.status))))
     .sort((a,b)=>(a.pago?1:0)-(b.pago?1:0) || a.venc.localeCompare(b.venc));
   const parcelas = ativos.filter(p=>!ETAPAS_CLIENTE_JA_PAGOU.includes(p.status) && saldoUsd(p)>0.5)
     .map(p=>{ const a = vencimentoParcelaAtiva(p); return a ? Object.assign({p}, a) : null; })
@@ -7733,7 +7747,7 @@ function renderSemanaTopo(){
   const lista = (titulo, itens, rotulo) => `<div class="sp-title">${titulo} · ${periodo}</div>` + (itens.length ? itens.map(x=>`
       <div class="sp-item" data-id="${x.p.id}">
         <span class="sp-date ${x.venc<hoje?'atrasado':''}">${fmtDateBR(x.venc)}</span>
-        <span class="sp-cli">${x.p.cliente||'—'} <small>#${x.p.processo||'?'}${rotulo(x)}</small></span>
+        <span class="sp-cli">${x.p.cliente||'—'} <small>#${x.p.processo||'?'}${rotulo(x)}${x.venc<hoje?' · <b style="color:#C2412D">em aberto</b>':''} · ${(STATUS_BY_KEY[x.p.status]||{}).label||x.p.status||''}</small></span>
         <span class="sp-val">${x.valor>0 ? 'USD '+fmt(x.valor) : '<span class="sp-semvalor">sem valor</span>'}${x.pago ? `<br><span class="sp-pago">✓ pago ${fmtDateBR(x.pago)}</span>` : ''}</span>
       </div>`).join('') + `<div class="sp-total"><span>${itens.some(x=>x.pago)?'A receber':'Total'}</span><span>USD ${fmt(soma(itens.filter(x=>!x.pago)))}</span></div>`
     : '<div class="sp-vazio">Nada vencendo nesta semana.</div>');
@@ -7787,12 +7801,13 @@ function renderDueThisWeek(){
   const atras = itens.filter(x=>x.venc < hoje).length;
   const total = itens.reduce((t,x)=>t+(x.valor||0),0);
   el.innerHTML = `
-    <div class="dtw-title" id="dtwToggle"><span class="dtw-caret">▾</span> ⏰ Vencimentos desta semana (${fmtDateBR(ini)} a ${fmtDateBR(fim)}) — ${itens.length}${atras?` · <span class="dtw-atras-n">${atras} já venceu</span>`:''}${total>0?` · USD ${fmt(total)}`:''}</div>
+    <div class="dtw-title" id="dtwToggle"><span class="dtw-caret">▾</span> ⏰ Vencimentos desta semana (${fmtDateBR(ini)} a ${fmtDateBR(fim)}) + entradas vencidas em aberto — ${itens.length}${atras?` · <span class="dtw-atras-n">${atras} já venceu</span>`:''}${total>0?` · USD ${fmt(total)}`:''}</div>
     <div class="dtw-row">
       ${itens.map(x=>`
         <div class="dtw-item${x.venc<hoje?' dtw-atrasado':''}" data-id="${x.p.id}" title="Clique para abrir o processo e dar baixa">
-          <div class="dtw-date">${fmtDateBR(x.venc)}${x.venc<hoje?' · venceu':''}</div>
+          <div class="dtw-date">${fmtDateBR(x.venc)}${x.venc<hoje?(x.tipo==='entrada'?' · venceu · em aberto':' · venceu'):''}</div>
           <div class="dtw-client">${x.p.cliente||'—'} <span class="dtw-proc">${rotuloProcesso(x.p)}${x.tipo==='entrada'?' · entrada':(x.n?` · ${x.n}ª parcela`:'')}</span></div>
+          <div class="dtw-etapa"><span class="dtw-etapa-dot" style="background:${(STATUS_BY_KEY[x.p.status]||{}).color||'#888'}"></span>${(STATUS_BY_KEY[x.p.status]||{}).label||x.p.status||''}</div>
           <div class="dtw-val">${x.valor>0 ? 'USD '+fmt(x.valor) : 'sem valor'}</div>
         </div>`).join('')}
     </div>`;
