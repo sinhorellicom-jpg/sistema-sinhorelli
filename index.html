@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-153502';</script>
+<script>window.VERSAO_SISTEMA = '20261110-153923';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -6850,7 +6850,7 @@ function swiftCellHtml(d, slot){
   if(i >= 0){
     const a = lista[i];
     corpo = `<div class="swift-box" title="${String(a.name||'').replace(/"/g,'&quot;')}">✓ <span class="swift-nome">SWIFT</span>`
-      + ((a.dados||a._anx) ? `<button type="button" data-swift-ver="${i}" title="Ver o SWIFT">👁</button>` : (a.url? `<a href="${a.url}" target="_blank" rel="noopener" title="Abrir">↗</a>`:''))
+      + ((a.dados||a._anx) ? `<button type="button" data-swift-ver="${i}" title="Ver o SWIFT">👁</button><button type="button" data-swift-baixar="${i}" title="Baixar o SWIFT para o computador">⬇</button>` : (a.url? `<a href="${a.url}" target="_blank" rel="noopener" title="Abrir">↗</a>`:''))
       + `<button type="button" data-swift-remove="${i}" title="Remover o SWIFT desta parcela">✕</button></div>`;
   } else {
     corpo = `<button type="button" class="swift-add" data-swift-add="${slot}" title="Anexar o SWIFT (comprovante) do pagamento — PDF ou imagem">📎 Anexar SWIFT</button>`;
@@ -9747,6 +9747,9 @@ function wireModalEvents(){
     });
     document.querySelectorAll('[data-swift-ver]').forEach(el=>{
       el.addEventListener('click', async (e)=>{ e.preventDefault(); const a=(draft.attachments||[])[parseInt(el.dataset.swiftVer,10)]; const d = await obterDadosAnexo(draft, a); if(!d){ toast('Não encontrei este SWIFT nem neste computador nem na nuvem.'); return; } visualizarArquivo(a); });
+    });
+    document.querySelectorAll('[data-swift-baixar]').forEach(el=>{
+      el.addEventListener('click', async (e)=>{ e.preventDefault(); const a=(draft.attachments||[])[parseInt(el.dataset.swiftBaixar,10)]; const d = await obterDadosAnexo(draft, a); if(!d){ toast('Não encontrei este SWIFT nem neste computador nem na nuvem.'); return; } baixarArquivo(a); });
     });
     document.querySelectorAll('[data-swift-remove]').forEach(el=>{
       el.addEventListener('click', (e)=>{
