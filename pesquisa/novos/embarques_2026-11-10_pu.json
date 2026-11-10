@@ -1,0 +1,62 @@
+[
+ {
+  "data": "2026-06-19",
+  "importador": "DIMAR GROUP",
+  "pais": "EQUADOR",
+  "exportador": "Pegantes Urano Ltd.",
+  "origem": "COLOMBIA",
+  "ncm": "3506.91",
+  "produto": "adhesives based on polymers (HS 3506910000; registro de exportação Colômbia, POL Ipiales; moeda do valor não exibida)",
+  "quantidade": 2156.16,
+  "unidade": "kg",
+  "valor": 6528.3,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/supplier/7742195"
+ },
+ {
+  "data": "2026-06-16",
+  "importador": "DIMAR GROUP",
+  "pais": "EQUADOR",
+  "exportador": "Pegantes Urano Ltd.",
+  "origem": "COLOMBIA",
+  "ncm": "3506.91",
+  "produto": "URANO PLATINO INCOLORO BOTELLA X 750 ML (HS 3506910020; POD Tulcan; moeda do valor não exibida)",
+  "quantidade": 114.783,
+  "unidade": "kg",
+  "valor": 345.907,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/supplier/7742195"
+ },
+ {
+  "data": "2026-06-16",
+  "importador": "DIMAR GROUP",
+  "pais": "EQUADOR",
+  "exportador": "Pegantes Urano Ltd.",
+  "origem": "COLOMBIA",
+  "ncm": "3506.91",
+  "produto": "URANO PLATINO INCOLORO GALON X 3.6 LITROS (HS 3506910020; POD Tulcan; moeda do valor não exibida)",
+  "quantidade": 146.468,
+  "unidade": "kg",
+  "valor": 441.391,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/supplier/7742195"
+ },
+ {
+  "data": "2026-06-16",
+  "importador": "DIMAR GROUP",
+  "pais": "EQUADOR",
+  "exportador": "Pegantes Urano Ltd.",
+  "origem": "COLOMBIA",
+  "ncm": "3506.91",
+  "produto": "URANO FLEX SPRAY GALON X 3.6 LITROS (HS 3506910020; POD Tulcan; moeda do valor não exibida)",
+  "quantidade": 413.499,
+  "unidade": "kg",
+  "valor": 1246.105,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/supplier/7742195"
+ }
+]
