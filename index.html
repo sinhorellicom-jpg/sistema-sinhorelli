@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-152928';</script>
+<script>window.VERSAO_SISTEMA = '20261110-153243';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -11641,8 +11641,10 @@ function renderNotasFiscaisView(){
   const porTipo = baseFiltro.filter(n => F.tipo==='todas' || (F.tipo==='nota' ? n.tipo==='nota' : n.tipo!=='nota'));
   const contaSit = s => porTipo.filter(n => s==='todos' || situacao(n)===s).length;
   let lista = porTipo.filter(n => F.status==='todos' || situacao(n)===F.status);
-  // emitidas por último ficam em cima (sem data de emissão = recém-criada, fica no topo); empate → nº mais alto primeiro
-  lista.sort((a,b)=> String(b.emissao||'9999').localeCompare(String(a.emissao||'9999')) || chaveNum(b) - chaveNum(a));
+  // em aberto em cima, finalizadas embaixo; dentro de cada bloco, emitidas por último em cima
+  // (sem data de emissão = recém-criada, fica no topo do bloco); empate → nº mais alto primeiro
+  lista.sort((a,b)=> (a.finalizado?1:0) - (b.finalizado?1:0)
+    || String(b.emissao||'9999').localeCompare(String(a.emissao||'9999')) || chaveNum(b) - chaveNum(a));
 
   const totalUsd = lista.reduce((s,n)=>s+(n.valorUsd||0),0);
   const totalLiquido = lista.reduce((s,n)=>s+nfValorLiquido(n),0);
