@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261111-173209';</script>
+<script>window.VERSAO_SISTEMA = '20261111-173618';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -773,6 +773,10 @@ body.arrastando-cartao, body.arrastando-cartao *{cursor:grabbing !important;user
 .pay-row{display:grid;grid-template-columns:80px 1fr 110px 90px 1fr 1fr 130px;gap:8px;align-items:end;margin-bottom:8px;}
 .swift-add{width:100%;padding:8px 6px;border-radius:7px;border:1px dashed #9DB6D6;background:#F7FAFE;color:#1E5AA8;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;}
 .swift-add:hover{background:#E3EEFB;border-style:solid;}
+.emb-grid{grid-template-columns:1fr 1fr 1fr;}
+@media (max-width:760px){.emb-grid{grid-template-columns:1fr;}}
+.emb-doc-cell .swift-add,.emb-doc-cell .swift-box{min-height:40px;}
+.emb-doc-drag .swift-add,.emb-doc-drag .swift-box{outline:2px dashed #1E5AA8;background:#E3EEFB;}
 .swift-box{display:flex;align-items:center;gap:4px;padding:6px 6px;border-radius:7px;border:1px solid #9FD3B4;background:#EEF8F2;font-size:12px;font-weight:600;color:#2E7D4F;white-space:nowrap;overflow:hidden;}
 .swift-box .swift-nome{flex:1;overflow:hidden;text-overflow:ellipsis;}
 .swift-box button{border:none;background:none;cursor:pointer;padding:0 2px;font-size:13px;}
@@ -6893,6 +6897,22 @@ function pedirValorSwift(a, sugestao){
   a.swiftValor = Math.round(n*100)/100;
   return true;
 }
+// documento do embarque (BL, conhecimento, aviso de embarque…): anexar, ver e baixar ao lado da data
+function embDocCellHtml(d){
+  const lista = (d && d.attachments) || [];
+  const i = lista.findIndex(a=>a && a.docEmbarque);
+  let corpo;
+  if(i >= 0){
+    const a = lista[i];
+    corpo = `<div class="swift-box emb-doc-box" title="${String(a.name||'').replace(/"/g,'&quot;')}">📄 <span class="swift-nome">${String(a.name||'documento').replace(/</g,'&lt;')}</span>`
+      + ((a.dados||a._anx) ? `<button type="button" data-embdoc-ver="${i}" title="Ver o documento do embarque">👁</button><button type="button" data-embdoc-baixar="${i}" title="Baixar o documento do embarque">⬇</button>` : (a.url? `<a href="${a.url}" target="_blank" rel="noopener" title="Abrir">↗</a>`:''))
+      + `<button type="button" data-embdoc-trocar="1" title="Trocar por outro documento">🔁</button>`
+      + `<button type="button" data-embdoc-remove="${i}" title="Remover o documento do embarque">✕</button></div>`;
+  } else {
+    corpo = `<button type="button" class="swift-add" data-embdoc-add="1" title="Anexar o documento do embarque (BL, conhecimento…) — PDF, imagem ou Word. Pode também arrastar o arquivo aqui.">📎 Anexar documento</button>`;
+  }
+  return `<div class="field emb-doc-cell" data-embdoc-cell="1"><label>Documento do embarque</label>${corpo}</div>`;
+}
 function swiftCellHtml(d, slot){
   const lista = (d && d.attachments) || [];
   const i = lista.findIndex(a=>a && a.swift===slot);
@@ -9325,9 +9345,10 @@ function renderModal(){
         </div>
         <div class="fgroup">
           <div class="fgroup-title">🚢 Embarque</div>
-          <div class="grid2">
+          <div class="grid2 emb-grid">
             ${fieldRow('Nº do Embarque (ex: 1/3)','numeroEmbarque','text',{placeholder:'esse é o embarque 1 de 3, por exemplo'})}
             ${fieldRow('Data do Embarque','embarque','date')}
+            ${embDocCellHtml(draft)}
           </div>
         </div>
 
@@ -9473,7 +9494,7 @@ function renderModal(){
         <div class="attach-list" id="attachList">
           ${(draft.attachments||[]).map((a,i)=>`
             <div class="attach-item">
-              <span class="ai-stage">${STATUS_BY_KEY[a.stage]?STATUS_BY_KEY[a.stage].label:'Geral'}</span>${a.swift? `<span class="ai-swift">🏦 SWIFT ${SWIFT_ROTULO[a.swift]||''}</span>`:''}
+              <span class="ai-stage">${STATUS_BY_KEY[a.stage]?STATUS_BY_KEY[a.stage].label:'Geral'}</span>${a.swift? `<span class="ai-swift">🏦 SWIFT ${SWIFT_ROTULO[a.swift]||''}</span>`:''}${a.docEmbarque? `<span class="ai-swift">🚢 Doc. embarque</span>`:''}
               <span class="ai-name">${(a.dados||a._anx)? '📎 ':''}${a.name}${a.tamanho? ` <span class="venc-muted">(${a.tamanho})</span>`:''}</span>
               ${(a.dados||a._anx)
                 ? `<button type="button" class="link-btn" data-attach-ver="${i}" title="Ver aqui dentro">👁 ver</button> <button type="button" class="link-btn" data-attach-baixar="${i}" title="Baixar">⬇ baixar</button>`
@@ -9888,7 +9909,7 @@ function wireModalEvents(){
     if(!lista){ renderModal(); return; }
     lista.innerHTML = (draft.attachments||[]).map((a,i)=>`
       <div class="attach-item">
-        <span class="ai-stage">${STATUS_BY_KEY[a.stage]?STATUS_BY_KEY[a.stage].label:'Geral'}</span>${a.swift? `<span class="ai-swift">🏦 SWIFT ${SWIFT_ROTULO[a.swift]||''}</span>`:''}
+        <span class="ai-stage">${STATUS_BY_KEY[a.stage]?STATUS_BY_KEY[a.stage].label:'Geral'}</span>${a.swift? `<span class="ai-swift">🏦 SWIFT ${SWIFT_ROTULO[a.swift]||''}</span>`:''}${a.docEmbarque? `<span class="ai-swift">🚢 Doc. embarque</span>`:''}
         <span class="ai-name">${(a.dados||a._anx)? '📎 ':''}${a.name}${a.tamanho? ` <span class="venc-muted">(${a.tamanho})</span>`:''}</span>
         ${(a.dados||a._anx)
           ? `<button type="button" class="link-btn" data-attach-ver="${i}" title="Ver aqui dentro">👁 ver</button> <button type="button" class="link-btn" data-attach-baixar="${i}" title="Baixar">⬇ baixar</button>`
@@ -9908,6 +9929,7 @@ function wireModalEvents(){
 
   // redesenha só as caixinhas "SWIFT" das parcelas e liga os botões
   function atualizarSwift(){
+    atualizarDocEmbarque();
     document.querySelectorAll('.swift-cell[data-swift-slot]').forEach(c=>{ c.outerHTML = swiftCellHtml(draft, c.dataset.swiftSlot); });
     document.querySelectorAll('[data-swift-add]').forEach(el=>{
       el.addEventListener('click', (e)=>{
@@ -9956,6 +9978,67 @@ function wireModalEvents(){
         atualizarListaAnexos();
       });
     });
+  }
+
+  // documento do embarque: anexar (clique ou arrastar), ver, baixar, trocar e remover
+  function atualizarDocEmbarque(){
+    const cel = document.querySelector('.emb-doc-cell[data-embdoc-cell]');
+    if(!cel) return;
+    cel.outerHTML = embDocCellHtml(draft);
+    const nova = document.querySelector('.emb-doc-cell[data-embdoc-cell]');
+    const podeEditar = ()=>{
+      if(typeof editMode!=='undefined' && !editMode){ toast('Digite a senha de edição pra anexar o documento do embarque.'); try{ openEditUnlockModal(); }catch(_){} return false; }
+      return true;
+    };
+    const anexarDoc = async (f)=>{
+      if(!f) return;
+      const antes = (draft.attachments||[]).length;
+      try{ await anexarArquivo(f, true); }catch(err){ console.warn('doc embarque', err); toast('Não consegui anexar o documento.'); return; }
+      const lista = draft.attachments||[];
+      if(lista.length > antes){
+        lista.forEach(a=>{ if(a && a.docEmbarque) delete a.docEmbarque; });   // um por embarque: o novo substitui a marcação do antigo
+        const novo = lista[lista.length-1];
+        novo.docEmbarque = true;
+        if(STATUS_BY_KEY['EMBARCADO']) novo.stage = 'EMBARCADO';
+        toast('🚢 Documento do embarque anexado. Clique em Salvar pra gravar.');
+        atualizarListaAnexos();
+      }
+    };
+    const escolher = (e)=>{
+      e.preventDefault();
+      if(!podeEditar()) return;
+      const inp = document.createElement('input'); inp.type='file'; inp.accept='.pdf,image/*,.txt,.doc,.docx,.xls,.xlsx'; inp.style.display='none';
+      document.body.appendChild(inp);
+      inp.addEventListener('change', ()=>{ const f=(inp.files||[])[0]; inp.remove(); anexarDoc(f); });
+      inp.click();
+    };
+    nova.querySelectorAll('[data-embdoc-add],[data-embdoc-trocar]').forEach(el=>el.addEventListener('click', escolher));
+    nova.addEventListener('dragover', e=>{ e.preventDefault(); nova.classList.add('emb-doc-drag'); });
+    nova.addEventListener('dragleave', ()=>nova.classList.remove('emb-doc-drag'));
+    nova.addEventListener('drop', e=>{
+      e.preventDefault(); e.stopPropagation(); nova.classList.remove('emb-doc-drag');
+      if(!podeEditar()) return;
+      anexarDoc(((e.dataTransfer||{}).files||[])[0]);
+    });
+    nova.querySelectorAll('[data-embdoc-ver]').forEach(el=>el.addEventListener('click', async (e)=>{
+      e.preventDefault(); const a=(draft.attachments||[])[parseInt(el.dataset.embdocVer,10)];
+      const d = await obterDadosAnexo(draft, a); if(!d){ toast('Não encontrei este documento nem neste computador nem na nuvem.'); return; }
+      visualizarArquivo(a);
+    }));
+    nova.querySelectorAll('[data-embdoc-baixar]').forEach(el=>el.addEventListener('click', async (e)=>{
+      e.preventDefault(); const a=(draft.attachments||[])[parseInt(el.dataset.embdocBaixar,10)];
+      const d = await obterDadosAnexo(draft, a); if(!d){ toast('Não encontrei este documento nem neste computador nem na nuvem.'); return; }
+      baixarArquivo(a);
+    }));
+    nova.querySelectorAll('[data-embdoc-remove]').forEach(el=>el.addEventListener('click', (e)=>{
+      e.preventDefault();
+      if(!podeEditar()) return;
+      const idx = parseInt(el.dataset.embdocRemove,10);
+      const a = (draft.attachments||[])[idx];
+      if(!a || !confirm('Remover o documento do embarque "' + (a.name||'') + '"?')) return;
+      draft.attachments.splice(idx, 1);
+      atualizarListaAnexos();
+    }));
   }
 
   function ligarAcoesAnexos(){
