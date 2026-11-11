@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261110-174132';</script>
+<script>window.VERSAO_SISTEMA = '20261111-162303';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1541,6 +1541,10 @@ body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 .nfx-tipo-nota{background:rgba(233,196,106,.18);color:var(--amber);}
 .nfx-chip{display:inline-block;font:600 11px/1.5 'IBM Plex Mono',monospace;padding:0 6px;margin:1px 3px 1px 0;border-radius:5px;border:1px solid var(--line);white-space:nowrap;}
 .nfx-chip-mais{border-style:dashed;}
+.nfx-procadd{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-height:38px;}
+.nfx-chip-proc{font-size:12px;padding:3px 8px;background:var(--card,#fff);}
+.nfx-chip-x{border:0;background:none;cursor:pointer;color:#C0392B;font-weight:700;padding:0 0 0 2px;}
+.nfx-procadd select{flex:1;min-width:150px;}
 .nfx-cli{font-size:11px;color:var(--ink-soft);margin-top:1px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .nfx-grupo td{cursor:pointer;background:rgba(127,127,127,.10) !important;font-size:12.5px;padding:8px 10px !important;border-top:2px solid var(--line);}
 .nfx-grupo:hover td{background:rgba(127,127,127,.16) !important;}
@@ -4467,22 +4471,34 @@ function sincronizarNfDoProcesso(p){
   saveNotasFiscais();
   toast(`Processo ${numProc||''} vinculado à ${n.tipo==='nota'?'nota':'invoice'} ${numero}. 📄`);
 }
-// leva o câmbio fechado na nota/invoice para o processo vinculado
+// todos os processos ligados à nota/invoice: o principal + os adicionados em "Outros processos"
+function nfProcessosVinculados(n){
+  const norm = s => { const m = String(s||'').trim().match(/^0*(\d+)\/(\d+)$/); return m ? (+m[1])+'/'+m[2] : String(s||'').trim().toLowerCase(); };
+  const out = [];
+  const p0 = (processos||[]).find(p=>p.id===n.processoId);
+  if(p0) out.push(p0);
+  String(n.processosRef||'').split(',').map(x=>x.trim()).filter(Boolean).forEach(num=>{
+    const pr = (processos||[]).find(p=>p.processo && norm(p.processo)===norm(num));
+    if(pr && out.indexOf(pr)<0) out.push(pr);
+  });
+  return out;
+}
+// leva o câmbio fechado na nota/invoice para TODOS os processos vinculados
 // (é o câmbio usado no pagamento dos vendedores e no fechamento do processo)
+// e grava o nº da invoice/nota no processo que ainda não tiver
 function nfAplicarCambioNoProcesso(n){
-  // vínculo feito pela aba Notas Fiscais: o processo passa a mostrar o nº da invoice/nota (se ainda não tiver)
-  try{
-    const pv = (processos||[]).find(p=>p.id===n.processoId);
-    if(pv && n.numero && !String(pv.nfComissao||'').trim()){ pv.nfComissao = n.numero; saveData(); }
-  }catch(e){}
+  const procs = nfProcessosVinculados(n);
+  if(!procs.length) return false;
   const c = nfCambioValido(n);
-  if(!c || !n.processoId) return false;
-  const proc = (processos||[]).find(p=>p.id===n.processoId);
-  if(!proc || Number(proc.cambio)===c) return false;
-  proc.cambio = c;
-  try{ saveData(); }catch(e){ console.warn('câmbio no processo', e); }
-  toast(`Câmbio ${fmt(c)} aplicado ao processo ${proc.processo||''}. 💱`);
-  return true;
+  const mudou = [];
+  let alterou = false;
+  procs.forEach(proc=>{
+    if(n.numero && !String(proc.nfComissao||'').trim()){ proc.nfComissao = n.numero; alterou = true; }
+    if(c && Number(proc.cambio)!==c){ proc.cambio = c; mudou.push(proc.processo||'?'); alterou = true; }
+  });
+  if(alterou){ try{ saveData(); }catch(e){ console.warn('câmbio no processo', e); } }
+  if(mudou.length) toast(`Câmbio ${fmt(c)} aplicado ${mudou.length>1?'aos processos':'ao processo'} ${mudou.join(', ')}. 💱`);
+  return mudou.length>0;
 }
 function nfValorRS(n){
   if(Number(n.valorRsManual) > 0) return Math.round(Number(n.valorRsManual)*100)/100;   // digitado à mão
@@ -12030,8 +12046,15 @@ function renderNotasFiscaisView(){
                   ${processos.filter(p=>(p.status!=='CANCELADO' && p.status!=='AMOSTRA')).sort(procCompare).map(p=>`<option value="${p.id}" ${n.processoId===p.id?'selected':''}>#${esc(p.processo||'?')} · ${esc(p.cliente||'')}</option>`).join('')}
                   ${proc && !processos.includes(proc)? `<option value="${proc.id}" selected>#${esc(proc.processo||'?')} · ${esc(proc.cliente||'')}</option>` : ''}
                 </select></div>
-              <div class="field"><label>Processos (separe por vírgula)</label>
-                <input type="text" data-nf-field="processosRef" data-nf-id="${n.id}" value="${esc(n.processosRef||'')}" placeholder="178/26, 180/26..." ${dis}></div>
+              <div class="field"><label>Outros processos</label>
+                <div class="nfx-procadd">
+                  ${refsDe(n).map(num=>{ const pr = procPorNum[normNum(num)];
+                    return `<span class="nfx-chip nfx-chip-proc" title="${esc(pr? (pr.cliente||'') : 'processo não encontrado')}">#${esc(num)}${pr&&pr.cliente? ' · '+esc(pr.cliente):''}${editMode? ` <button type="button" class="nfx-chip-x" data-nf-procdel="${n.id}" data-num="${esc(num)}" title="Tirar este processo">×</button>`:''}</span>`; }).join('')}
+                  ${editMode? `<select data-nf-procadd="${n.id}" title="Escolha o processo — o câmbio desta ${n.tipo==='nota'?'nota':'invoice'} vai direto pra ele">
+                    <option value="">+ adicionar processo</option>
+                    ${processos.filter(p=>p.status!=='CANCELADO' && p.status!=='AMOSTRA' && p.processo && p.id!==n.processoId && !refsDe(n).some(r=>normNum(r)===normNum(p.processo))).sort(procCompare).map(p=>`<option value="${p.id}">#${esc(p.processo)} · ${esc(p.cliente||'')}</option>`).join('')}
+                  </select>` : (refsDe(n).length? '' : '<span class="venc-muted">—</span>')}
+                </div></div>
             </div>
           </div></div>
           <div class="nfx-card nfx-c-verde"><div class="nfx-card-h"><span class="nfx-ic">💲</span>Valores</div><div class="nfx-card-b">
@@ -12224,6 +12247,32 @@ function renderNotasFiscaisView(){
                                      {titulo:'Excluir lançamento', confirmar:'Excluir', perigo:true});
       if(!ok) return;
       notasFiscais = notasFiscais.filter(n=>n.id!==btn.dataset.nfRemove);
+      saveNotasFiscais();
+      renderNotasFiscaisView();
+    });
+  });
+
+  // "Outros processos": adiciona/retira processo da nota/invoice e leva o câmbio pra ele
+  el.querySelectorAll('select[data-nf-procadd]').forEach(sel=>{
+    sel.addEventListener('click', e=>e.stopPropagation());
+    sel.addEventListener('change', ()=>{
+      const n = notasFiscais.find(x=>x.id===sel.dataset.nfProcadd);
+      const p = processos.find(x=>x.id===sel.value);
+      if(!n || !p) return;
+      if(!n.processoId){ n.processoId = p.id; }
+      else { const refs = refsDe(n); refs.push(p.processo); n.processosRef = refs.join(', '); }
+      if(!n.fornecedor && p.fornecedor) n.fornecedor = p.fornecedor;
+      if(!nfAplicarCambioNoProcesso(n)) toast(`Processo ${p.processo} adicionado.${nfCambioValido(n)? '' : ' O câmbio vai pra ele quando você preencher.'}`);
+      saveNotasFiscais();
+      renderNotasFiscaisView();
+    });
+  });
+  el.querySelectorAll('[data-nf-procdel]').forEach(b=>{
+    b.addEventListener('click', e=>{
+      e.preventDefault(); e.stopPropagation();
+      const n = notasFiscais.find(x=>x.id===b.dataset.nfProcdel);
+      if(!n) return;
+      n.processosRef = refsDe(n).filter(r=>normNum(r)!==normNum(b.dataset.num)).join(', ');
       saveNotasFiscais();
       renderNotasFiscaisView();
     });
