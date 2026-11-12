@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261112-162900';</script>
+<script>window.VERSAO_SISTEMA = '20261112-181237';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -8374,7 +8374,9 @@ function _produtosDasLinhasInvoice(linhas){
     const antes = tri ? textos.filter(o=>o.i < tri.i0) : textos;
     let nome = antes.reduce((m,o)=> o.p.length > m.length ? o.p : m, '');
     const soNcm = !textos.length && nums.length===1 && (ehNcm(nums[0].bruto) || /^\d{8,14}$/.test(nums[0].bruto));
-    return { nome, tri, soTexto: !nums.length && !!textos.length, soNcm, ncm: soNcm ? nums[0].bruto : '', textoTodo: textos.map(o=>o.p).join(' ') };
+    // nº do pedido na linha (coluna "YOUR REFERENCE" / "ORDER" / "PO"), ex.: "TG.WB#007-26" — invoice com 2+ pedidos
+    const ref = (textos.map(o=>o.p).filter(t=>t!==nome).join(' ').split(/\s+/).find(refPedidoValido) || '').replace(/[.,;:]+$/,'');
+    return { nome, tri, ref, soTexto: !nums.length && !!textos.length, soNcm, ncm: soNcm ? nums[0].bruto : '', textoTodo: textos.map(o=>o.p).join(' ') };
   });
   // 2) descrição quebrada em 2–3 linhas no PDF (texto em cima, números no meio, "5901.9000" embaixo)
   const usado = new Set(), out = [];
@@ -8393,9 +8395,41 @@ function _produtosDasLinhasInvoice(linhas){
     if(!nome) return;
     const nn = capaNorm(nome);
     if(/^(GRAND |SUB ?)?TOTAL|^TOTAL|^SUM\b|^AMOUNT|^SAY |^NET WEIGHT|^GROSS WEIGHT|^DEPOSIT|^BALANCE/.test(nn)) return;
-    out.push({ nome: nome.replace(/\s+/g,' ').trim(), quantidade:r.tri.q, precoLista:r.tri.pr, total:r.tri.tot });
+    out.push({ nome: nome.replace(/\s+/g,' ').trim(), quantidade:r.tri.q, precoLista:r.tri.pr, total:r.tri.tot, ref: r.ref || '' });
   });
   return out;
+}
+/* ---- invoice com mais de um pedido (coluna "YOUR REFERENCE": TG.WB#007-26, TG.WB#003-26…) ---- */
+// parece nº de pedido: tem letra e número e "#" ou termina em "-26" / "/26"
+function refPedidoValido(t){
+  t = String(t||'').trim().replace(/[.,;:]+$/,'');
+  return t.length>=4 && t.length<=30 && /[A-Za-z]/.test(t) && /\d/.test(t) && /^[A-Za-z0-9][A-Za-z0-9.#\/_-]*$/.test(t) && (/#/.test(t) || /\d[-\/]\d{2,4}$/.test(t));
+}
+// o nº do pedido da ficha bate com a referência da linha? ("TG.WB#007-26" = "TG.WB#007-26" / "007-26" / "7/26" / "7")
+function refBatePedido(ref, pedido){
+  const ped = String(pedido||'').trim(); if(!ped || !ref) return false;
+  const norm = x => String(x||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  const dig = x => (String(x||'').match(/\d+/g)||[]).map(Number);
+  // ficha com mais de um pedido ("TG.WB#003-26 e TG.WB#007-26")
+  const partes = ped.split(/\s*(?:[,;+&]|\s\/\s|\s+E\s+|\s+AND\s+|\s+Y\s+)\s*/i).map(x=>x.trim()).filter(Boolean);
+  return partes.some(p=>{
+    const a = norm(ref), b = norm(p);
+    if(!b) return false;
+    if(a===b) return true;
+    if(b.length>=5 && a.endsWith(b)) return true;
+    const dr = dig(ref), dp = dig(p);
+    if(!dp.length || !dr.length) return false;
+    if(dp.length>=2 && dr.length>=dp.length && dp.every((n,i)=>n===dr[dr.length-dp.length+i])) return /[A-Z]/i.test(p) ? norm(ref).indexOf(norm(p).replace(/\d.*$/,''))>=0 : true;
+    if(dp.length===1 && /^\d+$/.test(p) && dr.length===2 && dr[0]===dp[0]) return true;
+    return false;
+  });
+}
+// pedidos distintos da invoice (só quando TODAS as linhas têm referência e há 2 ou mais)
+function pedidosDaInvoice(produtos){
+  const L = produtos||[];
+  if(L.length<2 || !L.every(p=>p.ref)) return [];
+  const refs = []; L.forEach(p=>{ const k = String(p.ref).toUpperCase(); if(!refs.some(r=>r.toUpperCase()===k)) refs.push(p.ref); });
+  return refs.length>=2 ? refs : [];
 }
 /* CONTRATO (ex.: JBS BR): não tem tabela quantidade × preço = total.
    Lê o bloco "Description:" (até o próximo rótulo, ex. "Delivery date:"), a "Quantity:" e o "at USD 0,37/SQFT".
@@ -8789,6 +8823,8 @@ function preencherFaltantesDoDoc(cp, lido){
   });
   // frete absurdo (metade do valor ou mais — leitura antiga que pegou o FOB como frete) também é trocado
   const freteAbsurdo = (+draft.frete>0) && (+draft.valorUsd>0) && (+draft.frete >= (+draft.valorUsd)*0.5);
+  // invoice com 2+ pedidos: frete e FOB escritos nela são da invoice inteira, não deste processo
+  if(lido && lido._pedidos && lido._pedidos.length) return feitos;
   if(lido && lido.frete>0 && (!(+draft.frete>0) || freteAbsurdo)){
     draft.frete = lido.frete; draft.freteModo = lido.freteModo==='embutido' ? 'embutido' : 'somar';
     try{ aplicarFreteNoFob(draft); }catch(e){}
@@ -8819,6 +8855,13 @@ async function oferecerMateriaisDaInvoice(file, avisar){
   const fornDet = fornecedorPeloTexto(lido.texto);
   const fornUsar = String(draft.fornecedor||'').trim() || fornDet;
   lido.produtos.forEach(p=>{ p.nomeDoc = p.nome; p.nome = nomeMaterialFornecedor(p.nome, fornUsar); });   // a classe sai do nome como está no documento
+  // invoice com mais de um pedido: só entram as linhas do pedido deste processo (campo "Pedido" da ficha)
+  const pedidosInv = pedidosDaInvoice(lido.produtos);
+  lido._pedidos = pedidosInv;
+  const todosProd = lido.produtos.slice();
+  let pedSel = pedidosInv.length ? pedidosInv.filter(r=>refBatePedido(r, draft.pedido)) : [];
+  const prodDoPedido = () => pedidosInv.length ? todosProd.filter(p=>pedSel.some(r=>r.toUpperCase()===String(p.ref).toUpperCase())) : todosProd;
+  const pedParcial = () => pedidosInv.length>0 && pedSel.length < pedidosInv.length;
   // YANTAI: o nº da invoice do documento vai para o campo "Invoice" do processo
   const nInv = /YANTAI/i.test(fornUsar) ? numeroInvoiceDoTexto(lido.texto) : '';
   const cp = camposDoContrato(lido.linhas);
@@ -8850,22 +8893,32 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     || (lido.contrato ? (REGRAS_CLASSE_FORNECEDOR['JBS BR'].classe(nome) || null) : null)   // contrato: seleção TR1/TR2/TR3/TR4 ou A/B
     || (activeDataset==='vendas' ? nome : '');
   const temMat = (draft.materiais||[]).some(m=> m && (m.nome||m.material||m.classe||m.quantidade));
-  const totalQ = lido.produtos.reduce((s,p)=>s+p.quantidade,0), totalV = lido.produtos.reduce((s,p)=>s+p.total,0);
+  const totaisSel = () => { const L = prodDoPedido(); return { q: L.reduce((s,p)=>s+p.quantidade,0), v: L.reduce((s,p)=>s+p.total,0) }; };
+  const { q: totalQ, v: totalV } = totaisSel();
   const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  const linhas = lido.produtos.map(p=>`<tr><td style="font-family:'IBM Plex Mono',monospace;font-weight:600;text-align:left;white-space:nowrap;">${esc(classeDe(p.nomeDoc||p.nome))}</td><td style="text-align:left;">${esc(p.nome)}</td><td class="num">${fmt(p.quantidade)}</td><td class="num">${p.precoLista.toFixed(4).replace(/0{1,2}$/,'')}</td><td class="num">${fmt(p.total)}</td></tr>`).join('');
+  const linhaSel = p => !pedidosInv.length || pedSel.some(r=>r.toUpperCase()===String(p.ref).toUpperCase());
+  const linhasHtml = () => todosProd.map(p=>`<tr style="${linhaSel(p)?'':'opacity:.35;text-decoration:line-through;'}"><td style="font-family:'IBM Plex Mono',monospace;font-weight:600;text-align:left;white-space:nowrap;">${esc(classeDe(p.nomeDoc||p.nome))}</td><td style="text-align:left;">${esc(p.nome)}</td>${pedidosInv.length?`<td style="text-align:left;white-space:nowrap;font-family:'IBM Plex Mono',monospace;">${esc(p.ref)}</td>`:''}<td class="num">${fmt(p.quantidade)}</td><td class="num">${p.precoLista.toFixed(4).replace(/0{1,2}$/,'')}</td><td class="num">${fmt(p.total)}</td></tr>`).join('');
+  const linhas = linhasHtml();
+  const rodapeHtml = () => { const t = totaisSel(); return `<tr><td></td><td class="mt-produto">Total${pedParcial()?' do pedido':''}</td>${pedidosInv.length?'<td></td>':''}<td class="num">${fmt(t.q)}</td><td></td><td class="num">USD ${fmt(t.v)}</td></tr>`; };
   const root = document.createElement('div'); root.className='overlay'; root.style.zIndex=99999;
   root.innerHTML = `<div class="modal" style="max-width:860px;">
     <div class="modal-head"><div><h2>🧾 Produtos encontrados ${(lido.contrato || (/\bCONTRACT\b/i.test(lido.texto||'') && !/COMMERCIAL\s+INVOICE|PROFORMA/i.test(lido.texto||'')))?'no contrato':'na invoice'} — ${esc(file.name)}</h2>
       <div class="an-panel-sub">${lido.produtos.length} produto(s)${fornUsar?` · ${esc(fornUsar)}`:''}</div></div></div>
     <div class="modal-body">
-      <div style="overflow:auto;"><table class="mat-table" style="width:100%;"><thead><tr><th style="text-align:left;">Classe</th><th style="text-align:left;">Material (como na invoice)</th><th>Quant.</th><th>Valor unit.</th><th>Total</th></tr></thead>
-        <tbody>${linhas}</tbody>
-        <tfoot><tr><td></td><td class="mt-produto">Total</td><td class="num">${fmt(totalQ)}</td><td></td><td class="num">USD ${fmt(totalV)}</td></tr></tfoot></table></div>
-      ${lido.frete>0 ? `<div style="margin-top:10px;"><label><input type="checkbox" id="invFrete" checked> Frete${/INSURANCE/i.test(lido.texto||'')?' + seguro':''} da invoice: <b>USD ${fmt(lido.frete)}</b></label>
+      <div style="overflow:auto;"><table class="mat-table" style="width:100%;"><thead><tr><th style="text-align:left;">Classe</th><th style="text-align:left;">Material (como na invoice)</th>${pedidosInv.length?'<th style="text-align:left;">Pedido</th>':''}<th>Quant.</th><th>Valor unit.</th><th>Total</th></tr></thead>
+        <tbody id="invTbody">${linhas}</tbody>
+        <tfoot id="invTfoot">${rodapeHtml()}</tfoot></table></div>
+      ${pedidosInv.length ? `<div id="invPedBox" style="margin-top:10px;padding:10px 12px;border:2px solid var(--amber,#C98A0B);border-radius:10px;">
+          <div style="font-weight:700;margin-bottom:4px;">🧾 Esta invoice tem ${pedidosInv.length} pedidos — só entram as linhas do pedido deste processo${String(draft.pedido||'').trim()?` (Pedido na ficha: <b>${esc(draft.pedido)}</b>)`:''}</div>
+          ${pedidosInv.map(r=>{ const L = todosProd.filter(p=>String(p.ref).toUpperCase()===r.toUpperCase()); const q = L.reduce((s,p)=>s+p.quantidade,0), v = L.reduce((s,p)=>s+p.total,0);
+            return `<label style="display:flex;gap:8px;align-items:baseline;padding:3px 0;"><input type="checkbox" data-inv-ped="${esc(r)}" ${pedSel.indexOf(r)>=0?'checked':''}> <b style="font-family:'IBM Plex Mono',monospace;min-width:140px;">${esc(r)}</b> <span>${L.length} linha(s) · quant. ${fmt(q)} · USD ${fmt(v)}</span></label>`; }).join('')}
+          <div id="invPedAviso" style="margin-top:4px;font-weight:600;color:var(--amber,#C98A0B);"></div>
+        </div>` : ''}
+      ${lido.frete>0 ? `<div style="margin-top:10px;"><label><input type="checkbox" id="invFrete" ${pedParcial()?'':'checked'}> Frete${/INSURANCE/i.test(lido.texto||'')?' + seguro':''} da invoice: <b>USD ${fmt(lido.frete)}</b></label>
           ${lido.seguroDoc>0 ? `<span class="an-panel-sub">(frete USD ${fmt(arred2(lido.frete - lido.seguroDoc))} + seguro USD ${fmt(lido.seguroDoc)})</span>` : ''}
           <select id="invFreteModo" style="margin-left:6px;"><option value="somar" ${lido.freteModo!=='embutido'?'selected':''}>somado ao valor dos produtos</option><option value="embutido" ${lido.freteModo==='embutido'?'selected':''}>já embutido no preço dos produtos</option></select></div>` : ''}
-      ${lido.fobDoc>0 ? `<div style="margin-top:8px;"><label><input type="checkbox" id="invFob" checked> Valor FOB da invoice (base da comissão): <b>USD ${fmt(lido.fobDoc)}</b></label></div>` : ''}
-      ${lido.frete>0 && lido.freteModo==='somar' && lido.totalDoc && Math.abs(lido.totalDoc - totalV - lido.frete) < 0.05
+      ${lido.fobDoc>0 ? `<div style="margin-top:8px;"><label><input type="checkbox" id="invFob" ${pedParcial()?'':'checked'}> Valor FOB da invoice (base da comissão): <b>USD ${fmt(lido.fobDoc)}</b></label>${pedidosInv.length?' <span class="an-panel-sub">(é da invoice inteira, com todos os pedidos)</span>':''}</div>` : ''}
+      ${pedidosInv.length ? (lido.totalDoc ? `<div style="margin-top:8px;" class="an-panel-sub">Total da invoice inteira (todos os pedidos): USD ${fmt(lido.totalDoc)}</div>` : '') : lido.frete>0 && lido.freteModo==='somar' && lido.totalDoc && Math.abs(lido.totalDoc - totalV - lido.frete) < 0.05
         ? `<div style="margin-top:8px;color:var(--green,#2E9E6B);font-weight:600;">✓ Produtos USD ${fmt(totalV)} + frete USD ${fmt(lido.frete)} = total da invoice USD ${fmt(lido.totalDoc)}</div>`
         : lido.totalDoc ? (Math.abs(lido.totalDoc - totalV) < 0.05
         ? `<div style="margin-top:8px;color:var(--green,#2E9E6B);font-weight:600;">✓ Soma confere com o total da invoice: USD ${fmt(lido.totalDoc)}</div>`
@@ -8877,7 +8930,30 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     <div class="modal-foot"><button class="btn btn-outline" id="invCancel">Só anexar</button><button class="btn btn-primary" id="invOk">Preencher os materiais</button></div></div>`;
   document.body.appendChild(root);
   root.querySelector('#invCancel').onclick = ()=>root.remove();
+  // escolha do pedido (invoice com 2+ pedidos): marca/desmarca e a tabela e o total acompanham
+  const atualizarPedidos = () => {
+    const tb = root.querySelector('#invTbody'), tf = root.querySelector('#invTfoot'), av = root.querySelector('#invPedAviso'), ok = root.querySelector('#invOk');
+    if(tb) tb.innerHTML = linhasHtml();
+    if(tf) tf.innerHTML = rodapeHtml();
+    if(av) av.innerHTML = !pedSel.length ? (String(draft.pedido||'').trim()
+        ? `⚠ O pedido da ficha (${esc(draft.pedido)}) não aparece nesta invoice — marque qual pedido é deste processo.`
+        : '⚠ A ficha ainda não tem o nº do pedido — marque qual pedido é deste processo.')
+      : (pedParcial() ? `✓ Entram só as linhas de ${pedSel.map(esc).join(' + ')}.` : '');
+    if(ok) ok.disabled = pedidosInv.length>0 && !pedSel.length;
+    // frete/FOB da invoice inteira não servem quando o processo é só parte dela
+    const fr = root.querySelector('#invFrete'), fb = root.querySelector('#invFob');
+    if(pedidosInv.length){ if(fr) fr.checked = !pedParcial(); if(fb) fb.checked = !pedParcial(); }
+  };
+  root.querySelectorAll('[data-inv-ped]').forEach(cb=>cb.addEventListener('change', ()=>{
+    pedSel = Array.from(root.querySelectorAll('[data-inv-ped]')).filter(x=>x.checked).map(x=>x.dataset.invPed);
+    atualizarPedidos();
+  }));
+  if(pedidosInv.length) atualizarPedidos();
   root.querySelector('#invOk').onclick = ()=>{
+    if(pedidosInv.length && !pedSel.length){ toast('Marque qual pedido da invoice é deste processo.'); return; }
+    const prodUsar = prodDoPedido();
+    // ficha sem nº de pedido: fica com o pedido escolhido
+    if(pedidosInv.length && pedSel.length===1 && !String(draft.pedido||'').trim()) draft.pedido = pedSel[0];
     const modo = root.querySelector('input[name=invModo]:checked');
     const usarNum = root.querySelector('#invNumero');
     if(nInv && usarNum && usarNum.checked){ draft.invoice = nInv; }
@@ -8887,23 +8963,24 @@ async function oferecerMateriaisDaInvoice(file, avisar){
     const usarFob = root.querySelector('#invFob');
     if(lido.fobDoc>0 && usarFob && usarFob.checked){ draft.valorFob = lido.fobDoc; draft._fobAuto = false; }
     const capa = { campos: fornDet ? {fornecedor:fornDet} : {}, historico:[],
-      materiais: lido.produtos.map(p=>({ nome:p.nome, material:p.nome, classe:classeDe(p.nomeDoc||p.nome), espGsm:'', containers:'', quantidade:p.quantidade, precoLista:p.precoLista, custo:0 })) };
+      materiais: prodUsar.map(p=>({ nome:p.nome, material:p.nome, classe:classeDe(p.nomeDoc||p.nome), espGsm:'', containers:'', quantidade:p.quantidade, precoLista:p.precoLista, custo:0 })) };
     const feito = aplicarCapaNoProcesso(draft, capa, { substituir: !modo || modo.value==='sub' });
     root.remove(); renderModal();
     try{ syncMaterialAndValorFromMateriais(); }catch(e){}
     // valores da invoice valem mais que a soma arredondada linha a linha (diferença de centavos)
     try{
-      if(lido.totalDoc>0 && Math.abs(materiaisValorTotal(draft) + (draft.freteModo==='embutido'?0:(+draft.frete||0)) - lido.totalDoc) < 1) draft.valorUsd = lido.totalDoc;
+      if(!pedParcial() && lido.totalDoc>0 && Math.abs(materiaisValorTotal(draft) + (draft.freteModo==='embutido'?0:(+draft.frete||0)) - lido.totalDoc) < 1) draft.valorUsd = lido.totalDoc;
       const uf = root.querySelector('#invFob');
-      if(lido.fobDoc>0 && (!uf || uf.checked)){ draft.valorFob = lido.fobDoc; draft._fobAuto = false; }
+      if(lido.fobDoc>0 && (uf ? uf.checked : !pedParcial())){ draft.valorFob = lido.fobDoc; draft._fobAuto = false; }
       else aplicarFreteNoFob(draft);
       mostrarValoresNaFicha();
       const vu = document.querySelector('[data-key="valorUsd"][data-currency]'); if(vu && document.activeElement!==vu) vu.value = draft.valorUsd ? fmt(draft.valorUsd) : '';
     }catch(e){}
-    toast(`${feito.materiais} material(is) preenchido(s) pela invoice.`);
+    toast(`${feito.materiais} material(is) preenchido(s) pela invoice${pedParcial()?` — só do pedido ${pedSel.join(' + ')} (a invoice tem ${pedidosInv.length} pedidos)`:''}.`);
   };
   // ficha ainda sem materiais: preenche direto (frete, FOB e dados que faltam já vêm marcados); com materiais, pergunta antes de trocar
-  if(!temMat) root.querySelector('#invOk').click();
+  // invoice com 2+ pedidos e nenhum bate com o da ficha: espera a pessoa marcar qual é
+  if(!temMat && (!pedidosInv.length || pedSel.length)) root.querySelector('#invOk').click();
 }
 function lerArquivoCapa(file){
   return new Promise((res,rej)=>{ const r = new FileReader(); r.onload = ()=>{ try{ res(XLSX.read(new Uint8Array(r.result), {type:'array', cellDates:true})); }catch(e){ rej(e); } }; r.onerror = rej; r.readAsArrayBuffer(file); });
