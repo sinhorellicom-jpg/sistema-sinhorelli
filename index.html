@@ -9436,7 +9436,7 @@ function renderModal(){
           <div>Próximo vencimento (ativo)<b id="calcVencAtivo">${fmtDateBR(activeVencimento(draft))}</b></div>
         </div>
 
-        <div class="section-title">Nossa comissão (o que recebemos pela venda) <span class="an-panel-sub">Taxa de câmbio e "Já recebemos" são obrigatórios pra encerrar o processo</span></div>
+        <div class="section-title">Nossa comissão (o que recebemos pela venda) <span class="an-panel-sub">Taxa de câmbio e "Já recebemos" são obrigatórios pra encerrar o processo${(draft&&draft.status==='ENCERRADO'&&(JSON.parse(window.__draftOrig||'{}')||{}).status==='ENCERRADO')?' — processo já encerrado: a taxa de câmbio não é exigida pra salvar':''}</span></div>
         ${String(draft.fornecedor||'').trim().toUpperCase()==='YANTAI'? `<div id="yanQuadro">${yantaiQuadroHtml(draft)}</div>` : ''}
         <div class="grid3">
           <div class="field">
@@ -9814,7 +9814,10 @@ function wireModalEvents(){
     if(Number(String(draft.data).slice(0,4)) < ANO_MINIMO){
       toast('A data do processo precisa ser de ' + ANO_MINIMO + ' em diante.'); return;
     }
-    if(draft.status==='ENCERRADO' && (!draft.cambio || draft.cambio<=0)){
+    // processo que já estava encerrado (só completando documentação) não precisa da taxa de câmbio pra salvar
+    let jaEstavaEncerrado = false;
+    try{ jaEstavaEncerrado = !!editingId && (JSON.parse(window.__draftOrig||'{}')||{}).status==='ENCERRADO'; }catch(e){}
+    if(draft.status==='ENCERRADO' && !jaEstavaEncerrado && (!draft.cambio || draft.cambio<=0)){
       toast('Não dá pra encerrar: falta preencher a "Taxa de câmbio" na seção "Nossa comissão".');
       return;
     }
