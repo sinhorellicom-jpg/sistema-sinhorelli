@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261113-164544';</script>
+<script>window.VERSAO_SISTEMA = '20261113-164618';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -16489,6 +16489,14 @@ function buscaCasa(texto, q){
   if(ap) return ap.test(String(texto||'').toUpperCase());
   return prospNorm(q).split(' ').filter(Boolean).every(w=>t.indexOf(w)>=0);
 }
+function buscaEvRecente(evs){   // a evidência com a data mais recente (para mostrar sempre a última informação)
+  const chave = v => { const t = String(v&&v.periodo||'') + ' ' + String(v&&v.descricao||''); let k = '';
+    (t.match(/\b(19[89]\d|20[0-3]\d)\b/g)||[]).forEach(y=>{ if(y > k.slice(0,4)) k = y; });
+    let m; const re = /\b(\d{1,2})\/(\d{1,2})\/(20\d\d)\b|\b(20\d\d)-(\d{2})(?:-(\d{2}))?\b/g;
+    while((m = re.exec(t))){ const iso = m[3] ? `${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}` : `${m[4]}-${m[5]}-${m[6]||'00'}`; if(iso > k) k = iso; }
+    return k; };
+  return (evs||[]).slice().sort((a,b)=>chave(b).localeCompare(chave(a)))[0];
+}
 function buscaRender(){
   const box = document.getElementById('prBuscaBox'); if(!box) return;
   buscaF.pais = prospF.pais;   // país é o mesmo filtro da aba toda
@@ -16526,7 +16534,7 @@ function buscaRender(){
       const pr = embPreco(x); if(pr && pr.por){ const u = embUnidade(x.unidade); const q = +x.quantidade * (u && (u.g==='peso'||u.g==='area') ? u.f : 1); r.qb[pr.por] = (r.qb[pr.por]||0) + q; r.vb[pr.por] = (r.vb[pr.por]||0) + (+x.valor); }
       r.outros.add(porImp ? String(x.exportador||'').replace(/\s*\(.*$/,'') : x.importador);
     });
-    const grupos = Object.values(g).sort((a,b)=>b.n-a.n || String(b.ult).localeCompare(String(a.ult)));
+    const grupos = Object.values(g).sort((a,b)=>String(b.ult).localeCompare(String(a.ult)) || b.n-a.n);   // mais recente primeiro
     const linhaG = r=>{ const cli = porImp ? ehCli(r.nome) : '';
       const precos = Object.keys(r.qb).map(por=>`US$ ${fmt(r.vb[por]/r.qb[por])}/${E(por)}`).join(' · ');
       return `<tr data-busca-ir="${E(r.nome)}" style="cursor:pointer;" title="Ver os embarques na tabela abaixo">
@@ -16541,9 +16549,12 @@ function buscaRender(){
       if(buscaF.exp && !prospFornecedores(e).some(f=>buscaCasa(f, buscaF.exp))) return false;
       if(!filtroExtra(e.pais, (e.ncms_provaveis||[]).concat((e.evidencias||[]).map(v=>v.ncm)), null, e.empresa)) return false;
       if(buscaF.ano){ const pr = prospPeriodo(e); if(pr.max===null || pr.max < +buscaF.ano || (pr.min!==null && pr.min > +buscaF.ano)) return false; }
-      return true; }).slice(0, 300);
+      return true; })
+      .map(e=>{ const pr = prospPeriodo(e); return [e, pr.ultima || (pr.max!==null ? String(pr.max) : '')]; })
+      .sort((a,b)=>b[1].localeCompare(a[1])).map(x=>x[0])   // registro mais recente primeiro
+      .slice(0, 300);
     const linhaE = e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp));
-      const v = evs[0] || (e.evidencias||[])[0] || {};
+      const v = buscaEvRecente(evs) || buscaEvRecente(e.evidencias) || {};
       const cli = ehCli(e.empresa);
       return `<tr><td><b>${E(e.empresa)}</b>${cli?' <span class="pr-cli">✓ cliente</span>':''}${e.novo?' <span class="pr-novo">novo</span>':''}</td><td>${E(e.pais)}</td><td>${E(e.segmento||'')}</td>
         <td>${prospFornecedores(e).filter(f=>!buscaF.exp || buscaCasa(f, buscaF.exp)).map(f=>`<span class="pr-tag">${E(f)}</span>`).join(' ')}</td>
@@ -16639,7 +16650,7 @@ function buscaTabelas(){
     cab: ['Empresa', 'Já é cliente?', 'País', 'Cidade', 'Segmento', 'Fornecedor citado', 'Registro', 'Período', 'Último registro'],
     tipos: ['b','d','t','t','t','t','t','d','d'],
     larg: [32,10,12,14,18,26,60,11,12],
-    linhas: emps.map(e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp)); const v = evs[0] || (e.evidencias||[])[0] || {}; const pr = prospPeriodo(e);
+    linhas: emps.map(e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp)); const v = buscaEvRecente(evs) || buscaEvRecente(e.evidencias) || {}; const pr = prospPeriodo(e);
       return [e.empresa||'', ehCli(e.empresa)?'Sim':'Não', e.pais||'', e.cidade||'', e.segmento||'', prospFornecedores(e).filter(f=>!buscaF.exp || buscaCasa(f, buscaF.exp)).join(', '),
         (v.descricao||'') + (v.periodo ? ` (${v.periodo})` : ''), pr.txt||'', pr.ult||'']; })
   };
