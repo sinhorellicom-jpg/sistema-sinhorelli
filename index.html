@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261112-181237';</script>
+<script>window.VERSAO_SISTEMA = '20261113-113315';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -16476,6 +16476,7 @@ function embRender(){
 
 /* ===== BUSCA POR IMPORTADOR / EXPORTADOR — para quem os nossos fornecedores vendem (e de quem um cliente compra) ===== */
 const buscaF = { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false };
+let buscaExportDados = null;   // o que está na tela agora (para baixar em Excel / PDF)
 // apelidos dos nossos fornecedores → como o nome aparece nos registros
 const BUSCA_APELIDOS = {
   'JBS': /\bJBS\b|FRIBOI|CSA-?N\b/, 'JBS BR': /\bJBS\b(?!.*ARGENTIN)|JBS\s+COUROS|FRIBOI/, 'JBS AR': /JBS.*ARGENTIN|CSA-?N\b/, 'JBS US': /JBS.*(USA|US\b)/, 'JBS UR': /JBS.*URUGUA/,
@@ -16511,6 +16512,7 @@ function buscaRender(){
   const ncmsB = [...new Set(embs.map(x=>prospNcm4(x.ncm)).concat(prospNcms().map(x=>prospNcm4(x.ncm))).filter(n=>n && n.length===4))].sort();
   const anosB = [...new Set(embs.map(x=>String(x.data||'').slice(0,4)).filter(a=>/^\d{4}$/.test(a)))].sort().reverse();
   let corpo = '';
+  buscaExportDados = null;
   if(temBusca){
     const lista = embs.filter(x=>buscaCasa(x.exportador, buscaF.exp) && buscaCasa(x.importador, buscaF.imp) && filtroExtra(x.pais, [x.ncm], x.data, x.importador));
     // agrupa: buscando exportador → por importador; buscando só importador → por exportador
@@ -16546,6 +16548,7 @@ function buscaRender(){
       return `<tr><td><b>${E(e.empresa)}</b>${cli?' <span class="pr-cli">✓ cliente</span>':''}${e.novo?' <span class="pr-novo">novo</span>':''}</td><td>${E(e.pais)}</td><td>${E(e.segmento||'')}</td>
         <td>${prospFornecedores(e).filter(f=>!buscaF.exp || buscaCasa(f, buscaF.exp)).map(f=>`<span class="pr-tag">${E(f)}</span>`).join(' ')}</td>
         <td class="an-panel-sub">${E(v.descricao||'')}${v.periodo?` <b>(${E(v.periodo)})</b>`:''}</td><td style="white-space:nowrap;">${(()=>{ const pr = prospPeriodo(e); return pr.txt ? E(pr.txt) + (pr.ult?`<div class="an-panel-sub">último: ${E(pr.ult)}</div>`:'') : '<span class="an-panel-sub">sem data</span>'; })()}</td></tr>`; };
+    buscaExportDados = { porImp, grupos, lista, emps, ehCli };
     const tituloG = porImp ? `🏭 Compradores${buscaF.exp?` de <b>${E(buscaF.exp)}</b>`:''} nos embarques` : `🚢 Fornecedores de <b>${E(buscaF.imp)}</b> nos embarques`;
     corpo = `
       <div class="busca-sec">${tituloG} <span class="an-panel-sub">${grupos.length} · ${lista.length} embarque(s) de 2026 · clique numa linha para ver os embarques</span></div>
@@ -16566,7 +16569,7 @@ function buscaRender(){
       <select id="buscaAno"><option value="">Qualquer ano</option>${anosB.map(v=>`<option ${v===buscaF.ano?'selected':''}>${E(v)}</option>`).join('')}</select>
       <label><input type="checkbox" id="buscaSoCli" ${buscaF.soCli?'checked':''}> só clientes</label>
       <label><input type="checkbox" id="buscaSemCli" ${buscaF.semCli?'checked':''}> só quem ainda não é cliente</label>
-      ${temBusca?'<button class="btn btn-ghost btn-sm" id="buscaLimpar">Limpar</button>':''}
+      ${temBusca?'<button class="btn btn-ghost btn-sm" id="buscaLimpar">Limpar</button><button class="btn btn-outline btn-sm" id="buscaXls" title="Baixar o resultado desta pesquisa em Excel (folha em paisagem)">⬇ Excel</button><button class="btn btn-outline btn-sm" id="buscaPdf" title="Baixar o resultado desta pesquisa em PDF (folha em paisagem)">⬇ PDF</button>':''}
       <datalist id="buscaExpL">${nossos.concat(sugExp).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
       <datalist id="buscaImpL">${sugImp.slice(0,800).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
     </div>
@@ -16575,10 +16578,185 @@ function buscaRender(){
   const ir = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaRender(); };
   box.querySelector('#buscaIr').onclick = ir;
   box.querySelectorAll('#buscaExp,#buscaImp').forEach(i=>i.addEventListener('keydown', ev=>{ if(ev.key==='Enter') ir(); }));
+  const bxl = box.querySelector('#buscaXls'); if(bxl) bxl.onclick = ()=>buscaBaixarExcel();
+  const bpd = box.querySelector('#buscaPdf'); if(bpd) bpd.onclick = ()=>buscaBaixarPdf();
   const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ const tinhaPais = !!buscaF.pais; Object.assign(buscaF, { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false }); if(tinhaPais) prPaisMudou(''); else buscaRender(); };
   [['buscaPais','pais'],['buscaNcm','ncm'],['buscaAno','ano'],['buscaSoCli','soCli'],['buscaSemCli','semCli']].forEach(([id,k])=>{ const i = box.querySelector('#'+id); if(i) i.onchange = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); if(k==='pais'){ prPaisMudou(i.value); return; } buscaF[k] = i.type==='checkbox' ? i.checked : i.value; if(k==='soCli' && i.checked) buscaF.semCli = false; if(k==='semCli' && i.checked) buscaF.soCli = false; buscaRender(); }; });
   box.querySelectorAll('[data-busca-exp]').forEach(b=>b.onclick = ()=>{ buscaF.exp = buscaF.exp===b.dataset.buscaExp ? '' : b.dataset.buscaExp; buscaF.imp = ''; buscaRender(); });
   box.querySelectorAll('[data-busca-ir]').forEach(tr=>tr.onclick = ()=>{ embF.busca = tr.dataset.buscaIr; embF.limite = 200; embRender(); const eb = document.getElementById('prEmbBox'); if(eb) eb.scrollIntoView({behavior:'smooth', block:'start'}); });
+}
+
+// ----- Baixar o resultado da pesquisa por importador/exportador (Excel e PDF, folha em paisagem) -----
+function buscaDataBR(d){ d = String(d||''); return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d.split('-').reverse().join('/') : (/^\d{4}-\d{2}$/.test(d) ? d.slice(5)+'/'+d.slice(0,4) : d); }
+function buscaTabelas(){
+  const X = buscaExportDados; if(!X) return null;
+  const { porImp, grupos, lista, emps, ehCli } = X;
+  const r2 = v => Math.round(v*100)/100;
+  const pe2 = (typeof EMB_PE2!=='undefined' && EMB_PE2>0) ? EMB_PE2 : 0.09290304;
+  const quem = buscaF.exp || buscaF.imp || 'pesquisa';
+  const titulo = porImp ? (buscaF.exp ? `Compradores de ${buscaF.exp}` : 'Compradores nos embarques') : `Fornecedores de ${buscaF.imp}`;
+  const filtros = [
+    ['Exportador / fornecedor', buscaF.exp || 'todos'], ['Importador / comprador', buscaF.imp || 'todos'],
+    ['País', buscaF.pais || 'todos'], ['NCM', buscaF.ncm || 'todas'], ['Ano', buscaF.ano || 'qualquer'],
+  ].concat(buscaF.soCli ? [['Mostrando', 'só clientes']] : []).concat(buscaF.semCli ? [['Mostrando', 'só quem ainda não é cliente']] : []);
+  const valorTot = lista.reduce((s,x)=>s + (+x.valor>0 ? +x.valor : 0), 0);
+  const resumo = [
+    [porImp ? 'Importadores' : 'Exportadores', grupos.length], ['Embarques de 2026', lista.length],
+    ['Valor total (US$)', r2(valorTot)], ['Empresas da base', emps.length]];
+  // 1) um resumo por importador (ou por exportador)
+  const t1 = {
+    nome: porImp ? 'Compradores' : 'Fornecedores',
+    titulo: porImp ? 'Resumo por importador (embarques de 2026)' : 'Resumo por fornecedor (embarques de 2026)',
+    cab: [porImp?'Importador':'Exportador', 'Já é cliente?', 'País', 'Nº de embarques', 'Último embarque', 'NCMs', 'Valor total (US$)', 'Preço médio US$/kg', 'Preço médio US$/m²', 'Preço médio US$/pé²', 'Outro preço médio', porImp?'Fornecedor(es)':'Comprador(es)'],
+    tipos: ['b','d','t','i','d','t','n','n','n','n','t','t'],
+    larg: [34,11,13,11,13,16,15,13,13,13,16,40],
+    linhas: grupos.map(r=>{
+      const kg = r.qb.kg>0 ? r2(r.vb.kg/r.qb.kg) : null, m2 = r.qb['m²']>0 ? r.vb['m²']/r.qb['m²'] : null;
+      const outros = Object.keys(r.qb).filter(p=>p!=='kg' && p!=='m²' && r.qb[p]>0).map(p=>`US$ ${fmt(r.vb[p]/r.qb[p])}/${p||'un.'}`).join(' · ');
+      return [r.nome, porImp ? (ehCli(r.nome)?'Sim':'Não') : '', [...r.pais].join(', '), r.n, buscaDataBR(r.ult), [...r.ncms].join(', '), r.v>0 ? r2(r.v) : null,
+        kg, m2!==null ? r2(m2) : null, m2!==null ? r2(m2*pe2) : null, outros, [...r.outros].filter(Boolean).join(' · ')];
+    })
+  };
+  // 2) cada embarque, um por linha
+  const embOrd = lista.slice().sort((a,b)=>String(b.data||'').localeCompare(String(a.data||'')));
+  const t2 = {
+    nome: 'Embarques', titulo: 'Embarques um a um (do mais novo para o mais antigo)',
+    cab: ['Data', 'Importador', 'Já é cliente?', 'País', 'Exportador / fornecedor', 'Origem', 'NCM', 'Produto', 'Quantidade', 'Unidade', 'Valor (US$)', 'Tipo do valor', 'Preço unitário (US$)', 'Por', 'Fonte'],
+    tipos: ['d','b','d','t','t','t','d','t','n','d','n','d','n','d','t'],
+    larg: [11,28,10,12,26,10,11,30,11,11,12,11,12,6,34],
+    linhas: embOrd.map(x=>{ const p = embPreco(x);
+      return [buscaDataBR(x.data), x.importador||'', ehCli(x.importador)?'Sim':'Não', x.pais||'', x.exportador||'', x.origem||'', prospFmtNcm(x.ncm||''), x.produto||'',
+        +x.quantidade>0 ? +x.quantidade : null, x.unidade||'', +x.valor>0 ? +x.valor : null, x.tipo_valor||'', p ? r2(p.base) : null, p ? (p.por||'un.') : '', x.fonte||'']; })
+  };
+  // 3) empresas da base
+  const t3 = {
+    nome: 'Empresas da base', titulo: 'Empresas da base' + (buscaF.exp ? ` que compram de ${buscaF.exp}` : '') + ' (registros de qualquer período)',
+    cab: ['Empresa', 'Já é cliente?', 'País', 'Cidade', 'Segmento', 'Fornecedor citado', 'Registro', 'Período', 'Último registro'],
+    tipos: ['b','d','t','t','t','t','t','d','d'],
+    larg: [32,10,12,14,18,26,60,11,12],
+    linhas: emps.map(e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp)); const v = evs[0] || (e.evidencias||[])[0] || {}; const pr = prospPeriodo(e);
+      return [e.empresa||'', ehCli(e.empresa)?'Sim':'Não', e.pais||'', e.cidade||'', e.segmento||'', prospFornecedores(e).filter(f=>!buscaF.exp || buscaCasa(f, buscaF.exp)).join(', '),
+        (v.descricao||'') + (v.periodo ? ` (${v.periodo})` : ''), pr.txt||'', pr.ult||'']; })
+  };
+  const hoje = new Date();
+  const arq = ('PESQUISA_' + String(quem).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_|_$/g,'').toUpperCase() + '_' + hoje.toISOString().slice(0,10));
+  return { titulo, filtros, resumo, tabs:[t1,t2,t3], arq, geradoEm: hoje.toLocaleDateString('pt-BR') + ' ' + hoje.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) };
+}
+// estilos do Excel (cabeçalho azul, bordas, linhas alternadas, números com 2 casas) + folha em paisagem ajustada à largura
+const BUSCA_XLSX_ESTILOS = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+  + '<numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0.00"/></numFmts>'
+  + '<fonts count="5"><font><sz val="10"/><color rgb="FF1B2430"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="10"/><color rgb="FF1B2430"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="15"/><color rgb="FF1B365D"/><name val="Calibri"/><family val="2"/></font><font><sz val="10"/><color rgb="FF4A5568"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="10"/><color rgb="FFFFFFFF"/><name val="Calibri"/><family val="2"/></font></fonts>'
+  + '<fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF1B365D"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFEEF2F7"/><bgColor indexed="64"/></patternFill></fill></fills>'
+  + '<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FFC9D3E0"/></left><right style="thin"><color rgb="FFC9D3E0"/></right><top style="thin"><color rgb="FFC9D3E0"/></top><bottom style="thin"><color rgb="FFC9D3E0"/></bottom><diagonal/></border></borders>'
+  + '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'
+  + (()=>{ const xf = ['<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>',
+      '<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>',
+      '<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0" applyFont="1"/>',
+      '<xf numFmtId="0" fontId="4" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'];
+    [0,3].forEach(f=>{ const a = ` fillId="${f}" borderId="1" xfId="0" applyFill="1" applyBorder="1" applyAlignment="1"`;
+      xf.push(`<xf numFmtId="0" fontId="0"${a}><alignment vertical="top" wrapText="1"/></xf>`);
+      xf.push(`<xf numFmtId="0" fontId="1"${a} applyFont="1"><alignment vertical="top" wrapText="1"/></xf>`);
+      xf.push(`<xf numFmtId="3" fontId="0"${a} applyNumberFormat="1"><alignment horizontal="center" vertical="top"/></xf>`);
+      xf.push(`<xf numFmtId="164" fontId="0"${a} applyNumberFormat="1"><alignment vertical="top"/></xf>`);
+      xf.push(`<xf numFmtId="0" fontId="0"${a}><alignment horizontal="center" vertical="top" wrapText="1"/></xf>`); });
+    return `<cellXfs count="${xf.length}">${xf.join('')}</cellXfs>`; })()
+  + '<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles><dxfs count="0"/><tableStyles count="0"/></styleSheet>';
+function buscaBaixarExcel(){
+  if(typeof XLSX==='undefined'){ toast('Biblioteca do Excel não carregou (sem internet?).'); return; }
+  const T = buscaTabelas(); if(!T){ toast('Faça uma pesquisa primeiro.'); return; }
+  const CAB = 5;   // linha do cabeçalho das colunas
+  const wb = XLSX.utils.book_new(); wb.Workbook = { Names: [] };
+  const specs = [];
+  T.tabs.forEach((t, i)=>{
+    const ncol = t.cab.length;
+    const aoa = [
+      [`${T.titulo} — ${t.titulo}`],
+      [T.filtros.map(f=>f[0]+': '+f[1]).join('   ·   ')],
+      [T.resumo.map(r=>r[0]+': '+(typeof r[1]==='number' && r[0].indexOf('US$')>=0 ? fmt(r[1]) : r[1])).join('   ·   ') + `   ·   Gerado em ${T.geradoEm}`],
+      [],
+      t.cab
+    ].concat(t.linhas.length ? t.linhas.map(l=>l.map(v=>v===null ? '' : v)) : [['(nenhum registro com esses filtros)']]);
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    ws['!cols'] = t.larg.map(w=>({ wch:w }));
+    ws['!rows'] = [{ hpt:24 }, { hpt:16 }, { hpt:16 }, { hpt:6 }, { hpt:30 }];
+    ws['!merges'] = [0,1,2].map(r=>({ s:{r, c:0}, e:{r, c:ncol-1} }));
+    ws['!margins'] = { left:0.4, right:0.4, top:0.5, bottom:0.6, header:0.3, footer:0.3 };
+    if(t.linhas.length) ws['!autofilter'] = { ref: XLSX.utils.encode_range({ s:{r:CAB-1, c:0}, e:{r:CAB-1+t.linhas.length, c:ncol-1} }) };
+    const nome = t.nome.slice(0,31);
+    XLSX.utils.book_append_sheet(wb, ws, nome);
+    wb.Workbook.Names.push({ Name:'_xlnm.Print_Titles', Sheet:i, Ref:`'${nome}'!$${CAB}:$${CAB}` });
+    specs.push({ tipos:t.tipos, temLinhas: t.linhas.length>0 });
+  });
+  let bytes = XLSX.write(wb, { type:'array', bookType:'xlsx' });
+  try{ bytes = buscaXlsxEstilizar(bytes, specs, CAB); }catch(e){ console.warn('estilo do Excel', e); }
+  const blob = new Blob([bytes], { type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = T.arq + '.xlsx';
+  document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  toast('⬇ Excel baixado: 3 abas (resumo, embarques e empresas), folha em paisagem.');
+}
+function buscaXlsxEstilizar(bytes, specs, CAB){
+  const CFB = XLSX.CFB; const zip = CFB.read(new Uint8Array(bytes), { type:'array' });
+  const ler = p => { const f = CFB.find(zip, '/'+p); return f ? new TextDecoder().decode(f.content) : null; };
+  const gravar = (p, s) => { const f = CFB.find(zip, '/'+p); f.content = new TextEncoder().encode(s); f.size = f.content.length; };
+  if(ler('xl/styles.xml')===null) throw new Error('sem styles.xml');
+  gravar('xl/styles.xml', BUSCA_XLSX_ESTILOS);
+  const TIPO = { t:0, b:1, i:2, n:3, d:4 };
+  specs.forEach((sp, i)=>{
+    const p = `xl/worksheets/sheet${i+1}.xml`; let x = ler(p); if(x===null) return;
+    x = x.replace(/<c r="([A-Z]+)(\d+)"([^>]*?)(\/?)>/g, (m, col, row, attrs, fim)=>{
+      row = +row; attrs = attrs.replace(/\s+s="\d+"/, '');
+      let s = 0;
+      if(row===1) s = 1; else if(row===2 || row===3) s = 2; else if(row===CAB) s = 3;
+      else if(row>CAB){ const c = XLSX.utils.decode_col(col); const tp = sp.temLinhas ? (TIPO[sp.tipos[c]] ?? 0) : 0; s = 4 + ((row-CAB-1)%2 ? 5 : 0) + tp; }
+      return `<c r="${col}${row}" s="${s}"${attrs}${fim}>`; });
+    x = x.replace(/(<worksheet[^>]*>)/, '$1<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>');
+    x = x.replace(/<sheetView workbookViewId="0"\s*\/>/, `<sheetView workbookViewId="0" showGridLines="0"><pane ySplit="${CAB}" topLeftCell="A${CAB+1}" activePane="bottomLeft" state="frozen"/></sheetView>`);
+    x = x.replace(/(<pageMargins[^>]*\/>)/, '$1<pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/><headerFooter><oddFooter>&amp;LSinhorelli — Prospecção&amp;RPágina &amp;P de &amp;N</oddFooter></headerFooter>');
+    gravar(p, x);
+  });
+  return CFB.write(zip, { type:'array', fileType:'zip' });
+}
+function buscaBaixarPdf(){
+  const T = buscaTabelas(); if(!T){ toast('Faça uma pesquisa primeiro.'); return; }
+  const E = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const cel = (v, tp) => v===null || v==='' ? '<td class="vz">—</td>' : tp==='n' ? `<td class="num">${E(fmt(v))}</td>` : tp==='i' ? `<td class="cen">${E(v)}</td>` : tp==='d' ? `<td class="cen">${E(v)}</td>` : tp==='b' ? `<td><b>${E(v)}</b></td>` : `<td>${E(v)}</td>`;
+  // no PDF a coluna "Fonte" (endereço longo) fica de fora: está no Excel
+  const sec = t => { const tira = t.cab.indexOf('Fonte'); const cols = t.cab.map((c,i)=>i).filter(i=>i!==tira);
+    const larg = cols.reduce((s,i)=>s+t.larg[i], 0);
+    return `<h2>${E(t.titulo)} <span>${t.linhas.length} linha(s)</span></h2>` + (t.linhas.length
+      ? `<table><colgroup>${cols.map(i=>`<col style="width:${(t.larg[i]/larg*100).toFixed(1)}%">`).join('')}</colgroup><thead><tr>${cols.map(i=>`<th>${E(t.cab[i])}</th>`).join('')}</tr></thead><tbody>${t.linhas.map(l=>`<tr>${cols.map(i=>cel(l[i], t.tipos[i])).join('')}</tr>`).join('')}</tbody></table>`
+      : '<p class="vazio">Nenhum registro com esses filtros.</p>'); };
+  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>${E(T.arq)}</title>
+  <style>
+    @page{ size:A4 landscape; margin:10mm 10mm 12mm; }
+    *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    body{font-family:Arial,Helvetica,sans-serif;color:#1B2430;font-size:9px;margin:0;}
+    .topo{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #1B365D;padding-bottom:5px;margin-bottom:7px;}
+    h1{font-size:16px;margin:0;color:#1B365D;} .topo .dt{color:#5B6575;font-size:9px;text-align:right;}
+    .filtros{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0 0 7px;font-size:9.5px;} .filtros b{color:#1B365D;}
+    .kpis{display:flex;gap:8px;margin:0 0 10px;} .kpi{flex:1;border:1px solid #C9D3E0;border-radius:5px;padding:5px 8px;background:#F5F7FB;}
+    .kpi div{font-size:8px;color:#5B6575;text-transform:uppercase;letter-spacing:.04em;} .kpi b{font-size:14px;color:#1B365D;}
+    h2{font-size:11.5px;color:#1B365D;margin:12px 0 4px;} h2 span{font-weight:400;color:#5B6575;font-size:9px;}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;}
+    th{background:#1B365D;color:#fff;text-align:center;padding:4px 4px;font-size:8.5px;vertical-align:middle;}
+    td{border:1px solid #D5DCE6;padding:3px 4px;vertical-align:top;line-height:1.3;word-wrap:break-word;overflow-wrap:break-word;}
+    tbody tr:nth-child(even) td{background:#F1F4F9;}
+    tr{page-break-inside:avoid;} thead{display:table-header-group;}
+    .num{text-align:right;white-space:nowrap;} .cen{text-align:center;} .vz{text-align:center;color:#9AA4B2;}
+    .vazio{color:#5B6575;font-style:italic;}
+    .nota{margin-top:10px;color:#5B6575;font-size:8px;}
+  </style></head><body>
+    <div class="topo"><h1>${E(T.titulo)}</h1><div class="dt">Sinhorelli — Prospecção<br>Gerado em ${E(T.geradoEm)}</div></div>
+    <div class="filtros">${T.filtros.map(f=>`<span><b>${E(f[0])}:</b> ${E(f[1])}</span>`).join('')}</div>
+    <div class="kpis">${T.resumo.map(r=>`<div class="kpi"><div>${E(r[0])}</div><b>${E(typeof r[1]==='number' && r[0].indexOf('US$')>=0 ? fmt(r[1]) : r[1])}</b></div>`).join('')}</div>
+    ${T.tabs.map(sec).join('')}
+    <div class="nota">Preço médio = soma dos valores ÷ soma das quantidades (só embarques que trazem quantidade e valor). Valores em US$ como aparecem na fonte (FOB, CIF ou não informado). As fontes de cada embarque estão no Excel.</div>
+    <script>window.addEventListener('load', function(){ setTimeout(function(){ window.focus(); window.print(); }, 250); });<\/script>
+  </body></html>`;
+  const w = window.open('', '_blank');
+  if(!w){ toast('O navegador bloqueou a janela do PDF. Libere pop-ups para o sistema e tente de novo.'); return; }
+  w.document.open(); w.document.write(html); w.document.close();
+  toast('Na janela de impressão, escolha "Salvar como PDF" (a folha já vem em paisagem).');
 }
 
 /* ===== CLIENTES — cadastro com as instruções de embarque e documentação (formulário) + PDF ===== */
