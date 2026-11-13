@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261113-195240';</script>
+<script>window.VERSAO_SISTEMA = '20261113-195823';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -8982,6 +8982,135 @@ async function oferecerMateriaisDaInvoice(file, avisar){
   // invoice com 2+ pedidos e nenhum bate com o da ficha: espera a pessoa marcar qual é
   if(!temMat && (!pedidosInv.length || pedSel.length)) root.querySelector('#invOk').click();
 }
+/* ---- PACKING LIST (JBS AR: abas "packing en ft2" / "packing en DM2") → materiais do processo ----
+   Cada linha do packing tem o produto, a área (FT2) e o contrato/pedido (coluna "PO", ex.: "OMF #005-2026").
+   A invoice só diz quais contratos vão no embarque; a quantidade exata de cada contrato está aqui. */
+function packingLer(wb){
+  const capN = x => String(x==null?'':x).toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim();
+  const num = v => { if(typeof v==='number') return v; const s = String(v==null?'':v).trim(); if(!s || /#N\/A/i.test(s)) return 0; const n = contratoNum(s); return isNaN(n) ? 0 : n; };
+  const opcoes = [];
+  wb.SheetNames.forEach(nm=>{
+    const ws = wb.Sheets[nm]; if(!ws) return;
+    // só as primeiras 30 colunas (a planilha da JBS tem colunas auxiliares lá no fim)
+    const rg = ws['!ref'] ? XLSX.utils.decode_range(ws['!ref']) : null; if(!rg) return;
+    rg.e.c = Math.min(rg.e.c, 30);
+    const L = XLSX.utils.sheet_to_json(ws, { header:1, raw:true, defval:null, range: rg });
+    const iCab = L.findIndex(r=>(r||[]).some(c=>capN(c)==='PRODUCT' || capN(c)==='PRODUCTO') && (r||[]).some(c=>/AREA\s*TOTAL|^AREA$|QUANTITY|CANTIDAD/.test(capN(c))));
+    if(iCab<0) return;
+    const cab = L[iCab].map(capN);
+    const col = re => cab.findIndex(c=>re.test(c));
+    const iProd = col(/^PRODUCTO?$/), iArea = col(/AREA\s*TOTAL/), iQtd = col(/^QUANTITY$|^CANTIDAD$|^PIECES$|^PIEZAS$/), iPO = col(/^PO$|^P\.O\.?$|^ORDER$|^CONTRATO$|^CONTRACT$/), iPal = col(/PALLET/);
+    if(iProd<0 || (iArea<0 && iQtd<0)) return;
+    // unidade da área: "( FT2 )" / "( DM2 )" logo acima ou abaixo do cabeçalho, ou no nome da aba
+    let un = '';
+    for(let i=Math.max(0,iCab-3); i<=Math.min(L.length-1, iCab+3) && !un; i++){ const t = capN((L[i]||[])[iArea]); const m = t.match(/\b(FT2|SQFT|DM2|M2)\b/); if(m) un = m[1]; }
+    if(!un){ const m = capN(nm).match(/\b(FT2|SQFT|DM2|M2)\b/); if(m) un = m[1]; }
+    if(un==='SQFT') un = 'FT2';
+    const linhas = []; let pallet = null;
+    for(let i=iCab+1; i<L.length; i++){
+      const r = L[i]||[];
+      if(iPal>=0 && r[iPal]!=null && String(r[iPal]).trim()!=='') pallet = String(r[iPal]).trim();
+      const prod = String(r[iProd]==null?'':r[iProd]).replace(/\s+/g,' ').trim();
+      if(!prod || !/[A-Za-z]/.test(prod) || /#N\/A|^TOTAL/i.test(prod)) continue;
+      const area = iArea>=0 ? num(r[iArea]) : 0, pcs = iQtd>=0 ? num(r[iQtd]) : 0;
+      if(!(area>0) && !(pcs>0)) continue;
+      const po = iPO>=0 ? String(r[iPO]==null?'':r[iPO]).replace(/\s+/g,' ').trim() : '';
+      linhas.push({ produto:prod, area, pcs, po: /#N\/A/i.test(po) ? '' : po, pallet });
+    }
+    if(linhas.length) opcoes.push({ aba:nm, un, linhas });
+  });
+  if(!opcoes.length) return null;
+  // a invoice da JBS AR fatura em pés² (FT2): prefere essa aba
+  return opcoes.find(o=>o.un==='FT2') || opcoes[0];
+}
+async function importarPackingNaFicha(anexar){
+  if(!editMode){ toast('Digite a senha de edição pra importar o packing list.'); openEditUnlockModal(); return; }
+  if(typeof XLSX==='undefined'){ toast('A leitura de planilhas ainda não carregou; tente de novo em alguns segundos.'); return; }
+  const files = await escolherArquivos(false); const file = files[0]; if(!file) return;
+  let pk = null;
+  try{ pk = packingLer(await lerArquivoCapa(file)); }catch(e){ console.warn('packing', e); }
+  if(!pk){ toast('Não encontrei a tabela do packing list (colunas "Product", "Area Total" e "PO") em ' + file.name + '.'); return; }
+  try{ if(anexar) await anexar(file, true); }catch(e){ console.warn('anexar packing', e); }
+  const forn = String(draft.fornecedor||'').trim() || fornecedorPeloTexto(pk.linhas.map(l=>l.produto).join(' ')) || 'JBS AR';
+  const usaArea = pk.linhas.some(l=>l.area>0);
+  const unTxt = usaArea ? (pk.un || 'área') : 'peças';
+  const qtdDe = l => usaArea ? l.area : l.pcs;
+  // junta por produto + contrato (PO)
+  const grupos = []; const gi = {};
+  pk.linhas.forEach(l=>{
+    const nome = nomeMaterialFornecedor(l.produto, forn);
+    const k = capaNorm(nome) + '|' + String(l.po).toUpperCase();
+    let g = gi[k]; if(!g){ g = gi[k] = { nome, nomeDoc:l.produto, po:l.po, q:0, pcs:0, pallets:new Set() }; grupos.push(g); }
+    g.q += qtdDe(l); g.pcs += l.pcs; if(l.pallet) g.pallets.add(l.pallet);
+  });
+  const pos = []; grupos.forEach(g=>{ if(g.po && !pos.some(p=>p.toUpperCase()===g.po.toUpperCase())) pos.push(g.po); });
+  // contrato(s) deste processo: o que bate com o Pedido ou o Contrato da ficha
+  let poSel = pos.filter(p=>refBatePedido(p, draft.pedido) || refBatePedido(p, draft.contrato));
+  if(!poSel.length) poSel = pos.length===1 ? pos.slice() : [];
+  const semPO = grupos.some(g=>!g.po);
+  // preço / custo / classe dos materiais que já estão na ficha (vindos da invoice ou digitados)
+  const atuais = (draft.materiais||[]).filter(m=>m && (m.nome||m.material));
+  const chaveNome = x => capaNorm(nomeMaterialFornecedor(x, forn)).replace(/[^A-Z0-9]/g,'');
+  const achar = g => { const k = chaveNome(g.nome); return atuais.find(m=>chaveNome(m.nome||m.material)===k)
+      || atuais.find(m=>{ const a = chaveNome(m.nome||m.material); return a.length>=10 && (k.startsWith(a) || a.startsWith(k)); }); };
+  const classeDe = (g, m) => (m && String(m.classe||'').trim()) || classeAutoFornecedor(g.nomeDoc, forn) || classeAutoFornecedor(g.nome, forn) || (activeDataset==='vendas' ? g.nome : '');
+  const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const sel = g => !pos.length || !g.po || poSel.some(p=>p.toUpperCase()===g.po.toUpperCase());
+  const doProc = () => grupos.filter(sel);
+  const parcial = () => pos.length>0 && poSel.length < pos.length;
+  const linhasHtml = () => grupos.map(g=>{ const m = achar(g); const pr = m && +m.precoLista>0 ? +m.precoLista : 0;
+    return `<tr style="${sel(g)?'':'opacity:.35;text-decoration:line-through;'}"><td style="font-family:'IBM Plex Mono',monospace;font-weight:600;white-space:nowrap;text-align:left;">${esc(classeDe(g,m))}</td><td style="text-align:left;">${esc(g.nome)}</td>
+      <td style="font-family:'IBM Plex Mono',monospace;white-space:nowrap;">${esc(g.po||'—')}</td><td class="num">${g.pallets.size||''}</td><td class="num">${g.pcs?fmtInt(g.pcs):''}</td><td class="num"><b>${fmt(g.q)}</b></td>
+      <td class="num">${pr?fmt(pr):'<span class="an-panel-sub">—</span>'}</td><td class="num">${pr?'USD '+fmt(g.q*pr):''}</td></tr>`; }).join('');
+  const rodapeHtml = () => { const L = doProc(); const q = L.reduce((s,g)=>s+g.q,0), pc = L.reduce((s,g)=>s+g.pcs,0);
+    const v = L.reduce((s,g)=>{ const m = achar(g); return s + (m && +m.precoLista>0 ? g.q*m.precoLista : 0); },0);
+    return `<tr><td></td><td class="mt-produto">Total${parcial()?' deste processo':''}</td><td></td><td></td><td class="num">${pc?fmtInt(pc):''}</td><td class="num"><b>${fmt(q)}</b></td><td></td><td class="num">${v?'USD '+fmt(v):''}</td></tr>`; };
+  const temMat = atuais.some(m=>m.quantidade);
+  const root = document.createElement('div'); root.className='overlay'; root.style.zIndex=99999;
+  root.innerHTML = `<div class="modal" style="max-width:920px;">
+    <div class="modal-head"><div><h2>📦 Packing list — ${esc(file.name)}</h2>
+      <div class="an-panel-sub">aba "${esc(pk.aba)}" · ${pk.linhas.length} linha(s) · quantidades em ${esc(unTxt)} · ${esc(forn)}</div></div></div>
+    <div class="modal-body">
+      <div style="overflow:auto;"><table class="mat-table" style="width:100%;"><thead><tr><th style="text-align:left;">Classe</th><th style="text-align:left;">Material</th><th style="text-align:left;">Contrato (PO)</th><th>Pallets</th><th>Peças</th><th>Quant. (${esc(unTxt)})</th><th>Preço unit.</th><th>Valor</th></tr></thead>
+        <tbody id="pkTbody">${linhasHtml()}</tbody><tfoot id="pkTfoot">${rodapeHtml()}</tfoot></table></div>
+      ${pos.length>1 ? `<div style="margin-top:10px;padding:10px 12px;border:2px solid var(--amber,#C98A0B);border-radius:10px;">
+          <div style="font-weight:700;margin-bottom:4px;">📑 Este packing tem ${pos.length} contratos — marque o(s) deste processo${(String(draft.pedido||'').trim()||String(draft.contrato||'').trim())?` (na ficha: <b>${esc([draft.contrato, draft.pedido].filter(x=>String(x||'').trim()).join(' · '))}</b>)`:''}</div>
+          ${pos.map(p=>{ const L = grupos.filter(g=>String(g.po).toUpperCase()===p.toUpperCase()); const q = L.reduce((s,g)=>s+g.q,0);
+            return `<label style="display:flex;gap:8px;align-items:baseline;padding:3px 0;"><input type="checkbox" data-pk-po="${esc(p)}" ${poSel.indexOf(p)>=0?'checked':''}> <b style="font-family:'IBM Plex Mono',monospace;min-width:150px;">${esc(p)}</b> <span>${L.length} material(is) · <b>${fmt(q)}</b> ${esc(unTxt)}</span></label>`; }).join('')}
+          <div id="pkAviso" style="margin-top:4px;font-weight:600;color:var(--amber,#C98A0B);"></div>
+        </div>` : ''}
+      ${semPO && pos.length ? '<div class="an-panel-sub" style="margin-top:6px;">Linhas sem contrato no packing entram sempre.</div>' : ''}
+      <div class="an-panel-sub" style="margin-top:8px;">O preço unitário, o custo e a classe vêm dos materiais que já estão na ficha (da invoice). Materiais iguais do mesmo contrato são somados numa linha só.</div>
+      ${temMat?`<div style="margin-top:10px;"><label><input type="radio" name="pkModo" value="sub" checked> Substituir os materiais que já estão na ficha</label> &nbsp; <label><input type="radio" name="pkModo" value="add"> Acrescentar aos existentes</label></div>`:''}
+    </div>
+    <div class="modal-foot"><button class="btn btn-outline" id="pkCancel">Só anexar</button><button class="btn btn-primary" id="pkOk">Preencher os materiais</button></div></div>`;
+  document.body.appendChild(root);
+  root.querySelector('#pkCancel').onclick = ()=>root.remove();
+  const atualizar = () => {
+    root.querySelector('#pkTbody').innerHTML = linhasHtml(); root.querySelector('#pkTfoot').innerHTML = rodapeHtml();
+    const av = root.querySelector('#pkAviso');
+    if(av) av.innerHTML = !poSel.length ? '⚠ Nenhum contrato da ficha aparece neste packing — marque qual(is) é(são) deste processo.'
+      : (parcial() ? `✓ Entram só as quantidades de ${poSel.map(esc).join(' + ')}. Frete e FOB da ficha continuam os da invoice inteira — confira.` : '');
+    root.querySelector('#pkOk').disabled = pos.length>1 && !poSel.length;
+  };
+  root.querySelectorAll('[data-pk-po]').forEach(cb=>cb.addEventListener('change', ()=>{ poSel = Array.from(root.querySelectorAll('[data-pk-po]')).filter(x=>x.checked).map(x=>x.dataset.pkPo); atualizar(); }));
+  atualizar();
+  root.querySelector('#pkOk').onclick = ()=>{
+    if(pos.length>1 && !poSel.length){ toast('Marque qual contrato do packing é deste processo.'); return; }
+    // um material por produto (somando os contratos marcados)
+    const porProd = []; const pi = {};
+    doProc().forEach(g=>{ const k = capaNorm(g.nome); let x = pi[k]; if(!x){ x = pi[k] = { g, q:0 }; porProd.push(x); } x.q += g.q; });
+    const materiais = porProd.map(({g, q})=>{ const m = achar(g) || {};
+      return { nome:g.nome, material:g.nome, classe:classeDe(g, achar(g)), espGsm:m.espGsm||'', containers:m.containers||'', quantidade:Math.round(q*100)/100, precoLista:+m.precoLista||0, custo:+m.custo||0 }; });
+    if(!String(draft.pedido||'').trim() && poSel.length===1 && pos.length>1) draft.pedido = poSel[0];
+    const modo = root.querySelector('input[name=pkModo]:checked');
+    const feito = aplicarCapaNoProcesso(draft, { campos: {}, historico:[], materiais }, { substituir: !modo || modo.value==='sub' });
+    root.remove(); renderModal();
+    try{ syncMaterialAndValorFromMateriais(); }catch(e){}
+    const semPreco = materiais.filter(m=>!(m.precoLista>0)).length;
+    toast(`📦 ${feito.materiais} material(is) do packing list${parcial()?` — só ${poSel.join(' + ')}`:''}.` + (semPreco ? ` ${semPreco} sem preço: digite o valor unitário.` : ''));
+  };
+}
 function lerArquivoCapa(file){
   return new Promise((res,rej)=>{ const r = new FileReader(); r.onload = ()=>{ try{ res(XLSX.read(new Uint8Array(r.result), {type:'array', cellDates:true})); }catch(e){ rej(e); } }; r.onerror = rej; r.readAsArrayBuffer(file); });
 }
@@ -9482,6 +9611,7 @@ function renderModal(){
           <button class="btn btn-primary btn-sm" id="capaMatBtn" title="Escolha a capa de processo (Excel): os produtos entram como materiais, com quantidade, preço lista e custo">📥 Importar capa de processo (Excel)</button>
           <button class="btn btn-primary btn-sm" id="lerDocMatBtn" title="Invoice ou contrato (PDF ou Excel): o arquivo fica anexado e os materiais são preenchidos">📄 Ler invoice / contrato</button>
           <input type="file" id="lerDocMatFile" multiple accept=".pdf,.xlsx,.xls,.xlsm" style="display:none;">
+          <button class="btn btn-primary btn-sm" id="packingMatBtn" title="Packing list (Excel) da JBS AR: quantidade exata de cada material por contrato (coluna PO). O arquivo fica anexado.">📦 Importar packing list</button>
           <span class="an-panel-sub">a capa preenche os materiais e os dados que estiverem vazios; você pode ajustar depois</span>
         </div>
 
@@ -10193,6 +10323,7 @@ function wireModalEvents(){
   });
   ligarAcoesAnexos();
 
+  const pkBtn = document.getElementById('packingMatBtn'); if(pkBtn) pkBtn.addEventListener('click', ()=>{ importarPackingNaFicha(anexarArquivo).catch(e=>{ console.warn('packing', e); toast('Falha ao importar o packing list: '+e); }); });
   const capaBtn = document.getElementById('capaMatBtn'); if(capaBtn) capaBtn.addEventListener('click', ()=>{ importarCapaNaFicha().catch(e=>toast('Falha ao importar capa: '+e)); });
   // invoice / contrato direto na tabela de materiais: anexa ao processo e preenche os materiais
   const lerDocBtn = document.getElementById('lerDocMatBtn'), lerDocFile = document.getElementById('lerDocMatFile');
