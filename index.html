@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261113-182429';</script>
+<script>window.VERSAO_SISTEMA = '20261113-195240';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -13973,7 +13973,8 @@ async function exportarTudo(){
     window.STORAGE_KEY, window.STORAGE_KEY_VENDAS,
     'notas_fiscais_v1', 'nf_fornecedores_v1', 'planner_notas_v1', 'despesas_v1',
     MATERIAL_CATALOG_KEY, VENDOR_CATALOG_KEY, CLIENT_CATALOG_KEY, 'totais_manuais_v1',
-    'fornecedor_comissao_v1', 'fornecedor_cliente_comissao_v1', 'fornecedor_notas_v1', 'despesas_planilha_v1', 'resumo_jbs_v1', 'clientes_cadastro_v1'
+    'fornecedor_comissao_v1', 'fornecedor_cliente_comissao_v1', 'fornecedor_notas_v1', 'despesas_planilha_v1', 'resumo_jbs_v1', 'clientes_cadastro_v1',
+    'numeracao_processos_v1', 'resumo_jbs_v1_ncms', 'resumo_jbs_v1_embarques', 'historico_alteracoes_v1'
   ];
   for(const k of chaves){
     if(!k) continue;
