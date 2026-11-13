@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261113-113315';</script>
+<script>window.VERSAO_SISTEMA = '20261113-164544';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -16551,6 +16551,11 @@ function buscaRender(){
     buscaExportDados = { porImp, grupos, lista, emps, ehCli };
     const tituloG = porImp ? `🏭 Compradores${buscaF.exp?` de <b>${E(buscaF.exp)}</b>`:''} nos embarques` : `🚢 Fornecedores de <b>${E(buscaF.imp)}</b> nos embarques`;
     corpo = `
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 10px;padding:8px 10px;border:1px solid rgba(120,160,255,.35);border-radius:8px;background:rgba(120,160,255,.08);">
+        <b>⬇ Baixar esta pesquisa</b> <span class="an-panel-sub">(compradores, embarques e empresas da base · folha em paisagem)</span>
+        <button class="btn btn-primary btn-sm" id="buscaXls" title="Baixar em Excel">📊 Excel</button>
+        <button class="btn btn-primary btn-sm" id="buscaPdf" title="Baixar em PDF">📄 PDF</button>
+      </div>
       <div class="busca-sec">${tituloG} <span class="an-panel-sub">${grupos.length} · ${lista.length} embarque(s) de 2026 · clique numa linha para ver os embarques</span></div>
       ${grupos.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>${porImp?'Importador':'Exportador'}</th><th>País</th><th>Embarques</th><th>Último</th><th>NCMs</th><th style="text-align:right">Valor total</th><th>Preço médio</th><th>${porImp?'Fornecedor(es)':'Comprador(es)'}</th></tr></thead><tbody>${grupos.map(linhaG).join('')}</tbody></table></div>`
         : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhum embarque de 2026 com essa busca ainda — a coleta diária vai acrescentando. Veja abaixo as empresas da base.</div>'}
@@ -16569,7 +16574,7 @@ function buscaRender(){
       <select id="buscaAno"><option value="">Qualquer ano</option>${anosB.map(v=>`<option ${v===buscaF.ano?'selected':''}>${E(v)}</option>`).join('')}</select>
       <label><input type="checkbox" id="buscaSoCli" ${buscaF.soCli?'checked':''}> só clientes</label>
       <label><input type="checkbox" id="buscaSemCli" ${buscaF.semCli?'checked':''}> só quem ainda não é cliente</label>
-      ${temBusca?'<button class="btn btn-ghost btn-sm" id="buscaLimpar">Limpar</button><button class="btn btn-outline btn-sm" id="buscaXls" title="Baixar o resultado desta pesquisa em Excel (folha em paisagem)">⬇ Excel</button><button class="btn btn-outline btn-sm" id="buscaPdf" title="Baixar o resultado desta pesquisa em PDF (folha em paisagem)">⬇ PDF</button>':''}
+      ${temBusca?'<button class="btn btn-ghost btn-sm" id="buscaLimpar">Limpar</button>':''}
       <datalist id="buscaExpL">${nossos.concat(sugExp).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
       <datalist id="buscaImpL">${sugImp.slice(0,800).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
     </div>
