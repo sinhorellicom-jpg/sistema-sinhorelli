@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261113-164618';</script>
+<script>window.VERSAO_SISTEMA = '20261113-182429';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -16489,13 +16489,26 @@ function buscaCasa(texto, q){
   if(ap) return ap.test(String(texto||'').toUpperCase());
   return prospNorm(q).split(' ').filter(Boolean).every(w=>t.indexOf(w)>=0);
 }
+const BUSCA_ANO_MIN = 2025;   // na lista de empresas da pesquisa só entram informações de 2025 em diante
 function buscaEvRecente(evs){   // a evidência com a data mais recente (para mostrar sempre a última informação)
+  return (evs||[]).slice().sort((a,b)=>buscaEvChave(b).localeCompare(buscaEvChave(a)))[0];
+}
+function buscaEvsRelevantes(e){   // evidências da empresa (só as do fornecedor pesquisado, quando há um)
+  const todas = e.evidencias||[];
+  return buscaF.exp ? todas.filter(v=>buscaCasa(v.fornecedor, buscaF.exp)) : todas;
+}
+function buscaPeriodoTxt(pr){   // período a partir de 2025 (o que é anterior não interessa aqui)
+  if(pr.max===null) return '';
+  const lo = Math.max(pr.min===null ? pr.max : pr.min, BUSCA_ANO_MIN);
+  return lo>=pr.max ? String(pr.max) : `${lo}–${pr.max}`;
+}
+function buscaEvChave(v){
   const chave = v => { const t = String(v&&v.periodo||'') + ' ' + String(v&&v.descricao||''); let k = '';
     (t.match(/\b(19[89]\d|20[0-3]\d)\b/g)||[]).forEach(y=>{ if(y > k.slice(0,4)) k = y; });
     let m; const re = /\b(\d{1,2})\/(\d{1,2})\/(20\d\d)\b|\b(20\d\d)-(\d{2})(?:-(\d{2}))?\b/g;
     while((m = re.exec(t))){ const iso = m[3] ? `${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}` : `${m[4]}-${m[5]}-${m[6]||'00'}`; if(iso > k) k = iso; }
     return k; };
-  return (evs||[]).slice().sort((a,b)=>chave(b).localeCompare(chave(a)))[0];
+  return chave(v);
 }
 function buscaRender(){
   const box = document.getElementById('prBuscaBox'); if(!box) return;
@@ -16549,8 +16562,9 @@ function buscaRender(){
       if(buscaF.exp && !prospFornecedores(e).some(f=>buscaCasa(f, buscaF.exp))) return false;
       if(!filtroExtra(e.pais, (e.ncms_provaveis||[]).concat((e.evidencias||[]).map(v=>v.ncm)), null, e.empresa)) return false;
       if(buscaF.ano){ const pr = prospPeriodo(e); if(pr.max===null || pr.max < +buscaF.ano || (pr.min!==null && pr.min > +buscaF.ano)) return false; }
+      const evR = buscaEvRecente(buscaEvsRelevantes(e)); if(!evR || buscaEvChave(evR).slice(0,4) < String(BUSCA_ANO_MIN)) return false;   // só informações de 2025 em diante
       return true; })
-      .map(e=>{ const pr = prospPeriodo(e); return [e, pr.ultima || (pr.max!==null ? String(pr.max) : '')]; })
+      .map(e=>[e, buscaEvChave(buscaEvRecente(buscaEvsRelevantes(e)))])
       .sort((a,b)=>b[1].localeCompare(a[1])).map(x=>x[0])   // registro mais recente primeiro
       .slice(0, 300);
     const linhaE = e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp));
@@ -16558,7 +16572,7 @@ function buscaRender(){
       const cli = ehCli(e.empresa);
       return `<tr><td><b>${E(e.empresa)}</b>${cli?' <span class="pr-cli">✓ cliente</span>':''}${e.novo?' <span class="pr-novo">novo</span>':''}</td><td>${E(e.pais)}</td><td>${E(e.segmento||'')}</td>
         <td>${prospFornecedores(e).filter(f=>!buscaF.exp || buscaCasa(f, buscaF.exp)).map(f=>`<span class="pr-tag">${E(f)}</span>`).join(' ')}</td>
-        <td class="an-panel-sub">${E(v.descricao||'')}${v.periodo?` <b>(${E(v.periodo)})</b>`:''}</td><td style="white-space:nowrap;">${(()=>{ const pr = prospPeriodo(e); return pr.txt ? E(pr.txt) + (pr.ult?`<div class="an-panel-sub">último: ${E(pr.ult)}</div>`:'') : '<span class="an-panel-sub">sem data</span>'; })()}</td></tr>`; };
+        <td class="an-panel-sub">${E(v.descricao||'')}${v.periodo?` <b>(${E(v.periodo)})</b>`:''}</td><td style="white-space:nowrap;">${(()=>{ const pr = prospPeriodo(e); return pr.txt ? E(buscaPeriodoTxt(pr)) + (pr.ult?`<div class="an-panel-sub">último: ${E(pr.ult)}</div>`:'') : '<span class="an-panel-sub">sem data</span>'; })()}</td></tr>`; };
     buscaExportDados = { porImp, grupos, lista, emps, ehCli };
     const tituloG = porImp ? `🏭 Compradores${buscaF.exp?` de <b>${E(buscaF.exp)}</b>`:''} nos embarques` : `🚢 Fornecedores de <b>${E(buscaF.imp)}</b> nos embarques`;
     corpo = `
@@ -16570,7 +16584,7 @@ function buscaRender(){
       <div class="busca-sec">${tituloG} <span class="an-panel-sub">${grupos.length} · ${lista.length} embarque(s) de 2026 · clique numa linha para ver os embarques</span></div>
       ${grupos.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>${porImp?'Importador':'Exportador'}</th><th>País</th><th>Embarques</th><th>Último</th><th>NCMs</th><th style="text-align:right">Valor total</th><th>Preço médio</th><th>${porImp?'Fornecedor(es)':'Comprador(es)'}</th></tr></thead><tbody>${grupos.map(linhaG).join('')}</tbody></table></div>`
         : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhum embarque de 2026 com essa busca ainda — a coleta diária vai acrescentando. Veja abaixo as empresas da base.</div>'}
-      <div class="busca-sec" style="margin-top:12px;">📋 Empresas da base ${buscaF.exp?`que compram de <b>${E(buscaF.exp)}</b>`:(buscaF.imp?`com esse nome`:`com esses filtros`)} <span class="an-panel-sub">${emps.length} · registros de qualquer período (o período está na última coluna)</span></div>
+      <div class="busca-sec" style="margin-top:12px;">📋 Empresas da base ${buscaF.exp?`que compram de <b>${E(buscaF.exp)}</b>`:(buscaF.imp?`com esse nome`:`com esses filtros`)} <span class="an-panel-sub">${emps.length} · só com informação de 2025 em diante (o período está na última coluna)</span></div>
       ${emps.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>Fornecedor citado</th><th>Registro</th><th>Período</th></tr></thead><tbody>${emps.map(linhaE).join('')}</tbody></table></div>`
         : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhuma empresa da base cita esse fornecedor.</div>'}`;
   }
@@ -16646,13 +16660,13 @@ function buscaTabelas(){
   };
   // 3) empresas da base
   const t3 = {
-    nome: 'Empresas da base', titulo: 'Empresas da base' + (buscaF.exp ? ` que compram de ${buscaF.exp}` : '') + ' (registros de qualquer período)',
+    nome: 'Empresas da base', titulo: 'Empresas da base' + (buscaF.exp ? ` que compram de ${buscaF.exp}` : '') + ' (informações de 2025 em diante)',
     cab: ['Empresa', 'Já é cliente?', 'País', 'Cidade', 'Segmento', 'Fornecedor citado', 'Registro', 'Período', 'Último registro'],
     tipos: ['b','d','t','t','t','t','t','d','d'],
     larg: [32,10,12,14,18,26,60,11,12],
     linhas: emps.map(e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp)); const v = buscaEvRecente(evs) || buscaEvRecente(e.evidencias) || {}; const pr = prospPeriodo(e);
       return [e.empresa||'', ehCli(e.empresa)?'Sim':'Não', e.pais||'', e.cidade||'', e.segmento||'', prospFornecedores(e).filter(f=>!buscaF.exp || buscaCasa(f, buscaF.exp)).join(', '),
-        (v.descricao||'') + (v.periodo ? ` (${v.periodo})` : ''), pr.txt||'', pr.ult||'']; })
+        (v.descricao||'') + (v.periodo ? ` (${v.periodo})` : ''), buscaPeriodoTxt(pr), pr.ult||'']; })
   };
   const hoje = new Date();
   const arq = ('PESQUISA_' + String(quem).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_|_$/g,'').toUpperCase() + '_' + hoje.toISOString().slice(0,10));
