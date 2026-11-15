@@ -1,0 +1,62 @@
+[
+ {
+  "data": "2026-07-20",
+  "importador": "INDUCALSA-INDUSTRIA NACIONAL DE CALZADO S.A.",
+  "pais": "EQUADOR",
+  "exportador": "NOVAPLAST S A",
+  "origem": "Colombia",
+  "ncm": "",
+  "produto": "Sem descrição/HS na fonte (fornecedor de compostos plásticos; peso) — registro de exportação colombiana (ImportGenius Colombia); Inducalsa é fabricante equatoriano (Cuenca)",
+  "quantidade": 12000,
+  "unidade": "kg",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/buyers/inducalsa-industria-nacional-de-calzado-s-a"
+ },
+ {
+  "data": "2026-04-27",
+  "importador": "INDUCALSA-INDUSTRIA NACIONAL DE CALZADO S.A.",
+  "pais": "EQUADOR",
+  "exportador": "PROQUINAL S.A.S",
+  "origem": "Colombia",
+  "ncm": "",
+  "produto": "Sem descrição/HS na fonte (fornecedor de laminados sintéticos; peso) — registro de exportação colombiana (ImportGenius Colombia); Inducalsa é fabricante equatoriano (Cuenca)",
+  "quantidade": 3784.65,
+  "unidade": "kg",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/buyers/inducalsa-industria-nacional-de-calzado-s-a"
+ },
+ {
+  "data": "2026-01-30",
+  "importador": "INDUCALSA-INDUSTRIA NACIONAL DE CALZADO S.A.",
+  "pais": "EQUADOR",
+  "exportador": "NOVAPLAST S A",
+  "origem": "Colombia",
+  "ncm": "",
+  "produto": "Sem descrição/HS na fonte (peso; registro 1 de 2 nesse período) — registro de exportação colombiana (ImportGenius Colombia); Inducalsa é fabricante equatoriano (Cuenca)",
+  "quantidade": 12000,
+  "unidade": "kg",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/buyers/inducalsa-industria-nacional-de-calzado-s-a"
+ },
+ {
+  "data": "2026-01-29",
+  "importador": "INDUCALSA-INDUSTRIA NACIONAL DE CALZADO S.A.",
+  "pais": "EQUADOR",
+  "exportador": "NOVAPLAST S A",
+  "origem": "Colombia",
+  "ncm": "",
+  "produto": "Sem descrição/HS na fonte (peso; registro 2 de 2 nesse período) — registro de exportação colombiana (ImportGenius Colombia); Inducalsa é fabricante equatoriano (Cuenca)",
+  "quantidade": 12000,
+  "unidade": "kg",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/buyers/inducalsa-industria-nacional-de-calzado-s-a"
+ }
+]
