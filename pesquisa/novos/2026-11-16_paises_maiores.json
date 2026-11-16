@@ -1,0 +1,625 @@
+[
+  {
+    "empresa": "ALAN AUSTIN DE MEXICO S.A. DE C.V.",
+    "nome_fantasia": null,
+    "pais": "MEXICO",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Malhas de trama (mesh) importadas da China",
+    "porte": null,
+    "ncms_provaveis": [
+      "6005.37"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Importação de malha 6005.37 (embarque)",
+        "ncm": "6005.37",
+        "origem": "China",
+        "fornecedor": "SHAOXING KEQIAO EAST SILK IMPORTS&EXPORT CO.LTD.",
+        "periodo": "22/06/2026",
+        "valor": "4895.85",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/buyer/10185451"
+      },
+      {
+        "descricao": "Importação de malha 6005.38 (embarque)",
+        "ncm": "6005.37",
+        "origem": "China",
+        "fornecedor": "SHAOXING KUANSAN TRADE CO LTD",
+        "periodo": "30/07/2026",
+        "valor": "4939.53",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/buyer/10185451"
+      }
+    ],
+    "fornecedores_conhecidos": "Shaoxing Keqiao East Silk Imp&Exp; Shaoxing Kuansan Trade",
+    "por_que_e_prospect": "Importa malha/mesh da China em 2026, mesma NCM do air mesh da Yantai.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.52wmb.com/buyer/10185451"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "TEKNOCOL S.A. DE C.V.",
+    "nome_fantasia": null,
+    "pais": "MEXICO",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "adesivos/químicos",
+    "produtos": "Adesivos (importa de Nan Pao Resins, fabricante taiwanês de adesivos para calçado)",
+    "porte": null,
+    "ncms_provaveis": [
+      "3506.91"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Importação de adesivos 3506.91 em 3 linhas (6400 + 2310.01 + 122)",
+        "ncm": "3506.91",
+        "origem": "Taiwan/China",
+        "fornecedor": "NAN PAO RESINS CHEMICAL CO LTD",
+        "periodo": "13/03/2026",
+        "valor": "8832.01",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/buyer/2024482"
+      }
+    ],
+    "fornecedores_conhecidos": "Nan Pao Resins Chemical",
+    "por_que_e_prospect": "Importa adesivos 3506.91 em 2026 — alvo para adesivos BIQ.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.52wmb.com/buyer/2024482"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "RUBBER TECH",
+    "nome_fantasia": null,
+    "pais": "MEXICO",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "solados",
+    "produtos": "Pré-polímero/isocianato (3909.50)",
+    "porte": null,
+    "ncms_provaveis": [
+      "3909.50",
+      "3907.99"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Compra de 3909.50 (2 linhas: 7287.90 + 5299.89)",
+        "ncm": "3909.50",
+        "origem": "México (fornecedor mexicano no registro)",
+        "fornecedor": "FIRS QUALITY CHEMICALS S.A. DE C.V.",
+        "periodo": "26/05/2026",
+        "valor": "12587.79",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/supplier/22487769"
+      }
+    ],
+    "fornecedores_conhecidos": "Firs Quality Chemicals S.A. de C.V.",
+    "por_que_e_prospect": "Compra sistema/isocianato PU (3909.50) em 2026 — alvo para Xuchuan/Miracll; razão social completa não confirmada.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.52wmb.com/supplier/22487769"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "CORP MIRIAM INC.S.A.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "adesivos/químicos",
+    "produtos": "Adesivos para calçado e cola de contato/borracha industrial importados do Equador",
+    "porte": "médio",
+    "ncms_provaveis": [
+      "3506.91"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Shoe adhesive 3506.91 (4 linhas, B/L 470534)",
+        "ncm": "3506.91",
+        "origem": "Equador (Guayaquil→Callao)",
+        "fornecedor": "ADHEPLAST S.A.",
+        "periodo": "19/09/2026",
+        "valor": "20438.29",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/supplier/8143514"
+      },
+      {
+        "descricao": "Industrial rubber adhesive 3506.10 (mesmo B/L)",
+        "ncm": "3506.91",
+        "origem": "Equador",
+        "fornecedor": "ADHEPLAST S.A.",
+        "periodo": "19/09/2026",
+        "valor": "111104.70",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/supplier/8143514"
+      }
+    ],
+    "fornecedores_conhecidos": "Adheplast S.A. (Equador)",
+    "por_que_e_prospect": "Importador recorrente de adesivo para calçado (3506.91) em 2026 — alvo direto para BIQ.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.52wmb.com/supplier/8143514"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "GRAN PODER GROUP INTERNATIONAL SAC",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "adesivos/químicos",
+    "produtos": "Cola de contato 'Africano' (galões) importada do Equador",
+    "porte": null,
+    "ncms_provaveis": [
+      "3506.91"
+    ],
+    "evidencias": [
+      {
+        "descricao": "AFRICANO GALON 3506.91 (B/L cec202678120634)",
+        "ncm": "3506.91",
+        "origem": "Equador (Guayaquil→Callao)",
+        "fornecedor": "ADHEPLAST S.A.",
+        "periodo": "02/10/2026",
+        "valor": "6370.98",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/supplier/8143514"
+      },
+      {
+        "descricao": "AFRICANO 3506.10 (mesmo B/L, 3 linhas)",
+        "ncm": "3506.91",
+        "origem": "Equador",
+        "fornecedor": "ADHEPLAST S.A.",
+        "periodo": "02/10/2026",
+        "valor": "80401.25",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/supplier/8143514"
+      }
+    ],
+    "fornecedores_conhecidos": "Adheplast S.A. (Equador)",
+    "por_que_e_prospect": "Distribuidor de cola de contato com importação em out/2026 — alvo para adesivos/solventes BIQ.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.52wmb.com/supplier/8143514"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "CEPOLFI INDUSTRIAL C.A.",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "adesivos/químicos",
+    "produtos": "Isocianato/pré-polímero (3909.50)",
+    "porte": "médio",
+    "ncms_provaveis": [
+      "3909.50",
+      "3907.99"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Importação 3909.50",
+        "ncm": "3909.50",
+        "origem": "não informado",
+        "fornecedor": "ESPUMLATEX S.A.",
+        "periodo": "21/04/2026",
+        "valor": "27820.20",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/buyer/8551433"
+      },
+      {
+        "descricao": "Importação 3909.50",
+        "ncm": "3909.50",
+        "origem": "não informado",
+        "fornecedor": "ESPUMLATEX S.A.",
+        "periodo": "28/04/2026",
+        "valor": "27820.20",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/buyer/8551433"
+      },
+      {
+        "descricao": "Importação 3909.50",
+        "ncm": "3909.50",
+        "origem": "não informado",
+        "fornecedor": "ESPUMLATEX S.A.",
+        "periodo": "07/09/2026",
+        "valor": "26352.30",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/buyer/8551433"
+      }
+    ],
+    "fornecedores_conhecidos": "Espumlatex S.A.",
+    "por_que_e_prospect": "Compra recorrente de 3909.50 em 2026 (~US$80 mil) — alvo para sistema PU Xuchuan.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.52wmb.com/buyer/8551433"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "DIMAR GROUP",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "adesivos/químicos",
+    "produtos": "Adesivos/pegantes (Pegantes Urano, Colômbia)",
+    "porte": null,
+    "ncms_provaveis": [
+      "3506.91"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Adesivos 3506.91 (3 linhas)",
+        "ncm": "3506.91",
+        "origem": "Colômbia",
+        "fornecedor": "PEGANTES URANO LTD.",
+        "periodo": "16/06/2026",
+        "valor": "2033.40",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/supplier/7742195"
+      },
+      {
+        "descricao": "Adesivos 3506.91",
+        "ncm": "3506.91",
+        "origem": "Colômbia",
+        "fornecedor": "PEGANTES URANO LTD.",
+        "periodo": "19/06/2026",
+        "valor": "6528.30",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/supplier/7742195"
+      }
+    ],
+    "fornecedores_conhecidos": "Pegantes Urano Ltd.",
+    "por_que_e_prospect": "Importa adesivos 3506.91 em 2026 — alvo para BIQ; razão social completa não confirmada.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.52wmb.com/supplier/7742195"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "INSUMOS PADZUMA S.A.S.",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Plataformas, palmilhas e solados (6406.20)",
+    "porte": null,
+    "ncms_provaveis": [
+      "6406.20",
+      "6406.90"
+    ],
+    "evidencias": [
+      {
+        "descricao": "PLATAFORMA PALMILLA SUELA 6406.20 (4 linhas, B/L cec202679761059)",
+        "ncm": "6406.20",
+        "origem": "Colômbia",
+        "fornecedor": "GRUPO MODAPLASS S.A.S.",
+        "periodo": "24/09/2026",
+        "valor": "11503.45",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/supplier/65136626"
+      }
+    ],
+    "fornecedores_conhecidos": "Grupo Modaplass S.A.S. (Colômbia)",
+    "por_que_e_prospect": "Distribuidor de insumos que importa solados em 2026 — alvo para Hiper Solados e palmilhas Yantai.",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.52wmb.com/supplier/65136626"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "FREIRE MANTILLA FABIAN HERNALDO",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "solados",
+    "produtos": "Plataformas, palmilhas, solados, saltos e tapas (6406.20) — pessoa física com atividade comercial",
+    "porte": null,
+    "ncms_provaveis": [
+      "6406.20",
+      "6406.90"
+    ],
+    "evidencias": [
+      {
+        "descricao": "PLATAFORMA PALMILLA Y SUELA / TACON Y TAPA 6406.20 (11 linhas, B/L cec202679760897)",
+        "ncm": "6406.20",
+        "origem": "Colômbia",
+        "fornecedor": "GRUPO MODAPLASS S.A.S.",
+        "periodo": "09/09/2026",
+        "valor": "11055.50",
+        "unidade": "USD (moeda não informada na fonte)",
+        "fonte": "https://en.52wmb.com/supplier/65136626"
+      }
+    ],
+    "fornecedores_conhecidos": "Grupo Modaplass S.A.S. (Colômbia) — 1.569 transações no histórico",
+    "por_que_e_prospect": "Comprador recorrente de solados importados (1.569 transações com a Modaplass, última em 09/2026).",
+    "confianca": "alta",
+    "fontes": [
+      "https://en.52wmb.com/supplier/65136626"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "CALDAS CUJI JESUS HONORIO",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Componentes para calçado comprados da Modaplass (solados/plataformas, provável 6406.20) — pessoa física com atividade comercial",
+    "porte": null,
+    "ncms_provaveis": [
+      "6406.20"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Parceiro comprador da Grupo Modaplass: 4.791 transações, última em 09/09/2026 (NCM da linha não exibida; Modaplass exporta 6406.20)",
+        "ncm": "6406.20",
+        "origem": "Colômbia",
+        "fornecedor": "GRUPO MODAPLASS S.A.S.",
+        "periodo": "09/09/2026",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://en.52wmb.com/supplier/65136626"
+      }
+    ],
+    "fornecedores_conhecidos": "Grupo Modaplass S.A.S. (Colômbia)",
+    "por_que_e_prospect": "Maior comprador equatoriano da fabricante de solados Modaplass, ativo em 2026.",
+    "confianca": "média",
+    "fontes": [
+      "https://en.52wmb.com/supplier/65136626"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "MORETA TRAJANO VITERVO",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Componentes para calçado comprados da Modaplass (provável 6406.20) — pessoa física",
+    "porte": null,
+    "ncms_provaveis": [
+      "6406.20"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Parceiro comprador da Grupo Modaplass: 1.757 transações, última em 21/11/2023",
+        "ncm": "6406.20",
+        "origem": "Colômbia",
+        "fornecedor": "GRUPO MODAPLASS S.A.S.",
+        "periodo": "21/11/2023",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://en.52wmb.com/supplier/65136626"
+      }
+    ],
+    "fornecedores_conhecidos": "Grupo Modaplass S.A.S. (Colômbia)",
+    "por_que_e_prospect": "Comprador histórico de solados importados; sem registro visível após 2023.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://en.52wmb.com/supplier/65136626"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "LA CASA DEL PANTANERO",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": "Cuenca",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado de segurança",
+    "produtos": "Calçado industrial/botas de segurança (≈80% para compras públicas), injeção direta ao cabedal",
+    "porte": "pequeno",
+    "ncms_provaveis": [
+      "6406.20",
+      "6406.90",
+      "3907.99",
+      "3909.50",
+      "4107"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Reportagem: fábrica de calçado industrial em Cuenca, máquina de injeção direta de tecnologia brasileira",
+        "ncm": "6406.90",
+        "origem": "n/a",
+        "fornecedor": null,
+        "periodo": "17/12/2022",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://elmercurio.com.ec/?p=999145"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Fabricante de botas de segurança com injeção direta — usa sistema PU, biqueiras e couro; razão social não confirmada.",
+    "confianca": "média",
+    "fontes": [
+      "https://elmercurio.com.ec/?p=999145"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "CUESSET S.A.",
+    "nome_fantasia": null,
+    "pais": "ARGENTINA",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "curtume",
+    "produtos": "Couro bovino curtido/crust e wet blue (perfil Veritrade)",
+    "porte": "grande",
+    "ncms_provaveis": [
+      "4104.11",
+      "4104.41",
+      "4107"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Perfil Veritrade: 4.078 registros 2020–2024 (pico 2024); produtos principais couro bovino seco/crust e wet blue rachado; origem citada Brasil, Índia, Itália. A página mistura importação/exportação — não confirma NCM importada.",
+        "ncm": "4104.41",
+        "origem": "Brasil/Índia/Itália",
+        "fornecedor": null,
+        "periodo": "2020-2024",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://www.veritradecorp.com/en/argentina/imports-and-exports-cuesset-sa/cuit-3062405443"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Curtume com comércio exterior intenso de wet blue/crust — alvo para wet blue/crust JBS.",
+    "confianca": "média",
+    "fontes": [
+      "https://www.veritradecorp.com/en/argentina/imports-and-exports-cuesset-sa/cuit-3062405443"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "TOREDO S.A.",
+    "nome_fantasia": null,
+    "pais": "ARGENTINA",
+    "cidade": "Buenos Aires",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "curtume",
+    "produtos": "Couro bovino crust (4104.41), wet blue e rachado (perfil Veritrade)",
+    "porte": "grande",
+    "ncms_provaveis": [
+      "4104.41",
+      "4104.19",
+      "4107"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Perfil Veritrade: 3.568 registros 2020–2024, CIF US$47,1 mi; principal 4104.41.30.100 (crust flor integral); origem citada Itália/Alemanha/Brasil. A página não separa claramente importação/exportação.",
+        "ncm": "4104.41",
+        "origem": "Itália/Alemanha/Brasil",
+        "fornecedor": null,
+        "periodo": "2020-2024",
+        "valor": "47100000",
+        "unidade": "USD CIF (5 anos)",
+        "fonte": "https://www.veritradecorp.com/en/argentina/imports-and-exports-toredo-sa/cuit-3070714925"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Curtume/trader de crust e wet blue com volume alto — alvo para crust JBS Argentina e wet blue.",
+    "confianca": "média",
+    "fontes": [
+      "https://www.veritradecorp.com/en/argentina/imports-and-exports-toredo-sa/cuit-3070714925"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "SUELAS LEAL S.A.",
+    "nome_fantasia": null,
+    "pais": "ARGENTINA",
+    "cidade": "Ciudad Autónoma de Buenos Aires",
+    "id_fiscal": "30-70348253-4",
+    "site": null,
+    "contato": null,
+    "segmento": "solados",
+    "produtos": "Fabricação de partes de calçado (solados)",
+    "porte": "pequeno",
+    "ncms_provaveis": [
+      "6406.20",
+      "3907.99",
+      "3909.50",
+      "8480.71"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Cadastro: atividade 152040 fabricação de partes de calçado; consta como importador (11 despachos de 2 países; anos não visíveis)",
+        "ncm": "6406.20",
+        "origem": "n/d",
+        "fornecedor": null,
+        "periodo": "atividade desde 11/2013",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://indicadores.ar/empresa/30703482534"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Fábrica de solados importadora — alvo para sistema PU, moldes Polako e solados.",
+    "confianca": "média",
+    "fontes": [
+      "https://indicadores.ar/empresa/30703482534"
+    ],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "ARGENTINA TODO TERRENO (ATT)",
+    "nome_fantasia": "ATT",
+    "pais": "ARGENTINA",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": "attcalzados.com.ar",
+    "contato": null,
+    "segmento": "calçado de segurança",
+    "produtos": "Calçado de segurança em couro flor, biqueira de aço, solado PU bidensidade injetado (Desma)",
+    "porte": null,
+    "ncms_provaveis": [
+      "3907.99",
+      "3909.50",
+      "6406.90",
+      "4107",
+      "3921.13"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Reportagem: investimento em injetora Desma 522/24 para calçado de segurança com solado PU bidensidade e biqueira de aço; empresa do grupo Startex",
+        "ncm": "3907.99",
+        "origem": "n/a",
+        "fornecedor": null,
+        "periodo": "21/11/2012",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://mercado.com.ar/protagonistas/calzado-argentina-todo-terreno"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Fabricante de calçado de segurança injetado em PU — consome sistema PU, biqueiras e couro; fonte antiga.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://mercado.com.ar/protagonistas/calzado-argentina-todo-terreno"
+    ],
+    "atualiza_existente": false
+  }
+]

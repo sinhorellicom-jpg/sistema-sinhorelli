@@ -1,0 +1,222 @@
+[
+  {
+    "empresa": "BOJOS TANNING INC.",
+    "nome_fantasia": "Bojos",
+    "pais": "REP DOMINICANA",
+    "cidade": "Santiago de los Caballeros",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "curtume",
+    "produtos": "Couro acabado (top product na Panjiva) e calçado de couro (HTS 6403.91) exportados aos EUA; também HS 94",
+    "porte": "pequeno",
+    "ncms_provaveis": ["4104.11", "4104.41", "4107", "3506.91", "6406.20"],
+    "evidencias": [
+      {
+        "descricao": "Perfil Panjiva de fornecedor: 240 embarques para os EUA, produto principal 'finished leather', HS 41 e 64 (B/L de amostra HTS 6403.91), rota Puerto Plata–Miami; endereço Av. Núñez de Cáceres 100-B, Bella Vista, Santiago. Registro de EXPORTAÇÃO, não de importação.",
+        "ncm": "4107",
+        "origem": "Rep. Dominicana (exportação para EUA)",
+        "fornecedor": null,
+        "periodo": "31/05/2025; 23/08/2025; 20/10/2025",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://panjiva.com/Bojos-Tanning-Inc/89112001"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Curtume/acabador ativo em 2025 que exporta couro acabado e calçado, logo consome wet blue/crust, químicos e adesivos importados.",
+    "confianca": "média",
+    "fontes": ["https://panjiva.com/Bojos-Tanning-Inc/89112001", "https://panjiva.com/Bojos-Tanning-Inc/44167067"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "JVP FOOTWEAR SAS",
+    "nome_fantasia": null,
+    "pais": "REP DOMINICANA",
+    "cidade": "San Pedro de Macorís (Zona Franca Industrial)",
+    "id_fiscal": "RNC 1-31-57101-8 (conforme endereço no registro Panjiva)",
+    "site": null,
+    "contato": null,
+    "segmento": "bota PVC/borracha",
+    "produtos": "Botas e palmilhas exportadas aos EUA (B/L de amostra HTS 6401.92 – calçado impermeável de borracha/plástico); clientes PQ Footwear LLC e Aetrex Worldwide",
+    "porte": "médio",
+    "ncms_provaveis": ["6406.20", "6406.90", "3921.13", "5603.14", "3506.91", "3907.99", "3909.50"],
+    "evidencias": [
+      {
+        "descricao": "Perfil Panjiva: 119 embarques para os EUA desde 2007, produtos 'boots' e 'insoles', último embarque 20/10/2025 para PQ Footwear LLC (5.112 kg, 551 caixas). Registro de EXPORTAÇÃO.",
+        "ncm": "6406.90",
+        "origem": "Rep. Dominicana (exportação para EUA)",
+        "fornecedor": null,
+        "periodo": "20/10/2025",
+        "valor": null,
+        "unidade": "5.112 kg",
+        "fonte": "https://panjiva.com/Jvp-Footwear-Sas/46507051"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Fábrica de botas e palmilhas em zona franca, ativa em 2025, que precisa de solados, palmilhas, não-tecidos e sistemas PU/adesivos importados.",
+    "confianca": "média",
+    "fontes": ["https://panjiva.com/Jvp-Footwear-Sas/46507051"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "TRIUNFO MFG. SRL",
+    "nome_fantasia": null,
+    "pais": "REP DOMINICANA",
+    "cidade": "Santiago de los Caballeros (Caribbean Industrial Park)",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Sapatilhas/slippers e calçados exportados aos EUA (B/L de amostra HTS 6402.99) para Ballet Makers Inc. (Capezio)",
+    "porte": "médio",
+    "ncms_provaveis": ["4107", "3921.13", "6406.20", "5603.14", "3506.91"],
+    "evidencias": [
+      {
+        "descricao": "Perfil Panjiva: 73 embarques para os EUA, produtos 'slippers, shoes', HS 64; embarques de 09/04/2025, 05/05/2025 e 11/05/2025 para Ballet Makers Inc. (Totowa, NJ). Registro de EXPORTAÇÃO.",
+        "ncm": "6406.20",
+        "origem": "Rep. Dominicana (exportação para EUA)",
+        "fornecedor": null,
+        "periodo": "09/04/2025 a 11/05/2025",
+        "valor": null,
+        "unidade": "9.047 kg (B/L de amostra)",
+        "fonte": "https://panjiva.com/Triunfo-Mfg-Srl/29696410"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Fábrica de calçado em zona franca, ativa em 2025, que usa couro acabado, sintéticos, solados e adesivos.",
+    "confianca": "média",
+    "fontes": ["https://panjiva.com/Triunfo-Mfg-Srl/29696410"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "SKYSANDS FOOTWEAR CORP",
+    "nome_fantasia": null,
+    "pais": "REP DOMINICANA",
+    "cidade": "Santiago de los Caballeros (Pisano, Av. Joaquín Balaguer km 5)",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Calçado de couro (HTS 6403.91) para a Timberland/VF Outdoor; HS 64, 61, 29 e 39",
+    "porte": "grande",
+    "ncms_provaveis": ["4107", "4104.41", "3921.13", "6406.20", "3506.91", "3907.99", "3909.50"],
+    "evidencias": [
+      {
+        "descricao": "Perfil Panjiva: 476 embarques para os EUA, 9 clientes (Timberland LLC visível), último embarque 11/11/2025; B/L de amostra com 608 caixas e 7.979 kg, rota Haina–Miami. Registro de EXPORTAÇÃO.",
+        "ncm": "4107",
+        "origem": "Rep. Dominicana (exportação para EUA)",
+        "fornecedor": null,
+        "periodo": "11/11/2025",
+        "valor": null,
+        "unidade": "7.979 kg (B/L de amostra)",
+        "fonte": "https://es.panjiva.com/Skysands-Footwear-Corp/111505611"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Fabricante de calçado de couro para a Timberland em Pisano, com grande volume em 2025 e consumo de couro, solados e insumos PU. Pode ser a mesma operação da 'VF Corporation (Timberland) – planta Pisano' que já está na base: verificar antes de abordar.",
+    "confianca": "média",
+    "fontes": ["https://es.panjiva.com/Skysands-Footwear-Corp/111505611", "https://www.diariolibre.com/economia/tres-empresas-produciran-mas-de-5-5-millones-de-calzados-en-zonas-francas-de-santiago-EL12805274"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "CURTIEMBRE BASKA S.A.",
+    "nome_fantasia": "Baska",
+    "pais": "CHILE",
+    "cidade": "Santiago",
+    "id_fiscal": "79962720 (RUT sem dígito verificador, conforme URL da Veritrade)",
+    "site": "http://www.baska.cl",
+    "contato": null,
+    "segmento": "curtume",
+    "produtos": "Curtume (Leather Manufacturer na LWG); tipo de couro não informado",
+    "porte": null,
+    "ncms_provaveis": ["4104.11", "4104.19", "4104.41", "4107"],
+    "evidencias": [
+      {
+        "descricao": "Membro LWG (Leather Manufacturer), endereço Calle Los Cisnes 263, Santiago; certificado continuamente desde 04/12/2022 (status atual: expirado)",
+        "ncm": "4104.11",
+        "origem": null,
+        "fornecedor": null,
+        "periodo": "2022-2026",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://leatherworkinggroup.com/get-involved/our-community/certified-suppliers/curtiembre-baska-sa"
+      },
+      {
+        "descricao": "Tem perfil de importador/exportador na Veritrade Chile; o conteúdo (NCMs e datas) não pôde ser lido",
+        "ncm": "4104.11",
+        "origem": null,
+        "fornecedor": null,
+        "periodo": "não informado",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://www.veritradecorp.com/en/chile/imports-y-exports-curtiembre-baska-s-a/rut-79962720"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Curtume chileno com certificação LWG e registro de comércio exterior, que pode comprar wet blue ou crust para acabamento.",
+    "confianca": "média",
+    "fontes": ["https://leatherworkinggroup.com/get-involved/our-community/certified-suppliers/curtiembre-baska-sa", "https://www.veritradecorp.com/en/chile/imports-y-exports-curtiembre-baska-s-a/rut-79962720"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "TECNOCAL S.A.",
+    "nome_fantasia": null,
+    "pais": "CHILE",
+    "cidade": null,
+    "id_fiscal": "96686570 (RUT sem dígito verificador, conforme URL da Veritrade)",
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Não confirmado. Apareceu em busca da Veritrade por importadores chilenos de calçado/curtume/solados",
+    "porte": null,
+    "ncms_provaveis": ["6406.20", "3921.13"],
+    "evidencias": [
+      {
+        "descricao": "Perfil de importador na Veritrade Chile, encontrado em busca por calçado/curtume/solados; conteúdo não lido (o site bloqueou o acesso)",
+        "ncm": "6406.20",
+        "origem": null,
+        "fornecedor": null,
+        "periodo": "não informado",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://www.veritradecorp.com/en/chile/imports-y-exports-tecnocal-s-a/rut-96686570"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Importador chileno cujo nome sugere atuação em calçado, mas o segmento ainda precisa ser verificado.",
+    "confianca": "baixa",
+    "fontes": ["https://www.veritradecorp.com/en/chile/imports-y-exports-tecnocal-s-a/rut-96686570"],
+    "atualiza_existente": false
+  },
+  {
+    "empresa": "COMERCIAL ZAPATERA LIMITADA",
+    "nome_fantasia": null,
+    "pais": "CHILE",
+    "cidade": null,
+    "id_fiscal": "76499431 (RUT sem dígito verificador, conforme URL da Veritrade)",
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Não confirmado (comércio ligado a calçado/sapataria)",
+    "porte": null,
+    "ncms_provaveis": ["6406.20", "6406.90", "3506.91"],
+    "evidencias": [
+      {
+        "descricao": "Perfil de importador na Veritrade Chile; conteúdo não lido (o site bloqueou o acesso)",
+        "ncm": "6406.90",
+        "origem": null,
+        "fornecedor": null,
+        "periodo": "não informado",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://www.veritradecorp.com/en/chile/imports-y-exports-comercial-zapatera-limitada---/rut-76499431"
+      }
+    ],
+    "fornecedores_conhecidos": null,
+    "por_que_e_prospect": "Importador chileno com nome ligado a calçado, possivelmente distribuidor de insumos ou de calçado pronto; precisa ser verificado.",
+    "confianca": "baixa",
+    "fontes": ["https://www.veritradecorp.com/en/chile/imports-y-exports-comercial-zapatera-limitada---/rut-76499431"],
+    "atualiza_existente": false
+  }
+]
