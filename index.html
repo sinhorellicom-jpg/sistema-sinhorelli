@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>window.SITE_SEGURO = /^https?:$/.test(location.protocol);</script>
-<script>window.VERSAO_SISTEMA = '20261113-195823';</script>
+<script>window.VERSAO_SISTEMA = '20261116-204604';</script>
 <script>
 // no SITE não existe "arquivo do sistema": some com os botões/avisos de salvar no arquivo e de modo só arquivo
 if(window.SITE_SEGURO) document.write('<style>#btnSalvarSistema,#fileSaveStatus,#btnModoArquivo{display:none !important}</style>');
@@ -1788,6 +1788,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
       <button class="btn btn-ghost btn-sm" id="exportPdfBtn">🖨 Salvar PDF</button>
       <button class="btn btn-ghost btn-sm" id="exportarTudoBtn" title="Baixa um arquivo com TODOS os dados do sistema">📦 Exportar tudo</button>
       <button class="btn btn-ghost btn-sm" id="importarTudoBtn" title="Restaura os dados de um arquivo exportado">📥 Importar tudo</button>
+      <button class="btn btn-ghost btn-sm" id="conferirPlanilhaBtn" title="Compara o Valor USD, a etapa e a data de cada processo com a sua planilha de controle (Excel). Não altera nada.">🔎 Conferir com planilha</button>
       <button class="btn btn-ghost btn-sm" id="recuperarProcBtn" title="Acrescenta os processos que faltam nesta aba, a partir de um arquivo de processos">♻ Recuperar processos</button>
       <button class="btn btn-ghost btn-sm" id="sumModeBtn">Σ Somar valores</button>
       <button class="btn btn-ghost btn-sm" id="savePartsBtn" title="Baixa em PDF exatamente o que está na aba aberta, com os filtros aplicados">🖨 PDF desta aba</button>
@@ -14195,6 +14196,110 @@ async function exportarTudo(){
   return nome;
 }
 
+/* ===== CONFERIR COM A PLANILHA (Excel de controle, ex.: VENDAS_JBS.xlsx) =====
+   Lê as linhas com PROCESSO e VALOR USD e compara com os processos do sistema:
+   valor diferente, etapa diferente, processo só de um lado (no ano escolhido). Não altera nada. */
+function confNumProc(t){
+  const m = String(t||'').trim().match(/^0*(\d{1,4})\s*\/\s*(\d{2,4})$/); if(!m) return '';
+  return (+m[1]) + '/' + String(m[2]).slice(-2);
+}
+function confEtapaPlanilha(t){
+  const s = String(t||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
+  if(/^ENTRADA/.test(s)) return 'ENTRADA';
+  if(/PRODUC/.test(s)) return 'EM_PRODUCAO';
+  if(/EMBARCAR/.test(s)) return 'A_EMBARCAR';
+  if(/^EMBARCADO/.test(s)) return 'EMBARCADO';
+  if(/^VENCID/.test(s)) return 'VENCIDO';
+  if(/ESPERANDO|AGUARDANDO C/.test(s)) return 'ESPERANDO_COMISSAO';
+  if(/EMITIDO/.test(s)) return 'EMITIDO_INVOICE';
+  if(/FECHAMENTO|CAMBIO/.test(s)) return 'FECHAMENTO_CAMBIO';
+  if(/VENDEDOR/.test(s)) return 'PAGAMENTO_VENDEDOR';
+  if(/ENCERRAD/.test(s)) return 'ENCERRADO';
+  if(/CANCEL/.test(s)) return 'CANCELADO';
+  if(/AMOSTRA/.test(s)) return 'AMOSTRA';
+  return '';
+}
+function confLerPlanilha(wb){
+  const out = [];
+  wb.SheetNames.forEach(nm=>{
+    const L = XLSX.utils.sheet_to_json(wb.Sheets[nm], { header:1, raw:true, defval:null });
+    let iP = -1, iV = -1, iD = -1, iS = -1, iC = -1;
+    L.forEach(r=>{
+      r = r||[];
+      const cab = r.map(c=>String(c==null?'':c).toUpperCase().trim());
+      if(cab.indexOf('PROCESSO')>=0 && cab.indexOf('VALOR USD')>=0){ iP = cab.indexOf('PROCESSO'); iV = cab.indexOf('VALOR USD'); iD = cab.indexOf('DATA'); iS = cab.indexOf('STATUS'); iC = cab.indexOf('CLIENTE'); return; }
+      if(iP<0) return;
+      const n = confNumProc(r[iP]); if(!n) return;
+      let d = iD>=0 ? r[iD] : null;
+      if(d instanceof Date) d = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      else if(typeof d==='number' && d>20000) { const x = XLSX.SSF.parse_date_code(d); d = x ? x.y+'-'+String(x.m).padStart(2,'0')+'-'+String(x.d).padStart(2,'0') : ''; }
+      else d = String(d||'');
+      const v = typeof r[iV]==='number' ? r[iV] : (String(r[iV]||'').trim() ? contratoNum(r[iV]) : null);
+      out.push({ n, proc:String(r[iP]).trim(), data:d, valor:v, etapa:confEtapaPlanilha(iS>=0?r[iS]:''), etapaTxt:String(iS>=0&&r[iS]!=null?r[iS]:'').trim(), cliente:iC>=0?String(r[iC]||'').trim():'', aba:nm });
+    });
+  });
+  return out;
+}
+async function conferirComPlanilha(){
+  if(typeof XLSX==='undefined'){ toast('A leitura de planilhas ainda não carregou; tente de novo em alguns segundos.'); return; }
+  const files = await escolherArquivos(false); const file = files[0]; if(!file) return;
+  let pl = [];
+  try{ pl = confLerPlanilha(await lerArquivoCapa(file)); }catch(e){ console.warn('conferir', e); }
+  if(!pl.length){ toast('Não encontrei as colunas "PROCESSO" e "VALOR USD" em ' + file.name + '.'); return; }
+  const ano = (typeof currentYearFilter!=='undefined' && currentYearFilter && currentYearFilter!=='TODOS') ? String(currentYearFilter) : String(new Date().getFullYear());
+  const sis = (processos||[]).filter(p=>p && confNumProc(p.processo));
+  const mapS = {}; sis.forEach(p=>{ (mapS[confNumProc(p.processo)] = mapS[confNumProc(p.processo)] || []).push(p); });
+  const mapP = {}; pl.forEach(x=>{ (mapP[x.n] = mapP[x.n] || []).push(x); });
+  const r2 = v => Math.round((+v||0)*100)/100;
+  const ativo = p => p.status!=='CANCELADO' && p.status!=='AMOSTRA';
+  const anoS = p => String(p.data||'').slice(0,4)===ano;
+  const anoP = x => String(x.data||'').slice(0,4)===ano;
+  const difValor = [], difEtapa = [], soPlan = [], soSis = [], difAno = [];
+  Object.keys(mapP).forEach(n=>{
+    const x = mapP[n][0], ps = mapS[n];
+    if(!ps){ if(anoP(x) && x.valor) soPlan.push(x); return; }
+    const p = ps[0];
+    const vs = r2(p.valorUsd), vp = r2(x.valor);
+    if(x.valor!==null && Math.abs(vs - vp) >= 0.01) difValor.push({ x, p, vs, vp, d: r2(vs - vp) });
+    if(x.etapa && x.etapa!==p.status) difEtapa.push({ x, p });
+    if(anoP(x)!==anoS(p) && ativo(p) && (anoP(x) || anoS(p))) difAno.push({ x, p });
+  });
+  sis.filter(p=>ativo(p) && anoS(p) && !mapP[confNumProc(p.processo)]).forEach(p=>soSis.push(p));
+  difValor.sort((a,b)=>Math.abs(b.d)-Math.abs(a.d));
+  // totais do ano (pela data de abertura), como o cartão "Vendido em …"
+  const totS = sis.filter(p=>ativo(p) && anoS(p)), totP = pl.filter(x=>anoP(x) && x.valor && x.etapa!=='CANCELADO' && x.etapa!=='AMOSTRA');
+  const somaS = r2(totS.reduce((s,p)=>s+(+p.valorUsd||0),0)), somaP = r2(totP.reduce((s,x)=>s+(+x.valor||0),0));
+  const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const et = k => (STATUS_BY_KEY[k]||{}).label || k || '—';
+  const dt = d => /^\d{4}-\d{2}-\d{2}/.test(String(d||'')) ? fmtDateBR(String(d).slice(0,10)) : esc(d||'—');
+  const tab = (cab, linhas) => linhas.length ? `<div style="overflow:auto;"><table class="mat-table" style="width:100%;"><thead><tr>${cab.map(c=>`<th style="text-align:left;">${c}</th>`).join('')}</tr></thead><tbody>${linhas.join('')}</tbody></table></div>` : '<div class="an-panel-sub" style="padding:4px 0 8px;">Nenhum. ✓</div>';
+  const sec = (t, n, corpo) => `<h3 style="margin:16px 0 6px;font-size:15px;">${t} <span class="an-panel-sub">(${n})</span></h3>${corpo}`;
+  const html = `
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
+      <div class="an-panel" style="flex:1;min-width:200px;padding:10px 12px;"><div class="an-panel-sub">Vendido em ${ano} — sistema</div><b style="font-size:18px;">USD ${fmt(somaS)}</b><div class="an-panel-sub">${totS.length} processos</div></div>
+      <div class="an-panel" style="flex:1;min-width:200px;padding:10px 12px;"><div class="an-panel-sub">Vendido em ${ano} — planilha</div><b style="font-size:18px;">USD ${fmt(somaP)}</b><div class="an-panel-sub">${totP.length} processos</div></div>
+      <div class="an-panel" style="flex:1;min-width:200px;padding:10px 12px;"><div class="an-panel-sub">Diferença (sistema − planilha)</div><b style="font-size:18px;color:${Math.abs(somaS-somaP)<0.01?'var(--green,#2E9E6B)':'#F87171'};">USD ${fmt(r2(somaS-somaP))}</b></div>
+    </div>
+    ${sec('💲 Valor USD diferente', difValor.length, tab(['Processo','Cliente','Etapa no sistema','Valor no sistema','Valor na planilha','Diferença'],
+      difValor.map(o=>`<tr><td><b>${esc(o.p.processo)}</b></td><td style="text-align:left;">${esc(o.p.cliente||o.x.cliente)}</td><td style="text-align:left;">${esc(et(o.p.status))}</td><td class="num">${fmt(o.vs)}</td><td class="num">${fmt(o.vp)}</td><td class="num" style="font-weight:700;color:${o.d>0?'#F87171':'#60A5FA'};">${o.d>0?'+':''}${fmt(o.d)}</td></tr>`)))}
+    ${sec(`📅 Ano de abertura diferente (${ano})`, difAno.length, tab(['Processo','Cliente','Data no sistema','Data na planilha','Valor no sistema'],
+      difAno.map(o=>`<tr><td><b>${esc(o.p.processo)}</b></td><td style="text-align:left;">${esc(o.p.cliente||o.x.cliente)}</td><td>${dt(o.p.data)}</td><td>${dt(o.x.data)}</td><td class="num">${fmt(r2(o.p.valorUsd))}</td></tr>`)))}
+    ${sec(`🟦 Só no sistema (abertos em ${ano})`, soSis.length, tab(['Processo','Cliente','Etapa','Data','Valor'],
+      soSis.map(p=>`<tr><td><b>${esc(p.processo)}</b></td><td style="text-align:left;">${esc(p.cliente)}</td><td style="text-align:left;">${esc(et(p.status))}</td><td>${dt(p.data)}</td><td class="num">${fmt(r2(p.valorUsd))}</td></tr>`)))}
+    ${sec(`🟨 Só na planilha (abertos em ${ano})`, soPlan.length, tab(['Processo','Cliente','Etapa na planilha','Data','Valor'],
+      soPlan.map(x=>`<tr><td><b>${esc(x.proc)}</b></td><td style="text-align:left;">${esc(x.cliente)}</td><td style="text-align:left;">${esc(x.etapaTxt)}</td><td>${dt(x.data)}</td><td class="num">${fmt(r2(x.valor))}</td></tr>`)))}
+    ${sec('🔀 Etapa diferente', difEtapa.length, tab(['Processo','Cliente','Etapa no sistema','Etapa na planilha','Valor no sistema'],
+      difEtapa.map(o=>`<tr><td><b>${esc(o.p.processo)}</b></td><td style="text-align:left;">${esc(o.p.cliente||o.x.cliente)}</td><td style="text-align:left;">${esc(et(o.p.status))}</td><td style="text-align:left;">${esc(o.x.etapaTxt)}</td><td class="num">${fmt(r2(o.p.valorUsd))}</td></tr>`)))}
+    <div class="an-panel-sub" style="margin-top:12px;">Compara pelo nº do processo (37/26 = 037/26). Só mostra, não altera nada. Aba do sistema: ${activeDataset==='vendas'?'Vendas':'JBS'}.</div>`;
+  const root = document.createElement('div'); root.className='overlay'; root.style.zIndex=99999;
+  root.innerHTML = `<div class="modal" style="max-width:980px;"><div class="modal-head"><div><h2>🔎 Conferência com a planilha — ${esc(file.name)}</h2><div class="an-panel-sub">${pl.length} linha(s) com nº de processo na planilha · ${sis.length} processo(s) no sistema</div></div></div>
+    <div class="modal-body" style="max-height:72vh;overflow:auto;">${html}</div>
+    <div class="modal-foot"><button class="btn btn-primary" id="confFechar">Fechar</button></div></div>`;
+  document.body.appendChild(root);
+  root.querySelector('#confFechar').onclick = ()=>root.remove();
+  root.addEventListener('click', e=>{ if(e.target===root) root.remove(); });
+}
+
 function importarTudo(){
   const inp = document.createElement('input');
   inp.type = 'file'; inp.accept = '.json,application/json';
@@ -17225,6 +17330,8 @@ async function init(){
   const impCapas = document.getElementById('importCapasBtn'); if(impCapas) impCapas.addEventListener('click', ()=>{ importarCapasEmLote().catch(e=>toast('Falha ao importar capas: '+e)); });
   document.getElementById('exportBtn').addEventListener('click', exportCsv);
   document.getElementById('savePartsBtn').addEventListener('click', exportarPdfAba);
+  const btnConf = document.getElementById('conferirPlanilhaBtn');
+  if(btnConf) btnConf.addEventListener('click', ()=>{ conferirComPlanilha().catch(e=>{ console.warn('conferir', e); toast('Falha na conferência: '+(e.message||e)); }); });
   const btnExpTudo = document.getElementById('exportarTudoBtn');
   if(btnExpTudo) btnExpTudo.addEventListener('click', async ()=>{
     btnExpTudo.disabled = true; const t = btnExpTudo.textContent; btnExpTudo.textContent = '⏳ juntando…';
