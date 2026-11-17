@@ -16389,6 +16389,82 @@ function prospFornecedores(e){
   (e.evidencias||[]).forEach(v=>add(v.fornecedor));
   return out;
 }
+
+// ----- Fornecedores de uma empresa, um por linha: produtos comprados (com NCM) e valor FOB -----
+function prospValorNum(t){
+  if(typeof t==='number') return t>0 ? t : null;
+  t = String(t||''); if(!t.trim()) return null;
+  if(!/US\$|USD|FOB|CIF/i.test(t) && /\b(kg|m²|m2|pares|par|un|ton|t)\b/i.test(t)) return null;   // é quantidade, não valor
+  const m = t.match(/(?:US\$|USD)\s*~?\s*(\d[\d.,]*)\s*([KkMm](?![a-z²]))?/) || t.match(/(\d[\d.,]*)\s*([KkMm](?![a-z²]))?/);
+  if(!m) return null;
+  let n = m[1].replace(/[.,]$/,'');
+  const lp = n.lastIndexOf('.'), lc = n.lastIndexOf(',');
+  if(lp>=0 && lc>=0){ n = lc>lp ? n.replace(/\./g,'').replace(',','.') : n.replace(/,/g,''); }
+  else if(lc>=0){ n = /^\d{1,3}(,\d{3})+$/.test(n) && !m[2] ? n.replace(/,/g,'') : n.replace(',','.'); }
+  else if(lp>=0){ if(/^\d{1,3}(\.\d{3})+$/.test(n) && !m[2]) n = n.replace(/\./g,''); }
+  let v = parseFloat(n); if(!(v>0)) return null;
+  if(m[2]) v *= /m/i.test(m[2]) ? 1e6 : 1e3;
+  return Math.round(v*100)/100;
+}
+function prospTipoValor(t){ t = String(t||''); return /CIF/i.test(t) && !/FOB/i.test(t) ? 'CIF' : 'FOB'; }
+function prospChaveForn(x){ return prospNorm(String(x||'').replace(/\(.*?\)/g,'')).replace(/\b(LTDA|SA|SAS|SPA|LIMITED|LTD|CO|SAU|SRL|DE|CV|UC|GMBH|INTERNACIONAL|INTERNATIONAL|TRADE|TRADING)\b/g,' ').replace(/\s+/g,' ').trim(); }
+function prospFornDetalhe(e){
+  const grupos = [];
+  const acha = nome => { const k = prospChaveForn(nome); if(!k) return null;
+    const p1 = k.split(' ')[0];
+    return grupos.find(g=>g.k===k || (g.k && (g.k.startsWith(k+' ') || k.startsWith(g.k+' '))) || (p1.length>=5 && g.k.split(' ')[0]===p1)) || null; };
+  const grupo = nome => { let g = acha(nome); if(!g){ g = { nome:String(nome||'').trim(), k:prospChaveForn(nome), origem:new Set(), prods:new Map(), fob:0, cif:0, est:false, n:0, ult:'', nota:'' }; grupos.push(g); } return g; };
+  const addProd = (g, desc, ncm) => { desc = String(desc||'').replace(/\s*\((declaração|declaracao)[^)]*\)/ig,'').trim(); const nc = String(ncm||'').trim(); const n = (nc && nc!=='—') ? prospFmtNcm(nc.split(/\s*\/\s*/)[0]) + (nc.indexOf('/')>=0 ? ' / '+nc.split(/\s*\/\s*/).slice(1).map(prospFmtNcm).join(' / ') : '') : ''; const k = prospNorm(desc).slice(0,40) + '|' + n; if(!g.prods.has(k)) g.prods.set(k, { desc, ncm:n }); };
+  const addVal = (g, num, tipo, est) => { if(!(num>0)) return; if(tipo==='CIF') g.cif += num; else g.fob += num; if(est) g.est = true; };
+  (e.evidencias||[]).forEach(v=>{
+    const g = grupo(v.fornecedor && String(v.fornecedor).trim() ? v.fornecedor : '(fornecedor não informado)');
+    if(v.origem) g.origem.add(String(v.origem).trim());
+    addProd(g, v.descricao, v.ncm);
+    addVal(g, prospValorNum(v.valor), prospTipoValor(v.valor), /estimad/i.test(String(v.valor||'')));
+    g.n++; const ch = buscaEvChave(v); if(ch > g.ult) g.ult = ch;
+  });
+  // embarques coletados em que essa empresa é a importadora
+  const ne = prospNorm(e.empresa);
+  if(ne.length>=4 && typeof embTodos==='function'){
+    embTodos().forEach(x=>{ const ni = prospNorm(x.importador); if(!ni || !(ni===ne || ni.startsWith(ne+' ') || ne.startsWith(ni+' '))) return;
+      const g = grupo(String(x.exportador||'(fornecedor não informado)').replace(/\s*\(.*$/,''));
+      if(x.origem) g.origem.add(String(x.origem).trim());
+      addProd(g, x.produto, x.ncm);
+      addVal(g, +x.valor, prospTipoValor(x.tipo_valor), /estimad/i.test(String(x.tipo_valor||'')));
+      g.n++; const d = String(x.data||''); if(d > g.ult) g.ult = d; });
+  }
+  // fornecedores citados no texto (sem registro detalhado): entram como linha também
+  const partes = t => { const r = []; let cur = '', nv = 0; for(const ch of String(t||'')){ if(ch==='(') nv++; if(ch===')') nv = Math.max(0, nv-1); if(nv===0 && /[;|\n]/.test(ch)){ r.push(cur); cur = ''; } else cur += ch; } r.push(cur); return r.map(x=>x.trim()).filter(Boolean); };
+  partes(e.fornecedores_conhecidos).forEach(x=>{
+    x = x.replace(/^(e|y|and)\s+/i,'');
+    if(/^peso por fornecedor/i.test(x) || /\d+([.,]\d+)?%/.test(x.replace(/\(.*?\)/g,'')) ) return;   // trecho de participação, não é fornecedor
+    const nome = x.replace(/\s*\(.*$/,'').replace(/[.:]+$/,'').trim(); if(!nome || prospChaveForn(nome).length<3) return;
+    const info = (x.match(/\((.*)\)/)||[])[1] || '';
+    const g = acha(nome) || grupo(nome);
+    if(info && !g.nota) g.nota = info;
+    if(!g.prods.size && info){ const ori = info.split(',')[0].trim(); if(ori && !/\d/.test(ori) && ori.length<20) g.origem.add(ori); }
+  });
+  grupos.forEach(g=>{ g.fob = Math.round(g.fob*100)/100; g.cif = Math.round(g.cif*100)/100; });
+  // quem mais vende primeiro (valor), depois os sem valor; "não informado" por último
+  return grupos.sort((a,b)=>(a.nome.startsWith('(')-b.nome.startsWith('(')) || ((b.fob||b.cif)-(a.fob||a.cif)) || (b.n-a.n));
+}
+function prospFornValorTxt(g){
+  const out = [];
+  if(g.fob>0) out.push('US$ '+fmt(g.fob)+' FOB'+(g.est?' *':''));
+  if(g.cif>0) out.push('US$ '+fmt(g.cif)+' CIF');
+  return out.join(' + ');
+}
+function prospFornProdTxt(g){ return [...g.prods.values()].map(p=>p.desc + (p.ncm ? ' — NCM '+p.ncm : '')).join('; ') || (g.nota || ''); }
+function prospFornTabelaHtml(e, filtro){
+  const E = prospEsc;
+  const gs = prospFornDetalhe(e).filter(g=>!filtro || filtro(g.nome));
+  if(!gs.length) return '<span class="an-panel-sub">sem fornecedor identificado</span>';
+  return `<table class="pr-tab pr-forn"><thead><tr><th>Fornecedor</th><th>Origem</th><th>Produtos comprados (NCM)</th><th style="text-align:right">Valor FOB</th><th>Registros</th></tr></thead><tbody>${gs.map(g=>`<tr>
+    <td><b>${E(g.nome)}</b></td><td>${E([...g.origem].join(', '))}</td>
+    <td>${g.prods.size ? [...g.prods.values()].map(p=>`<div>${E(p.desc||'—')}${p.ncm?` <span class="pr-n">${E(p.ncm)}</span>`:''}</div>`).join('') : `<span class="an-panel-sub">${E(g.nota||'sem registro detalhado')}</span>`}</td>
+    <td style="text-align:right;white-space:nowrap;">${prospFornValorTxt(g) || '<span class="an-panel-sub">—</span>'}</td>
+    <td style="white-space:nowrap;">${g.n ? g.n + (g.ult?`<div class="an-panel-sub">último: ${E(/^\d{4}-\d{2}-\d{2}$/.test(g.ult)?fmtDateBR(g.ult):g.ult)}</div>`:'') : '<span class="an-panel-sub">citado</span>'}</td></tr>`).join('')}</tbody></table>`;
+}
 // período das informações (anos e data mais recente citados nos registros)
 function prospPeriodo(e){
   let min = null, max = null, ultima = '';
@@ -16474,7 +16550,7 @@ async function renderProspeccaoView(){
     const det = aberto ? `<tr class="pr-det"><td colspan="7">
         ${e.produtos?`<div><b>Produz / compra:</b> ${prospEsc(e.produtos)}</div>`:''}
         ${e.por_que_e_prospect?`<div><b>Por que é prospect:</b> ${prospEsc(e.por_que_e_prospect)}</div>`:''}
-        ${e.fornecedores_conhecidos?`<div><b>Fornecedores atuais:</b> ${prospEsc(e.fornecedores_conhecidos)}</div>`:''}
+        ${(e.fornecedores_conhecidos || (e.evidencias||[]).length)?`<div style="margin-top:6px;"><b>Fornecedores — um por linha:</b>${prospFornTabelaHtml(e)}</div>`:''}
         ${[e.id_fiscal?`ID fiscal: ${prospEsc(e.id_fiscal)}`:'', e.site?`<a href="${prospEsc(e.site)}" target="_blank" rel="noopener">${prospEsc(e.site)}</a>`:'', e.porte?`Porte: ${prospEsc(e.porte)}`:''].filter(Boolean).join(' · ')}
         ${(e.evidencias||[]).length?`<div style="margin-top:6px;"><b>Registros / evidências:</b><ul>${e.evidencias.map(v=>`<li>${prospEsc(v.descricao)}${v.ncm?` <span class="pr-n">${prospEsc(v.ncm)}</span>`:''}${v.periodo?` · ${prospEsc(v.periodo)}`:''}${v.fonte?` · <a href="${prospEsc(v.fonte)}" target="_blank" rel="noopener">fonte</a>`:''}</li>`).join('')}</ul></div>`:''}
         ${(e.fontes||[]).length?`<div class="an-panel-sub">Fontes: ${e.fontes.map((u,i)=>`<a href="${prospEsc(u)}" target="_blank" rel="noopener">${i+1}</a>`).join(' · ')}</div>`:''}
@@ -16765,7 +16841,7 @@ function embRender(){
 }
 
 /* ===== BUSCA POR IMPORTADOR / EXPORTADOR — para quem os nossos fornecedores vendem (e de quem um cliente compra) ===== */
-const buscaF = { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false };
+const buscaF = { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false, todas:false };
 let buscaExportDados = null;   // o que está na tela agora (para baixar em Excel / PDF)
 // apelidos dos nossos fornecedores → como o nome aparece nos registros
 const BUSCA_APELIDOS = {
@@ -16812,7 +16888,7 @@ function buscaRender(){
   const nossos = [...new Set(prospNcms().flatMap(x=>x.fornecedores||[]).filter(f=>f && !/^—/.test(f)))];
   const sugExp = [...new Set(embs.map(x=>x.exportador).filter(Boolean).map(x=>String(x).replace(/\s*\(.*$/,'').trim()))].sort();
   const sugImp = [...new Set(embs.map(x=>x.importador).concat((D.empresas||[]).map(e=>e.empresa)).filter(Boolean))].sort();
-  const temBusca = buscaF.exp || buscaF.imp || buscaF.pais || buscaF.ncm || buscaF.ano || buscaF.soCli || buscaF.semCli;
+  const temBusca = buscaF.exp || buscaF.imp || buscaF.pais || buscaF.ncm || buscaF.ano || buscaF.soCli || buscaF.semCli || buscaF.todas;
   const filtroExtra = (pais, ncms, data, nome) => {
     if(buscaF.pais && pais !== buscaF.pais) return false;
     if(buscaF.ncm && !(ncms||[]).some(n=>prospNcm4(n)===buscaF.ncm)) return false;
@@ -16856,13 +16932,20 @@ function buscaRender(){
       return true; })
       .map(e=>[e, buscaEvChave(buscaEvRecente(buscaEvsRelevantes(e)))])
       .sort((a,b)=>b[1].localeCompare(a[1])).map(x=>x[0])   // registro mais recente primeiro
-      .slice(0, 300);
-    const linhaE = e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp));
-      const v = buscaEvRecente(evs) || buscaEvRecente(e.evidencias) || {};
+      .slice(0, buscaF.todas ? 2000 : 300);
+    const linhaE = e=>{
       const cli = ehCli(e.empresa);
-      return `<tr><td><b>${E(e.empresa)}</b>${cli?' <span class="pr-cli">✓ cliente</span>':''}${e.novo?' <span class="pr-novo">novo</span>':''}</td><td>${E(e.pais)}</td><td>${E(e.segmento||'')}</td>
-        <td>${prospFornecedores(e).filter(f=>!buscaF.exp || buscaCasa(f, buscaF.exp)).map(f=>`<span class="pr-tag">${E(f)}</span>`).join(' ')}</td>
-        <td class="an-panel-sub">${E(v.descricao||'')}${v.periodo?` <b>(${E(v.periodo)})</b>`:''}</td><td style="white-space:nowrap;">${(()=>{ const pr = prospPeriodo(e); return pr.txt ? E(buscaPeriodoTxt(pr)) + (pr.ult?`<div class="an-panel-sub">último: ${E(pr.ult)}</div>`:'') : '<span class="an-panel-sub">sem data</span>'; })()}</td></tr>`; };
+      const gs = prospFornDetalhe(e).filter(g=>!buscaF.exp || buscaCasa(g.nome, buscaF.exp));
+      const pr = prospPeriodo(e);
+      const perHtml = pr.txt ? E(buscaPeriodoTxt(pr)) + (pr.ult?`<div class="an-panel-sub">último: ${E(pr.ult)}</div>`:'') : '<span class="an-panel-sub">sem data</span>';
+      const lin = gs.length ? gs : [null];
+      const rs = lin.length, sep = 'border-top:2px solid rgba(120,160,255,.35);';
+      return lin.map((g,i)=>`<tr>${i===0?`<td rowspan="${rs}" style="vertical-align:top;${sep}"><b>${E(e.empresa)}</b>${cli?' <span class="pr-cli">✓ cliente</span>':''}${e.novo?' <span class="pr-novo">novo</span>':''}</td><td rowspan="${rs}" style="vertical-align:top;${sep}">${E(e.pais)}</td><td rowspan="${rs}" style="vertical-align:top;${sep}">${E(e.segmento||'')}</td>`:''}
+        ${g ? `<td style="vertical-align:top;${i===0?sep:''}"><b>${E(g.nome)}</b>${g.origem.size?`<div class="an-panel-sub">${E([...g.origem].join(', '))}</div>`:''}</td>
+        <td style="vertical-align:top;${i===0?sep:''}">${g.prods.size ? [...g.prods.values()].map(p=>`<div>${E(p.desc||'—')}${p.ncm?` <span class="pr-n">${E(p.ncm)}</span>`:''}</div>`).join('') : `<span class="an-panel-sub">${E(g.nota||'sem registro detalhado')}</span>`}</td>
+        <td style="vertical-align:top;text-align:right;white-space:nowrap;${i===0?sep:''}">${prospFornValorTxt(g) || '<span class="an-panel-sub">—</span>'}${g.n?`<div class="an-panel-sub">${g.n} registro(s)${g.ult?' · último '+E(/^\d{4}-\d{2}-\d{2}$/.test(g.ult)?fmtDateBR(g.ult):g.ult):''}</div>`:''}</td>`
+        : `<td colspan="3" class="an-panel-sub" style="${sep}">sem fornecedor identificado</td>`}
+        ${i===0?`<td rowspan="${rs}" style="vertical-align:top;white-space:nowrap;${sep}">${perHtml}</td>`:''}</tr>`).join(''); };
     buscaExportDados = { porImp, grupos, lista, emps, ehCli };
     const tituloG = porImp ? `🏭 Compradores${buscaF.exp?` de <b>${E(buscaF.exp)}</b>`:''} nos embarques` : `🚢 Fornecedores de <b>${E(buscaF.imp)}</b> nos embarques`;
     corpo = `
@@ -16874,8 +16957,8 @@ function buscaRender(){
       <div class="busca-sec">${tituloG} <span class="an-panel-sub">${grupos.length} · ${lista.length} embarque(s) de 2026 · clique numa linha para ver os embarques</span></div>
       ${grupos.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>${porImp?'Importador':'Exportador'}</th><th>País</th><th>Embarques</th><th>Último</th><th>NCMs</th><th style="text-align:right">Valor total</th><th>Preço médio</th><th>${porImp?'Fornecedor(es)':'Comprador(es)'}</th></tr></thead><tbody>${grupos.map(linhaG).join('')}</tbody></table></div>`
         : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhum embarque de 2026 com essa busca ainda — a coleta diária vai acrescentando. Veja abaixo as empresas da base.</div>'}
-      <div class="busca-sec" style="margin-top:12px;">📋 Empresas da base ${buscaF.exp?`que compram de <b>${E(buscaF.exp)}</b>`:(buscaF.imp?`com esse nome`:`com esses filtros`)} <span class="an-panel-sub">${emps.length} · só com informação de 2025 em diante (o período está na última coluna)</span></div>
-      ${emps.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>Fornecedor citado</th><th>Registro</th><th>Período</th></tr></thead><tbody>${emps.map(linhaE).join('')}</tbody></table></div>`
+      <div class="busca-sec" style="margin-top:12px;">📋 Empresas da base ${buscaF.exp?`que compram de <b>${E(buscaF.exp)}</b>`:(buscaF.imp?`com esse nome`:`com esses filtros`)} <span class="an-panel-sub">${emps.length} · uma linha por fornecedor · só com informação de 2025 em diante · * FOB estimado pela fonte</span></div>
+      ${emps.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>Fornecedor</th><th>Produtos comprados (NCM)</th><th style="text-align:right">Valor FOB (US$)</th><th>Período</th></tr></thead><tbody>${emps.map(linhaE).join('')}</tbody></table></div>`
         : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhuma empresa da base cita esse fornecedor.</div>'}`;
   }
   box.innerHTML = `
@@ -16884,6 +16967,7 @@ function buscaRender(){
       <input id="buscaExp" list="buscaExpL" placeholder="Exportador / fornecedor (ex.: JBS, Yantai, Miracll)" value="${E(buscaF.exp)}" style="min-width:260px;">
       <input id="buscaImp" list="buscaImpL" placeholder="Importador / comprador" value="${E(buscaF.imp)}" style="min-width:240px;">
       <button class="btn btn-primary btn-sm" id="buscaIr">Pesquisar</button>
+      <button class="btn ${buscaF.todas?'btn-primary':'btn-ghost'} btn-sm" id="buscaTodas" title="Lista todas as empresas da base, cada fornecedor numa linha, com produtos (NCM) e valor FOB">🏢 Todas as empresas</button>
       <select id="buscaPais"><option value="">Todos os países</option>${paisesB.map(v=>`<option ${v===buscaF.pais?'selected':''}>${E(v)}</option>`).join('')}</select>
       <select id="buscaNcm"><option value="">Todas as NCMs</option>${ncmsB.map(v=>`<option ${v===buscaF.ncm?'selected':''}>${E(v)}</option>`).join('')}</select>
       <select id="buscaAno"><option value="">Qualquer ano</option>${anosB.map(v=>`<option ${v===buscaF.ano?'selected':''}>${E(v)}</option>`).join('')}</select>
@@ -16898,9 +16982,10 @@ function buscaRender(){
   const ir = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaRender(); };
   box.querySelector('#buscaIr').onclick = ir;
   box.querySelectorAll('#buscaExp,#buscaImp').forEach(i=>i.addEventListener('keydown', ev=>{ if(ev.key==='Enter') ir(); }));
+  const bt = box.querySelector('#buscaTodas'); if(bt) bt.onclick = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaF.todas = !buscaF.todas; buscaRender(); };
   const bxl = box.querySelector('#buscaXls'); if(bxl) bxl.onclick = ()=>buscaBaixarExcel();
   const bpd = box.querySelector('#buscaPdf'); if(bpd) bpd.onclick = ()=>buscaBaixarPdf();
-  const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ const tinhaPais = !!buscaF.pais; Object.assign(buscaF, { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false }); if(tinhaPais) prPaisMudou(''); else buscaRender(); };
+  const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ const tinhaPais = !!buscaF.pais; Object.assign(buscaF, { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false, todas:false }); if(tinhaPais) prPaisMudou(''); else buscaRender(); };
   [['buscaPais','pais'],['buscaNcm','ncm'],['buscaAno','ano'],['buscaSoCli','soCli'],['buscaSemCli','semCli']].forEach(([id,k])=>{ const i = box.querySelector('#'+id); if(i) i.onchange = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); if(k==='pais'){ prPaisMudou(i.value); return; } buscaF[k] = i.type==='checkbox' ? i.checked : i.value; if(k==='soCli' && i.checked) buscaF.semCli = false; if(k==='semCli' && i.checked) buscaF.soCli = false; buscaRender(); }; });
   box.querySelectorAll('[data-busca-exp]').forEach(b=>b.onclick = ()=>{ buscaF.exp = buscaF.exp===b.dataset.buscaExp ? '' : b.dataset.buscaExp; buscaF.imp = ''; buscaRender(); });
   box.querySelectorAll('[data-busca-ir]').forEach(tr=>tr.onclick = ()=>{ embF.busca = tr.dataset.buscaIr; embF.limite = 200; embRender(); const eb = document.getElementById('prEmbBox'); if(eb) eb.scrollIntoView({behavior:'smooth', block:'start'}); });
@@ -16948,15 +17033,20 @@ function buscaTabelas(){
       return [buscaDataBR(x.data), x.importador||'', ehCli(x.importador)?'Sim':'Não', x.pais||'', x.exportador||'', x.origem||'', prospFmtNcm(x.ncm||''), x.produto||'',
         +x.quantidade>0 ? +x.quantidade : null, x.unidade||'', +x.valor>0 ? +x.valor : null, x.tipo_valor||'', p ? r2(p.base) : null, p ? (p.por||'un.') : '', x.fonte||'']; })
   };
-  // 3) empresas da base
+  // 3) empresas da base — uma linha por fornecedor
+  const t3linhas = [];
+  emps.forEach(e=>{ const pr = prospPeriodo(e);
+    const gs = prospFornDetalhe(e).filter(g=>!buscaF.exp || buscaCasa(g.nome, buscaF.exp));
+    (gs.length ? gs : [null]).forEach(g=>t3linhas.push([e.empresa||'', ehCli(e.empresa)?'Sim':'Não', e.pais||'', e.segmento||'',
+      g ? g.nome : 'sem fornecedor identificado', g ? [...g.origem].join(', ') : '', g ? prospFornProdTxt(g) : '',
+      g && g.fob>0 ? g.fob : null, g && g.est ? 'estimado' : (g && g.fob>0 ? 'real' : ''), g && g.cif>0 ? g.cif : null,
+      g ? g.n : null, g && g.ult ? buscaDataBR(g.ult) : '', buscaPeriodoTxt(pr)])); });
   const t3 = {
-    nome: 'Empresas da base', titulo: 'Empresas da base' + (buscaF.exp ? ` que compram de ${buscaF.exp}` : '') + ' (informações de 2025 em diante)',
-    cab: ['Empresa', 'Já é cliente?', 'País', 'Cidade', 'Segmento', 'Fornecedor citado', 'Registro', 'Período', 'Último registro'],
-    tipos: ['b','d','t','t','t','t','t','d','d'],
-    larg: [32,10,12,14,18,26,60,11,12],
-    linhas: emps.map(e=>{ const evs = (e.evidencias||[]).filter(v=>!buscaF.exp || buscaCasa(v.fornecedor, buscaF.exp)); const v = buscaEvRecente(evs) || buscaEvRecente(e.evidencias) || {}; const pr = prospPeriodo(e);
-      return [e.empresa||'', ehCli(e.empresa)?'Sim':'Não', e.pais||'', e.cidade||'', e.segmento||'', prospFornecedores(e).filter(f=>!buscaF.exp || buscaCasa(f, buscaF.exp)).join(', '),
-        (v.descricao||'') + (v.periodo ? ` (${v.periodo})` : ''), buscaPeriodoTxt(pr), pr.ult||'']; })
+    nome: 'Empresas da base', titulo: 'Empresas da base — fornecedores, produtos (NCM) e valor FOB' + (buscaF.exp ? ` · fornecedor ${buscaF.exp}` : '') + ' (informações de 2025 em diante)',
+    cab: ['Empresa', 'Já é cliente?', 'País', 'Segmento', 'Fornecedor', 'Origem', 'Produtos comprados (NCM)', 'Valor FOB (US$)', 'FOB real/estimado', 'Valor CIF (US$)', 'Registros', 'Último registro', 'Período'],
+    tipos: ['b','d','t','t','b','t','t','n','d','n','i','d','d'],
+    larg: [30,10,12,16,30,12,60,15,11,14,9,12,11],
+    linhas: t3linhas
   };
   const hoje = new Date();
   const arq = ('PESQUISA_' + String(quem).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_|_$/g,'').toUpperCase() + '_' + hoje.toISOString().slice(0,10));
