@@ -1,0 +1,62 @@
+[
+ {
+  "data": "2026-06-04",
+  "importador": "COMPANIA NACIONAL DE CUEROS S.A.",
+  "pais": "CHILE",
+  "exportador": "INNOVACION EN PIELES S.DE R.L.DE C.V.",
+  "origem": "MEXICO",
+  "ncm": "4104.11",
+  "produto": "PIEL DE BOVINO EN WET BLUE (HS 41041104, registro de exportação mexicano; valor sem moeda indicada)",
+  "quantidade": 3480,
+  "unidade": "kg",
+  "valor": 11420.16,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/supplier/25577856"
+ },
+ {
+  "data": "2026-04-29",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": "ITALIA",
+  "ncm": "",
+  "produto": "Couro (DO-PEL.20265617); HS não exibido neste registro, provável 4107 (não confirmado): fornecedor/linha iguais ao embarque 4107.92 de jun-2026",
+  "quantidade": 601.45,
+  "unidade": "m2",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ },
+ {
+  "data": "2026-03-26",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": "ITALIA",
+  "ncm": "",
+  "produto": "Couro (DO-PEL.20262823); HS não exibido neste registro, provável 4107 (não confirmado): fornecedor/linha iguais ao embarque 4107.92 de jun-2026",
+  "quantidade": 1166.26,
+  "unidade": "m2",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ },
+ {
+  "data": "2026-02-24",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": "ITALIA",
+  "ncm": "",
+  "produto": "Couro (DO-PEL.20260566); HS não exibido neste registro, provável 4107 (não confirmado): fornecedor/linha iguais ao embarque 4107.92 de jun-2026",
+  "quantidade": 615.18,
+  "unidade": "m2",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ }
+]
