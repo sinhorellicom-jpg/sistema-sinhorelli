@@ -1788,6 +1788,7 @@ html,body{overflow-x:hidden;overflow-x:clip;}
       <button class="btn btn-ghost btn-sm" id="exportPdfBtn">🖨 Salvar PDF</button>
       <button class="btn btn-ghost btn-sm" id="exportarTudoBtn" title="Baixa um arquivo com TODOS os dados do sistema">📦 Exportar tudo</button>
       <button class="btn btn-ghost btn-sm" id="importarTudoBtn" title="Restaura os dados de um arquivo exportado">📥 Importar tudo</button>
+      <button class="btn btn-ghost btn-sm" id="conferirEnc26Btn" title="Compara os encerrados de 2026 com a planilha (total USD 1.371.238,83) e mostra qual está com valor diferente">✅ Conferir encerrados 2026</button>
       <button class="btn btn-ghost btn-sm" id="conferirPlanilhaBtn" title="Compara o Valor USD, a etapa e a data de cada processo com a sua planilha de controle (Excel). Não altera nada.">🔎 Conferir com planilha</button>
       <button class="btn btn-ghost btn-sm" id="recuperarProcBtn" title="Acrescenta os processos que faltam nesta aba, a partir de um arquivo de processos">♻ Recuperar processos</button>
       <button class="btn btn-ghost btn-sm" id="sumModeBtn">Σ Somar valores</button>
@@ -14240,6 +14241,58 @@ function confLerPlanilha(wb){
   });
   return out;
 }
+
+/* ===== CONFERÊNCIA DOS ENCERRADOS 2026 com a planilha "ENCERRADO EM 2026" (28 processos · USD 1.371.238,83) ===== */
+const ENC26_PLANILHA = {"111/26":[88923.86,"TUNGURAHUA"],"100/26":[103441.47,"TUNGURAHUA"],"128/26":[101627.28,"TUNGURAHUA"],"120/26":[51288.67,"TUNGURAHUA"],"186/26":[664.39,"TAURO"],"105/26":[68694.12,"DINNO"],"125/26":[29683.08,"PIELES AR"],"177/26":[526.19,"CUEROS VÉLEZ"],"144/26":[14121.90,"PIELES AR"],"37/26":[153855.90,"PIELES AR"],"95/26":[31876.20,"TAURO"],"83/26":[19361.75,"TAURO"],"158/26":[32204.07,"CUEROS VÉLEZ"],"99/26":[60518.71,"CURPISCO"],"11/26":[28970.61,"CURPISCO"],"13/26":[8831.41,"ARTESA"],"15/26":[49117.20,"ZARZARROSSA"],"16/26":[27492.13,"TUNGURAHUA"],"17/26":[34265.24,"TUNGURAHUA"],"18/26":[26575.25,"TUNGURAHUA"],"29/26":[33283.09,"CUEROS VÉLEZ"],"31/26":[17570.13,"CABRIPIEL"],"60/26":[28816.63,"CURPISCO"],"77/26":[27700.86,"TUNGURAHUA"],"98/26":[42531.00,"TUNGURAHUA"],"109/26":[45998.49,"TUNGURAHUA"],"110/26":[62328.44,"TUNGURAHUA"],"44/26":[180970.76,"DINNO"]};
+function conferirEncerrados2026(){
+  const r2 = v => Math.round((+v||0)*100)/100;
+  const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const et = k => (STATUS_BY_KEY[k]||{}).label || k || '—';
+  const totPlan = r2(Object.values(ENC26_PLANILHA).reduce((s,x)=>s+x[0],0));
+  const encSis = processos.filter(p=>p.status==='ENCERRADO' && yearOf(p)==='2026');
+  const totSis = r2(encSis.reduce((s,p)=>s+(+p.valorUsd||0),0));
+  const difValor = [], naoEnc = [], naoAchou = [], sobra = [];
+  Object.keys(ENC26_PLANILHA).forEach(n=>{
+    const [v, cli] = ENC26_PLANILHA[n];
+    const ps = processos.filter(p=>confNumProc(p.processo)===n);
+    const p = ps.find(x=>x.status==='ENCERRADO') || ps[0];
+    if(!p){ naoAchou.push({n, v, cli}); return; }
+    const vs = r2(p.valorUsd);
+    if(Math.abs(vs - v) >= 0.01) difValor.push({p, n, v, vs, d:r2(vs - v)});
+    if(p.status!=='ENCERRADO' || yearOf(p)!=='2026') naoEnc.push({p, n, v});
+  });
+  encSis.forEach(p=>{ if(!ENC26_PLANILHA[confNumProc(p.processo)]) sobra.push(p); });
+  const tab = (cab, linhas) => linhas.length ? `<div style="overflow:auto;"><table class="mat-table" style="width:100%;"><thead><tr>${cab.map(c=>`<th style="text-align:left;">${c}</th>`).join('')}</tr></thead><tbody>${linhas.join('')}</tbody></table></div>` : '<div class="an-panel-sub" style="padding:4px 0 8px;">Nenhum. ✓</div>';
+  const sec = (t, n, corpo) => `<h3 style="margin:16px 0 6px;font-size:15px;">${t} <span class="an-panel-sub">(${n})</span></h3>${corpo}`;
+  const dif = r2(totSis - totPlan);
+  const html = `
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
+      <div class="an-panel" style="flex:1;min-width:200px;padding:10px 12px;"><div class="an-panel-sub">Encerrados 2026 — sistema</div><b style="font-size:18px;">USD ${fmt(totSis)}</b><div class="an-panel-sub">${encSis.length} processos</div></div>
+      <div class="an-panel" style="flex:1;min-width:200px;padding:10px 12px;"><div class="an-panel-sub">Encerrados 2026 — planilha</div><b style="font-size:18px;">USD ${fmt(totPlan)}</b><div class="an-panel-sub">28 processos</div></div>
+      <div class="an-panel" style="flex:1;min-width:200px;padding:10px 12px;"><div class="an-panel-sub">Diferença (sistema − planilha)</div><b style="font-size:18px;color:${Math.abs(dif)<0.01?'var(--green,#2E9E6B)':'#F87171'};">USD ${fmt(dif)}</b></div>
+    </div>
+    ${sec('💲 Valor da venda diferente da planilha', difValor.length, tab(['Processo','Cliente','Etapa','Valor no sistema','Valor na planilha','Diferença',''],
+      difValor.map(o=>`<tr><td><b>${esc(o.p.processo)}</b></td><td style="text-align:left;">${esc(o.p.cliente)}</td><td style="text-align:left;">${esc(et(o.p.status))}</td><td class="num">${fmt(o.vs)}</td><td class="num">${fmt(o.v)}</td><td class="num" style="font-weight:700;color:${o.d>0?'#F87171':'#60A5FA'};">${o.d>0?'+':''}${fmt(o.d)}</td><td><button class="btn btn-ghost btn-sm" data-enc26-fix="${o.p.id}" data-v="${o.v}">Corrigir p/ ${fmt(o.v)}</button></td></tr>`)))}
+    ${sec('🟦 Encerrados 2026 no sistema que NÃO estão na planilha', sobra.length, tab(['Processo','Cliente','Data','Valor'],
+      sobra.map(p=>`<tr><td><b>${esc(p.processo)}</b></td><td style="text-align:left;">${esc(p.cliente)}</td><td>${p.data?fmtDateBR(String(p.data).slice(0,10)):'—'}</td><td class="num">${fmt(r2(p.valorUsd))}</td></tr>`)))}
+    ${sec('🔀 Na planilha, mas no sistema não está em Encerrados 2026', naoEnc.length, tab(['Processo','Cliente','Etapa no sistema','Data no sistema','Valor no sistema'],
+      naoEnc.map(o=>`<tr><td><b>${esc(o.p.processo)}</b></td><td style="text-align:left;">${esc(o.p.cliente)}</td><td style="text-align:left;">${esc(et(o.p.status))}</td><td>${o.p.data?fmtDateBR(String(o.p.data).slice(0,10)):'—'}</td><td class="num">${fmt(r2(o.p.valorUsd))}</td></tr>`)))}
+    ${sec('🟨 Na planilha, mas não existe no sistema', naoAchou.length, tab(['Processo','Cliente','Valor na planilha'],
+      naoAchou.map(o=>`<tr><td><b>${esc(o.n)}</b></td><td style="text-align:left;">${esc(o.cli)}</td><td class="num">${fmt(o.v)}</td></tr>`)))}
+    <div class="an-panel-sub" style="margin-top:12px;">Só mostra. Nada muda até você clicar em "Corrigir".</div>`;
+  const root = document.createElement('div'); root.className='overlay'; root.style.zIndex=99999;
+  root.innerHTML = `<div class="modal" style="max-width:980px;"><div class="modal-head"><div><h2>✅ Conferência — Encerrados 2026 × planilha</h2></div></div>
+    <div class="modal-body" style="max-height:72vh;overflow:auto;">${html}</div>
+    <div class="modal-foot"><button class="btn btn-primary" id="enc26Fechar">Fechar</button></div></div>`;
+  document.body.appendChild(root);
+  root.querySelector('#enc26Fechar').onclick = ()=>root.remove();
+  root.addEventListener('click', e=>{ if(e.target===root) root.remove(); });
+  root.querySelectorAll('[data-enc26-fix]').forEach(b=>b.addEventListener('click', ()=>{
+    const p = processos.find(x=>String(x.id)===b.dataset.enc26Fix); if(!p) return;
+    p.valorUsd = +b.dataset.v; saveData(true); try{ renderBoard(); }catch(e){}
+    toast('Processo '+p.processo+' corrigido para USD '+fmt(p.valorUsd)); root.remove(); conferirEncerrados2026();
+  }));
+}
 async function conferirComPlanilha(){
   if(typeof XLSX==='undefined'){ toast('A leitura de planilhas ainda não carregou; tente de novo em alguns segundos.'); return; }
   const files = await escolherArquivos(false); const file = files[0]; if(!file) return;
@@ -17331,6 +17384,8 @@ async function init(){
   document.getElementById('exportBtn').addEventListener('click', exportCsv);
   document.getElementById('savePartsBtn').addEventListener('click', exportarPdfAba);
   const btnConf = document.getElementById('conferirPlanilhaBtn');
+  const btnEnc26 = document.getElementById('conferirEnc26Btn');
+  if(btnEnc26) btnEnc26.addEventListener('click', ()=>{ if(activeDataset!=='jbs'){ toast('Abra a aba Vendas JBS para conferir.'); return; } try{ conferirEncerrados2026(); }catch(e){ console.warn('enc26', e); toast('Falha na conferência: '+(e.message||e)); } });
   if(btnConf) btnConf.addEventListener('click', ()=>{ conferirComPlanilha().catch(e=>{ console.warn('conferir', e); toast('Falha na conferência: '+(e.message||e)); }); });
   const btnExpTudo = document.getElementById('exportarTudoBtn');
   if(btnExpTudo) btnExpTudo.addEventListener('click', async ()=>{
