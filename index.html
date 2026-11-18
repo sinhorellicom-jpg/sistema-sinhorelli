@@ -12145,6 +12145,7 @@ function renderNotasFiscaisView(){
   const chaveNum = n => { const m = String(n.numero||'').match(/(\d+)\s*\/\s*(\d+)/); if(m) return (+m[2])*100000 + (+m[1]); const d = parseInt(String(n.numero||'').replace(/\D/g,''),10); return isNaN(d) ? -1 : d; };
   const dataBR = d => d && /^\d{4}-\d{2}-\d{2}$/.test(d) ? d.slice(8,10)+'/'+d.slice(5,7)+'/'+d.slice(2,4) : '';
 
+  window.__nfTodosProc = todosProc;
   const nfFornList = mergeNfFornecedores();
   const totalGeral = notasFiscais.length;
 
@@ -12255,6 +12256,7 @@ function renderNotasFiscaisView(){
         <div></div>
         <button class="btn btn-primary" id="nfQuickAddBtn" style="height:36px;">+ Adicionar</button>
       </div>
+      <div id="nfQuickAuto" class="an-panel-sub" style="margin-top:6px;display:none;"></div>
       <div class="an-panel-sub" style="margin-top:6px;">Nota fiscal desconta IRRF de 1,5% automaticamente · Invoice não tem IRRF, só a taxa bancária.
         <button type="button" class="link-btn" id="nfAddBtn" title="Cria uma linha vazia pra preencher direto na lista">ou criar uma linha em branco na lista</button></div>
     </div>`;
@@ -14694,6 +14696,60 @@ function wireNfQuickAdd(){
     if(el){ el.addEventListener('input', fmtQuick); el.addEventListener('change', fmtQuick); }
   });
   fmtQuick();
+
+  // ---- digitou o nº do processo → puxa fornecedor, nº da invoice, comissão (US$), câmbio e data de recebimento ----
+  const autoBox = document.getElementById('nfQuickAuto');
+  const campoAuto = (id, valor) => {   // só preenche se o campo está vazio ou foi preenchido automaticamente antes
+    const el = document.getElementById(id); if(!el) return;
+    if(el.value && el.dataset.auto!=='1') return;
+    if(valor===undefined || valor===null || valor===''){ if(el.dataset.auto==='1'){ el.value=''; el.dataset.auto=''; } return; }
+    el.value = valor; el.dataset.auto = '1';
+  };
+  ['nfQuickFornecedor','nfQuickNumero','nfQuickValor','nfQuickCambio','nfQuickDataPagto'].forEach(id=>{
+    const el = document.getElementById(id); if(el) el.addEventListener('input', ()=>{ el.dataset.auto=''; });
+  });
+  const numBR = v => (Math.round((+v||0)*100)/100).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const normP = t => { const m = String(t||'').trim().match(/^0*(\d{1,4})\s*\/\s*(\d{2,4})$/); return m ? (+m[1])+'/'+String(m[2]).slice(-2) : String(t||'').trim().toLowerCase(); };
+  const puxarDoProcesso = ()=>{
+    const inp = document.getElementById('nfQuickProcessos'); if(!inp) return;
+    const nums = inp.value.split(/[,;]+/).map(x=>x.trim()).filter(Boolean);
+    const base = (window.__nfTodosProc || processos || []).filter(p=>p && p.processo);
+    const achados = [], faltam = [];
+    nums.forEach(n=>{ const k = normP(n); const p = base.find(x=>normP(x.processo)===k && x.status!=='CANCELADO') || base.find(x=>normP(x.processo)===k); if(p){ if(!achados.includes(p)) achados.push(p); } else faltam.push(n); });
+    if(!achados.length){
+      ['nfQuickFornecedor','nfQuickNumero','nfQuickValor','nfQuickCambio','nfQuickDataPagto'].forEach(id=>campoAuto(id, ''));
+      if(autoBox){ autoBox.style.display = nums.length ? '' : 'none'; autoBox.innerHTML = nums.length ? '⚠ Processo não encontrado: ' + faltam.map(x=>'<b>'+x.replace(/</g,'&lt;')+'</b>').join(', ') : ''; }
+      fmtQuick(); return;
+    }
+    const unico = arr => { const u = [...new Set(arr.filter(Boolean).map(x=>String(x).trim()))]; return u.length===1 ? u[0] : ''; };
+    // fornecedor: usa a opção da lista que corresponde ao fornecedor do processo (cria a opção se não houver)
+    const forn = unico(achados.map(p=>p.fornecedor));
+    const sel = document.getElementById('nfQuickFornecedor');
+    if(sel && forn && (!sel.value || sel.dataset.auto==='1')){
+      const nf = forn.toUpperCase();
+      let op = [...sel.options].find(o=>o.value && o.value.toUpperCase()===nf) || [...sel.options].find(o=>o.value && (o.value.toUpperCase().includes(nf) || nf.includes(o.value.toUpperCase())));
+      if(!op){ op = new Option(forn, forn); sel.add(op); }
+      sel.value = op.value; sel.dataset.auto = '1';
+    } else if(sel && !forn && sel.dataset.auto==='1'){ sel.value=''; sel.dataset.auto=''; }
+    campoAuto('nfQuickNumero', unico(achados.map(p=>p.nfComissao)));
+    const com = achados.reduce((s,p)=>{ try{ return s + (comissaoUsd(p)||0); }catch(e){ return s; } }, 0);
+    campoAuto('nfQuickValor', com>0 ? numBR(com) : '');
+    const camb = unico(achados.map(p=>Number(p.cambio)>1 ? String(p.cambio) : ''));
+    campoAuto('nfQuickCambio', camb ? (+camb).toLocaleString('pt-BR',{maximumFractionDigits:4}) : '');
+    const datas = achados.map(p=>p.dataComissaoRecebida).filter(d=>/^\d{4}-\d{2}-\d{2}$/.test(String(d||''))).sort();
+    campoAuto('nfQuickDataPagto', datas.length===achados.length ? datas[datas.length-1] : '');
+    if(autoBox){
+      const esc = t => String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+      autoBox.style.display = '';
+      autoBox.innerHTML = '🔗 Puxado do sistema: ' + achados.map(p=>`<b>${esc(p.processo)}</b> ${esc(p.cliente||'')} · ${esc(p.fornecedor||'—')} · comissão USD ${numBR(comissaoUsd(p))}${Number(p.cambio)>1?' · câmbio '+Number(p.cambio).toLocaleString('pt-BR',{maximumFractionDigits:4}):''}`).join(' &nbsp;|&nbsp; ')
+        + (achados.length>1 ? ` &nbsp;→ <b>total USD ${numBR(com)}</b>` : '')
+        + (faltam.length ? ` &nbsp;·&nbsp; ⚠ não encontrado: <b>${faltam.map(esc).join(', ')}</b>` : '')
+        + (!forn && achados.length>1 ? ' &nbsp;·&nbsp; processos de fornecedores diferentes: escolha o fornecedor' : '');
+    }
+    fmtQuick();
+  };
+  const procInp = document.getElementById('nfQuickProcessos');
+  if(procInp){ let tm = null; procInp.addEventListener('input', ()=>{ clearTimeout(tm); tm = setTimeout(puxarDoProcesso, 350); }); procInp.addEventListener('change', puxarDoProcesso); }
 
   btn.addEventListener('click', ()=>{
     if(!editMode){
