@@ -1,0 +1,62 @@
+[
+ {
+  "data": "2026-05-12",
+  "importador": "CEPOLFI INDUSTRIAL C.A.",
+  "pais": "EQUADOR",
+  "exportador": "amino quimica ltd.",
+  "origem": null,
+  "ncm": "3907.29",
+  "produto": "AMIPOL MVE 2000/97 CP",
+  "quantidade": 3000,
+  "unidade": "kg",
+  "valor": 14130,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/buyer/8551433"
+ },
+ {
+  "data": "2026-05-12",
+  "importador": "CEPOLFI INDUSTRIAL C.A.",
+  "pais": "EQUADOR",
+  "exportador": "amino quimica ltd.",
+  "origem": null,
+  "ncm": "3907.29",
+  "produto": "AMIPOL PHR 2560",
+  "quantidade": 400,
+  "unidade": "kg",
+  "valor": 1512,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/buyer/8551433"
+ },
+ {
+  "data": "2026-09-29",
+  "importador": "ATECMA CIA LTDA",
+  "pais": "EQUADOR",
+  "exportador": "Henkel Peruana S.A.",
+  "origem": "CHINA",
+  "ncm": "3506.91",
+  "produto": "Technomelt Supra 90 25 kg",
+  "quantidade": 719,
+  "unidade": "KILOGRAMO BRUTO",
+  "valor": 2566.78,
+  "tipo_valor": "CIF",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/ecuador/suppliers/henkel-peruana-s-a"
+ },
+ {
+  "data": "2026-01-26",
+  "importador": "unilever andina ecuador s.a.",
+  "pais": "EQUADOR",
+  "exportador": "suministros quimicos ltda.",
+  "origem": null,
+  "ncm": "3909.50",
+  "produto": "polyurethanes",
+  "quantidade": 1200,
+  "unidade": "kg",
+  "valor": 17098,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/supplier/21121376"
+ }
+]
