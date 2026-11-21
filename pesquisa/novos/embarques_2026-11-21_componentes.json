@@ -1,0 +1,32 @@
+[
+ {
+  "data": "2026-05-06",
+  "importador": "WORK GROUP MACHINERY S.A.C.",
+  "pais": "PERU",
+  "exportador": "GAOMIA SHENGYUNA METALA PRODUCTSA CO",
+  "origem": "CHINA",
+  "ncm": "6406.90",
+  "produto": "PUNTERA DE ACERO, GAOMI, EN 12568 PARA ZAPATO DE SEGURIDAD (#9 5000 PARES Y #10 100 PARES)",
+  "quantidade": 140.108,
+  "unidade": "kg",
+  "valor": 1938,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/buyer/61433356"
+ },
+ {
+  "data": "2026-05-06",
+  "importador": "WORK GROUP MACHINERY S.A.C.",
+  "pais": "PERU",
+  "exportador": "GAOMIA SHENGYUNA METALA PRODUCTSA CO",
+  "origem": "CHINA",
+  "ncm": "6406.90",
+  "produto": "PUNTERA DE PLASTICO, GAOMI, EN 12568 PARA ZAPATO DE SEGURIDAD (#6 3000 PAR, #7 2000...)",
+  "quantidade": 339.642,
+  "unidade": "kg",
+  "valor": 4698,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://en.52wmb.com/buyer/61433356"
+ }
+]

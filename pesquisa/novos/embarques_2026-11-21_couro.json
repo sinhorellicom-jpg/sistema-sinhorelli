@@ -1,0 +1,47 @@
+[
+ {
+  "data": "2026-04-29",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": "ITALIA",
+  "ncm": "4107",
+  "produto": "Cuero bovino (descrição truncada na fonte: \"Producto. Cuer\"/\"Origen. Bovino\"); HS não exibido nesta linha — 4107 inferido do embarque de 2026-06-26 do mesmo importador/fornecedor (HS 4107920000)",
+  "quantidade": 601.45,
+  "unidade": "m2",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ },
+ {
+  "data": "2026-03-26",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": "ITALIA",
+  "ncm": "4107",
+  "produto": "Cuero bovino (descrição truncada na fonte: \"Producto. Cuer\"/\"Origen. Bovino\"); HS não exibido nesta linha — 4107 inferido do embarque de 2026-06-26 do mesmo importador/fornecedor (HS 4107920000)",
+  "quantidade": 1166.26,
+  "unidade": "m2",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ },
+ {
+  "data": "2026-02-24",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": "ITALIA",
+  "ncm": "4107",
+  "produto": "Cuero bovino (descrição truncada na fonte: \"Producto. Cuer\"/\"Origen. Bovino\"); HS não exibido nesta linha — 4107 inferido do embarque de 2026-06-26 do mesmo importador/fornecedor (HS 4107920000)",
+  "quantidade": 615.18,
+  "unidade": "m2",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ }
+]
