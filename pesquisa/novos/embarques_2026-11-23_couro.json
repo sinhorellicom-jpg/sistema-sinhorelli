@@ -1,0 +1,47 @@
+[
+ {
+  "data": "2026-08-11",
+  "importador": "APF CUEROS COLOMBIA S.A.S",
+  "pais": "COLOMBIA",
+  "exportador": "GRUPPO MASTROTTO SPA",
+  "origem": "Itália",
+  "ncm": "4107.92",
+  "produto": "Leather product, bovine origin (HS 4107920000; HAWB-126101061)",
+  "quantidade": 768.3,
+  "unidade": "m2",
+  "valor": 22572.29,
+  "tipo_valor": "FOB",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+ },
+ {
+  "data": "2026-08-04",
+  "importador": "FABRICA DE CALZADO TAURO S.A.S.",
+  "pais": "COLOMBIA",
+  "exportador": "JBS LEATHER ARGENTINA SA",
+  "origem": "Argentina",
+  "ncm": "4104.41",
+  "produto": "Cuero bovino crust (HS 4104410000; BL OABAE61158)",
+  "quantidade": 1728.11,
+  "unidade": "m2",
+  "valor": 14898.98,
+  "tipo_valor": "FOB",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/fabrica-de-calzado-tauro-sas"
+ },
+ {
+  "data": "2026-06-05",
+  "importador": "PIELESTERRIOS LA HISPANO S.A.S.",
+  "pais": "COLOMBIA",
+  "exportador": "S.A. LA HISPANO ARGENTINA CURTIEMBRE Y CHAROLERIA",
+  "origem": "Argentina",
+  "ncm": "4104.49",
+  "produto": "Cuero bovino crust (HS 4104490000; BL 729-48957882)",
+  "quantidade": 557.78,
+  "unidade": "m2",
+  "valor": 4162.6,
+  "tipo_valor": "FOB",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/colombia/importers/pielesterrios-la-hispano-sas"
+ }
+]

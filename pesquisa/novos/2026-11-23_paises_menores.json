@@ -1,0 +1,361 @@
+[
+ {
+  "empresa": "MARSEG SOCIEDAD ANONIMA",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçado com sola de borracha/plástico/couro (6403.40 = calçado com biqueira de proteção), partes superiores de calçado (6406.10) e palmilhas (6406.90.20)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "6406.90",
+   "3921.13",
+   "5603.14",
+   "3909.50",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Listada como exportadora de 6403.40.00 'Calzado con suela de caucho, plástico, cuero natural', 6403.91.90, 6406.10.00 'Partes superiores de calzado y sus partes' e 6406.90.20 'Plantillas'",
+    "ncm": "6406.90",
+    "origem": "Catálogo oficial 'Paraguay Exporta 2022' (Ministerio de Relaciones Exteriores do Paraguai) — empresa listada como exportadora",
+    "fornecedor": null,
+    "periodo": "2022",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante paraguaio de calçado (inclui 6403.40, calçado com biqueira protetora) e de cabedais/palmilhas — compra couro acabado, biqueiras, contrafortes, não-tecidos e adesivos.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "NIPPONFLEX S.A.",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Palmilhas (6406.90.20) e bolsas com superfície de couro (4202.22.20)",
+  "porte": null,
+  "ncms_provaveis": [
+   "5603.14",
+   "3921.13",
+   "6406.90",
+   "6005.37"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Listada como exportadora de 6406.90.20 'Plantillas' e 4202.22.20",
+    "ncm": "6406.90",
+    "origem": "Catálogo oficial 'Paraguay Exporta 2022' (Ministerio de Relaciones Exteriores do Paraguai) — empresa listada como exportadora",
+    "fornecedor": null,
+    "periodo": "2022",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabrica palmilhas para calçado — usa não-tecido, espuma PU laminada, malha e sintéticos como matéria-prima.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PARPELLI INDUSTRIAL S.A.",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couro bovino wet blue e crust (4104.11.21, 4104.19.40, 4104.41.10)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Listada como exportadora de 4104.11.21, 4104.19.40 e 4104.41.10 (couros bovinos curtidos, wet blue e crust)",
+    "ncm": "4104.41",
+    "origem": "Catálogo oficial 'Paraguay Exporta 2022' (Ministerio de Relaciones Exteriores do Paraguai) — empresa listada como exportadora",
+    "fornecedor": null,
+    "periodo": "2022",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume que processa wet blue até crust — potencial comprador de wet blue (flor/raspa) para complementar volume de recurtimento.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "FABE SOCIEDAD ANONIMA",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couro vacuno wet blue (4104.11.21, 4104.11.24, 4104.19.10, 4104.19.40)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Listada como exportadora de 4104.11.21 'Cuero vacuno Wet Blue', 4104.11.24, 4104.19.10 e 4104.19.40",
+    "ncm": "4104.11",
+    "origem": "Catálogo oficial 'Paraguay Exporta 2022' (Ministerio de Relaciones Exteriores do Paraguai) — empresa listada como exportadora",
+    "fornecedor": null,
+    "periodo": "2022",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume de wet blue no Paraguai — pode comprar wet blue/raspa para trading ou para fechar lotes de exportação.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "YLF S.A",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Wet blue (4104.11.14), luvas de couro (4203.29) e outras manufaturas de couro (4205)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Listada como exportadora de 4104.11.14 (wet blue), 4203.29.00 (luvas) e 4205.00.00",
+    "ncm": "4104.11",
+    "origem": "Catálogo oficial 'Paraguay Exporta 2022' (Ministerio de Relaciones Exteriores do Paraguai) — empresa listada como exportadora",
+    "fornecedor": null,
+    "periodo": "2022",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume com fabricação de luvas de couro — consome couro curtido/raspa para luvas de segurança.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "AMERICA SRL",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": "Asunción",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couro bovino crust (4104.41.10)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Listada como exportadora de 4104.41.10 (couros bovinos em estado seco/crust); endereço Avda. Santísima Trinidad 1331, Asunción",
+    "ncm": "4104.41",
+    "origem": "Catálogo oficial 'Paraguay Exporta 2022' (Ministerio de Relaciones Exteriores do Paraguai) — empresa listada como exportadora",
+    "fornecedor": null,
+    "periodo": "2022",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Produz crust a partir de wet blue — comprador potencial de wet blue para recurtimento.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CHACO CUERO S.A.",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": "Asunción",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Artigos de talabartaria/selaria (4201.00.10) e manufaturas de couro (4205)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Listada como exportadora de 4201.00.10 'Artículos de talabartería o guarnicionería para todos los animales' e 4205.00.00",
+    "ncm": "4107",
+    "origem": "Catálogo oficial 'Paraguay Exporta 2022' (Ministerio de Relaciones Exteriores do Paraguai) — empresa listada como exportadora",
+    "fornecedor": null,
+    "periodo": "2022",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de selaria/talabartaria em couro — consome couro bovino acabado e adesivos.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "KALOS S.A.",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Bolsas (4202.31, 4202.92) e cintos/cinturões (4203.30)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "3921.13",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Listada como exportadora de 4202.31.00, 4202.92.00 e 4203.30.00 'Cintos, cinturones y bandoleras'",
+    "ncm": "4107",
+    "origem": "Catálogo oficial 'Paraguay Exporta 2022' (Ministerio de Relaciones Exteriores do Paraguai) — empresa listada como exportadora",
+    "fornecedor": null,
+    "periodo": "2022",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de cintos e bolsas — compra couro acabado e sintéticos PU.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "SUPERSPUMA DEL PARAGUAY S.A.E.C.A.",
+  "nome_fantasia": null,
+  "pais": "PARAGUAI",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Couros bovinos inteiros curtidos (4104.11.14, 4104.11.19)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Listada como exportadora de 4104.11.14 e 4104.11.19 'Cueros y pieles enteros de bovino (incluido el búfalo)'",
+    "ncm": "4104.11",
+    "origem": "Catálogo oficial 'Paraguay Exporta 2022' (Ministerio de Relaciones Exteriores do Paraguai) — empresa listada como exportadora",
+    "fornecedor": null,
+    "periodo": "2022",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Aparece como exportadora de wet blue no catálogo oficial — possível trader/processador de couro; perfil de compra a confirmar.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.mre.gov.py/san-pablo/pdf/PARAGUAY%20EXPORTA%202022.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "NAPPA LEATHER INC",
+  "nome_fantasia": null,
+  "pais": "PANAMA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Importa marroquinaria pronta: mochilas, pochetes e bolsas de couro, maletas de couro, porta-documentos, chaveiros",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Registros de importação (alfândega Tocumen) de 'Morrales, Riñoneras, Bandoleras De Cuero', 'Maletines De Cuero', 'Porta Documentos De Materia Textil' (4202.32.90)",
+    "ncm": "4202.32",
+    "origem": "Colômbia, China",
+    "fornecedor": "CUEROS VELEZ S.A.S (Colômbia)",
+    "periodo": "03/06/2024 a 29/09/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.importgenius.com/panama/importers/nappa-leather-inc"
+   }
+  ],
+  "fornecedores_conhecidos": "Cueros Vélez S.A.S (Colômbia); CDI Exhibiciones S.A.S.",
+  "por_que_e_prospect": "Importador ativo de artigos de couro (2024–2026); só seria prospect se tiver ou abrir produção própria de marroquinaria — hoje compra produto acabado, não insumo.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/panama/importers/nappa-leather-inc"
+  ],
+  "atualiza_existente": false
+ }
+]

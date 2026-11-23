@@ -1,0 +1,47 @@
+[
+ {
+  "data": "2026-08-05",
+  "importador": "SAR SUELA S.R.L.",
+  "pais": "ARGENTINA",
+  "exportador": null,
+  "origem": "China",
+  "ncm": "6406.20",
+  "produto": "Suelas y tacones de caucho o plástico (HS 64062000190)",
+  "quantidade": 1440,
+  "unidade": "pares",
+  "valor": 4320,
+  "tipo_valor": "FOB",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/argentina/importers/sar-suela-srl"
+ },
+ {
+  "data": "2026-07-29",
+  "importador": "FRISCHMANN Y CIA S.A.C.I.F.I.A.",
+  "pais": "ARGENTINA",
+  "exportador": null,
+  "origem": "Espanha",
+  "ncm": "6406.90",
+  "produto": "Las demás partes de calzado (HS 64069020900)",
+  "quantidade": 5365,
+  "unidade": "pares",
+  "valor": 23849.09,
+  "tipo_valor": "FOB",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/argentina/importers/frischmann-y-cia-s-a-c-i-f-i-a"
+ },
+ {
+  "data": "2026-09-28",
+  "importador": "GUTIERREZ PEREZ MIGUEL ANGEL",
+  "pais": "EQUADOR",
+  "exportador": "XIAMEN GOLDEN HEYMANN IMPORT & EXPORT CO.,LTD",
+  "origem": "China",
+  "ncm": "6406.20",
+  "produto": "Suelas (HS 6406200000; BL CTLTXM1001428225)",
+  "quantidade": 540,
+  "unidade": "unidades",
+  "valor": 2106,
+  "tipo_valor": "FOB",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importgenius.com/ecuador/importers/gutierrez-perez-miguel-angel"
+ }
+]

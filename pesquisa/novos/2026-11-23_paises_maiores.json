@@ -1,0 +1,937 @@
+[
+ {
+  "empresa": "MATAMORES HOLDINGS S. DE R.L. DE C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "marroquinaria/estofados",
+  "produtos": "Importa couro bovino acabado (atividade final exata não confirmada)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de couro acabado 4107.92 (base de embarques interna)",
+    "ncm": "4107.92",
+    "origem": null,
+    "fornecedor": "IMALD INTERNATIONAL S.A.",
+    "periodo": "24/07/2026",
+    "valor": "146240",
+    "unidade": "USD (7312 kg)",
+    "fonte": "https://en.52wmb.com/buyer/766334"
+   }
+  ],
+  "fornecedores_conhecidos": "IMALD INTERNATIONAL S.A.",
+  "por_que_e_prospect": "Comprador recente de couro acabado em volume (7,3 t num embarque), perfil de cliente para couro JBS.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/766334"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "POLIURETANOS MEXICANOS WOODBRIDGE",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Espumas de poliuretano; importa poliol de sistema PU",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importações de poliol 3907.29 (vários embarques em ago/2026, ex.: 23.300 kg)",
+    "ncm": "3907.29",
+    "origem": "China",
+    "fornecedor": "zanathane systems shanghai limited",
+    "periodo": "14/08/2026–27/08/2026",
+    "valor": "43586.01–49965.62",
+    "unidade": "USD por embarque",
+    "fonte": "https://en.52wmb.com/buyer/530814"
+   }
+  ],
+  "fornecedores_conhecidos": "Zanathane Systems Shanghai Limited",
+  "por_que_e_prospect": "Importador recorrente de polióis para PU; potencial para poliol/pré-polímero Xuchuan, embora o uso seja espuma e não solado.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/buyer/530814",
+   "https://www.importgenius.com/suppliers/poliuretanos-mexicanos-woodbridge-s"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CORPORACION NACIONAL CURTIDORA S.A.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume; registro de compra de wet blue e de químicos de curtimento",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Embarque de wet blue (HS 41041903) registrado em base dos EUA",
+    "ncm": "4104.19",
+    "origem": "México",
+    "fornecedor": "Venegas Cubero",
+    "periodo": "12/03/2007",
+    "valor": null,
+    "unidade": "855 CTN / 17.790 kg",
+    "fonte": "https://es.importgenius.com/importers/corporacion-nacional-curtidora-s-a"
+   },
+   {
+    "descricao": "Taninos sintéticos e auxiliares de curtimento",
+    "ncm": "3202.90",
+    "origem": "Espanha",
+    "fornecedor": "Cromogenia Units S.A",
+    "periodo": "15/07/2010",
+    "valor": null,
+    "unidade": "22.421 kg",
+    "fonte": "https://es.importgenius.com/importers/corporacion-nacional-curtidora-s-a"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume em León que já comprou wet blue; registros antigos, precisa confirmar atividade atual.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://es.importgenius.com/importers/corporacion-nacional-curtidora-s-a"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PROCESOS MODERNOS DE LEON S.A. DE C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume de couro bovino de curtimento vegetal (vaquetas/solas)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Exporta couro bovino curtido vegetal (HS 41079101) para Curtidos Lancina, Espanha — curtume ativo",
+    "ncm": "4107",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "29/03/2025 e 11/12/2025",
+    "valor": null,
+    "unidade": "13.249 kg e 19.550 kg",
+    "fonte": "https://es.importgenius.com/suppliers/procesos-modernos-de-leon-sa-de-cv"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume ativo em León (exportando em 2025), potencial comprador de couro em estágio anterior (wet blue).",
+  "confianca": "média",
+  "fontes": [
+   "https://es.importgenius.com/suppliers/procesos-modernos-de-leon-sa-de-cv"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PIELESTERRIOS LA HISPANO S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Bogotá",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importa couro bovino (crust 4104.49) da Argentina e do Brasil",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.49",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de couro 4104.49 (557,78 m²), FOB 4.162,60 USD",
+    "ncm": "4104.49",
+    "origem": "Argentina",
+    "fornecedor": "S.A. La Hispano Argentina Curtiembre y Charoleria",
+    "periodo": "05/06/2026",
+    "valor": "4162.60",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/colombia/importers/pielesterrios-la-hispano-sas"
+   },
+   {
+    "descricao": "Importação de couro do Brasil (965,5 kg)",
+    "ncm": "4104",
+    "origem": "Brasil",
+    "fornecedor": "Viladelco Industria e Comercio de Couros Ltda",
+    "periodo": "29/01/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.importgenius.com/colombia/importers/pielesterrios-la-hispano-sas"
+   }
+  ],
+  "fornecedores_conhecidos": "S.A. La Hispano Argentina Curtiembre y Charoleria; Viladelco Industria e Comercio de Couros Ltda; Ceyen S.A",
+  "por_que_e_prospect": "Compra crust/couro da Argentina e Brasil regularmente em 2025–2026; alvo direto para crust JBS Argentina.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/colombia/importers/pielesterrios-la-hispano-sas"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "FABRICA DE CALZADO TAURO S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Bogotá",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fábrica de calçado; importa couro crust e componentes (Texon)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.41",
+   "4107",
+   "5603.14",
+   "3921.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de couro 4104.41 (1.728,11 m²), FOB 14.898,98 USD",
+    "ncm": "4104.41",
+    "origem": "Argentina",
+    "fornecedor": "JBS Leather Argentina SA",
+    "periodo": "04/08/2026",
+    "valor": "14898.98",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/colombia/importers/fabrica-de-calzado-tauro-sas"
+   },
+   {
+    "descricao": "Importação de material Texon (10.213 kg)",
+    "ncm": null,
+    "origem": "Itália",
+    "fornecedor": "Texon Italia S.R.L",
+    "periodo": "21/07/2026",
+    "valor": null,
+    "unidade": "10.213 kg",
+    "fonte": "https://www.importgenius.com/colombia/importers/fabrica-de-calzado-tauro-sas"
+   },
+   {
+    "descricao": "Importação de couro (1.555,61 m²)",
+    "ncm": "4104",
+    "origem": "Brasil",
+    "fornecedor": "Viladelco Industria e Comercio de Couros Ltda",
+    "periodo": "09/07/2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.importgenius.com/colombia/importers/fabrica-de-calzado-tauro-sas"
+   }
+  ],
+  "fornecedores_conhecidos": "JBS Leather Argentina SA; JBS Leather Uruguay S.A.; Texon Italia S.R.L; Viladelco; Pere Pons S.A.; Dongguan Liangjiang Machine",
+  "por_que_e_prospect": "Já compra crust da JBS Argentina (43 t acumuladas) e insumos Texon; cliente ativo para couro JBS e para contraforte/não-tecido Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/colombia/importers/fabrica-de-calzado-tauro-sas"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "GRUPO PRIMAFLEX S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Barranquilla (aduana)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Importa isocianato (2929.10) e polióis para poliuretano",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de isocianato HS 2929.10 (20.000 kg), CIF 60.000 USD",
+    "ncm": "2929.10",
+    "origem": "China",
+    "fornecedor": "Wanhua Chemical (Singapore) Pte. Ltd",
+    "periodo": "22/07/2026",
+    "valor": "60000",
+    "unidade": "USD CIF",
+    "fonte": "https://www.importgenius.com/colombia/importers/grupo-primaflex-s-a-s"
+   },
+   {
+    "descricao": "Importações de 23.000 kg de insumos químicos (descrições referem poliol)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Spiral Chemicals Limited; Huars Hongkong Limited; Pangs Chem HK Limited",
+    "periodo": "16/06/2025–03/01/2026",
+    "valor": null,
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/colombia/importers/grupo-primaflex-s-a-s"
+   }
+  ],
+  "fornecedores_conhecidos": "Wanhua Chemical; Spiral Chemicals; OCI International; Huars Hongkong; Pangs Chem",
+  "por_que_e_prospect": "Comprador recorrente de químicos de PU (isocianato e poliol); potencial para pré-polímero/poliol Xuchuan se tiver linha de solado.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/colombia/importers/grupo-primaflex-s-a-s"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "APF CUEROS COLOMBIA S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": "Bogotá",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importação de couro bovino acabado",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de couro bovino 4107.92 (768,3 m²), FOB 22.572,29 USD; outros embarques fev–jun/2026",
+    "ncm": "4107.92",
+    "origem": "Itália",
+    "fornecedor": "Gruppo Mastrotto Spa",
+    "periodo": "11/08/2026",
+    "valor": "22572.29",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+   }
+  ],
+  "fornecedores_conhecidos": "Gruppo Mastrotto Spa; Combocal; Foshan Nanhai Yahang Shoes",
+  "por_que_e_prospect": "Evidência nova de compras regulares de couro acabado em 2026 (Gruppo Mastrotto), concorrente direto do couro JBS.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/colombia/importers/apf-cueros-colombia-s-a-s"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "SUELAS NOVOPLAST S.A.C.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": "Lima/Callao",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Fábrica de solados (EVA e poliuretano), palmilhas de EVA",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50",
+   "8480.71"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de EVA para injeção (1.000 kg), FOB 2.300 USD",
+    "ncm": "3901.30",
+    "origem": "China",
+    "fornecedor": null,
+    "periodo": "04/06/2026",
+    "valor": "2300",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/peru/importers/suelas-novoplast-sac"
+   },
+   {
+    "descricao": "Principal fornecedor histórico: sistemas PU para solado (~162,5 t acumuladas)",
+    "ncm": "3907",
+    "origem": "Itália",
+    "fornecedor": "Epaflex Polyurethanes S.p.A.",
+    "periodo": "2008–2026",
+    "valor": null,
+    "unidade": "162.511 kg",
+    "fonte": "https://www.importgenius.com/peru/importers/suelas-novoplast-sac"
+   }
+  ],
+  "fornecedores_conhecidos": "Epaflex Polyurethanes S.p.A.; Maswell International Limited; Xiamen Freede Industry Co Ltd",
+  "por_que_e_prospect": "Fábrica de solados que compra sistema PU da Epaflex; alvo direto para sistema PU Xuchuan e moldes Polako.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/peru/importers/suelas-novoplast-sac"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "GRUPO FLEX E.I.R.L.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": "Lima/Callao",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçado injetado (cabedais 'Combate' e 'Rhyno Flex'), importa cabedais, tecido de palmilha e molde de injeção",
+  "porte": null,
+  "ncms_provaveis": [
+   "8480.71",
+   "5603.14",
+   "3921.13",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Tecido de palmilha recoberto de PU (590 m²), FOB 696,20 USD",
+    "ncm": "5903.20",
+    "origem": "China",
+    "fornecedor": null,
+    "periodo": "04/09/2026",
+    "valor": "696.20",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/peru/importers/grupo-flex-empresa-individual-de-responsabilidad-limitada"
+   },
+   {
+    "descricao": "Molde de injeção (1 un., 133 kg) — HS não exibido na página",
+    "ncm": "8480.71",
+    "origem": "China",
+    "fornecedor": null,
+    "periodo": "04/09/2026",
+    "valor": null,
+    "unidade": "1 un.",
+    "fonte": "https://www.importgenius.com/peru/importers/grupo-flex-empresa-individual-de-responsabilidad-limitada"
+   },
+   {
+    "descricao": "Cabedais sem sola modelo 'Combate' (9.840 un.)",
+    "ncm": "6406.10",
+    "origem": "China",
+    "fornecedor": null,
+    "periodo": "04/09/2026",
+    "valor": null,
+    "unidade": "9.840 un.",
+    "fonte": "https://www.importgenius.com/peru/importers/grupo-flex-empresa-individual-de-responsabilidad-limitada"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Injeta calçado tipo combate/segurança e importa molde, palmilha e cabedais em 2026; alvo para moldes Polako, sistema PU e componentes Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/peru/importers/grupo-flex-empresa-individual-de-responsabilidad-limitada"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "MANUFACTURA CALZADO MINI S.A.",
+  "nome_fantasia": null,
+  "pais": "PERU",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Fábrica de calçado com injeção de PU; importava polióis, isocianatos e catalisadores",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de polióis, isocianatos e catalisadores (HS 3815.90 na amostra)",
+    "ncm": "3909.50",
+    "origem": "Itália",
+    "fornecedor": "Epaflex Polyurethanes S.p.A.",
+    "periodo": "12/02/2020",
+    "valor": "412.32",
+    "unidade": "USD FOB (amostra catalisador)",
+    "fonte": "https://www.importgenius.com/peru/importers/manufactura-calzado-mini-s-a"
+   }
+  ],
+  "fornecedores_conhecidos": "Epaflex Polyurethanes S.p.A.; Dimeca SRL; Gava IFC SPA",
+  "por_que_e_prospect": "Usuário de sistema PU para solado (Epaflex); registros até 2020, verificar se segue ativo.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/peru/importers/manufactura-calzado-mini-s-a"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PU INNOVATIONS S.R.L.",
+  "nome_fantasia": null,
+  "pais": "ARGENTINA",
+  "cidade": "Buenos Aires (aduana)",
+  "id_fiscal": null,
+  "site": "https://puinnovations.com.ar",
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Poliuretanos; importa poliéter poliol em volume",
+  "porte": null,
+  "ncms_provaveis": [
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de poliéter poliol F3521 (HS 3907.29), 26.840 kg, CIF 59.160 USD; mais 3 embarques de ~25 t em jul/2026",
+    "ncm": "3907.29",
+    "origem": "China",
+    "fornecedor": "NINGBO ACETECH (marca)",
+    "periodo": "03/08/2026",
+    "valor": "59160",
+    "unidade": "USD CIF",
+    "fonte": "https://es.importgenius.com/argentina/importers/pu-innovations-s-r-l"
+   }
+  ],
+  "fornecedores_conhecidos": "Ningbo Acetech",
+  "por_que_e_prospect": "Importador de polióis em escala (78 embarques), provável casa de sistemas PU; potencial para poliol poliéster e pré-polímero Xuchuan.",
+  "confianca": "média",
+  "fontes": [
+   "https://es.importgenius.com/argentina/importers/pu-innovations-s-r-l",
+   "https://www.veritradecorp.com/en/argentina/imports-y-exports-pu-innovations-srl/cuit-3071554420",
+   "https://puinnovations.com.ar/inicio"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "SAR SUELA S.R.L.",
+  "nome_fantasia": null,
+  "pais": "ARGENTINA",
+  "cidade": "Buenos Aires (aduana)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "Importa solados de borracha/plástico",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20",
+   "8480.71"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de solas 6406.20 (1.440 pares), FOB 4.320 USD; 5 embarques no mesmo dia",
+    "ncm": "6406.20",
+    "origem": "China",
+    "fornecedor": null,
+    "periodo": "05/08/2026",
+    "valor": "4320",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/argentina/importers/sar-suela-srl"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Grande importador de solas (4.678 embarques); alvo para solados Hiper Solados e moldes.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/argentina/importers/sar-suela-srl"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "FRISCHMANN Y CIA S.A.C.I.F.I.A.",
+  "nome_fantasia": null,
+  "pais": "ARGENTINA",
+  "cidade": "Buenos Aires (aduana)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importa partes de calçado",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de partes de calçado 6406.90 (5.365 pares), FOB 23.849,09 USD (CFR 24.398,54)",
+    "ncm": "6406.90",
+    "origem": "Espanha",
+    "fornecedor": null,
+    "periodo": "29/07/2026",
+    "valor": "23849.09",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/argentina/importers/frischmann-y-cia-s-a-c-i-f-i-a"
+   },
+   {
+    "descricao": "Partes de calçado (8.559 pares)",
+    "ncm": "6406.90",
+    "origem": "Espanha",
+    "fornecedor": null,
+    "periodo": "10/09/2025",
+    "valor": null,
+    "unidade": "pares",
+    "fonte": "https://www.importgenius.com/argentina/importers/frischmann-y-cia-s-a-c-i-f-i-a"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Compra componentes 6406.90 todo ano; alvo para biqueiras/palmilhas Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/argentina/importers/frischmann-y-cia-s-a-c-i-f-i-a"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "ROFREVE S.A.",
+  "nome_fantasia": null,
+  "pais": "ARGENTINA",
+  "cidade": "Buenos Aires (aduana)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Importa partes superiores de calçado (cabedais) e calçado",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.90",
+   "6406.20"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de cabedais HS 6406.10 (7.596 pares), FOB 3.435 USD",
+    "ncm": "6406.10",
+    "origem": "China",
+    "fornecedor": null,
+    "periodo": "28/08/2026",
+    "valor": "3435",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/argentina/importers/rofreve-s-a"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Importador frequente de partes de calçado (2.374 embarques, origens Brasil/China/Chile); alvo para componentes e solados.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/argentina/importers/rofreve-s-a"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CALZADOS CAPASSO S.R.L.",
+  "nome_fantasia": null,
+  "pais": "ARGENTINA",
+  "cidade": "Paso de los Libres (aduana)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Calçado; importa calçado do Brasil (marca Brooksfield)",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.90",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de calçado HS 6402.99 do Brasil, FOB 20.540,85 USD",
+    "ncm": "6402.99",
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "25/03/2026",
+    "valor": "20540.85",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/argentina/importers/calzados-capasso-s-r-l"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Empresa de calçado ativa em importações 2026; prospect para insumos se tiver produção própria (a confirmar).",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.importgenius.com/argentina/importers/calzados-capasso-s-r-l"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "LEATHERTEX ARGENTINA S.A.",
+  "nome_fantasia": null,
+  "pais": "ARGENTINA",
+  "cidade": "Santa Fe",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Comércio de couro bovino crust (exporta 4104.41 de origem brasileira)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.41",
+   "4104.11"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Exporta couro bovino 4104.41 aos EUA com origem declarada Brasil — indica compra de crust brasileiro",
+    "ncm": "4104.41",
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "29/06/2026",
+    "valor": null,
+    "unidade": "6.682 kg",
+    "fonte": "https://www.importgenius.com/suppliers/leathertex-argentina-s-a"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Trader de couro em Santa Fe que movimenta crust de origem brasileira; potencial comprador de crust/wet blue JBS.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/suppliers/leathertex-argentina-s-a"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CURTIEMBRE PASO DEL REY S.A.",
+  "nome_fantasia": null,
+  "pais": "ARGENTINA",
+  "cidade": "Paso del Rey, Buenos Aires",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume de couro bovino (certificado LWG)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Curtume certificado Leather Working Group (Bronze); com perfil de comércio exterior na Veritrade",
+    "ncm": "4104",
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "2024-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://leatherworkinggroup.com/get-involved/our-community/certified-suppliers/curtiembre-paso-del-rey-s-a-cur225"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume ativo e certificado; pode comprar wet blue para completar volume de crust/acabado.",
+  "confianca": "média",
+  "fontes": [
+   "https://leatherworkinggroup.com/get-involved/our-community/certified-suppliers/curtiembre-paso-del-rey-s-a-cur225",
+   "https://www.veritradecorp.com/es/argentina/importaciones-y-exportaciones-curtiembre-paso-del-rey-s-a/cuit-3069700374"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CURTIEMBRE TANDIL S.R.L.",
+  "nome_fantasia": null,
+  "pais": "ARGENTINA",
+  "cidade": "Tandil, Buenos Aires",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Perfil de importações/exportações na Veritrade (detalhe não acessível)",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "2024-2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.veritradecorp.com/es/argentina/importaciones-y-exportaciones-curtiembre-tandil-srl/cuit-3070782293"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume com atividade de comércio exterior registrada; confirmar se compra wet blue.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.veritradecorp.com/es/argentina/importaciones-y-exportaciones-curtiembre-tandil-srl/cuit-3070782293"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "GUTIERREZ PEREZ MIGUEL ANGEL",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Guayaquil (aduana)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importa solados (Vibram e China) para revenda/produção de calçado",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.20",
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de solas 6406.20 (540 un.), FOB 2.106 USD",
+    "ncm": "6406.20",
+    "origem": "China",
+    "fornecedor": "Xiamen Golden Heymann Import & Export Co., Ltd",
+    "periodo": "28/09/2026",
+    "valor": "2106",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/ecuador/importers/gutierrez-perez-miguel-angel"
+   },
+   {
+    "descricao": "Solas Vibram (148,9 t acumuladas)",
+    "ncm": "6406.20",
+    "origem": "Itália",
+    "fornecedor": "Vibram S.P.A",
+    "periodo": "08/05/2026",
+    "valor": null,
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/ecuador/importers/gutierrez-perez-miguel-angel"
+   },
+   {
+    "descricao": "Componentes de calçado",
+    "ncm": "6406.20",
+    "origem": "México",
+    "fornecedor": "HT7 Extra Ligera S.A. de C.V.",
+    "periodo": "06/08/2026",
+    "valor": null,
+    "unidade": "kg",
+    "fonte": "https://www.importgenius.com/ecuador/importers/gutierrez-perez-miguel-angel"
+   }
+  ],
+  "fornecedores_conhecidos": "Vibram S.P.A; Fujian Fulong Supply Chain Management; Hawai Italia SRL; HT7 Extra Ligera S.A. de C.V.; Xiamen Golden Heymann",
+  "por_que_e_prospect": "Maior importador de solados do Equador nessa base (10 mil embarques); alvo para solados Hiper e componentes Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.importgenius.com/ecuador/importers/gutierrez-perez-miguel-angel"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "MALLA CALDERON YERSON SEGUNDO",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Importa partes de calçado (6406.90) da China",
+  "porte": "pequeno",
+  "ncms_provaveis": [
+   "6406.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importações de partes de calçado 6406.90 (7 lançamentos, ex.: 343,94 kg) — base de embarques interna",
+    "ncm": "6406.90",
+    "origem": "China",
+    "fornecedor": "zhuhai shengyali trade company",
+    "periodo": "01/05/2026",
+    "valor": null,
+    "unidade": "kg",
+    "fonte": "https://en.52wmb.com/buyer/8728591"
+   }
+  ],
+  "fornecedores_conhecidos": "zhuhai shengyali trade company",
+  "por_que_e_prospect": "Importador de componentes de calçado em 2026; pequeno, mas comprador direto de 6406.90.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/8728591"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "BUESTÁN (razão social não confirmada)",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Quito",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Botas industriais de segurança dielétricas (sola até 18.000 V, biqueira de proteção)",
+  "porte": null,
+  "ncms_provaveis": [
+   "6406.90",
+   "5901.90",
+   "3907.99",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Matéria da Presidência do Equador sobre fábrica que produz botas de segurança antes importadas",
+    "ncm": null,
+    "origem": null,
+    "fornecedor": null,
+    "periodo": "2016",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.presidencia.gob.ec/calzado-industrial-que-antes-se-importaba-ahora-se-elabora-en-ecuador/"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Fabricante de calçado de segurança em Quito; usa biqueira, palmilha antiperfuro e solado isolante.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://www.presidencia.gob.ec/calzado-industrial-que-antes-se-importaba-ahora-se-elabora-en-ecuador/"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CURTUME BAGE LTDA",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": "Bagé, RS",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume; registros de couro 4107.92 e insumos de curtimento (sulfato de cromo, sulfeto de sódio)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Registro de couro 41079210 de outro curtume brasileiro",
+    "ncm": "4107.92",
+    "origem": "Brasil",
+    "fornecedor": "Future Industria de Couros Ltda",
+    "periodo": "2020–2023",
+    "valor": null,
+    "unidade": "caixas",
+    "fonte": "https://www.importgenius.com/importers/curtume-bage-ltda"
+   },
+   {
+    "descricao": "Sulfato básico de cromo (insumo de curtimento wet blue)",
+    "ncm": "3202.90",
+    "origem": "Bélgica",
+    "fornecedor": "Sisecam Dis Ticaret",
+    "periodo": "2020–2023",
+    "valor": null,
+    "unidade": "40 caixas",
+    "fonte": "https://www.importgenius.com/importers/curtume-bage-ltda"
+   }
+  ],
+  "fornecedores_conhecidos": null,
+  "por_que_e_prospect": "Curtume ativo no RS que compra couro de terceiros; potencial para wet blue JBS.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/importers/curtume-bage-ltda"
+  ],
+  "atualiza_existente": false
+ }
+]
