@@ -8145,7 +8145,7 @@ function duplicarProcesso(id){
   c.documentos = {CO:false, FUMIGACAO:false, PL:false, INVOICE:false, BL:false};
   c.documentosExtra = (c.documentosExtra||[]).map(d=>Object.assign({}, d, {recebido:false}));
   delete c.ordem; delete c._upd; delete c.ordemManual;
-  draft = c; editingId = null; window.__draftOrig = JSON.stringify(c);     // abre como "Novo processo" — só grava quando clicar em "Criar processo"
+  draft = c; editingId = null; window.__draftOrig = JSON.stringify(c); window.__valorTravado = window.__valorTravado || {}; window.__valorTravado[c.id||'__novo'] = false;     // abre como "Novo processo" — só grava quando clicar em "Criar processo"
   renderModal();
   toast('Cópia do #' + (orig.processo||'') + ' pronta: confira o nº (' + c.processo + '), quantidades e valor, depois clique em "Criar processo".');
 }
@@ -9182,6 +9182,7 @@ async function importarCapasEmLote(){
 function openModal(id){
   const existing = id ? processos.find(p=>p.id===id) : null;
   draft = existing ? JSON.parse(JSON.stringify(existing)) : blankProcess();
+  window.__valorTravado = window.__valorTravado || {}; window.__valorTravado[draft.id||'__novo'] = !!existing && (+draft.valorUsd||0) > 0;   // valor salvo fica travado
   editingId = existing ? existing.id : null;
   // processo sem % de comissão: já entra com o % padrão do fornecedor (JBS AR 3%, JBS BR 2%…), editável
   try{
@@ -9891,9 +9892,11 @@ function wireModalEvents(){
   { const sel = root.querySelector('[data-frete-modo]');
     if(sel) sel.addEventListener('change', ()=>{
       draft.freteModo = sel.value;
-      if(materiaisValorTotal(draft)>0) draft.valorUsd = valorUsdPelosMateriais(draft);
+      if(materiaisValorTotal(draft)>0 && !valorTravado(draft)) draft.valorUsd = valorUsdPelosMateriais(draft);
       aplicarFreteNoFob(draft); mostrarValoresNaFicha();
     });
+    // processo aberto: guarda se ele já tinha Valor USD salvo (aí o valor fica travado)
+    { const k = draft.id||'__novo'; if(!(k in window.__valorTravado)) window.__valorTravado[k] = (+draft.valorUsd||0) > 0; }
     // processo aberto: sem Valor USD e com materiais → já preenche; se for diferente, avisa com o botão "Usar"
     if(!(+draft.valorUsd>0) && materiaisValorTotal(draft)>0){ draft.valorUsd = valorUsdPelosMateriais(draft); aplicarFreteNoFob(draft); setTimeout(mostrarValoresNaFicha, 0); }
     else setTimeout(renderValorHint, 0);
@@ -9916,7 +9919,7 @@ function wireModalEvents(){
       if(key==='vendedorUsdManual' && !num) delete draft.vendedorUsdManual;
       el.value = num ? fmt(num) : '';
       if(key==='valorFob') draft._fobAuto = false;   // FOB digitado à mão
-      if(key==='frete'){ if(materiaisValorTotal(draft)>0) draft.valorUsd = valorUsdPelosMateriais(draft); aplicarFreteNoFob(draft); mostrarValoresNaFicha(); }
+      if(key==='frete'){ if(materiaisValorTotal(draft)>0 && !valorTravado(draft)) draft.valorUsd = valorUsdPelosMateriais(draft); aplicarFreteNoFob(draft); mostrarValoresNaFicha(); }
       if(key==='valorUsd'){ if(+draft.frete>0) aplicarFreteNoFob(draft); mostrarValoresNaFicha(); }
       if(['valorUsd','valorFob','entrada','pg1','pg2','pg3','pg4','comissaoPct','vendedorPct','vendedorUsdManual','vendedorPagamentoAdicional','cambio',
           'dataPg1','dataPg2','dataPg3','dataPg4','vencEntrada','dataEntradaPg','status'].includes(key)){
@@ -10449,6 +10452,10 @@ function updateMatRowCalc(i){
 // (Comercial & Prazos) a partir da tabela de Materiais do pedido — sempre que ela mudar.
 /* ---- frete: somado aos produtos ou já embutido no preço; FOB (base da comissão) = Valor USD − frete ---- */
 function arred2(v){ return Math.round((+v||0)*100)/100; }
+// Processo que já abriu com Valor USD salvo: o valor da venda fica TRAVADO — lançar/alterar materiais
+// não muda o Valor USD nem o FOB; a ficha só mostra se a soma dos produtos bate com o valor da venda.
+window.__valorTravado = window.__valorTravado || {};
+function valorTravado(p){ return !!(p && window.__valorTravado[p.id||'__novo'] && (+p.valorUsd||0) > 0); }
 function valorUsdPelosMateriais(p){
   const mt = materiaisValorTotal(p); if(!(mt>0)) return 0;
   return arred2(mt + (p.freteModo==='embutido' ? 0 : (+p.frete||0)));
@@ -10487,7 +10494,13 @@ function renderValorHint(){
     const esperado = valorUsdPelosMateriais(draft);
     if(fr>0) partes.push(emb ? `Produtos USD ${fmt(mt)} (frete de USD ${fmt(fr)} já incluído) · FOB = USD ${fmt(arred2(esperado-fr))}`
                              : `Produtos USD ${fmt(mt)} + frete USD ${fmt(fr)} = USD ${fmt(esperado)} · FOB = USD ${fmt(mt)}`);
-    if(Math.abs(esperado - (+draft.valorUsd||0)) > Math.max(0.05, (draft.materiais||[]).length*0.006))
+    const vVenda = +draft.valorUsd||0, difV = arred2(vVenda - esperado);
+    if(valorTravado(draft)){
+      if(Math.abs(difV) <= Math.max(0.05, (draft.materiais||[]).length*0.006))
+        partes.push(`<span style="color:var(--teal,#2E9E6B);font-weight:600;">✓ Soma dos produtos${fr>0&&!emb?' + frete':''} = valor da venda (USD ${fmt(vVenda)})</span>`);
+      else
+        partes.push(`<span style="color:var(--amber,#C98A0B);font-weight:600;">🔒 Valor da venda mantido: USD ${fmt(vVenda)} · soma dos produtos${fr>0&&!emb?' + frete':''}: USD ${fmt(esperado)} · ${difV>0?'faltam':'passou'} USD ${fmt(Math.abs(difV))}</span>`);
+    } else if(Math.abs(esperado - (+draft.valorUsd||0)) > Math.max(0.05, (draft.materiais||[]).length*0.006))
       partes.push(`<span style="color:var(--amber,#C98A0B);font-weight:600;">⚠ Valor USD diferente da tabela de materiais${fr>0&&!emb?' + frete':''} (USD ${fmt(esperado)})</span> <button type="button" class="btn btn-outline btn-sm" id="usarValorMateriais">Usar USD ${fmt(esperado)}</button>`);
   } else if(fr>0 && (+draft.valorUsd||0)>0){
     partes.push(`FOB = Valor USD − frete = USD ${fmt(arred2(draft.valorUsd - fr))}`);
@@ -10499,8 +10512,7 @@ function renderValorHint(){
 function syncMaterialAndValorFromMateriais(){
   const mats = materialTags(draft);
   draft.material = mats.join(' E ');
-  draft.valorUsd = valorUsdPelosMateriais(draft);
-  aplicarFreteNoFob(draft);
+  if(!valorTravado(draft)){ draft.valorUsd = valorUsdPelosMateriais(draft); aplicarFreteNoFob(draft); }
   { const vf = document.querySelector('[data-key="valorFob"][data-currency]'); if(vf) vf.value = draft.valorFob ? fmt(draft.valorFob) : ''; }
   try{ renderValorHint(); }catch(e){}
 
