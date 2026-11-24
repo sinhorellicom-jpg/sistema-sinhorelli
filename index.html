@@ -1861,6 +1861,11 @@ html,body{overflow-x:hidden;overflow-x:clip;}
     <div class="cards-row" id="analyticsKpis" style="display:none;"></div>
     <div class="an-grid">
       <div class="an-panel an-panel-wide">
+        <div class="an-panel-title">📦 Variação por produto — período atual
+          <span class="an-panel-sub">quanto cada produto vendeu este ano até hoje, contra o mesmo período do ano passado</span></div>
+        <div id="prodVarConteudo"></div>
+      </div>
+      <div class="an-panel an-panel-wide">
         <div class="an-panel-title">🔎 Variação por cliente — período atual
           <span class="an-panel-sub">quanto o cliente comprou este ano até hoje, contra o mesmo período do ano passado</span></div>
         <div style="display:flex;gap:8px;align-items:end;margin-bottom:10px;flex-wrap:wrap;">
@@ -1868,11 +1873,6 @@ html,body{overflow-x:hidden;overflow-x:clip;}
             <select id="cliDetSel"></select></div>
         </div>
         <div id="cliDetConteudo"></div>
-      </div>
-      <div class="an-panel an-panel-wide">
-        <div class="an-panel-title">📦 Variação por produto — período atual
-          <span class="an-panel-sub">quanto cada produto vendeu este ano até hoje, contra o mesmo período do ano passado</span></div>
-        <div id="prodVarConteudo"></div>
       </div>
       <div class="an-panel an-panel-wide">
         <div class="an-panel-title" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
