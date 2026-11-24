@@ -1944,6 +1944,9 @@ html,body{overflow-x:hidden;overflow-x:clip;}
         </div>
         <div class="an-chart-box" style="height:240px;"><canvas id="chartAno"></canvas></div>
       </div>
+      <div class="an-panel an-panel-wide">
+        <div id="cliClasseConteudo"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -11479,7 +11482,7 @@ function renderClienteDetalhe(){
     + clientes.map(c=>`<option value="${c.replace(/"/g,'&quot;')}" ${c===cliDet?'selected':''}>${c}</option>`).join('');
 
   const lista = cliDet ? universo.filter(p=>String(p.cliente||'').trim() === cliDet) : universo;
-  if(!lista.length){ el.innerHTML = '<div class="an-panel-sub">Nenhum processo com esse filtro.</div>'; return; }
+  if(!lista.length){ el.innerHTML = '<div class="an-panel-sub">Nenhum processo com esse filtro.</div>'; const ce0 = document.getElementById('cliClasseConteudo'); if(ce0) ce0.innerHTML = ''; return; }
 
   const porAno = {};
   lista.forEach(p=>{
@@ -11552,7 +11555,9 @@ function renderClienteDetalhe(){
       </tbody>
     </table>
 
-    <div class="an-panel-title" style="margin-top:16px;">Quantidade por classe
+`;
+  const classeHtml = `
+    <div class="an-panel-title">📦 Quantidade por classe <span class="an-panel-sub">${cliDet? 'cliente <b>'+cliDet+'</b>' : 'todos os clientes'} · muda junto com o cliente escolhido em “Variação por cliente”</span>
       ${topMat? `<span class="an-panel-sub">mais comprado em ${anoAnt}+${anoAtual}: <b>${topMat.n}</b> (${fmtInt(topMat.q)} un.)</span>` : ''}</div>
     ${nomesMat.length ? `
       <table class="mat-table" style="width:100%;">
@@ -11570,6 +11575,7 @@ function renderClienteDetalhe(){
       </table>`
       : '<div class="an-panel-sub">Esse cliente ainda não tem materiais (com classe) lançados na tabela “Materiais do pedido”.</div>'}
 `;
+  const ce = document.getElementById('cliClasseConteudo'); if(ce) ce.innerHTML = classeHtml;
 }
 
 // produto de um processo: materiais lançados (classe/nome) ou, sem eles, o campo "Material" limpo ("2 FCL TR2" → "TR2")
