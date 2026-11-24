@@ -7353,7 +7353,7 @@ const REGRAS_CLASSE_FORNECEDOR = {
   'JBS AR': {
     exemplo: 'CSA-N SAN DIEGO 14/16 TR1 P TAN SDS → TR1 SAN DIEGO · CSA-N FORRO ML 1.0/1.2 TR4 → FORRO TR4',
     detectar: /\bCSA-?[AN]\b/i,
-    material(nome){ return String(nome||'').replace(/^\s*\d{4,}\s*[-–—]\s*/,'').replace(/\s+/g,' ').trim(); },
+    material(nome){ let n = String(nome||''); if(/\bCSA-?[AN]\b/i.test(n)) n = n.replace(/^.*?(?=\bCSA-?[AN]\b)/i,''); return n.replace(/^\s*\d{4,}\s*[-–—]\s*/,'').replace(/\s+/g,' ').trim(); },
     classe(nome){
       // abreviações do mesmo couro: "S DIEGO", "S.DIEGO", "SDIEGOFLX" → "SAN DIEGO", "SAN DIEGO FLX"
       const n = this.material(nome).toUpperCase()
@@ -8283,11 +8283,29 @@ function parseCapaProcesso(wb){
   if(c.pais) c.pais = c.pais.toUpperCase(); if(c.incoterm) c.incoterm = c.incoterm.toUpperCase();
   return out;
 }
+// classe automática dos materiais da capa, igual à leitura das invoices: acha o fornecedor (do processo, da capa
+// ou pelo próprio texto dos produtos, ex.: "CSA-N" = JBS AR) e aplica a regra de classe dele
+function classificarCapa(capa, fornProcesso){
+  if(!capa || !(capa.materiais||[]).length) return '';
+  const cands = [fornProcesso, (capa.campos||{}).fornecedor].map(x=>String(x||'').trim()).filter(Boolean);
+  let forn = cands.find(f=>regraClasseFornecedor(f)) || '';
+  if(!forn) forn = fornecedorPeloTexto(cands.join(' ') + ' ' + capa.materiais.map(m=>m.nome).join(' ')) || '';
+  if(!forn) return '';
+  capa.materiais.forEach(m=>{
+    const orig = String(m.nome||m.material||'').trim(); if(!orig) return;
+    const auto = classeAutoFornecedor(orig, forn);
+    const atual = String(m.classe||'').trim();
+    if(auto && (!atual || atual.toUpperCase()===orig.toUpperCase())) m.classe = auto;
+    const nm = nomeMaterialFornecedor(orig, forn);
+    if(nm){ m.nome = nm; m.material = nm; }
+  });
+  return forn;
+}
 // aplica a capa num processo: materiais (substitui ou acrescenta) + campos vazios; devolve o que foi feito
 function aplicarCapaNoProcesso(p, capa, opts){
   opts = opts || {}; const feito = { materiais:0, campos:[] };
   // só os materiais que estão entrando agora recebem a classe pela regra do fornecedor (os que já estavam não mudam)
-  try{ const forn = String(p.fornecedor||'').trim() || String((capa.campos||{}).fornecedor||''); aplicarRegrasClasse([{ fornecedor:forn, materiais:capa.materiais }]); }catch(e){}
+  try{ classificarCapa(capa, p.fornecedor); }catch(e){}
   if(capa.materiais.length){
     if(opts.substituir || !(p.materiais||[]).length) p.materiais = capa.materiais.map(m=>Object.assign({},m));
     else p.materiais = (p.materiais||[]).concat(capa.materiais.map(m=>Object.assign({},m)));
@@ -9131,14 +9149,15 @@ async function importarCapaNaFicha(){
   if(!capa || (!capa.materiais.length && !Object.keys(capa.campos).length)){ toast('Não encontrei a tabela PRODUTO / QUANT / PREÇO LISTA nessa planilha.'); return; }
   const temMat = (draft.materiais||[]).some(m=> m && (m.nome||m.classe||m.quantidade));
   const c = capa.campos;
-  const linhas = capa.materiais.map(m=>`<tr><td>${m.nome}</td><td class="num">${fmt(m.quantidade)}</td><td class="num">${fmt(m.precoLista)}</td><td class="num">${fmt(m.quantidade*m.precoLista)}</td><td class="num">${m.custo?fmt(m.custo):'<span style="color:var(--amber)">—</span>'}</td><td class="num"><b>${fmt(Math.max(0,(m.precoLista-(m.custo||0))*m.quantidade/2))}</b></td></tr>`).join('');
+  try{ classificarCapa(capa, draft.fornecedor); }catch(e){}
+  const linhas = capa.materiais.map(m=>`<tr><td style="font-family:'IBM Plex Mono',monospace;font-weight:600;white-space:nowrap;">${m.classe||'<span class="venc-muted">—</span>'}</td><td>${m.nome}</td><td class="num">${fmt(m.quantidade)}</td><td class="num">${fmt(m.precoLista)}</td><td class="num">${fmt(m.quantidade*m.precoLista)}</td><td class="num">${m.custo?fmt(m.custo):'<span style="color:var(--amber)">—</span>'}</td><td class="num"><b>${fmt(Math.max(0,(m.precoLista-(m.custo||0))*m.quantidade/2))}</b></td></tr>`).join('');
   const campos = ['processo','invoice','data','embarque','incoterm','pais','condPagto','fornecedor','cliente','pedido','contrato','valorFob'].filter(k=>c[k]!==undefined&&c[k]!==''&&c[k]!==null).map(k=>`<span class="chip" title="${k}">${k}: <b>${/data|embarque/.test(k)?fmtDateBR(c[k]):(k==='valorFob'?'USD '+fmt(c[k]):c[k])}</b></span>`).join(' ');
   const divergente = c.processo && draft.processo && String(c.processo).trim()!==String(draft.processo).trim();
   const root = document.createElement('div'); root.className='overlay'; root.style.zIndex=99999;
   root.innerHTML = `<div class="modal" style="max-width:820px;">
     <div class="modal-head"><div><h2>📥 Capa de processo — ${files[0].name}</h2><div class="an-panel-sub">${capa.materiais.length} produto(s) encontrado(s)${divergente?` · <span style="color:var(--amber)">atenção: a capa é do processo ${c.processo}, e esta ficha é o ${draft.processo}</span>`:''}</div></div></div>
     <div class="modal-body">
-      <div style="overflow:auto;"><table class="mat-table" style="width:100%;"><thead><tr><th>Produto</th><th>Quant.</th><th>Preço lista</th><th>Total venda</th><th>Custo</th><th>Lucro (÷2)</th></tr></thead><tbody>${linhas||'<tr><td colspan="6">nenhum produto</td></tr>'}</tbody></table></div>
+      <div style="overflow:auto;"><table class="mat-table" style="width:100%;"><thead><tr><th>Classe</th><th>Produto</th><th>Quant.</th><th>Preço lista</th><th>Total venda</th><th>Custo</th><th>Lucro (÷2)</th></tr></thead><tbody>${linhas||'<tr><td colspan="7">nenhum produto</td></tr>'}</tbody></table></div>
       ${campos?`<div class="an-panel-sub" style="margin-top:10px;">Dados encontrados na capa (preenchem só o que estiver vazio na ficha):</div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">${campos}</div>`:''}
       ${capa.historico.length?`<div class="an-panel-sub" style="margin-top:10px;">Histórico na capa: ${capa.historico.length} linha(s) — <label><input type="checkbox" id="capaHist" checked> levar para as observações</label></div>`:''}
       ${temMat?`<div style="margin-top:12px;"><label><input type="radio" name="capaModo" value="sub" checked> Substituir os materiais que já estão na ficha</label> &nbsp; <label><input type="radio" name="capaModo" value="add"> Acrescentar aos existentes</label></div>`:''}
