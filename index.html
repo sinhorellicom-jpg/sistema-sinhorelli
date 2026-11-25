@@ -3654,7 +3654,7 @@ async function abrirAcessos(){
 
 /* ---- configurações que antes ficavam só no navegador de cada um (agora também na nuvem) ---- */
 const CFG_NUVEM = ['fornecedor_comissao_v1','fornecedor_cliente_comissao_v1','fornecedor_notas_v1',
-  'materiais_catalogo_v1','vendedores_catalogo_v1','clientes_catalogo_v1','totais_manuais_v1'];
+  'materiais_catalogo_v1','vendedores_catalogo_v1','clientes_catalogo_v1','totais_manuais_v1','metas_anuais_v1'];
 function ehCfgNuvem(key, shared){ return !shared && CFG_NUVEM.indexOf(key) >= 0; }
 
 async function initFirebase(){
@@ -11112,7 +11112,7 @@ function renderAnalyticsKpis(){
           <div class="card accent-violet"><div class="label">Vendas</div><div class="value">USD ${fmt(vVen)}</div><div class="sub">${conta(vendasLista)} processos em ${ano}</div></div>
           <div class="card accent-teal an-destaque-total"><div class="label">Total das duas planilhas</div><div class="value">USD ${fmt(vJbs+vVen)}</div><div class="sub">Vendas JBS + Vendas</div></div>
         </div>${aviso}
-      </div>`;
+      </div>` + metaHtml(ano, vJbs+vVen);
     // embarcado por ano: usa a DATA DO EMBARQUE; sem data, vale a etapa (Embarcado em diante) com o ano do processo
     const EMB_STATUS = ['EMBARCADO','ESPERANDO_COMISSAO','EMITIDO_INVOICE','FECHAMENTO_CAMBIO','PAGAMENTO_VENDEDOR','ENCERRADO'];
     const anoEmb = p => { const e=String(p.embarque||'').slice(0,4); if(/^\d{4}$/.test(e)) return e; return EMB_STATUS.includes(p.status)? yearOf(p) : null; };
@@ -11128,6 +11128,7 @@ function renderAnalyticsKpis(){
         <div class="an-destaque-cards">${cardEmb(ano)}${cardEmb(anoAnt)}</div>
       </div>`;
   })();
+  try{ metaWire(); }catch(e){ console.warn('meta', e); }
   // cards de resumo (total comprado / clientes / fornecedores / quantidade) removidos a pedido
   const kpisEl = document.getElementById('analyticsKpis'); if(kpisEl) kpisEl.innerHTML = '';
 }
@@ -11382,6 +11383,58 @@ function projecaoAno(vendidoAgora, vendidoMesmoPeriodoAnoPassado, totalAnoPassad
 function rotuloPeriodo(){
   const h = new Date();
   return 'até ' + String(h.getDate()).padStart(2,'0') + '/' + String(h.getMonth()+1).padStart(2,'0');
+}
+
+/* metas anuais de venda (USD) — uma por ano, gravadas na nuvem junto com as configurações */
+let metasAnuais = { '2026': 15000000 };
+const METAS_KEY = 'metas_anuais_v1';
+async function loadMetasAnuais(){
+  try{ const r = await storageGet(METAS_KEY, false); if(r && r.value){ const m = JSON.parse(r.value); if(m && typeof m==='object') metasAnuais = Object.assign({ '2026': 15000000 }, m); } }catch(e){}
+}
+function saveMetasAnuais(){ return storageSet(METAS_KEY, JSON.stringify(metasAnuais), false); }
+function metaHtml(ano, vendido){
+  const meta = +metasAnuais[ano] || 0;
+  if(!(meta>0)) return `<div class="an-destaque an-destaque-meta"><div class="an-destaque-titulo">🎯 Meta de ${ano}</div>
+    <div class="an-panel-sub" style="margin:4px 0 8px;">Ainda não tem meta para ${ano}.</div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">USD <input id="metaValor" class="input" inputmode="decimal" placeholder="ex.: 15.000.000" style="max-width:200px;"><button class="btn btn-primary btn-sm" id="metaSalvar" data-ano="${ano}">Salvar meta</button></div></div>`;
+  const pct = vendido/meta*100, falta = Math.max(0, meta - vendido), passou = Math.max(0, vendido - meta);
+  // ritmo: quanto deveria ter vendido até hoje (proporcional aos dias do ano)
+  const hoje = new Date(), ini = new Date(+ano,0,1), fim = new Date(+ano+1,0,1);
+  const fracAno = String(hoje.getFullYear())===ano ? Math.min(1, (hoje-ini)/(fim-ini)) : (hoje.getFullYear()>+ano ? 1 : 0);
+  const esperado = meta*fracAno, adiante = vendido - esperado;
+  const mesesRest = String(hoje.getFullYear())===ano ? Math.max(0, 12 - hoje.getMonth() - (hoje.getDate()/31)) : 0;
+  const cor = pct>=100 ? 'var(--teal,#2E9E6B)' : (adiante>=0 ? 'var(--teal,#2E9E6B)' : 'var(--amber,#C98A0B)');
+  return `<div class="an-destaque an-destaque-meta">
+    <div class="an-destaque-titulo">🎯 Meta de ${ano} <span class="an-panel-sub" style="font-weight:400;">vendido nas duas planilhas (Vendas JBS + Vendas), pela data de abertura</span>
+      <button class="btn btn-ghost btn-sm" id="metaEditar" data-ano="${ano}" style="margin-left:8px;">✏️ Alterar meta</button></div>
+    <div class="an-destaque-cards">
+      <div class="card accent-steel"><div class="label">Meta anual</div><div class="value">USD ${fmt(meta)}</div><div class="sub">definida para ${ano}</div></div>
+      <div class="card accent-teal an-destaque-total"><div class="label">Alcançado</div><div class="value" style="color:${cor};">${pct.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</div><div class="sub">USD ${fmt(vendido)} vendidos</div></div>
+      <div class="card accent-amber"><div class="label">${passou>0?'Passou da meta':'Falta para a meta'}</div><div class="value">USD ${fmt(passou>0?passou:falta)}</div><div class="sub">${passou>0?'🎉 meta batida':(mesesRest>0.2?'≈ USD '+fmt(falta/mesesRest)+' por mês até dezembro':'')}</div></div>
+    </div>
+    <div style="margin-top:10px;height:14px;border-radius:7px;background:rgba(255,255,255,.08);overflow:hidden;position:relative;">
+      <div style="height:100%;width:${Math.min(100,pct).toFixed(2)}%;background:${cor};"></div>
+      ${fracAno>0 && fracAno<1 ? `<div title="onde deveria estar hoje" style="position:absolute;top:-2px;bottom:-2px;left:${(fracAno*100).toFixed(2)}%;width:2px;background:#fff;opacity:.7;"></div>`:''}
+    </div>
+    ${fracAno>0 && fracAno<1 ? `<div class="an-panel-sub" style="margin-top:6px;">Pelo calendário, até hoje o esperado era USD ${fmt(esperado)} (${(fracAno*100).toFixed(0)}% do ano) — ${adiante>=0?'<b style="color:var(--teal,#2E9E6B)">USD '+fmt(adiante)+' à frente</b>':'<b style="color:var(--amber,#C98A0B)">USD '+fmt(-adiante)+' atrás</b>'} do ritmo.</div>`:''}
+    <div id="metaEditBox" style="display:none;margin-top:8px;gap:8px;align-items:center;flex-wrap:wrap;">Ano <input id="metaAno" class="input" value="${ano}" style="max-width:80px;"> Meta USD <input id="metaValor" class="input" inputmode="decimal" value="${fmt(meta)}" style="max-width:200px;"><button class="btn btn-primary btn-sm" id="metaSalvar" data-ano="${ano}">Salvar meta</button></div>
+  </div>`;
+}
+function metaWire(){
+  const ed = document.getElementById('metaEditar'), box = document.getElementById('metaEditBox');
+  if(ed && box) ed.onclick = ()=>{ box.style.display = box.style.display==='none' ? 'flex' : 'none'; };
+  const sv = document.getElementById('metaSalvar');
+  if(sv) sv.onclick = async ()=>{
+    if(!editMode){ toast('Digite a senha de edição para alterar a meta.'); openEditUnlockModal(); return; }
+    const anoEl = document.getElementById('metaAno'); const ano = String((anoEl && anoEl.value) || sv.dataset.ano).trim();
+    if(!/^\d{4}$/.test(ano)){ toast('Ano inválido.'); return; }
+    const t = String(document.getElementById('metaValor').value||'').replace(/[^\d.,]/g,'');
+    const v = parseFloat(t.indexOf(',')>=0 ? t.replace(/\./g,'').replace(',','.') : t.replace(/\.(?=\d{3}(\D|$))/g,''));
+    if(!(v>0)){ toast('Digite o valor da meta.'); return; }
+    metasAnuais[ano] = Math.round(v*100)/100;
+    try{ await saveMetasAnuais(); toast('Meta de '+ano+' salva: USD '+fmt(metasAnuais[ano])); }catch(e){ toast('Não consegui salvar a meta: '+(e.message||e)); }
+    renderAnalyticsKpis();
+  };
 }
 
 /* totais de anos antigos podem ser informados à mão (ex: 2024 fechado) */
@@ -14144,7 +14197,7 @@ async function exportarTudo(){
   const chaves = [
     window.STORAGE_KEY, window.STORAGE_KEY_VENDAS,
     'notas_fiscais_v1', 'nf_fornecedores_v1', 'planner_notas_v1', 'despesas_v1',
-    MATERIAL_CATALOG_KEY, VENDOR_CATALOG_KEY, CLIENT_CATALOG_KEY, 'totais_manuais_v1',
+    MATERIAL_CATALOG_KEY, VENDOR_CATALOG_KEY, CLIENT_CATALOG_KEY, 'totais_manuais_v1', 'metas_anuais_v1',
     'fornecedor_comissao_v1', 'fornecedor_cliente_comissao_v1', 'fornecedor_notas_v1', 'despesas_planilha_v1', 'resumo_jbs_v1', 'clientes_cadastro_v1',
     'numeracao_processos_v1', 'resumo_jbs_v1_ncms', 'resumo_jbs_v1_embarques', 'historico_alteracoes_v1'
   ];
@@ -17725,6 +17778,7 @@ async function init(){
     try{ await loadResumoJbs(); rjAjustarSubabas(); }catch(e){ console.warn('resumo JBS: carga falhou', e); }
     try{ await loadClientesCadastro(); }catch(e){ console.warn('clientes: carga falhou', e); }
     await loadTotaisManuais();
+    try{ await loadMetasAnuais(); }catch(e){}
     await loadDespesas();
     try{ await loadDespPlanilha(); }catch(e){ console.warn('despesas planilha: carga falhou', e); dplState = dplState || dplSeed(); }
     startRealtimeSync();
