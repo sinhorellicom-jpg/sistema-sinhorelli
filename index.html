@@ -10942,8 +10942,9 @@ async function anCarregarOutraAba(){
     if(firebaseReady && firestoreDb){ try{ raw = await firestoreReadProcessos(key); }catch(e){} }
     if(raw === null){ const res = await storageGet(key, true); raw = res && res.value ? res.value : null; }
     anOutraAba = raw ? JSON.parse(raw).map(normalize) : [];
+    window.__anOutraFalhou = (raw === null);
     if(outro==='vendas') vendasClassePadrao(anOutraAba);
-  }catch(e){ anOutraAba = []; }
+  }catch(e){ anOutraAba = []; window.__anOutraFalhou = true; }
 }
 function anUniverso(){
   const atual = processos.filter(anoValido).map(p=>Object.assign({_ds:activeDataset}, p));
@@ -11100,10 +11101,22 @@ function renderAnalyticsKpis(){
     const soma = lista => (lista||[]).filter(p=>(p.status!=='CANCELADO' && p.status!=='AMOSTRA') && yearOf(p)===ano).reduce((s,p)=>s+(p.valorUsd||0),0);
     const conta = lista => (lista||[]).filter(p=>(p.status!=='CANCELADO' && p.status!=='AMOSTRA') && yearOf(p)===ano).length;
     const atualEhVendas = activeDataset==='vendas';
-    const jbsLista    = atualEhVendas ? (anOutraAba||[]) : processos;
-    const vendasLista = atualEhVendas ? processos : (anOutraAba||[]);
+    // a outra planilha: usa o cache da aba (sempre atualizado) e, se não tiver, o que a análise carregou
+    const outroNome = atualEhVendas ? 'jbs' : 'vendas';
+    const cacheOutra = (typeof datasetCache!=='undefined' && datasetCache[outroNome] && Array.isArray(datasetCache[outroNome].processos) && datasetCache[outroNome].processos.length) ? datasetCache[outroNome].processos : null;
+    const outra = cacheOutra || anOutraAba || [];
+    const jbsLista    = atualEhVendas ? outra : processos;
+    const vendasLista = atualEhVendas ? processos : outra;
     const vJbs = soma(jbsLista), vVen = soma(vendasLista);
-    const aviso = anOutraAba===null ? `<div class="an-panel-sub" style="margin-top:6px;">carregando a outra planilha…</div>` : '';
+    // a outra planilha veio vazia (falha de leitura ou ainda carregando): tenta de novo uma vez e avisa — a meta é sobre as DUAS
+    const outraVazia = !cacheOutra && (!anOutraAba || !anOutraAba.length);
+    if(outraVazia && anOutraAba && !renderAnalyticsKpis._retry){
+      renderAnalyticsKpis._retry = true; anOutraAba = null;
+      anCarregarOutraAba().then(()=>{ renderAnalyticsKpis(); setTimeout(()=>{ renderAnalyticsKpis._retry = false; }, 30000); }).catch(()=>{});
+    }
+    const nomeOutra = atualEhVendas ? 'Vendas JBS' : 'Vendas';
+    const aviso = anOutraAba===null ? `<div class="an-panel-sub" style="margin-top:6px;">carregando a planilha ${nomeOutra}…</div>`
+      : (outraVazia ? `<div class="an-panel-sub" style="margin-top:6px;color:var(--amber,#C98A0B);">⚠ Não consegui ler a planilha ${nomeOutra} agora — o total e a meta estão sem ela. <a href="#" id="anRecarregarOutra">tentar de novo</a></div>` : '');
     document.getElementById('anDestaque').innerHTML = `
       <div class="an-destaque">
         <div class="an-destaque-titulo">💵 Vendido em ${ano}</div>
@@ -11112,7 +11125,7 @@ function renderAnalyticsKpis(){
           <div class="card accent-violet"><div class="label">Vendas</div><div class="value">USD ${fmt(vVen)}</div><div class="sub">${conta(vendasLista)} processos em ${ano}</div></div>
           <div class="card accent-teal an-destaque-total"><div class="label">Total das duas planilhas</div><div class="value">USD ${fmt(vJbs+vVen)}</div><div class="sub">Vendas JBS + Vendas</div></div>
         </div>${aviso}
-      </div>` + metaHtml(ano, vJbs+vVen);
+      </div>` + metaHtml(ano, vJbs+vVen, outraVazia ? nomeOutra : '');
     // embarcado por ano: usa a DATA DO EMBARQUE; sem data, vale a etapa (Embarcado em diante) com o ano do processo
     const EMB_STATUS = ['EMBARCADO','ESPERANDO_COMISSAO','EMITIDO_INVOICE','FECHAMENTO_CAMBIO','PAGAMENTO_VENDEDOR','ENCERRADO'];
     const anoEmb = p => { const e=String(p.embarque||'').slice(0,4); if(/^\d{4}$/.test(e)) return e; return EMB_STATUS.includes(p.status)? yearOf(p) : null; };
@@ -11129,6 +11142,7 @@ function renderAnalyticsKpis(){
       </div>`;
   })();
   try{ metaWire(); }catch(e){ console.warn('meta', e); }
+  { const rl = document.getElementById('anRecarregarOutra'); if(rl) rl.onclick = (ev)=>{ ev.preventDefault(); anOutraAba = null; renderAnalyticsKpis(); anCarregarOutraAba().then(()=>renderAnalyticsKpis()); }; }
   // cards de resumo (total comprado / clientes / fornecedores / quantidade) removidos a pedido
   const kpisEl = document.getElementById('analyticsKpis'); if(kpisEl) kpisEl.innerHTML = '';
 }
@@ -11392,7 +11406,7 @@ async function loadMetasAnuais(){
   try{ const r = await storageGet(METAS_KEY, false); if(r && r.value){ const m = JSON.parse(r.value); if(m && typeof m==='object') metasAnuais = Object.assign({ '2026': 15000000 }, m); } }catch(e){}
 }
 function saveMetasAnuais(){ return storageSet(METAS_KEY, JSON.stringify(metasAnuais), false); }
-function metaHtml(ano, vendido){
+function metaHtml(ano, vendido, faltaPlanilha){
   const meta = +metasAnuais[ano] || 0;
   if(!(meta>0)) return `<div class="an-destaque an-destaque-meta"><div class="an-destaque-titulo">🎯 Meta de ${ano}</div>
     <div class="an-panel-sub" style="margin:4px 0 8px;">Ainda não tem meta para ${ano}.</div>
@@ -11405,8 +11419,9 @@ function metaHtml(ano, vendido){
   const mesesRest = String(hoje.getFullYear())===ano ? Math.max(0, 12 - hoje.getMonth() - (hoje.getDate()/31)) : 0;
   const cor = pct>=100 ? 'var(--teal,#2E9E6B)' : (adiante>=0 ? 'var(--teal,#2E9E6B)' : 'var(--amber,#C98A0B)');
   return `<div class="an-destaque an-destaque-meta">
-    <div class="an-destaque-titulo">🎯 Meta de ${ano} <span class="an-panel-sub" style="font-weight:400;">vendido nas duas planilhas (Vendas JBS + Vendas), pela data de abertura</span>
+    <div class="an-destaque-titulo">🎯 Meta de ${ano} <span class="an-panel-sub" style="font-weight:400;">meta geral: soma de Vendas JBS + Vendas, pela data de abertura</span>
       <button class="btn btn-ghost btn-sm" id="metaEditar" data-ano="${ano}" style="margin-left:8px;">✏️ Alterar meta</button></div>
+    ${faltaPlanilha ? `<div class="an-panel-sub" style="color:var(--amber,#C98A0B);margin:4px 0 8px;">⚠ A planilha ${faltaPlanilha} não carregou — o alcançado abaixo está incompleto.</div>` : ''}
     <div class="an-destaque-cards">
       <div class="card accent-steel"><div class="label">Meta anual</div><div class="value">USD ${fmt(meta)}</div><div class="sub">definida para ${ano}</div></div>
       <div class="card accent-teal an-destaque-total"><div class="label">Alcançado</div><div class="value" style="color:${cor};">${pct.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</div><div class="sub">USD ${fmt(vendido)} vendidos</div></div>
