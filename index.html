@@ -7972,8 +7972,7 @@ function renderBoard(){
           <span class="col-dot" style="background:${st.color}"></span>${st.label} <span class="chip">${items.length}</span>
           <span class="collapse-hint">${collapsed?'▾':'▴'}</span>
         </div>
-        <div class="column-sum">USD ${fmt(sum)}${isVencidoCol? ' em aberto':''}${mostraCom? `<div class="column-com" title="${comAReceber.length} processo(s) com comissão ainda não recebida">💰 Comissão a receber: USD ${fmt(sumCom)}</div>` : ''}</div>
-        ${isVencidoCol? `<div class="column-note">puxados automaticamente: vencimento passado e saldo em aberto (até a etapa Embarcado). Ao pagar, voltam sozinhos pra etapa de origem</div>` : ''}
+        <div class="column-sum">${isVencidoCol? `USD ${fmt(items.reduce((s,p)=>s+(p.valorUsd||0),0))}<div class="column-com" style="color:#F87171;" title="soma do saldo ainda não pago dos processos vencidos">Em aberto: USD ${fmt(sum)}</div>` : `USD ${fmt(sum)}`}${mostraCom? `<div class="column-com" title="${comAReceber.length} processo(s) com comissão ainda não recebida">💰 Comissão a receber: USD ${fmt(sumCom)}</div>` : ''}</div>
       </div>
       <div class="column-body" data-status="${st.key}">
         ${items.length? items.map(p=>cardHtml(p, st)).join('') : `<div class="empty-col">${isVencidoCol? 'Nenhum processo vencido 🎉' : 'Nenhum processo aqui'}</div>`}
