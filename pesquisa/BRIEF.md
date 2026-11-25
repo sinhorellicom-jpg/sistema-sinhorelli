@@ -33,10 +33,23 @@ Para os PAÍSES indicados, encontrar empresas que COMPRAM/IMPORTAM essas NCMs, o
 Já existem na base (NÃO repita estas; você pode reforçar uma delas só se achar evidência NOVA de importação 2024–2026 — nesse caso inclua com o mesmo nome e "atualiza_existente": true):
 ver o arquivo a lista de empresas já existentes em prospeccao.json (campo "empresas", chaves "pais" e "empresa") (chaves = país em português maiúsculo).
 
-Meta: 10 a 20 empresas NOVAS por país grande (México, Colômbia, Peru, Brasil, Argentina, Equador), 4 a 10 por país menor. Qualidade > quantidade.
+Meta: 10 a 20 empresas NOVAS por país grande (Brasil primeiro; depois México, Colômbia, Peru, Argentina, Equador), 4 a 10 por país menor. Qualidade > quantidade. Empresa com fornecedor + NCM + valor vale mais que três empresas só com nome.
 
 ## Fornecedores e período (importante)
 Para cada empresa, procure DE QUEM ela compra (nome do exportador/fornecedor nos registros de importação) e preencha "fornecedores_conhecidos" e o campo "fornecedor" de cada evidência. Em toda evidência, preencha "periodo" com a data do registro (dd/mm/aaaa quando houver, ou o intervalo de anos, ex.: "2024-2026"). Registro sem data perde valor: prefira registros datados.
+
+
+## PRIORIDADE 1 — De quem os clientes compram (fornecedores e importações)
+A pergunta principal da prospecção é: **o que cada cliente compra, de quem, de onde, a que preço e com que NCM.**
+- Para CADA empresa que você incluir ou reforçar, procure os fornecedores nos registros de importação (lado do importador: Veritrade, Volza, Datasur, ImportGenius, Panjiva) **e** pelo lado do exportador (52wmb, Seair/Eximpedia, TradeAtlas, ImportYeti: "<exportador> shipments to <país>"). Cada fornecedor vira pelo menos uma evidência com "fornecedor", "origem", "ncm", "descricao" do produto, "periodo" e "valor" (FOB quando houver).
+- Toda rodada, escolha também **15 a 25 empresas da base que ainda não têm fornecedor** (sem "fornecedores_conhecidos" e sem "fornecedor" nas evidências) e procure de quem elas compram. Comece pelos **nossos clientes** (pesquisa/CLIENTES.md) e pelas do **Brasil**. Inclua-as com o mesmo nome e "atualiza_existente": true.
+- **Nossos clientes** (pesquisa/CLIENTES.md): procure o que eles importam além do que compram de nós e de quais **concorrentes** (outros curtumes, outros fornecedores chineses de microfibra/PU, etc.) — com NCM, volume e preço. Isso mostra onde podemos vender mais.
+
+## PRIORIDADE 2 — BRASIL: quem compra as nossas NCMs
+O Brasil é o mercado mais importante. Busque **clientes nossos e empresas novas** no Brasil que compram/importam as NCMs da tabela (grave a NCM brasileira de 8 dígitos exatamente como aparece na fonte; ex.: 3921.13.90, 6406.90.90).
+- Fontes Brasil: registros de importação com nome do importador (Volza "Brazil import data <HS>", Datamarket, Logcomex, ImportGenius, Panjiva, 52wmb e Seair pelo lado do exportador chinês → Brasil), o **Cadastro de Empresas Importadoras do MDIC** (gov.br/mdic — empresas por CNPJ, município e capítulo SH: 39, 40, 41, 56, 59, 60, 64, 35, 84), o **Comex Stat** (comexstat.mdic.gov.br: valor e quilos por NCM, **estado/município de destino** e país de origem — mostra os polos, ex.: Franca-SP, Novo Hamburgo/Vale dos Sinos-RS, Birigui-SP, Nova Serrana-MG, Jaú-SP, São João Batista-SC), Abicalçados, Assintecal, CICB (curtumes), feiras (Fimec, Couromoda, Fenac) e notícias.
+- Para cada empresa do Brasil: CNPJ (só se tiver certeza), cidade/UF, o que fabrica, **o que importa (NCM 8 dígitos + descrição), de quem (fornecedor e país) e o valor FOB**. Quando o insumo é comprado no próprio Brasil (ex.: couro de curtume nacional, adesivo nacional), registre o fornecedor nacional citado com "origem": "Brasil".
+- Meta Brasil por rodada: 10 a 20 empresas (novas ou reforçadas com fornecedor/importação).
 
 ## Saída
 Grave UM arquivo JSON (lista) no caminho indicado na sua tarefa, cada item exatamente com estas chaves:

@@ -16421,6 +16421,26 @@ function prospProcessos(){
   return out;
 }
 // clientes que já temos (para marcar "já é cliente")
+// lista dos nossos clientes (das vendas) para guiar a pesquisa: cliente | país | fornecedores | produtos | último ano
+function prospListaClientesPesquisa(){
+  const m = new Map();
+  prospProcessos().forEach(p=>{ const c = String(p && p.cliente || '').trim(); if(!c) return; const k = prospNorm(c); if(!k) return;
+    const o = m.get(k) || { nome:c, pais:new Set(), forn:new Set(), prod:new Set(), ano:'', n:0 };
+    if(p.pais) o.pais.add(String(p.pais).trim().toUpperCase()); if(p.fornecedor) o.forn.add(String(p.fornecedor).trim().toUpperCase());
+    (typeof materialTags==='function' ? materialTags(p) : []).forEach(t=>o.prod.add(String(t).trim().toUpperCase()));
+    const y = String(p.data||'').slice(0,4); if(y > o.ano) o.ano = y; o.n++; m.set(k, o); });
+  const linhas = [...m.values()].sort((a,b)=>[...a.pais].join().localeCompare([...b.pais].join()) || a.nome.localeCompare(b.nome))
+    .map(o=>`${o.nome} | ${[...o.pais].join(', ')||'?'} | ${[...o.forn].join(', ')} | ${[...o.prod].slice(0,8).join(', ')} | último ${o.ano||'?'} | ${o.n} processo(s)`);
+  const txt = 'CLIENTE | PAÍS | NOSSOS FORNECEDORES | PRODUTOS | ÚLTIMO ANO | PROCESSOS\n' + linhas.join('\n');
+  const root = document.createElement('div'); root.className='overlay'; root.style.zIndex=99999;
+  root.innerHTML = `<div class="modal" style="max-width:900px;"><div class="modal-head"><div><h2>📋 Nossos clientes — lista para a pesquisa</h2><div class="an-panel-sub">${linhas.length} cliente(s). Copie e cole na conversa com o Claude: a pesquisa diária passa a buscar de quem cada um compra e o que importa.</div></div></div>
+    <div class="modal-body"><textarea id="lcTxt" readonly style="width:100%;height:55vh;font-family:'IBM Plex Mono',monospace;font-size:12px;"></textarea></div>
+    <div class="modal-foot"><button class="btn btn-outline" id="lcFechar">Fechar</button><button class="btn btn-primary" id="lcCopiar">Copiar</button></div></div>`;
+  document.body.appendChild(root);
+  const ta = root.querySelector('#lcTxt'); ta.value = txt;
+  root.querySelector('#lcFechar').onclick = ()=>root.remove();
+  root.querySelector('#lcCopiar').onclick = async ()=>{ try{ await navigator.clipboard.writeText(txt); }catch(e){ ta.select(); document.execCommand('copy'); } toast('Lista copiada — cole na conversa com o Claude.'); };
+}
 function prospClientes(){
   const m = new Map();
   prospProcessos().forEach(p=>{ const c = String(p && p.cliente || '').trim(); if(c){ const n = prospNorm(c); if(n && !m.has(n)) m.set(n, c); } });
@@ -17060,6 +17080,7 @@ function buscaRender(){
       <input id="buscaExp" list="buscaExpL" placeholder="Exportador / fornecedor (ex.: JBS, Yantai, Miracll)" value="${E(buscaF.exp)}" style="min-width:260px;">
       <input id="buscaImp" list="buscaImpL" placeholder="Importador / comprador" value="${E(buscaF.imp)}" style="min-width:240px;">
       <button class="btn btn-primary btn-sm" id="buscaIr">Pesquisar</button>
+      <button class="btn btn-ghost btn-sm" id="buscaListaCli" title="Gera a lista dos nossos clientes (país, fornecedores, produtos) para mandar ao Claude e guiar a pesquisa diária">📋 Clientes p/ pesquisa</button>
       <button class="btn ${buscaF.todas?'btn-primary':'btn-ghost'} btn-sm" id="buscaTodas" title="Lista todas as empresas da base, cada fornecedor numa linha, com produtos (NCM) e valor FOB">🏢 Todas as empresas</button>
       <select id="buscaPais"><option value="">Todos os países</option>${paisesB.map(v=>`<option ${v===buscaF.pais?'selected':''}>${E(v)}</option>`).join('')}</select>
       <select id="buscaNcm"><option value="">Todas as NCMs</option>${ncmsB.map(v=>`<option ${v===buscaF.ncm?'selected':''}>${E(v)}</option>`).join('')}</select>
@@ -17075,6 +17096,7 @@ function buscaRender(){
   const ir = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaRender(); };
   box.querySelector('#buscaIr').onclick = ir;
   box.querySelectorAll('#buscaExp,#buscaImp').forEach(i=>i.addEventListener('keydown', ev=>{ if(ev.key==='Enter') ir(); }));
+  const blc = box.querySelector('#buscaListaCli'); if(blc) blc.onclick = prospListaClientesPesquisa;
   const bt = box.querySelector('#buscaTodas'); if(bt) bt.onclick = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaF.todas = !buscaF.todas; buscaRender(); };
   const bxl = box.querySelector('#buscaXls'); if(bxl) bxl.onclick = ()=>buscaBaixarExcel();
   const bpd = box.querySelector('#buscaPdf'); if(bpd) bpd.onclick = ()=>buscaBaixarPdf();

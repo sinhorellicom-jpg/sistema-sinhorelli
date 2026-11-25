@@ -8,6 +8,11 @@ Veritrade (veritradecorp.com — perfis de empresa por país com amostras de emb
 ## Prioridade: para quem os NOSSOS fornecedores vendem
 Toda rodada, procure também pelo lado do exportador: embarques de JBS (Brasil, Argentina/CSA-N, Uruguai, EUA), Zendaleather, Yantai Joye Microfiber, Miracll, Xuchuan, BIQ, Matrizaria Polako, Formello e Hiper Solados para importadores da América Latina (páginas de fornecedor no 52wmb, ImportGenius, Panjiva, Volza, TradeAtlas, Seair/Eximpedia). O campo "exportador" deve trazer o nome como aparece no registro.
 
+
+## Prioridade: BRASIL e os nossos clientes
+- Brasil (hoje quase não tem embarque na base): procure toda rodada embarques **para importadores brasileiros** das NCMs (SH de 6 dígitos da tabela do BRIEF; grave a NCM de 8 dígitos exatamente como aparece na fonte — ex.: 3921.13.90, 6406.90.90, 6406.20.00, 5903.20.00, 6005.37.00). Fontes: Volza ("Brazil import data HS 392113"), Datamarket, Logcomex, Panjiva, ImportGenius, e o lado do exportador (52wmb/Seair/Eximpedia: "Yantai Joye Microfiber Brazil", "PU microfiber leather export Brazil", "steel toe cap export Brazil", "wet blue export Brazil importer").
+- Nossos clientes (pesquisa/CLIENTES.md): procure os embarques deles de **outros** fornecedores (concorrentes) — importador = cliente, exportador ≠ nossos fornecedores.
+
 ## Regras
 - Só registre embarque que a fonte mostra de verdade: data (ou mês/ano), importador e pelo menos quantidade OU valor. Nunca invente nem estime números; se um campo não aparece, null.
 - Quantidade com a unidade exatamente como aparece (kg, ton, m2, sqft/pés², pcs, pares, rolos, unidades). Valor em USD, dizendo se é FOB, CIF ou "não informado".
