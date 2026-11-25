@@ -11125,7 +11125,7 @@ function renderAnalyticsKpis(){
           <div class="card accent-violet"><div class="label">Vendas</div><div class="value">USD ${fmt(vVen)}</div><div class="sub">${conta(vendasLista)} processos em ${ano}</div></div>
           <div class="card accent-teal an-destaque-total"><div class="label">Total das duas planilhas</div><div class="value">USD ${fmt(vJbs+vVen)}</div><div class="sub">Vendas JBS + Vendas</div></div>
         </div>${aviso}
-      </div>` + metaHtml(ano, vJbs+vVen, outraVazia ? nomeOutra : '');
+      </div>` + metaHtml(ano, vJbs+vVen, outraVazia ? nomeOutra : '') + metaFornHtml(ano, [jbsLista, vendasLista]);
     // embarcado por ano: usa a DATA DO EMBARQUE; sem data, vale a etapa (Embarcado em diante) com o ano do processo
     const EMB_STATUS = ['EMBARCADO','ESPERANDO_COMISSAO','EMITIDO_INVOICE','FECHAMENTO_CAMBIO','PAGAMENTO_VENDEDOR','ENCERRADO'];
     const anoEmb = p => { const e=String(p.embarque||'').slice(0,4); if(/^\d{4}$/.test(e)) return e; return EMB_STATUS.includes(p.status)? yearOf(p) : null; };
@@ -11401,6 +11401,54 @@ function rotuloPeriodo(){
 
 /* metas anuais de venda (USD) — uma por ano, gravadas na nuvem junto com as configurações */
 let metasAnuais = { '2026': 15000000 };
+// metas por fornecedor (USD), por ano — ficam dentro do mesmo registro, em "_forn"
+const METAS_FORN_PADRAO = { '2026': { 'JBS':6500000, 'BIQ':800000, 'POLAKO':200000, 'XUCHUAN':1500000, 'YANTAI':5500000, 'MIRACLL':500000 } };
+function metasFornDoAno(ano){ const f = (metasAnuais._forn && metasAnuais._forn[ano]) || METAS_FORN_PADRAO[ano] || {}; return f; }
+function metaFornChave(nome){ return String(nome||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9 ]+/g,' ').replace(/\s+/g,' ').trim(); }
+// "JBS" pega JBS BR / JBS AR / JBS US / JBS UR; "YANTAI" pega YANTAI JOYE...
+function metaFornDe(fornecedor, metas){
+  const f = metaFornChave(fornecedor); if(!f) return null;
+  const ks = Object.keys(metas).sort((a,b)=>b.length-a.length);
+  return ks.find(k=>{ const c = metaFornChave(k); return f===c || f.startsWith(c+' ') || (' '+f+' ').indexOf(' '+c+' ')>=0; }) || null;
+}
+function metaFornHtml(ano, listas){
+  const metas = metasFornDoAno(ano); const ks = Object.keys(metas);
+  if(!ks.length) return `<div class="an-destaque an-destaque-meta"><div class="an-destaque-titulo">🏭 Meta por fornecedor — ${ano} <button class="btn btn-ghost btn-sm" id="metaFornEditar" style="margin-left:8px;">✏️ Definir metas</button></div><div class="an-panel-sub">Ainda não tem metas por fornecedor para ${ano}.</div>${metaFornEditBox(ano, metas)}</div>`;
+  const vend = {}, nProc = {}; let outros = 0, nOutros = 0; const outrosNomes = {};
+  ks.forEach(k=>{ vend[k]=0; nProc[k]=0; });
+  listas.forEach(l=>(l||[]).forEach(p=>{
+    if(p.status==='CANCELADO' || p.status==='AMOSTRA' || yearOf(p)!==ano) return;
+    const k = metaFornDe(p.fornecedor, metas), v = +p.valorUsd||0;
+    if(k){ vend[k]+=v; nProc[k]++; } else { outros+=v; nOutros++; const n = String(p.fornecedor||'(sem fornecedor)').trim().toUpperCase(); outrosNomes[n]=(outrosNomes[n]||0)+v; }
+  }));
+  const linhas = ks.sort((a,b)=>metas[b]-metas[a]).map(k=>{
+    const m = +metas[k]||0, v = vend[k], pct = m>0 ? v/m*100 : 0, falta = Math.max(0,m-v), passou = Math.max(0,v-m);
+    const cor = pct>=100 ? 'var(--teal,#2E9E6B)' : (pct>=75 ? 'var(--amber,#C98A0B)' : '#F87171');
+    return `<tr><td><b>${k}</b><div class="an-panel-sub">${nProc[k]} processo(s)</div></td>
+      <td class="num">USD ${fmt(m)}</td><td class="num"><b>USD ${fmt(v)}</b></td>
+      <td style="min-width:170px;"><div style="display:flex;align-items:center;gap:8px;"><div style="flex:1;height:10px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden;"><div style="height:100%;width:${Math.min(100,pct).toFixed(1)}%;background:${cor};"></div></div><b style="color:${cor};min-width:52px;text-align:right;">${pct.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</b></div></td>
+      <td class="num">${passou>0 ? `<span style="color:var(--teal,#2E9E6B);font-weight:700;">✅ batida · +USD ${fmt(passou)}</span>` : `USD ${fmt(falta)}`}</td></tr>`; }).join('');
+  const totM = ks.reduce((s,k)=>s+(+metas[k]||0),0), totV = ks.reduce((s,k)=>s+vend[k],0);
+  const outrosTxt = Object.entries(outrosNomes).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([n,v])=>n+' USD '+fmt(v)).join(' · ');
+  return `<div class="an-destaque an-destaque-meta">
+    <div class="an-destaque-titulo">🏭 Meta por fornecedor — ${ano} <span class="an-panel-sub" style="font-weight:400;">vendido em ${ano} nas duas planilhas, pela data de abertura</span>
+      <button class="btn btn-ghost btn-sm" id="metaFornEditar" style="margin-left:8px;">✏️ Alterar metas</button></div>
+    <div style="overflow:auto;"><table class="mat-table" style="width:100%;">
+      <thead><tr><th style="text-align:left;">Fornecedor</th><th>Meta ${ano}</th><th>Vendido</th><th style="text-align:left;">Alcançado</th><th>Falta para a meta</th></tr></thead>
+      <tbody>${linhas}
+        <tr style="border-top:2px solid rgba(255,255,255,.15);"><td><b>Total dos fornecedores com meta</b></td><td class="num"><b>USD ${fmt(totM)}</b></td><td class="num"><b>USD ${fmt(totV)}</b></td><td><b>${totM>0?(totV/totM*100).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1}):'0,0'}%</b></td><td class="num"><b>${totV>=totM?'✅ batida':'USD '+fmt(totM-totV)}</b></td></tr>
+      </tbody></table></div>
+    ${outros>0 ? `<div class="an-panel-sub" style="margin-top:6px;">Outros fornecedores (sem meta): USD ${fmt(outros)} em ${nOutros} processo(s)${outrosTxt?' — '+outrosTxt:''}</div>` : ''}
+    ${metaFornEditBox(ano, metas)}
+  </div>`;
+}
+function metaFornEditBox(ano, metas){
+  const txt = Object.keys(metas).map(k=>k+' = '+fmt(metas[k])).join('\n');
+  return `<div id="metaFornBox" style="display:none;margin-top:10px;">
+    <div class="an-panel-sub" style="margin-bottom:4px;">Uma linha por fornecedor: <b>NOME = valor</b> (ex.: JBS = 6.500.000). "JBS" vale para JBS BR, AR, US e UR. Apague a linha para tirar a meta.</div>
+    <textarea id="metaFornTxt" style="width:100%;max-width:520px;height:150px;font-family:'IBM Plex Mono',monospace;">${txt}</textarea>
+    <div style="margin-top:6px;"><button class="btn btn-primary btn-sm" id="metaFornSalvar" data-ano="${ano}">Salvar metas de ${ano}</button></div></div>`;
+}
 const METAS_KEY = 'metas_anuais_v1';
 async function loadMetasAnuais(){
   try{ const r = await storageGet(METAS_KEY, false); if(r && r.value){ const m = JSON.parse(r.value); if(m && typeof m==='object') metasAnuais = Object.assign({ '2026': 15000000 }, m); } }catch(e){}
@@ -11425,7 +11473,7 @@ function metaHtml(ano, vendido, faltaPlanilha){
     <div class="an-destaque-cards">
       <div class="card accent-steel"><div class="label">Meta anual</div><div class="value">USD ${fmt(meta)}</div><div class="sub">definida para ${ano}</div></div>
       <div class="card accent-teal an-destaque-total"><div class="label">Alcançado</div><div class="value" style="color:${cor};">${pct.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</div><div class="sub">USD ${fmt(vendido)} vendidos</div></div>
-      <div class="card accent-amber"><div class="label">${passou>0?'Passou da meta':'Falta para a meta'}</div><div class="value">USD ${fmt(passou>0?passou:falta)}</div><div class="sub">${passou>0?'🎉 meta batida':(mesesRest>0.2?'≈ USD '+fmt(falta/mesesRest)+' por mês até dezembro':'')}</div></div>
+      <div class="card accent-amber"><div class="label">${passou>0?'Passou da meta':'Falta para a meta'}</div><div class="value">USD ${fmt(passou>0?passou:falta)}</div><div class="sub">${passou>0?'🎉 meta batida':'para chegar aos USD '+fmt(meta)}</div></div>
     </div>
     <div style="margin-top:10px;height:14px;border-radius:7px;background:rgba(255,255,255,.08);overflow:hidden;position:relative;">
       <div style="height:100%;width:${Math.min(100,pct).toFixed(2)}%;background:${cor};"></div>
@@ -11436,6 +11484,21 @@ function metaHtml(ano, vendido, faltaPlanilha){
   </div>`;
 }
 function metaWire(){
+  const fe = document.getElementById('metaFornEditar'), fb = document.getElementById('metaFornBox');
+  if(fe && fb) fe.onclick = ()=>{ fb.style.display = fb.style.display==='none' ? 'block' : 'none'; };
+  const fs = document.getElementById('metaFornSalvar');
+  if(fs) fs.onclick = async ()=>{
+    if(!editMode){ toast('Digite a senha de edição para alterar as metas.'); openEditUnlockModal(); return; }
+    const ano = fs.dataset.ano, novo = {};
+    for(const lin of String(document.getElementById('metaFornTxt').value||'').split(/\n+/)){
+      const m = lin.match(/^\s*(.+?)\s*[=:;]\s*(?:USD|US\$)?\s*([\d.,]+)\s*$/i); if(!m) continue;
+      const t = m[2]; const v = parseFloat(t.indexOf(',')>=0 ? t.replace(/\./g,'').replace(',','.') : t.replace(/\.(?=\d{3}(\D|$))/g,''));
+      if(v>0) novo[m[1].trim().toUpperCase()] = Math.round(v*100)/100;
+    }
+    metasAnuais._forn = metasAnuais._forn || {}; metasAnuais._forn[ano] = novo;
+    try{ await saveMetasAnuais(); toast('Metas por fornecedor de '+ano+' salvas.'); }catch(e){ toast('Não consegui salvar: '+(e.message||e)); }
+    renderAnalyticsKpis();
+  };
   const ed = document.getElementById('metaEditar'), box = document.getElementById('metaEditBox');
   if(ed && box) ed.onclick = ()=>{ box.style.display = box.style.display==='none' ? 'flex' : 'none'; };
   const sv = document.getElementById('metaSalvar');
