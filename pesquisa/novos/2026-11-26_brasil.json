@@ -1,0 +1,26 @@
+[
+  {
+    "empresa": "MARTINO & VICENZO LTDA",
+    "nome_fantasia": null,
+    "pais": "BRASIL",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "adesivos/químicos",
+    "produtos": "Importa poliuretano em forma primária (DESMOLAC 2100, base PU/ligante para primers e acabamentos) da Covestro, além de cetonas/MEK (solventes) da China",
+    "porte": null,
+    "ncms_provaveis": ["3909.50"],
+    "evidencias": [
+      {"descricao": "Poliuretanos em formas primárias - DESMOLAC 2100 (base PU, ligante para primers/acabamentos), 8.000 kg", "ncm": "3909.50.29", "origem": "Alemanha", "fornecedor": "Covestro Deutschland AG", "periodo": "01/07/2025", "valor": "68652.5 (moeda não informada na fonte)", "unidade": "8000 kg", "fonte": "https://en.52wmb.com/buyer/70240735"},
+      {"descricao": "Base poliuretano DESMOLAC 2100 (finishes, primers, binder), 8.000 kg", "ncm": "3909.50.29", "origem": "Alemanha", "fornecedor": "Covestro Deutschland AG", "periodo": "01/05/2025", "valor": "65935.74 (moeda não informada na fonte)", "unidade": "8000 kg", "fonte": "https://en.52wmb.com/buyer/70240735"},
+      {"descricao": "DESMOLAC 2100 PU linear base MDI, ligante para primers, 8.000 kg", "ncm": "3909.50.29", "origem": "Alemanha", "fornecedor": "Covestro Deutschland AG", "periodo": "01/01/2025", "valor": "63371.62 (moeda não informada na fonte)", "unidade": "8000 kg", "fonte": "https://en.52wmb.com/buyer/70240735"},
+      {"descricao": "Cetonas e quinonas e derivados, 25.840 kg", "ncm": "2914.22.10", "origem": "China", "fornecedor": "Born King Co. Ltd.", "periodo": "01/04/2025", "valor": "39535.2 (moeda não informada na fonte)", "unidade": "25840 kg", "fonte": "https://en.52wmb.com/buyer/70240735"}
+    ],
+    "fornecedores_conhecidos": "Covestro Deutschland AG (Alemanha) - PU 3909.50.29; Born King Co. Ltd. e New China Chemical Co. Ltd. (China) - cetonas/MEK",
+    "por_que_e_prospect": "Importa regularmente poliuretano em forma primária (NCM 3909.50.29) em lotes de 8 t da Covestro — alvo para PU/TPU da Xuchuan/Miracll; cidade e uso final (acabamento/adesivo) não confirmados.",
+    "confianca": "média",
+    "fontes": ["https://en.52wmb.com/buyer/70240735"],
+    "atualiza_existente": false
+  }
+]

@@ -1,0 +1,477 @@
+[
+  {
+    "empresa": "CURTIDURIA TUNGURAHUA S.A.",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": "Ambato",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "curtume",
+    "produtos": "Curtume (wet blue/crust/acabado); cliente Sinhorelli (JBS BR/AR). Compra corantes e químicos de curtimento da Espanha.",
+    "porte": null,
+    "ncms_provaveis": [
+      "4104.11",
+      "4104.41",
+      "4107"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Corantes ácidos para couro (Colorantes-Beige ZLF; no mesmo B/L 012026072660 também Brown GNB, Orange S, Brown NT, Orange 2GC 200) — fornecedor concorrente de insumo químico; total acumulado do fornecedor para a Curtiduría ≈113.765 kg",
+        "ncm": "3204.12.00.00",
+        "origem": "Espanha",
+        "fornecedor": "COLORANTES INDUSTRIALES S.A.",
+        "periodo": "22/09/2026",
+        "valor": "224.50",
+        "unidade": "USD FOB (só a linha amostra Beige ZLF, 50 kg; CIF 235,38)",
+        "fonte": "https://www.importgenius.com/ecuador/suppliers/colorantes-industriales-sa"
+      },
+      {
+        "descricao": "Embarque LCL Barcelona→Guayaquil, 6 pacotes (descrição mascarada; fornecedor de corantes/auxiliares, capítulos 32/34/38)",
+        "ncm": "n/d (capítulos 32/34/38 do exportador)",
+        "origem": "Espanha",
+        "fornecedor": "COLORANTES INDUSTRIALES S.A.",
+        "periodo": "05/09/2025",
+        "valor": null,
+        "unidade": "3.224 kg brutos",
+        "fonte": "https://panjiva.com/Colorantes-Industriales-SA/30677563"
+      },
+      {
+        "descricao": "Contêiner 40' FCL Barcelona→Guayaquil, 26 fardos (descrição mascarada; Trumpler = químicos para curtume, capítulos 32/34/38/39/41 do exportador)",
+        "ncm": "n/d (capítulos 32/34/38/39/41 do exportador)",
+        "origem": "Espanha",
+        "fornecedor": "TRUMPLER ESPAÑOLA S.A.",
+        "periodo": "24/10/2025",
+        "valor": null,
+        "unidade": "23.876,5 kg brutos",
+        "fonte": "https://es.panjiva.com/Trumpler-Espanola-S-A/39283831"
+      },
+      {
+        "descricao": "2 paletes marca LEDECHEM Valencia→Guayaquil (descrição mascarada; químicos para couro)",
+        "ncm": "n/d (capítulos 38/32/39/34 do exportador)",
+        "origem": "Espanha",
+        "fornecedor": "LEDECHEM IBERICA S.L.",
+        "periodo": "02/07/2017",
+        "valor": null,
+        "unidade": "890 kg brutos",
+        "fonte": "https://panjiva.com/Ledechem-Iberica-Sl/45036357"
+      }
+    ],
+    "fornecedores_conhecidos": "COLORANTES INDUSTRIALES S.A.; TRUMPLER ESPAÑOLA S.A.; LEDECHEM IBERICA S.L.",
+    "por_que_e_prospect": "Cliente ativo de couro JBS que também importa químicos de curtimento da Espanha regularmente (2025–2026); não foram achadas compras de couro de curtumes concorrentes nas fontes gratuitas.",
+    "confianca": "alta",
+    "fontes": [
+      "https://www.importgenius.com/ecuador/suppliers/colorantes-industriales-sa",
+      "https://panjiva.com/Colorantes-Industriales-SA/30677563",
+      "https://es.panjiva.com/Trumpler-Espanola-S-A/39283831",
+      "https://panjiva.com/Ledechem-Iberica-Sl/45036357"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "CUEROS VÉLEZ S.A.S.",
+    "nome_fantasia": null,
+    "pais": "COLOMBIA",
+    "cidade": "Medellín",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "curtume",
+    "produtos": "Curtume e marca de artigos de couro; cliente Sinhorelli (JBS AR). Importa auxiliares químicos de acabamento da Espanha.",
+    "porte": null,
+    "ncms_provaveis": [
+      "4104.11",
+      "4104.41",
+      "4107"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Auxiliar de acabamento/curtimento (descrição mascarada) — 754,08 kg líquidos / 1.019,35 kg brutos; outros embarques do mesmo fornecedor em 26/09/2025",
+        "ncm": "3809.93.00.00",
+        "origem": "Espanha",
+        "fornecedor": "PAULE CHEMICAL S.L.U.",
+        "periodo": "01/10/2025",
+        "valor": "24982",
+        "unidade": "USD FOB (CIF 25.882)",
+        "fonte": "https://panjiva.com/Paule-Chemical-S-L-U/32354196"
+      }
+    ],
+    "fornecedores_conhecidos": "PAULE CHEMICAL S.L.U.",
+    "por_que_e_prospect": "Cliente ativo de couro JBS; compra químicos de acabamento da Espanha (US$ 25 mil por embarque), o que mostra volume de curtimento próprio.",
+    "confianca": "alta",
+    "fontes": [
+      "https://panjiva.com/Paule-Chemical-S-L-U/32354196"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "SEGURINDUSTRIA S.A.",
+    "nome_fantasia": null,
+    "pais": "PERU",
+    "cidade": "Lima",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado de segurança",
+    "produtos": "Fabricante de calçado de segurança e botas PVC/PU (planta em Trujillo citada no B/L); importa resina PVC, negro de fumo, poliol poliéster e tecidos revestidos.",
+    "porte": null,
+    "ncms_provaveis": [
+      "3907.99",
+      "3909.50",
+      "3921.90",
+      "6406.90"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Resina de PVC (policloreto de vinila) — 17 volumes, Altamira→Houston→Peru; compras anuais do fornecedor: US$ 351,13 mil (2022), 767,54 mil (2023), 31,27 mil (2024)",
+        "ncm": "3904.10",
+        "origem": "México",
+        "fornecedor": "MEXICHEM RESINAS VINILICAS S.A. DE C.V.",
+        "periodo": "04/01/2024 (anuais 2022-2024)",
+        "valor": "767540",
+        "unidade": "USD (total 2023; embarque de 04/01/2024 = 26.000 kg)",
+        "fonte": "https://www.trademo.com/companies/segurindustria-sa/26513578"
+      },
+      {
+        "descricao": "Mesmo fornecedor no lado do exportador (B/L): resina vinílica HTS 3904.10, 26.000 kg; outros embarques 26/12/2023 e 30/10/2023",
+        "ncm": "3904.10",
+        "origem": "México",
+        "fornecedor": "MEXICHEM RESINAS VINILICAS S.A. DE C.V.",
+        "periodo": "04/01/2024",
+        "valor": null,
+        "unidade": "26.000 kg",
+        "fonte": "https://panjiva.com/Segurindustria-S-A/2110833"
+      },
+      {
+        "descricao": "Compras do fornecedor (produto não especificado na página; Cabot Colombiana produz negro de fumo para borracha)",
+        "ncm": "n/d",
+        "origem": "Colômbia",
+        "fornecedor": "CABOT COLOMBIANA S.A.",
+        "periodo": "2023-2024",
+        "valor": "202050",
+        "unidade": "USD (2024; 2023 = 205,36 mil)",
+        "fonte": "https://www.trademo.com/companies/segurindustria-sa/26513578"
+      },
+      {
+        "descricao": "Importações de poliésteres em formas primárias (poliol para PU — NCM do sistema Xuchuan) somam US$ 1,18 milhão; e outras chapas plásticas 3921.90 US$ 764,78 mil (fornecedor não identificado; origens principais China, México, EUA, Coreia do Sul)",
+        "ncm": "3907.99",
+        "origem": null,
+        "fornecedor": null,
+        "periodo": "2022-2026 (total do período)",
+        "valor": "1180000",
+        "unidade": "USD (total acumulado)",
+        "fonte": "https://www.trademo.com/companies/segurindustria-sa/26513578"
+      }
+    ],
+    "fornecedores_conhecidos": "MEXICHEM RESINAS VINILICAS S.A. DE C.V.; CABOT COLOMBIANA S.A.",
+    "por_que_e_prospect": "Compra sistema PU (3907.99) e chapas 3921.90 em volume e já tem fornecedores de resina e de negro de fumo identificados; dá para atacar com Xuchuan e Yantai.",
+    "confianca": "alta",
+    "fontes": [
+      "https://www.trademo.com/companies/segurindustria-sa/26513578",
+      "https://panjiva.com/Segurindustria-S-A/2110833"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "INJECTSOLE CIA. LTDA.",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": "Tungurahua",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "solados",
+    "produtos": "Fábrica de solados/injetados; importa partes de calçado da Colômbia.",
+    "porte": null,
+    "ncms_provaveis": [
+      "6406.20",
+      "6406.90",
+      "3907.99",
+      "3909.50"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Partes de calçado — 6.000 unidades, 168,4 kg líquidos, transporte por caminhão via Ipiales",
+        "ncm": "6406.90.10.00",
+        "origem": "Colômbia",
+        "fornecedor": "A'FAMITEX S.A.S.",
+        "periodo": "16/09/2024",
+        "valor": "4200",
+        "unidade": "USD FOB",
+        "fonte": "https://panjiva.com/Injectsole-Cia-Ltda/36388633"
+      },
+      {
+        "descricao": "Embarques do fornecedor colombiano (detalhes mascarados)",
+        "ncm": "n/d",
+        "origem": "Colômbia",
+        "fornecedor": "JORDAO S.A.S.",
+        "periodo": "25/02/2022; 26/12/2017",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://panjiva.com/Injectsole-Cia-Ltda/36388633"
+      }
+    ],
+    "fornecedores_conhecidos": "A'FAMITEX S.A.S.; JORDAO S.A.S.",
+    "por_que_e_prospect": "Fábrica de solados que importa componentes da Colômbia (63 embarques no total); prospect para solados Hiper, moldes Polako e sistema PU.",
+    "confianca": "média",
+    "fontes": [
+      "https://panjiva.com/Injectsole-Cia-Ltda/36388633"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "STANTON S.A.S.",
+    "nome_fantasia": null,
+    "pais": "COLOMBIA",
+    "cidade": "Bogotá (Vía a Sibaté)",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Fabricante de calçado (borracha/vulcanizado); importa borracha sintética SBR do México.",
+    "porte": null,
+    "ncms_provaveis": [
+      "6406.20",
+      "3506.91",
+      "5609"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Borracha sintética de estireno-butadieno (SBR) — 12 volumes, Altamira→Houston; outros embarques em 05/09/2023 e 22/01/2023 (18 embarques nos EUA no total)",
+        "ncm": "4002.19",
+        "origem": "México",
+        "fornecedor": "INDUSTRIAS NEGROMEX S.A. DE C.V.",
+        "periodo": "06/01/2024",
+        "valor": null,
+        "unidade": "15.516 kg",
+        "fonte": "https://panjiva.com/Stanton-S-A-S/33668855"
+      }
+    ],
+    "fornecedores_conhecidos": "INDUSTRIAS NEGROMEX S.A. DE C.V.",
+    "por_que_e_prospect": "Fabricante de calçado de borracha que importa matéria-prima de solado (SBR) em contêiner; prospect para solados, adesivos e cadarços.",
+    "confianca": "média",
+    "fontes": [
+      "https://panjiva.com/Stanton-S-A-S/33668855"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "Calzado Grismar S.A.P.I. de C.V.",
+    "nome_fantasia": null,
+    "pais": "MEXICO",
+    "cidade": null,
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "calçado geral",
+    "produtos": "Fabricante de calçado; importa cabedais/partes de calçado da China (53 fornecedores segundo a Panjiva).",
+    "porte": null,
+    "ncms_provaveis": [
+      "6406.90",
+      "3921.13",
+      "5603.14"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Cabedais/partes superiores de calçado — 6 pares, 5 kg, via aérea (amostra; 206 registros no total)",
+        "ncm": "6406.10.08.99",
+        "origem": "China",
+        "fornecedor": "GUANGZHOU SHAJIA TRADING CO., LTD.",
+        "periodo": "15/10/2025",
+        "valor": "752",
+        "unidade": "USD CIF (item US$ 75)",
+        "fonte": "https://panjiva.com/Calzado-Grismar-SA-Cv/31154388"
+      }
+    ],
+    "fornecedores_conhecidos": "GUANGZHOU SHAJIA TRADING CO., LTD.",
+    "por_que_e_prospect": "Compra partes de calçado da China (53 fornecedores); prospect para microfibra, não-tecido e componentes da Yantai.",
+    "confianca": "média",
+    "fontes": [
+      "https://panjiva.com/Calzado-Grismar-SA-Cv/31154388"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "Aquitex S.A. de C.V. (Grupo Zahonero)",
+    "nome_fantasia": null,
+    "pais": "MEXICO",
+    "cidade": "León, Guanajuato",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Filial do Grupo Zahonero; importa espumas de látex/borracha celular (Lipolan) e látex da Espanha e Alemanha.",
+    "porte": null,
+    "ncms_provaveis": [
+      "5603.14",
+      "3921.13",
+      "6406.90"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Chapas de borracha celular/espuma de látex (Lipolan) — Valencia→Newark",
+        "ncm": "4008.11",
+        "origem": "Espanha",
+        "fornecedor": "ZAHONERO S.L.U.",
+        "periodo": "03/08/2025",
+        "valor": null,
+        "unidade": "18.766 kg",
+        "fonte": "https://es.panjiva.com/Aquitex-SA-De-Cv/1904551"
+      },
+      {
+        "descricao": "Látex/dispersões (descrição mascarada) — 157 embarques nos EUA no total",
+        "ncm": "n/d (capítulos 40/39/38 da empresa)",
+        "origem": "Alemanha",
+        "fornecedor": "SYNTHOMER DEUTSCHLAND GMBH",
+        "periodo": "01/02/2024; 18/02/2024",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://es.panjiva.com/Aquitex-SA-De-Cv/1904551"
+      }
+    ],
+    "fornecedores_conhecidos": "ZAHONERO S.L.U.; SYNTHOMER DEUTSCHLAND GMBH",
+    "por_que_e_prospect": "Distribuidor de palmilhas/espumas em León que importa contêineres da Espanha; prospect para não-tecido, palmilhas e microfibra Yantai.",
+    "confianca": "média",
+    "fontes": [
+      "https://es.panjiva.com/Aquitex-SA-De-Cv/1904551"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "ANDES GROUP",
+    "nome_fantasia": null,
+    "pais": "COLOMBIA",
+    "cidade": "Bucaramanga",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "distribuidor de insumos",
+    "produtos": "Distribuidor de insumos para calçado em Bucaramanga; importou não-tecido e outros insumos da China.",
+    "porte": null,
+    "ncms_provaveis": [
+      "5603.14",
+      "3921.13",
+      "3506.91"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Não-tecido (649 volumes, Xiamen→Oakland)",
+        "ncm": "5603.94",
+        "origem": "China",
+        "fornecedor": "TESI (CHINA) CO., LTD.",
+        "periodo": "30/04/2014",
+        "valor": null,
+        "unidade": "26.930 kg",
+        "fonte": "https://panjiva.com/Andes-Group-Ltda/39700977"
+      },
+      {
+        "descricao": "Embarque de fornecedor chinês (detalhes mascarados)",
+        "ncm": "n/d (capítulos 39/59/35/60/56 da empresa)",
+        "origem": "China",
+        "fornecedor": "KAI YING (FUJIAN) IMP.",
+        "periodo": "10/04/2013",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://panjiva.com/Andes-Group-Ltda/39700977"
+      },
+      {
+        "descricao": "Embarque de fornecedor chinês (detalhes mascarados)",
+        "ncm": "n/d",
+        "origem": "China",
+        "fornecedor": "SHANGHAI DIBANG INDUSTRIES CO., LTD.",
+        "periodo": "31/10/2011",
+        "valor": null,
+        "unidade": null,
+        "fonte": "https://panjiva.com/Andes-Group-Ltda/39700977"
+      }
+    ],
+    "fornecedores_conhecidos": "TESI (CHINA) CO., LTD.; KAI YING (FUJIAN) IMP.; SHANGHAI DIBANG INDUSTRIES CO., LTD.",
+    "por_que_e_prospect": "Já comprou não-tecido (NCM 5603) de concorrente chinês em contêiner cheio; prospect direto para Yantai — os registros são antigos (2011–2014).",
+    "confianca": "baixa",
+    "fontes": [
+      "https://panjiva.com/Andes-Group-Ltda/39700977"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "INDUSUELAS SIERRA-SERRANO S.A.",
+    "nome_fantasia": null,
+    "pais": "EQUADOR",
+    "cidade": "Ambato",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "solados",
+    "produtos": "Fábrica de solados em Ambato; compra matéria-prima plástica de fabricantes colombianos (122 embarques).",
+    "porte": null,
+    "ncms_provaveis": [
+      "6406.20",
+      "3907.99",
+      "3909.50"
+    ],
+    "evidencias": [
+      {
+        "descricao": "Embarque de material plástico (produto/NCM não informados na página)",
+        "ncm": "n/d",
+        "origem": "Colômbia",
+        "fornecedor": "NOVAPLAST S.A.",
+        "periodo": "01/02/2020",
+        "valor": null,
+        "unidade": "7.500 kg brutos",
+        "fonte": "https://www.importgenius.com/colombia/buyers/indusuelas-sierra-serrano-s-a"
+      },
+      {
+        "descricao": "4 embarques no mesmo dia (500, 250, 250 e 1.500 kg; produto não informado)",
+        "ncm": "n/d",
+        "origem": "Colômbia",
+        "fornecedor": "PLASTINOVA S.A.",
+        "periodo": "30/11/2019",
+        "valor": null,
+        "unidade": "2.500 kg brutos no total",
+        "fonte": "https://www.importgenius.com/colombia/buyers/indusuelas-sierra-serrano-s-a"
+      }
+    ],
+    "fornecedores_conhecidos": "NOVAPLAST S.A.; PLASTINOVA S.A.",
+    "por_que_e_prospect": "Solaria com compras recorrentes de insumos plásticos da Colômbia; prospect para sistema PU/TPU e moldes.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://www.importgenius.com/colombia/buyers/indusuelas-sierra-serrano-s-a"
+    ],
+    "atualiza_existente": true
+  },
+  {
+    "empresa": "Foam Creations México (Grupo Finproject)",
+    "nome_fantasia": null,
+    "pais": "MEXICO",
+    "cidade": "León, Guanajuato (Parque Industrial Stiva)",
+    "id_fiscal": null,
+    "site": null,
+    "contato": null,
+    "segmento": "solados",
+    "produtos": "Fabricante de solados/calçado injetado em espuma (Grupo Finproject); importa elastômero de poliolefina.",
+    "porte": null,
+    "ncms_provaveis": [
+      "3909.50",
+      "6406.20"
+    ],
+    "evidencias": [
+      {
+        "descricao": "ENGAGE(TM) 8150 Polyolefin Elastomer, sacos de 20 kg (registro antigo)",
+        "ncm": "3901.90",
+        "origem": "Espanha",
+        "fornecedor": "DOW EUROPE GMBH c/o DOW CHEMICAL IBERICA S.L.",
+        "periodo": "20/04/2014",
+        "valor": null,
+        "unidade": "9.205,81 kg",
+        "fonte": "https://seair.co.in/us-importers/foam-creations-mexicosa-de-cv.aspx"
+      }
+    ],
+    "fornecedores_conhecidos": "DOW EUROPE GMBH c/o DOW CHEMICAL IBERICA S.L.",
+    "por_que_e_prospect": "Injetora de solados em grande volume que compra elastômero da Dow; registro de 2014, precisa confirmar se ainda compra.",
+    "confianca": "baixa",
+    "fontes": [
+      "https://seair.co.in/us-importers/foam-creations-mexicosa-de-cv.aspx"
+    ],
+    "atualiza_existente": true
+  }
+]
