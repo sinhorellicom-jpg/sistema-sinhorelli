@@ -1387,6 +1387,20 @@ body.acesso-restrito .view-tab[data-view="prospeccao"]{display:none !important;}
 .busca-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 8px;}
 .busca-chip{cursor:pointer;border:1px solid var(--line);} .busca-chip.sel{background:var(--teal);color:#0B1220;border-color:var(--teal);}
 .busca-sec{font-weight:700;font-size:13px;margin:6px 0;color:var(--ink);}
+.bq-modos{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px;}
+.bq-modo{flex:1;min-width:220px;text-align:left;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--ink);cursor:pointer;}
+.bq-modo b{display:block;font-size:14px;} .bq-modo span{font-size:12px;color:var(--muted,#9aa4b8);}
+.bq-modo.sel{border-color:var(--teal);background:rgba(46,158,107,.14);box-shadow:0 0 0 1px var(--teal) inset;}
+.bq-passo{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted,#9aa4b8);margin:10px 0 6px;}
+.bq-linha{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.bq-linha input,.bq-linha select{min-height:34px;}
+.bq-seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+.bq-seg button{border:0;background:transparent;color:var(--ink);padding:6px 10px;cursor:pointer;font-size:12px;}
+.bq-seg button.sel{background:var(--teal);color:#0B1220;font-weight:700;}
+.bq-res{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0 8px;padding:10px 12px;border:1px solid rgba(120,160,255,.35);border-radius:10px;background:rgba(120,160,255,.07);}
+.bq-num{padding:2px 10px;border-left:1px solid var(--line);} .bq-num:first-of-type{border-left:0;}
+.bq-num b{display:block;font-size:17px;} .bq-num span{font-size:11px;color:var(--muted,#9aa4b8);}
+.bq-vazio{padding:18px;border:1px dashed var(--line);border-radius:10px;color:var(--muted,#9aa4b8);margin-top:12px;line-height:1.6;}
 .emb-resumo{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:8px 0 10px;}
 .emb-res{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--soft);}
 .emb-res-v{font-size:17px;font-weight:800;color:var(--ink);} .emb-res-v small{font-size:11px;font-weight:600;color:var(--ink-soft);}
@@ -17089,7 +17103,7 @@ function embRender(){
 }
 
 /* ===== BUSCA POR IMPORTADOR / EXPORTADOR — para quem os nossos fornecedores vendem (e de quem um cliente compra) ===== */
-const buscaF = { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false, todas:false };
+const buscaF = { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false, todas:false, modo:'forn' };
 let buscaExportDados = null;   // o que está na tela agora (para baixar em Excel / PDF)
 // apelidos dos nossos fornecedores → como o nome aparece nos registros
 const BUSCA_APELIDOS = {
@@ -17224,6 +17238,8 @@ function buscaDetalhe(i){
 function buscaRender(){
   const box = document.getElementById('prBuscaBox'); if(!box) return;
   buscaF.pais = prospF.pais;   // país é o mesmo filtro da aba toda
+  if(buscaF.todas) buscaF.modo = 'todas'; else if(buscaF.imp && !buscaF.exp) buscaF.modo = 'cli'; else if(buscaF.exp) buscaF.modo = 'forn';
+  const modo = buscaF.modo || 'forn';
   const E = prospEsc;
   const embs = embTodos();
   const D = prospDados || {};
@@ -17313,42 +17329,56 @@ function buscaRender(){
         : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhuma empresa da base cita esse fornecedor.</div>'}`;
     const tituloG = porImp ? `🏭 Compradores${buscaF.exp?` de <b>${E(buscaF.exp)}</b>`:''} nos embarques` : `🚢 Fornecedores de <b>${E(buscaF.imp)}</b> nos embarques`;
     corpo = `
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 10px;padding:8px 10px;border:1px solid rgba(120,160,255,.35);border-radius:8px;background:rgba(120,160,255,.08);">
-        <b>⬇ Baixar esta pesquisa</b> <span class="an-panel-sub">(compradores, embarques e empresas da base · folha em paisagem)</span>
-        <button class="btn btn-primary btn-sm" id="buscaXls" title="Baixar em Excel">📊 Excel</button>
-        <button class="btn btn-primary btn-sm" id="buscaPdf" title="Baixar em PDF">📄 PDF</button>
+      <div class="bq-res">
+        <div class="bq-num"><b>${porImp ? new Set(lista.map(x=>prospNorm(x.importador)).concat(buscaF.exp ? emps.map(e=>prospNorm(e.empresa)) : [])).size : grupos.length}</b><span>${porImp?'compradores':'fornecedores'}</span></div>
+        <div class="bq-num"><b>${lista.length}</b><span>embarques</span></div>
+        <div class="bq-num"><b>US$ ${fmt(lista.reduce((s,x)=>s+(+x.valor>0?+x.valor:0),0))}</b><span>valor dos embarques</span></div>
+        <div class="bq-num"><b>${emps.length}</b><span>empresas da base</span></div>
+        <div style="margin-left:auto;display:flex;gap:6px;align-items:center;"><span class="an-panel-sub">Baixar:</span>
+          <button class="btn btn-ghost btn-sm" id="buscaXls" title="Baixar em Excel">📊 Excel</button>
+          <button class="btn btn-ghost btn-sm" id="buscaPdf" title="Baixar em PDF">📄 PDF</button></div>
       </div>
       ${(porImp && buscaF.exp) ? buscaUnificadaHtml(lista, emps, ehCli) : buscaSecoesAntigas()}`;
   }
   box.innerHTML = `
-    <div class="an-panel-title">🔎 Pesquisar por importador e exportador <span class="an-panel-sub">para quem os nossos fornecedores vendem — e de quem cada cliente compra</span></div>
-    <div class="pr-filtros">
-      <input id="buscaExp" list="buscaExpL" placeholder="Exportador / fornecedor (ex.: JBS, Yantai, Miracll)" value="${E(buscaF.exp)}" style="min-width:260px;">
-      <input id="buscaImp" list="buscaImpL" placeholder="Importador / comprador" value="${E(buscaF.imp)}" style="min-width:240px;">
-      <button class="btn btn-primary btn-sm" id="buscaIr">Pesquisar</button>
-      <button class="btn btn-ghost btn-sm" id="buscaListaCli" title="Gera a lista dos nossos clientes (país, fornecedores, produtos) para mandar ao Claude e guiar a pesquisa diária">📋 Clientes p/ pesquisa</button>
-      <button class="btn ${buscaF.todas?'btn-primary':'btn-ghost'} btn-sm" id="buscaTodas" title="Lista todas as empresas da base, cada fornecedor numa linha, com produtos (NCM) e valor FOB">🏢 Todas as empresas</button>
-      <select id="buscaPais"><option value="">Todos os países</option>${paisesB.map(v=>`<option ${v===buscaF.pais?'selected':''}>${E(v)}</option>`).join('')}</select>
-      <select id="buscaNcm"><option value="">Todas as NCMs</option>${ncmsB.map(v=>`<option ${v===buscaF.ncm?'selected':''}>${E(v)}</option>`).join('')}</select>
-      <select id="buscaAno"><option value="">Qualquer ano</option>${anosB.map(v=>`<option ${v===buscaF.ano?'selected':''}>${E(v)}</option>`).join('')}</select>
-      <label><input type="checkbox" id="buscaSoCli" ${buscaF.soCli?'checked':''}> só clientes</label>
-      <label><input type="checkbox" id="buscaSemCli" ${buscaF.semCli?'checked':''}> só quem ainda não é cliente</label>
-      ${temBusca?'<button class="btn btn-ghost btn-sm" id="buscaLimpar">Limpar</button>':''}
-      <datalist id="buscaExpL">${nossos.concat(sugExp).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
-      <datalist id="buscaImpL">${sugImp.slice(0,800).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
+    <div class="an-panel-title">🔎 Pesquisa de compradores e fornecedores <span class="an-panel-sub">escolha o que quer descobrir</span>
+      <button class="btn btn-ghost btn-sm" id="buscaListaCli" style="margin-left:auto;" title="Gera a lista dos nossos clientes (país, fornecedores, produtos) para mandar ao Claude e guiar a pesquisa diária">📋 Lista de clientes p/ pesquisa</button></div>
+    <div class="bq-modos">
+      <button class="bq-modo ${modo==='forn'?'sel':''}" data-bq-modo="forn"><b>🏭 Quem compra de um fornecedor</b><span>ex.: para quem a Polako ou a Yantai vendem</span></button>
+      <button class="bq-modo ${modo==='cli'?'sel':''}" data-bq-modo="cli"><b>🛒 De quem uma empresa compra</b><span>ex.: fornecedores da Kondor ou da Dotakondor</span></button>
+      <button class="bq-modo ${modo==='todas'?'sel':''}" data-bq-modo="todas"><b>🏢 Todas as empresas</b><span>a base inteira, com fornecedores, NCM e FOB</span></button>
     </div>
-    <div class="busca-chips"><span class="an-panel-sub">Nossos fornecedores:</span> ${nossos.map(f=>`<button class="pr-tag busca-chip ${buscaF.exp===f?'sel':''}" data-busca-exp="${E(f)}">${E(f)}</button>`).join(' ')}</div>
-    ${corpo}`;
-  const ir = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaRender(); };
-  box.querySelector('#buscaIr').onclick = ir;
+    ${modo==='forn' ? `
+      <div class="bq-passo">1 · Escolha o fornecedor</div>
+      <div class="busca-chips" style="margin:0 0 8px;">${nossos.map(f=>`<button class="pr-tag busca-chip ${buscaF.exp===f?'sel':''}" data-busca-exp="${E(f)}">${E(f)}</button>`).join(' ')}</div>
+      <div class="bq-linha"><input id="buscaExp" list="buscaExpL" placeholder="…ou digite outro fornecedor" value="${E(buscaF.exp)}" style="min-width:300px;"><button class="btn btn-primary btn-sm" id="buscaIr">Pesquisar</button></div>`
+    : modo==='cli' ? `
+      <div class="bq-passo">1 · Digite a empresa compradora</div>
+      <div class="bq-linha"><input id="buscaImp" list="buscaImpL" placeholder="nome do comprador (ex.: Kondor, Dotakondor, Tungurahua)" value="${E(buscaF.imp)}" style="min-width:360px;"><button class="btn btn-primary btn-sm" id="buscaIr">Pesquisar</button></div>`
+    : ''}
+    <div class="bq-passo">${modo==='todas'?'1':'2'} · Filtrar (opcional)</div>
+    <div class="bq-linha">
+      <select id="buscaPais"><option value="">🌎 Todos os países</option>${paisesB.map(v=>`<option ${v===buscaF.pais?'selected':''}>${E(v)}</option>`).join('')}</select>
+      <select id="buscaNcm"><option value="">📦 Todas as NCMs</option>${ncmsB.map(v=>`<option ${v===buscaF.ncm?'selected':''}>${E(v)}</option>`).join('')}</select>
+      <select id="buscaAno"><option value="">📅 Qualquer ano</option>${anosB.map(v=>`<option ${v===buscaF.ano?'selected':''}>${E(v)}</option>`).join('')}</select>
+      <span class="bq-seg"><button data-bq-cli="" class="${!buscaF.soCli&&!buscaF.semCli?'sel':''}">Todos</button><button data-bq-cli="so" class="${buscaF.soCli?'sel':''}">Só clientes</button><button data-bq-cli="sem" class="${buscaF.semCli?'sel':''}">Só quem não é cliente</button></span>
+      ${temBusca?'<button class="btn btn-ghost btn-sm" id="buscaLimpar">✕ Limpar tudo</button>':''}
+    </div>
+    <datalist id="buscaExpL">${nossos.concat(sugExp).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
+    <datalist id="buscaImpL">${sugImp.slice(0,800).map(x=>`<option value="${E(x)}">`).join('')}</datalist>
+    ${temBusca ? corpo : `<div class="bq-vazio">${modo==='forn' ? '👆 Clique num dos nossos fornecedores (ou digite outro) para ver <b>quem compra dele</b>: cada embarque numa linha, com produto, NCM, quantidade, valor e preço — e clique na linha para ver tudo sobre o embarque.' : modo==='cli' ? '👆 Digite o nome de uma empresa para ver <b>de quem ela compra</b>: fornecedores, produtos, NCM e valores.' : ''}</div>`}`;
+  const lerCampos = ()=>{ const e = box.querySelector('#buscaExp'), i = box.querySelector('#buscaImp'); if(e) buscaF.exp = e.value.trim(); if(i) buscaF.imp = i.value.trim(); };
+  const ir = ()=>{ lerCampos(); buscaRender(); };
+  { const bi = box.querySelector('#buscaIr'); if(bi) bi.onclick = ir; }
+  box.querySelectorAll('[data-bq-modo]').forEach(b=>b.onclick = ()=>{ const m = b.dataset.bqModo; if(m===buscaF.modo) return; buscaF.modo = m; buscaF.exp = ''; buscaF.imp = ''; buscaF.todas = (m==='todas'); buscaRender(); });
+  box.querySelectorAll('[data-bq-cli]').forEach(b=>b.onclick = ()=>{ lerCampos(); buscaF.soCli = b.dataset.bqCli==='so'; buscaF.semCli = b.dataset.bqCli==='sem'; buscaRender(); });
   box.querySelectorAll('#buscaExp,#buscaImp').forEach(i=>i.addEventListener('keydown', ev=>{ if(ev.key==='Enter') ir(); }));
   const blc = box.querySelector('#buscaListaCli'); if(blc) blc.onclick = prospListaClientesPesquisa;
-  const bt = box.querySelector('#buscaTodas'); if(bt) bt.onclick = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); buscaF.todas = !buscaF.todas; buscaRender(); };
   const bxl = box.querySelector('#buscaXls'); if(bxl) bxl.onclick = ()=>buscaBaixarExcel();
   const bpd = box.querySelector('#buscaPdf'); if(bpd) bpd.onclick = ()=>buscaBaixarPdf();
-  const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ const tinhaPais = !!buscaF.pais; Object.assign(buscaF, { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false, todas:false }); if(tinhaPais) prPaisMudou(''); else buscaRender(); };
-  [['buscaPais','pais'],['buscaNcm','ncm'],['buscaAno','ano'],['buscaSoCli','soCli'],['buscaSemCli','semCli']].forEach(([id,k])=>{ const i = box.querySelector('#'+id); if(i) i.onchange = ()=>{ buscaF.exp = box.querySelector('#buscaExp').value.trim(); buscaF.imp = box.querySelector('#buscaImp').value.trim(); if(k==='pais'){ prPaisMudou(i.value); return; } buscaF[k] = i.type==='checkbox' ? i.checked : i.value; if(k==='soCli' && i.checked) buscaF.semCli = false; if(k==='semCli' && i.checked) buscaF.soCli = false; buscaRender(); }; });
-  box.querySelectorAll('[data-busca-exp]').forEach(b=>b.onclick = ()=>{ buscaF.exp = buscaF.exp===b.dataset.buscaExp ? '' : b.dataset.buscaExp; buscaF.imp = ''; buscaRender(); });
+  const lp = box.querySelector('#buscaLimpar'); if(lp) lp.onclick = ()=>{ const tinhaPais = !!buscaF.pais; Object.assign(buscaF, { exp:'', imp:'', pais:'', ncm:'', ano:'', soCli:false, semCli:false, todas: buscaF.modo==='todas' }); if(tinhaPais) prPaisMudou(''); else buscaRender(); };
+  [['buscaPais','pais'],['buscaNcm','ncm'],['buscaAno','ano']].forEach(([id,k])=>{ const i = box.querySelector('#'+id); if(i) i.onchange = ()=>{ lerCampos(); if(k==='pais'){ prPaisMudou(i.value); return; } buscaF[k] = i.type==='checkbox' ? i.checked : i.value; if(k==='soCli' && i.checked) buscaF.semCli = false; if(k==='semCli' && i.checked) buscaF.soCli = false; buscaRender(); }; });
+  box.querySelectorAll('[data-busca-exp]').forEach(b=>b.onclick = ()=>{ buscaF.exp = buscaF.exp===b.dataset.buscaExp ? '' : b.dataset.buscaExp; buscaF.imp = ''; buscaF.modo = 'forn'; buscaRender(); });
   box.querySelectorAll('[data-busca-item]').forEach(tr=>tr.onclick = ()=>buscaDetalhe(+tr.dataset.buscaItem));
   box.querySelectorAll('[data-busca-ir]').forEach(tr=>tr.onclick = ()=>{ embF.busca = tr.dataset.buscaIr; embF.limite = 200; embRender(); const eb = document.getElementById('prEmbBox'); if(eb) eb.scrollIntoView({behavior:'smooth', block:'start'}); });
 }
