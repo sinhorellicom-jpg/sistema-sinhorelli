@@ -17202,8 +17202,21 @@ function buscaRender(){
         <button class="btn btn-primary btn-sm" id="buscaXls" title="Baixar em Excel">📊 Excel</button>
         <button class="btn btn-primary btn-sm" id="buscaPdf" title="Baixar em PDF">📄 PDF</button>
       </div>
-      <div class="busca-sec">${tituloG} <span class="an-panel-sub">${grupos.length} · ${lista.length} embarque(s) de 2026 · clique numa linha para ver os embarques</span></div>
-      ${grupos.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>${porImp?'Importador':'Exportador'}</th><th>País</th><th>Embarques</th><th>Último</th><th>NCMs</th><th style="text-align:right">Valor total</th><th>Preço médio</th><th>${porImp?'Fornecedor(es)':'Comprador(es)'}</th></tr></thead><tbody>${grupos.map(linhaG).join('')}</tbody></table></div>`
+      <div class="busca-sec">${tituloG} <span class="an-panel-sub">${grupos.length} ${porImp?'comprador(es)':'fornecedor(es)'} · ${lista.length} embarque(s) de 2026${buscaF.exp?` · só embarques de <b>${E(buscaF.exp)}</b>`:''} · cada embarque numa linha</span></div>
+      ${grupos.length ? `<div class="emb-scroll" style="max-height:65vh;"><table class="pr-tab"><thead><tr><th>Data</th><th>${porImp?'Fornecedor (exportador)':'Comprador (importador)'}</th><th>Origem</th><th>Produto</th><th>NCM</th><th style="text-align:right">Quantidade</th><th style="text-align:right">Valor</th><th>Preço unitário</th><th>Fonte</th></tr></thead><tbody>${grupos.map(r=>{
+          const cli = porImp ? ehCli(r.nome) : '';
+          const precos = Object.keys(r.qb).map(por=>`US$ ${fmt(r.vb[por]/r.qb[por])}/${E(por)}`).join(' · ');
+          const meus = lista.filter(x=>(porImp ? (x.importador||'—') : String(x.exportador||'—').replace(/\s*\(.*$/,''))===r.nome).sort((a,b)=>String(b.data||'').localeCompare(String(a.data||'')));
+          const cab = `<tr style="background:rgba(120,160,255,.10);"><td colspan="9" style="border-top:2px solid rgba(120,160,255,.35);"><b>${E(r.nome)}</b>${cli?' <span class="pr-cli">✓ cliente</span>':''} <span class="an-panel-sub">· ${E([...r.pais].join(', '))} · ${r.n} embarque(s)${r.v>0?' · total US$ '+fmt(r.v):''}${precos?' · preço médio '+precos:''}</span></td></tr>`;
+          return cab + meus.map(x=>{ const pr = embPreco(x); const tv = String(x.tipo_valor||'');
+            return `<tr><td style="white-space:nowrap;">${E(/^\d{4}-\d{2}-\d{2}$/.test(String(x.data||''))?fmtDateBR(x.data):(x.data||'—'))}</td>
+              <td>${E(porImp ? String(x.exportador||'—') : (x.importador||'—'))}</td><td>${E(x.origem||'')}</td>
+              <td style="max-width:380px;">${E(x.produto||'—')}</td><td>${x.ncm?`<span class="pr-n">${E(prospFmtNcm(x.ncm))}</span>`:'<span class="an-panel-sub">—</span>'}</td>
+              <td style="text-align:right;white-space:nowrap;">${+x.quantidade>0 ? (+x.quantidade).toLocaleString('pt-BR',{maximumFractionDigits:2})+' '+E(x.unidade||'') : '—'}</td>
+              <td style="text-align:right;white-space:nowrap;">${+x.valor>0 ? 'US$ '+fmt(+x.valor)+(tv && !/não informado/i.test(tv)?` <span class="an-panel-sub">${E(tv)}</span>`:'') : '—'}</td>
+              <td class="emb-preco">${pr ? pr.txt : '<span class="an-panel-sub" style="font-weight:400;">—</span>'}</td>
+              <td>${/^https?:\/\//i.test(String(x.fonte||''))?`<a href="${E(x.fonte)}" target="_blank" rel="noopener">abrir</a>`:''}</td></tr>`; }).join('');
+        }).join('')}</tbody></table></div>`
         : '<div class="an-panel-sub" style="padding:6px 2px;">Nenhum embarque de 2026 com essa busca ainda — a coleta diária vai acrescentando. Veja abaixo as empresas da base.</div>'}
       <div class="busca-sec" style="margin-top:12px;">📋 Empresas da base ${buscaF.exp?`que compram de <b>${E(buscaF.exp)}</b>`:(buscaF.imp?`com esse nome`:`com esses filtros`)} <span class="an-panel-sub">${emps.length} · uma linha por fornecedor · só com informação de 2025 em diante · * FOB estimado pela fonte</span></div>
       ${emps.length ? `<div class="emb-scroll" style="max-height:50vh;"><table class="pr-tab"><thead><tr><th>Empresa</th><th>País</th><th>Segmento</th><th>Fornecedor</th><th>Produtos comprados (NCM)</th><th style="text-align:right">Valor FOB (US$)</th><th>Período</th></tr></thead><tbody>${emps.map(linhaE).join('')}</tbody></table></div>`
