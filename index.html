@@ -11139,6 +11139,10 @@ function renderAnalyticsKpis(){
       <div class="an-destaque an-destaque-emb">
         <div class="an-destaque-titulo">🚢 Embarcado por ano <span class="an-panel-sub" style="font-weight:400;">pela data do embarque (sem data, vale a etapa Embarcado em diante) · acompanha o ano corrente</span></div>
         <div class="an-destaque-cards">${cardEmb(ano)}${cardEmb(anoAnt)}</div>
+        ${['JBS','Vendas'].map(nm=>{ const t = tudo.find(x=>x.n===nm); const titulo = nm==='JBS' ? 'Vendas JBS' : 'Vendas'; const acc = nm==='JBS' ? 'accent-steel' : 'accent-violet';
+          const card = a => { const l = (t.l||[]).filter(p=>(p.status!=='CANCELADO' && p.status!=='AMOSTRA') && anoEmb(p)===a); const v = l.reduce((q,p)=>q+(p.valorUsd||0),0);
+            return `<div class="card ${acc}"><div class="label">${titulo} · embarcado em ${a}</div><div class="value">USD ${fmt(v)}</div><div class="sub">${l.length} processos</div></div>`; };
+          return `<div class="an-destaque-titulo" style="margin-top:14px;font-size:14px;">${nm==='JBS'?'📘':'📗'} Embarcados — ${titulo}</div><div class="an-destaque-cards">${card(ano)}${card(anoAnt)}</div>`; }).join('')}
       </div>`;
   })();
   try{ metaWire(); }catch(e){ console.warn('meta', e); }
