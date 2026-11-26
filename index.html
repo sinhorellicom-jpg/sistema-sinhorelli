@@ -3850,7 +3850,16 @@ async function v2FetchAnexo(docId, aid){
   return sdata;
 }
 const FS_V2_CHUNK = 700000;            // caracteres por pedaço de anexo (limite do Firestore: 1 MiB por documento)
-const _v2 = { synced:{}, anexos:{}, ready:{}, meta:{} };   // synced: docId -> {id: json sem anexos}; anexos: docId -> {aid:true}
+const _v2 = { synced:{}, anexos:{}, ready:{}, meta:{}, dels:{} };   // dels: docId -> {id: quando foi excluído (_upd da lápide)}
+// EXCLUSÃO É DEFINITIVA: um processo excluído não volta por cópia velha (do navegador, de uma colega com a tela
+// desatualizada ou de uma versão antiga do sistema). Só volta se alguém mexer nele DEPOIS da exclusão (ex.: mover de aba).
+function v2Apagado(docId, rec){ const d = _v2.dels[docId]; if(!d || !rec || !rec.id || d[rec.id]===undefined) return false; return (rec._upd||0) <= d[rec.id]; }
+function v2FiltrarApagados(docId, lista){
+  if(!Array.isArray(lista) || !_v2.dels[docId]) return lista;
+  const fora = lista.filter(r=>v2Apagado(docId, r));
+  if(fora.length) console.warn('🗑 ignorados (já excluídos):', docId, fora.map(r=>r.processo||r.id).join(', '));
+  return fora.length ? lista.filter(r=>!v2Apagado(docId, r)) : lista;
+}   // synced: docId -> {id: json sem anexos}; anexos: docId -> {aid:true}
 function v2Hash(str){ let h = 5381; for(let i=0;i<str.length;i++){ h = ((h<<5) + h + str.charCodeAt(i)) | 0; } return (h>>>0).toString(36); }
 function v2AnexoId(recId, a){
   const d = a.dados || '';
@@ -3888,6 +3897,7 @@ async function v2Write(lista, docId){
   const pend = (_v2.pend && _v2.pend[docId]) || new Set();
   for(const p of lista){
     if(!p || !p.id) continue;
+    if(!synced[p.id] && v2Apagado(docId, p)){ console.warn('🗑 não regravado (já excluído):', p.processo||p.id); (lista.__apagados = lista.__apagados||[]).push(p.id); continue; }   // cópia velha de um excluído: não volta
     vistos[p.id] = true;
     const { rec, anexos } = v2Separar(typeof normalize==='function' ? normalize(p) : p);   // mesma forma que fica em memória → só grava o que mudou de verdade
     const s = JSON.stringify(rec);
@@ -3916,7 +3926,7 @@ async function v2Write(lista, docId){
     } }
   // apagados: quem sumiu da lista vira lápide (_del), pra sumir também na colega
   Object.keys(synced).forEach(id=>{ if(!vistos[id] && pend.has(id)){ novosSynced[id] = synced[id]; return; }   // processo novo da colega que ainda não chegou na tela: não apaga
-    if(!vistos[id]){ ops.push({ ref: itens.doc(String(id)), data:{ json:'', _upd:agora, _del:true, autor:CLIENTE_ID, autorNome:porQuem, updatedAt:v2Carimbo() } }); nMud++; } });
+    if(!vistos[id]){ ops.push({ ref: itens.doc(String(id)), data:{ json:'', _upd:agora, _del:true, autor:CLIENTE_ID, autorNome:porQuem, updatedAt:v2Carimbo() } }); nMud++; (_v2.dels[docId] = _v2.dels[docId]||{})[id] = agora; } });
   // lotes de até 200 operações
   for(let i=0;i<ops.length;i+=200){
     const b = firestoreDb.batch(); ops.slice(i,i+200).forEach(o=> b.set(o.ref, o.data)); await b.commit();
@@ -3927,6 +3937,11 @@ async function v2Write(lista, docId){
     marcarUltimaAtualizacao(agora, porQuem + ' (você)');
   }
   _v2.synced[docId] = novosSynced; _v2.ready[docId] = true;
+  // cópias velhas de excluídos que estavam na tela: somem daqui também
+  if(lista.__apagados && lista.__apagados.length){
+    const fora = new Set(lista.__apagados); delete lista.__apagados;
+    try{ if(docId===currentFirestoreDocId() && processos.some(p=>fora.has(p.id))){ processos = processos.filter(p=>!fora.has(p.id)); try{ renderAll(); }catch(e){} } }catch(e){}
+  }
   console.log(`☁ v2 ${docId}: ${nMud} registro(s) e ${nAnx} anexo(s) gravados`);
 }
 
@@ -3934,7 +3949,9 @@ async function v2Write(lista, docId){
 async function v2ReadAll(docId){
   const snapI = await v2Col(docId,'itens').get();
   const synced = {}; const recs = [];
-  snapI.forEach(d=>{ const x = d.data()||{}; if(x._del || !x.json) return; synced[d.id] = x.json; try{ recs.push(JSON.parse(x.json)); }catch(e){} });
+  const dels = {};
+  snapI.forEach(d=>{ const x = d.data()||{}; if(x._del){ dels[d.id] = x._upd||0; return; } if(!x.json) return; synced[d.id] = x.json; try{ recs.push(JSON.parse(x.json)); }catch(e){} });
+  _v2.dels[docId] = dels;
   // anexos: só o índice (pequeno). Os bytes ficam na nuvem e são baixados quando a pessoa clica no documento.
   const known = {};
   try{ const snapI2 = await v2Col(docId,'anexos_idx').get(); snapI2.forEach(d=>{ known[d.id] = true; }); }catch(e){}
@@ -3979,8 +3996,18 @@ function v2Listen(docId){
       if(x.autor === CLIENTE_ID){ if(x._del) delete (_v2.synced[docId]||{})[ch.doc.id]; else (_v2.synced[docId] = _v2.synced[docId]||{})[ch.doc.id] = x.json; continue; }
       try{ if(x.updatedAt && x.updatedAt.toMillis) marcarUltimaAtualizacao(x.updatedAt.toMillis(), x.autorNome||'colega'); }catch(e){}
       ((_v2.pend = _v2.pend||{})[docId] = _v2.pend[docId] || new Set()).add(ch.doc.id);   // chegou da colega, ainda não está na tela
-      if(x._del){ dels.push({ id:ch.doc.id, _upd:x._upd||0 }); delete (_v2.synced[docId]||{})[ch.doc.id]; continue; }
+      if(x._del){ dels.push({ id:ch.doc.id, _upd:x._upd||0 }); delete (_v2.synced[docId]||{})[ch.doc.id]; (_v2.dels[docId] = _v2.dels[docId]||{})[ch.doc.id] = x._upd||Date.now(); continue; }
       if(!x.json) continue;
+      // alguém (com o sistema desatualizado) regravou um processo que já tinha sido excluído: não volta, e a exclusão é regravada
+      { const tomb = (_v2.dels[docId]||{})[ch.doc.id];
+        if(tomb !== undefined && (x._upd||0) <= tomb){
+          try{ ((_v2.pend||{})[docId]||new Set()).delete(ch.doc.id); }catch(e){}
+          try{ if(typeof podeGravarNuvem!=='function' || podeGravarNuvem()) v2Col(docId,'itens').doc(ch.doc.id).set({ json:'', _upd:tomb, _del:true, autor:CLIENTE_ID, autorNome:nomeUsuario(), updatedAt:v2Carimbo() }); }catch(e){}
+          console.warn('🗑 ignorada regravação de processo excluído:', ch.doc.id);
+          continue;
+        }
+        if(tomb !== undefined) delete _v2.dels[docId][ch.doc.id];   // mexeram nele depois da exclusão (ex.: moveram de volta): vale
+      }
       (_v2.synced[docId] = _v2.synced[docId]||{})[ch.doc.id] = x.json;
       let rec; try{ rec = JSON.parse(x.json); }catch(e){ continue; }
       // anexos: fica só a referência; os bytes descem quando alguém clicar no documento
@@ -4772,7 +4799,7 @@ async function loadData(){
           const rawLocal = window.localStorage.getItem(lsKey(currentStorageKey(), true));
           if(rawLocal && localTs() > tsNuvem){
             const local = JSON.parse(rawLocal).map(normalize);
-            const mesclado = mesclarPorUpd(local, remoto);
+            const mesclado = v2FiltrarApagados(currentFirestoreDocId(), mesclarPorUpd(local, remoto));
             if(JSON.stringify(mesclado) !== JSON.stringify(remoto)){
               remoto = mesclado;
               marcarFonte('nuvem + navegador (mesclado)');
@@ -4783,7 +4810,8 @@ async function loadData(){
         }catch(e){ console.error('mesclagem local/nuvem falhou', e); }
         // junta com o que está dentro do arquivo (nada do arquivo se perde)
         { const m = mesclarComArquivo(currentStorageKey(), remoto);
-          if(m.mudou){ remoto = m.lista.map(normalize); marcarFonte('nuvem + arquivo (mesclado)');
+          if(m.mudou) m.lista = v2FiltrarApagados(currentFirestoreDocId(), m.lista);
+          if(m.mudou && m.lista.length !== remoto.length || m.mudou && JSON.stringify(m.lista)!==JSON.stringify(remoto)){ remoto = m.lista.map(normalize); marcarFonte('nuvem + arquivo (mesclado)');
             try{ await firestoreWriteProcessos(JSON.stringify(remoto), currentFirestoreDocId()); }catch(e){ registrarErroSalvar('nuvem (mesclagem arquivo)', e); } } }
         processos = remoto;
         if(window.__fonteDados.indexOf('mesclado')<0) marcarFonte('da nuvem (Firebase)');
@@ -4816,6 +4844,7 @@ async function loadData(){
 }
 
 async function finalizarLoadData(){
+  try{ const doc = currentFirestoreDocId(); if(FS_V2_KEYS.indexOf(doc)>=0) processos = v2FiltrarApagados(doc, processos); }catch(e){}
   // HISTÓRICO: ajustes automáticos da carga não entram como alteração; a base é montada no fim
   window.__histPausado = true;
   try{ return await _finalizarLoadDataInterno(); }
