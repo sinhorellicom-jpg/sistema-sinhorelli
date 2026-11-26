@@ -3999,7 +3999,7 @@ function agendarAplicacaoV2(docId, alter, dels){
   dels.forEach(d=>{ p.dels[d.id] = d; delete p.alter[d.id]; });
   const tentar = ()=>{
     if(temEdicaoEmAndamento() || window.__trocandoAba){ clearTimeout(_v2Timer); _v2Timer = setTimeout(tentar, 2000); return; }
-    Object.keys(_v2Pend).forEach(id=>{ const q = _v2Pend[id]; delete _v2Pend[id]; aplicarRemotoV2(id, Object.values(q.alter), Object.values(q.dels)); });
+    comPosicaoPreservada(()=>{ Object.keys(_v2Pend).forEach(id=>{ const q = _v2Pend[id]; delete _v2Pend[id]; aplicarRemotoV2(id, Object.values(q.alter), Object.values(q.dels)); }); });
   };
   tentar();
 }
@@ -5521,6 +5521,40 @@ function aplicarRemoto(docId, raw){
   }catch(e){ console.warn('tempo real: falha ao aplicar', docId, e); }
 }
 
+
+/* ===== quando chega alteração de uma colega, a MINHA tela não mexe:
+   guarda a posição de rolagem (página, quadro, colunas, tabelas) antes de redesenhar e devolve depois ===== */
+function _scrollChave(el){
+  if(el.id) return '#'+el.id;
+  if(el.dataset && el.dataset.status) return '[data-status="'+el.dataset.status+'"]';
+  if(el.dataset && el.dataset.colkey) return '[data-colkey="'+el.dataset.colkey+'"]';
+  const c = (el.classList && el.classList[0]) || el.tagName.toLowerCase();
+  const irmaos = document.getElementsByClassName(c);
+  let i = 0; for(; i<irmaos.length; i++){ if(irmaos[i]===el) break; }
+  return '.'+c+'|'+i;
+}
+function _scrollAchar(k){
+  try{
+    if(k.indexOf('|')>0){ const [c,i] = k.split('|'); return document.getElementsByClassName(c.slice(1))[+i] || null; }
+    return document.querySelector(k);
+  }catch(e){ return null; }
+}
+function comPosicaoPreservada(fn){
+  const salvo = { x: window.scrollX, y: window.scrollY, els: [] };
+  try{
+    document.querySelectorAll('body *').forEach(el=>{ if((el.scrollTop>0 || el.scrollLeft>0) && el.scrollHeight>0) salvo.els.push([_scrollChave(el), el.scrollTop, el.scrollLeft]); });
+  }catch(e){}
+  const foco = document.activeElement && document.activeElement.id ? document.activeElement.id : null;
+  try{ fn(); }
+  finally{
+    const devolver = ()=>{
+      salvo.els.forEach(([k,t,l])=>{ const el = _scrollAchar(k); if(el){ if(el.scrollTop!==t) el.scrollTop = t; if(el.scrollLeft!==l) el.scrollLeft = l; } });
+      if(window.scrollY!==salvo.y) window.scrollTo(window.scrollX, salvo.y);
+    };
+    devolver(); requestAnimationFrame(devolver); setTimeout(devolver, 120); setTimeout(devolver, 400);
+    if(foco){ const f = document.getElementById(foco); if(f && document.activeElement!==f){ try{ f.focus({preventScroll:true}); }catch(e){} } }
+  }
+}
 function agendarAplicacaoRemota(docId, raw){
   _rtPendentes[docId] = raw;
   const tentar = ()=>{
@@ -5529,10 +5563,12 @@ function agendarAplicacaoRemota(docId, raw){
       _rtTimer = setTimeout(tentar, 2000); // tenta de novo quando a pessoa parar
       return;
     }
-    Object.keys(_rtPendentes).forEach(id=>{
-      const r = _rtPendentes[id];
-      delete _rtPendentes[id];
-      aplicarRemoto(id, r);
+    comPosicaoPreservada(()=>{
+      Object.keys(_rtPendentes).forEach(id=>{
+        const r = _rtPendentes[id];
+        delete _rtPendentes[id];
+        aplicarRemoto(id, r);
+      });
     });
   };
   tentar();
