@@ -19964,6 +19964,88 @@ init();
 })();
 </script>
 
+
+<script id="autoAtualizarJs">
+/* ===== ATUALIZAÇÃO AUTOMÁTICA: quando sai uma versão nova do sistema, a página se atualiza sozinha
+   (sem precisar de Ctrl+F5) — só num momento seguro: ninguém digitando, nenhuma ficha aberta, nada sendo salvo.
+   Depois de recarregar, volta para a mesma aba e a mesma posição da tela. ===== */
+(function(){
+  const URL_PAG = location.pathname + (location.pathname.endsWith('/') ? 'index.html' : '');
+  const CHAVE_ESTADO = 'auto_atualizar_estado_v1';
+  let base = null, novaVersao = false, ultimoUso = Date.now(), avisou = false;
+  ['mousemove','mousedown','keydown','wheel','touchstart','scroll'].forEach(ev=>document.addEventListener(ev, ()=>{ ultimoUso = Date.now(); }, {passive:true, capture:true}));
+  function hash(t){ let h = 0; for(let i=0;i<t.length;i+=7){ h = (h*31 + t.charCodeAt(i))|0; } return h + ':' + t.length; }
+  async function assinatura(){
+    try{
+      const r = await fetch(URL_PAG + '?_v=' + Date.now(), { method:'HEAD', cache:'no-store' });
+      const sig = r.headers.get('etag') || r.headers.get('last-modified');
+      if(r.ok && sig) return 'h:' + sig;
+    }catch(e){}
+    try{ const r = await fetch(URL_PAG + '?_v=' + Date.now(), { cache:'no-store' }); if(r.ok) return 'g:' + hash(await r.text()); }catch(e){}
+    return null;
+  }
+  function seguro(){
+    try{
+      if(!window.__bootOk || window.__trocandoAba) return false;
+      if(typeof temEdicaoEmAndamento==='function' && temEdicaoEmAndamento()) return false;
+      if(typeof saveTimer!=='undefined' && saveTimer) return false;
+      if((window.__salvandoProcessos||0) > 0) return false;
+      if(typeof _nfSavePending!=='undefined' && _nfSavePending) return false;
+      if(typeof _dpSavePending!=='undefined' && _dpSavePending) return false;
+      if(typeof _dplSavePending!=='undefined' && _dplSavePending) return false;
+      if(document.querySelector('.overlay')) return false;
+      const parado = (Date.now() - ultimoUso) > 20000;   // 20s sem mexer (ou a aba está em segundo plano)
+      return parado || document.hidden;
+    }catch(e){ return false; }
+  }
+  function guardarEstado(){
+    try{
+      const board = document.getElementById('board');
+      const tab = document.querySelector('.view-tab.active');
+      sessionStorage.setItem(CHAVE_ESTADO, JSON.stringify({
+        em: Date.now(), view: window.currentView || (tab && tab.dataset.view) || '', ano: (typeof currentYearFilter!=='undefined') ? currentYearFilter : '',
+        y: window.scrollY, bx: board ? board.scrollLeft : 0 }));
+    }catch(e){}
+  }
+  function recarregar(){
+    guardarEstado();
+    try{ toast('🔄 Saiu uma versão nova do sistema — atualizando…'); }catch(e){}
+    setTimeout(()=>location.reload(), 1200);
+  }
+  async function verificar(){
+    if(novaVersao){ if(seguro()) recarregar(); return; }
+    const sig = await assinatura(); if(!sig) return;
+    if(base === null){ base = sig; return; }
+    if(sig !== base){
+      novaVersao = true;
+      if(!avisou){ avisou = true; console.log('🆕 versão nova do sistema publicada — atualiza sozinho assim que for seguro'); }
+      if(seguro()) recarregar();
+    }
+  }
+  // depois de recarregar: volta para a mesma aba e posição
+  function restaurar(){
+    let st = null; try{ st = JSON.parse(sessionStorage.getItem(CHAVE_ESTADO)||'null'); sessionStorage.removeItem(CHAVE_ESTADO); }catch(e){}
+    if(!st || Date.now() - st.em > 120000) return;
+    const esperar = (n)=>{ if(!window.__bootOk){ if(n<60) setTimeout(()=>esperar(n+1), 500); return; }
+      try{
+        if(st.view && st.view !== (window.currentView||'processos')){ const t = document.querySelector('.view-tab[data-view="'+st.view+'"]') || (/^despesas/.test(st.view) ? document.getElementById('tabDespesasPlanilha') : null); if(t) t.click(); }
+        setTimeout(()=>{
+          try{ if(st.ano && typeof currentYearFilter!=='undefined' && currentYearFilter!==st.ano && st.ano){ const y = document.querySelector('.year-tab[data-year="'+st.ano+'"]'); if(y) y.click(); } }catch(e){}
+          setTimeout(()=>{ try{ const b = document.getElementById('board'); if(b && st.bx) b.scrollLeft = st.bx; window.scrollTo(0, st.y||0); }catch(e){} }, 400);
+          try{ toast('✅ Sistema atualizado para a versão nova.'); }catch(e){}
+        }, 700);
+      }catch(e){}
+    };
+    esperar(0);
+  }
+  restaurar();
+  setTimeout(verificar, 15000);
+  setInterval(verificar, 120000);        // confere a cada 2 minutos se saiu versão nova
+  setInterval(()=>{ if(novaVersao && seguro()) recarregar(); }, 5000);
+  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) verificar(); else if(novaVersao && seguro()) recarregar(); });
+})();
+</script>
+
 <script id="fixTravaLateralJs">
 (function(){
   function alvos(){ return [document.documentElement, document.body, document.getElementById('appRoot'), document.querySelector('.app-shell'), document.querySelector('.main-col'), document.querySelector('.topheader')]; }
