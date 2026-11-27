@@ -3919,7 +3919,7 @@ async function v2Write(lista, docId){
   }
   // PROTEÇÃO: se uma gravação fosse apagar muitos processos de uma vez, é quase certo que é erro de carga — bloqueia
   { const somem = Object.keys(synced).filter(id=>!vistos[id] && !pend.has(id)); const tot = Object.keys(synced).length;
-    if(somem.length >= 5 && somem.length > tot*0.3){
+    if(somem.length >= 5 && somem.length > tot*0.3 && !(window.__apagarEmMassa && window.__apagarEmMassa[docId])){
       console.error('☁ bloqueado: gravação apagaria', somem.length, 'de', tot, 'registros em', docId);
       try{ toast('⚠ Proteção: uma gravação ia apagar ' + somem.length + ' processos de uma vez na nuvem e foi bloqueada. Recarregue a página (F5).'); }catch(e){}
       throw new Error('gravação bloqueada: apagamento em massa');
@@ -14353,6 +14353,78 @@ function comScroll(fn){
 }
 
 /* ===== exportar / importar TUDO (ponte entre versões do sistema) ===== */
+
+/* ===== limpeza pedida: apagar todos os processos com DATA DE ABERTURA em 2023 ou 2024 (Vendas JBS e Vendas) =====
+   Roda sozinha ao abrir o sistema: mostra a lista, baixa uma cópia de segurança e apaga ao confirmar.
+   Depois disso não sobra nenhum e a janela não aparece mais. */
+const ANOS_APAGAR = ['2023','2024'];
+function ehAnoApagar(p){ return p && ANOS_APAGAR.indexOf(String(p.data||'').slice(0,4)) >= 0; }
+async function anosAntigosListas(){
+  const outro = activeDataset==='vendas' ? 'jbs' : 'vendas';
+  const docOutro = outro==='vendas' ? 'processos_vendas_v1' : 'processos_jbs_v1';
+  let listaOutra = null;
+  if(temAba(abaDoDataset(outro))){
+    if(datasetCache[outro] && Array.isArray(datasetCache[outro].processos)) listaOutra = datasetCache[outro].processos;
+    else { try{ const raw = await firestoreReadProcessos(docOutro); listaOutra = raw ? JSON.parse(raw).map(normalize) : null; }catch(e){ listaOutra = null; } }
+  }
+  return { atual:{ ds:activeDataset, doc:currentFirestoreDocId(), lista:processos }, outra: listaOutra ? { ds:outro, doc:docOutro, lista:listaOutra } : null };
+}
+async function apagarAnosAntigos(automatico){
+  if(!window.__bootOk || !firebaseReady || !podeGravarNuvem()) return;
+  if(automatico){ try{ if(sessionStorage.getItem('apagar_2324_adiado')) return; }catch(e){} }
+  const L = await anosAntigosListas();
+  const grupos = [L.atual, L.outra].filter(Boolean).map(g=>({ ...g, sai:g.lista.filter(ehAnoApagar) })).filter(g=>g.sai.length);
+  if(!grupos.length){ if(!automatico) toast('Não há processos com data de abertura em 2023 ou 2024.'); return; }
+  const nome = ds => ds==='vendas' ? 'Vendas' : 'Vendas JBS';
+  const tot = grupos.reduce((n,g)=>n+g.sai.length,0);
+  const esc = t => String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const html = grupos.map(g=>`<h3 style="margin:12px 0 6px;font-size:15px;">${nome(g.ds)} — ${g.sai.length} processo(s) · USD ${fmt(g.sai.reduce((s,p)=>s+(+p.valorUsd||0),0))}</h3>
+    <div style="max-height:30vh;overflow:auto;"><table class="mat-table" style="width:100%;"><thead><tr><th>Processo</th><th>Data de abertura</th><th style="text-align:left;">Cliente</th><th style="text-align:left;">Fornecedor</th><th>Valor USD</th></tr></thead><tbody>
+    ${g.sai.slice().sort((a,b)=>String(a.data).localeCompare(String(b.data))).map(p=>`<tr><td><b>${esc(p.processo)}</b></td><td>${fmtDateBR(String(p.data).slice(0,10))}</td><td style="text-align:left;">${esc(p.cliente)}</td><td style="text-align:left;">${esc(p.fornecedor)}</td><td class="num">${fmt(+p.valorUsd||0)}</td></tr>`).join('')}
+    </tbody></table></div>`).join('');
+  const root = document.createElement('div'); root.className='overlay'; root.style.zIndex=99999;
+  root.innerHTML = `<div class="modal" style="max-width:900px;"><div class="modal-head"><div><h2>🗑 Apagar processos de 2023 e 2024</h2>
+    <div class="an-panel-sub">${tot} processo(s) com <b>data de abertura</b> em 2023 ou 2024. Ao confirmar, o sistema baixa uma cópia de segurança desses processos (arquivo .json) e apaga de vez — para todas as pessoas.</div></div></div>
+    <div class="modal-body" style="max-height:62vh;overflow:auto;">${html}</div>
+    <div class="modal-foot"><button class="btn btn-outline" id="a2324Depois">Agora não</button><button class="btn btn-danger" id="a2324Ok" style="background:#C0392B;color:#fff;">Baixar cópia e apagar ${tot}</button></div></div>`;
+  document.body.appendChild(root);
+  root.querySelector('#a2324Depois').onclick = ()=>{ try{ sessionStorage.setItem('apagar_2324_adiado','1'); }catch(e){} root.remove(); };
+  root.querySelector('#a2324Ok').onclick = async ()=>{
+    if(!editMode){ toast('Digite a senha de edição e clique de novo.'); openEditUnlockModal(); return; }
+    const bt = root.querySelector('#a2324Ok'); bt.disabled = true; bt.textContent = 'Apagando…';
+    // 1) cópia de segurança
+    try{
+      const pacote = { apagadoEm:new Date().toISOString(), motivo:'data de abertura em 2023/2024', abas:{} };
+      grupos.forEach(g=>{ pacote.abas[nome(g.ds)] = g.sai; });
+      const blob = new Blob([JSON.stringify(pacote)], {type:'application/json'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'processos_2023_2024_apagados_'+todayStr()+'.json'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    }catch(e){ console.warn('cópia', e); }
+    // 2) apaga
+    let ok = 0, falhou = '';
+    for(const g of grupos){
+      const fora = new Set(g.sai.map(p=>p.id));
+      if(typeof podeEditarAba==='function' && !podeEditarAba(abaDoDataset(g.ds))){ falhou += ' '+nome(g.ds)+' (sem permissão de edição)'; continue; }
+      window.__apagarEmMassa = Object.assign(window.__apagarEmMassa||{}, { [g.doc]: true });
+      try{
+        if(g.ds===activeDataset){
+          g.sai.forEach(p=>{ try{ window.__histExcluidos.add(p.id); }catch(e){} });
+          processos = processos.filter(p=>!fora.has(p.id));
+          await saveData(true);
+        } else {
+          const nova = g.lista.filter(p=>!fora.has(p.id));
+          await firestoreWriteProcessos(JSON.stringify(nova), g.doc);
+          if(datasetCache[g.ds]) datasetCache[g.ds].processos = nova;
+          try{ await storageSet(g.ds==='vendas' ? window.STORAGE_KEY_VENDAS : window.STORAGE_KEY, JSON.stringify(nova), true); }catch(e){}
+          try{ anOutraAba = null; }catch(e){}
+        }
+        ok += g.sai.length;
+      }catch(e){ console.error('apagar 2023/2024', g.doc, e); falhou += ' '+nome(g.ds); }
+      finally{ delete window.__apagarEmMassa[g.doc]; }
+    }
+    root.remove(); try{ renderAll(); }catch(e){}
+    toast(falhou ? `⚠ Apaguei ${ok}, mas falhou em:${falhou}. Recarregue e tente de novo.` : `🗑 ${ok} processo(s) de 2023/2024 apagados. Cópia de segurança baixada.`);
+  };
+}
 async function exportarTudo(){
   const pacote = { versao: 1, exportadoEm: new Date().toISOString(), dados: {} };
   const chaves = [
@@ -18078,6 +18150,7 @@ async function init(){
   document.getElementById('loading').style.display = 'none';
   window.__bootOk = true;   // a partir daqui, só gravações feitas pela pessoa
   try{ montarUiConta(); }catch(e){ console.warn('conta', e); }
+  setTimeout(()=>{ try{ apagarAnosAntigos(true); }catch(e){ console.warn('apagar 2023/2024', e); } }, 6000);
   // quem vê as duas abas mantém a numeração da nuvem em dia (para quem só vê uma delas não repetir número)
   if(firebaseReady && temAba('jbs') && temAba('vendas') && podeGravarNuvem()){
     setTimeout(async ()=>{
