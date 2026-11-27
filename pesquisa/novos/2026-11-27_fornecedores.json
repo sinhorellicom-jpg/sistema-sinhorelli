@@ -1,0 +1,402 @@
+[
+ {
+  "empresa": "CABRIPIEL (Curtiembre)",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "couro bovino (curtume/distribuidora de couro; registrada na importação como DISTRIBUIDORA CABRIPIEL E.U.)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de couro bovino (HS 41) do curtume brasileiro Apucarana Leather — concorrente de JBS; descrição e NCM de 8+ dígitos mascaradas na fonte; importador registrado como DISTRIBUIDORA CABRIPIEL E.U.",
+    "ncm": "41",
+    "origem": "Brasil",
+    "fornecedor": "Apucarana Leather S.A.",
+    "periodo": "23/04/2019",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Apucarana-Leather-SA/5369787"
+   },
+   {
+    "descricao": "Importação anterior de couro do mesmo curtume (Apucarana Leather, Apucarana-PR); detalhes mascarados",
+    "ncm": "41",
+    "origem": "Brasil",
+    "fornecedor": "Apucarana Leather S.A.",
+    "periodo": "11/08/2016",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Apucarana-Leather-SA/5369787"
+   }
+  ],
+  "fornecedores_conhecidos": "Apucarana Leather S.A.",
+  "por_que_e_prospect": "Nosso cliente (JBS AR) já comprou couro do curtume brasileiro concorrente Apucarana Leather (2016 e 2019) — espaço para JBS BR/Zendaleather disputarem esse volume.",
+  "confianca": "média",
+  "fontes": [
+   "https://panjiva.com/Apucarana-Leather-SA/5369787"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "CUEROS VÉLEZ S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "couro, marroquinaria e calçado (Vélez)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4107",
+   "6406.20"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de couro bovino (HS 41) do curtume brasileiro Apucarana Leather (concorrente de JBS); detalhes mascarados na fonte",
+    "ncm": "41",
+    "origem": "Brasil",
+    "fornecedor": "Apucarana Leather S.A.",
+    "periodo": "29/04/2021",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Apucarana-Leather-SA/5369787"
+   },
+   {
+    "descricao": "Partes de calçado (solados) — Factura 132 de 22/05/2018, 8.236 unidades, 2.128 kg",
+    "ncm": "6406.20.00.00",
+    "origem": "México",
+    "fornecedor": "Hi Tech Soles S.A. de C.V.",
+    "periodo": "08/06/2018",
+    "valor": "16378.15",
+    "unidade": "USD FOB",
+    "fonte": "https://www.importgenius.com/colombia/suppliers/hi-tech-soles-s-a-de-c-v"
+   },
+   {
+    "descricao": "Partes de calçado (solados), 938 unidades, 211 kg (pedido imp 4597); Hi Tech Soles somou 17.977 kg para a Vélez",
+    "ncm": "6406.20",
+    "origem": "México",
+    "fornecedor": "Hi Tech Soles S.A. de C.V.",
+    "periodo": "18/05/2018",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.importgenius.com/colombia/suppliers/hi-tech-soles-s-a-de-c-v"
+   }
+  ],
+  "fornecedores_conhecidos": "Apucarana Leather S.A.; Hi Tech Soles S.A. de C.V.",
+  "por_que_e_prospect": "Nosso cliente (JBS AR) também compra couro do curtume brasileiro Apucarana Leather (2021) e solados mexicanos da Hi Tech Soles (2018) — oportunidade para JBS BR e Hiper Solados.",
+  "confianca": "média",
+  "fontes": [
+   "https://panjiva.com/Apucarana-Leather-SA/5369787",
+   "https://www.importgenius.com/colombia/suppliers/hi-tech-soles-s-a-de-c-v"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "Indynam S.A. de C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "Aguascalientes, Aguascalientes",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "adesivos hotmelt e químicos para calçado",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "3506.91",
+   "3909.50",
+   "3921.90"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Embarque de 12.750 kg (500 sacos) da Can Kimya; mercadoria mascarada no registro — o perfil da empresa cita \"hotmelt\" como produto principal (provável 3506.91, não confirmada)",
+    "ncm": "35",
+    "origem": "Turquia",
+    "fornecedor": "Can Kimya San. ve Tic. A.Ş.",
+    "periodo": "23/10/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Indynam-S-A-De-C-V/39784910"
+   },
+   {
+    "descricao": "Embarques anteriores do mesmo fornecedor (detalhes mascarados); perfil cita 26 embarques EUA e 32–34 fornecedores",
+    "ncm": "35",
+    "origem": "Turquia",
+    "fornecedor": "Can Kimya San. ve Tic. A.Ş.",
+    "periodo": "04/04/2024; 29/09/2024",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Indynam-S-A-De-C-V/37660019"
+   }
+  ],
+  "fornecedores_conhecidos": "Can Kimya San. ve Tic. A.Ş.",
+  "por_que_e_prospect": "Importa adesivo hotmelt da turca Can Kimya (2024–2025) — prospect para os adesivos BIQ e o contraforte termoadesivo da Yantai.",
+  "confianca": "média",
+  "fontes": [
+   "https://panjiva.com/Indynam-S-A-De-C-V/39784910",
+   "https://panjiva.com/Indynam-S-A-De-C-V/37660019"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "Gemex Imp. & Exp. S.A. de C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "químicos para curtume e calçado (corantes, resinas acrílicas)",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "3506.91",
+   "3814.00",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Corante orgânico sintético (HS 3204.12); 18.798 kg; descrição mascarada",
+    "ncm": "3204.12.07.99",
+    "origem": "Itália",
+    "fornecedor": "Getti Italia S.r.l.",
+    "periodo": "26/11/2025",
+    "valor": "64976 (CIF USD)",
+    "unidade": "USD CIF",
+    "fonte": "https://panjiva.com/Gemex-Imp-Exp-SA-De-Cv/38078801"
+   },
+   {
+    "descricao": "Polímero acrílico (HTS 3906.90); 17.780 kg; descrição mascarada",
+    "ncm": "3906.90",
+    "origem": "Itália",
+    "fornecedor": "Getti Italia S.r.l.",
+    "periodo": "20/11/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://es.panjiva.com/Gemex-Imp-Exp-S-A-De-C-V/44891023"
+   },
+   {
+    "descricao": "Embarques de químicos (detalhes mascarados)",
+    "ncm": "34/38",
+    "origem": "Itália",
+    "fornecedor": "Industria Chimica Panzeri S.r.l.",
+    "periodo": "07/03/2024; 02/06/2023",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://es.panjiva.com/Gemex-Imp-Exp-S-A-De-C-V/44891023"
+   }
+  ],
+  "fornecedores_conhecidos": "Getti Italia S.r.l.; Industria Chimica Panzeri S.r.l.",
+  "por_que_e_prospect": "Distribuidor de químicos em León que importa da Itália (Getti, Panzeri; 2.465 registros) — canal para adesivos/solventes BIQ e sistema PU.",
+  "confianca": "alta",
+  "fontes": [
+   "https://panjiva.com/Gemex-Imp-Exp-SA-De-Cv/38078801",
+   "https://es.panjiva.com/Gemex-Imp-Exp-S-A-De-C-V/44891023"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "Fábricas de Calzado Andrea S.A. de C.V.",
+  "nome_fantasia": "Andrea",
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "calçado (venda por catálogo) e vestuário",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "6406.90",
+   "6406.20",
+   "3921.13",
+   "5603.14",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Calçado com cabedal têxtil (HS 6404.19.02); 5.907 kg",
+    "ncm": "6404.19.02.00",
+    "origem": "China",
+    "fornecedor": "Wenzhou Meilianmei Shoes Co., Ltd.",
+    "periodo": "11/11/2024",
+    "valor": "44886",
+    "unidade": "USD CIF",
+    "fonte": "https://panjiva.com/Wenzhou-Meilianmei-Shoes-Co-Ltd/154699179"
+   },
+   {
+    "descricao": "Calçado esportivo com cabedal têxtil (HS 6404.11.17); 180 pares, 2.660 kg",
+    "ncm": "6404.11.17.01",
+    "origem": "China (Geox Asia Pacific)",
+    "fornecedor": "Geox Asia Pacific Ltd.",
+    "periodo": "27/01/2021",
+    "valor": "71451",
+    "unidade": "USD CIF",
+    "fonte": "https://panjiva.com/Geox-Asia-Pacific-Ltd/92352672"
+   }
+  ],
+  "fornecedores_conhecidos": "Wenzhou Meilianmei Shoes Co., Ltd.; Geox Asia Pacific Ltd.",
+  "por_que_e_prospect": "Grande varejista/fabricante de León que importa calçado pronto da China (2024) — prospect para componentes (microfibra, forros, solados) da sua produção própria.",
+  "confianca": "alta",
+  "fontes": [
+   "https://panjiva.com/Wenzhou-Meilianmei-Shoes-Co-Ltd/154699179",
+   "https://panjiva.com/Geox-Asia-Pacific-Ltd/92352672",
+   "https://panjiva.com/Fiory-S-A/38888153",
+   "https://panjiva.com/Fabricas-De-Calzado-Andrea-SA-De-Cv/1974424"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "POLYSHOES S.A.S.",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "solados",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99",
+   "6406.20"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação da italiana Ama Gusberti (Vigevano; máquinas para calçado — produto principal 'machinery'); detalhes mascarados (NCM não exibida; capítulo 84 inferido pelo produto principal do fornecedor)",
+    "ncm": "84",
+    "origem": "Itália",
+    "fornecedor": "Ama Gusberti S.r.l.",
+    "periodo": "23/04/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://es.panjiva.com/Ama-Gusberti-Srl/4148738"
+   }
+  ],
+  "fornecedores_conhecidos": "Ama Gusberti S.r.l.",
+  "por_que_e_prospect": "Fábrica de solados que importou de fabricante italiano de máquinas para calçado em 2025 — investimento ativo; prospect para sistema PU e moldes Polako.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://es.panjiva.com/Ama-Gusberti-Srl/4148738"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "CALZADO 70",
+  "nome_fantasia": null,
+  "pais": "COLOMBIA",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "calçado de segurança",
+  "porte": null,
+  "ncms_provaveis": [
+   "4107",
+   "6406.90",
+   "5901.90",
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação da italiana Ama Gusberti (máquinas para calçado; produto principal 'machinery'); 2 registros, detalhes mascarados; importador FABRICA DE CALZADO 70 S.A.S. (NCM não exibida; capítulo 84 inferido pelo produto principal do fornecedor)",
+    "ncm": "84",
+    "origem": "Itália",
+    "fornecedor": "Ama Gusberti S.r.l.",
+    "periodo": "30/09/2024",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://es.panjiva.com/Ama-Gusberti-Srl/4148738"
+   }
+  ],
+  "fornecedores_conhecidos": "Ama Gusberti S.r.l.",
+  "por_que_e_prospect": "Fábrica de calçado de segurança que importou máquinas italianas em 2024 — prospect para couro, biqueira, palmilha antiperfuro e PU.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://es.panjiva.com/Ama-Gusberti-Srl/4148738"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "CALZACUERO C.A.",
+  "nome_fantasia": null,
+  "pais": "EQUADOR",
+  "cidade": "Cotopaxi",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "calçado",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "4107",
+   "6406.20",
+   "6406.90",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Calçado (HS 6404.19); 1.864 unidades, 593 kg líquidos, via Ipiales",
+    "ncm": "6404.19.00.00",
+    "origem": "Colômbia",
+    "fornecedor": "Manisol S.A.S.",
+    "periodo": "15/11/2025",
+    "valor": "12149",
+    "unidade": "USD FOB",
+    "fonte": "https://panjiva.com/Calzacuero/23975619"
+   },
+   {
+    "descricao": "Calçado de borracha/plástico (HS 6402.20); 2.365 unidades",
+    "ncm": "6402.20.00.00",
+    "origem": "Colômbia",
+    "fornecedor": "Col - Huellas S.A.S.",
+    "periodo": "18/11/2025",
+    "valor": "5059",
+    "unidade": "USD FOB",
+    "fonte": "https://panjiva.com/Calzacuero/24086126"
+   },
+   {
+    "descricao": "Calçado (detalhes mascarados)",
+    "ncm": "64",
+    "origem": "Colômbia",
+    "fornecedor": "P.D Calzado Lupi S.A.S.",
+    "periodo": "03/09/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Calzacuero/24086126"
+   },
+   {
+    "descricao": "Calçado (detalhes mascarados)",
+    "ncm": "64",
+    "origem": "Colômbia",
+    "fornecedor": "Industria de Calzado Superiores S.A.S.",
+    "periodo": "18/07/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Calzacuero/24086126"
+   }
+  ],
+  "fornecedores_conhecidos": "Manisol S.A.S.; Col - Huellas S.A.S.; P.D Calzado Lupi S.A.S.; Industria de Calzado Superiores S.A.S.",
+  "por_que_e_prospect": "Compra calçado pronto de 4+ fabricantes colombianos (2025; 804 registros, 31 fornecedores) — pode ser abordada para insumos e para a produção própria.",
+  "confianca": "alta",
+  "fontes": [
+   "https://panjiva.com/Calzacuero/23975619",
+   "https://panjiva.com/Calzacuero/24086126"
+  ],
+  "atualiza_existente": true
+ }
+]

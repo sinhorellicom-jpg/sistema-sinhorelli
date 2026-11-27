@@ -1,0 +1,32 @@
+[
+ {
+  "data": "2026-04-09",
+  "importador": "LEAR MEXICAN TRIM OPERATIONS S. DE R.L. DE C.V.",
+  "pais": "MEXICO",
+  "exportador": "CURTIEMBRE ARLEI S.A.",
+  "origem": "Argentina",
+  "ncm": "",
+  "produto": "BOVINE,EQUINE DEHAIRED RAWHIDE,SKINS, FULL GRAINS, UNSPLIT; GRAIN SPLITS AND AUTOMOTIVE UPHOLSTERY LEATHER (BL ONEYBUEG00878301, Buenos Aires -> Houston; 3 PKG; NCM não exibida)",
+  "quantidade": 1712,
+  "unidade": "kg",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importinfo.com/curtiembre-arlei-s-a"
+ },
+ {
+  "data": "2026-04-09",
+  "importador": "LEAR MEXICAN SEATING CORPORATION",
+  "pais": "MEXICO",
+  "exportador": "CURTIEMBRE ARLEI S.A.",
+  "origem": "Argentina",
+  "ncm": "",
+  "produto": "BOVINE,EQUINE DEHAIRED RAWHIDE,SKINS, FULL GRAINS, UNSPLIT; GRAIN SPLITS AND AUTOMOTIVE UPHOLSTERY LEATHER (BL ONEYBUEG00878300, Buenos Aires -> Houston; 5 PKG; NCM não exibida)",
+  "quantidade": 3515,
+  "unidade": "kg",
+  "valor": null,
+  "tipo_valor": "não informado",
+  "preco_unit_fonte": null,
+  "fonte": "https://www.importinfo.com/curtiembre-arlei-s-a"
+ }
+]

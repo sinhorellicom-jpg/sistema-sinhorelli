@@ -1,0 +1,160 @@
+[
+ {
+  "empresa": "FCC - CIENCIA DOS MATERIAIS LTDA",
+  "nome_fantasia": "FCC",
+  "pais": "BRASIL",
+  "cidade": "Campo Bom/RS",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Indústria de ciência dos materiais para calçados: adesivos, termoplásticos e selantes; desde set/2026 opera em Campo Bom a primeira fábrica de E-TPU (TPU expandido, para entressolas de calçados esportivos/casuais) da América Latina; também produz TPV",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "3909.50",
+   "3506.91",
+   "3907.99"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Pleito de Ex-tarifário (II 0%) para poliuretano termoplástico em partículas micropelletizadas (0,3–1,5 mm) para fabricar E-TPU — nomes comerciais Mirathane A390C2 e Mirathane A195E1 (Mirathane = marca da Miracll Chemicals, China; atribuição do fornecedor inferida pela marca, a nota não nomeia o exportador). Valores da NCM inteira (não da empresa): importação BR 2025 US$ 35.815.785 FOB, China US$ 10.283.805 (44,1% da quantidade)",
+    "ncm": "3909.50.29",
+    "origem": "China",
+    "fornecedor": "Miracll Chemicals (marca Mirathane) — inferido",
+    "periodo": "2026 (nota técnica da 239ª reunião Gecex; dados Comex Stat 2022–mai/2026)",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.gov.br/mdic/pt-br/assuntos/camex/outros-documentos/notas/deferimentos/239a-reuniao-do-comite-executivo-de-gestao/extrato-da-nota-tecnica-1358_2026_mdic.pdf"
+   },
+   {
+    "descricao": "FCC investe R$ 20 milhões em fábrica de E-TPU em Campo Bom, em operação desde início de set/2026 (primeira da América Latina)",
+    "ncm": "3909.50",
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "19/10/2026",
+    "valor": "R$ 20 milhões (investimento)",
+    "unidade": null,
+    "fonte": "https://www.jornaldocomercio.com/especiais/anuario-de-investimentos/2026/10/1267393-fcc-investe-rs-20-milhoes-em-fabrica-de-material-inedita-na-america-latina.html"
+   },
+   {
+    "descricao": "FCC (RS): adesivos, termoplásticos e selantes para calçados; atende os 50 maiores fabricantes de calçados do Brasil; >500 formulações; materiais em ~200 milhões de pares/ano; fábrica de ETPU em fase final",
+    "ncm": "3506.91",
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "24/09/2025",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://assintecal.azurewebsites.net/en/noticias/fcc-makes-its-mark-at-regional-footwear-fairs"
+   }
+  ],
+  "fornecedores_conhecidos": "TPU micropelletizado Mirathane (marca da Miracll Chemicals, China) — pleito de ex-tarifário 2026, NCM 3909.50.29",
+  "por_que_e_prospect": "Importa TPU 3909.50.29 da marca Mirathane (Miracll, fornecedor que representamos) para a nova fábrica de E-TPU e é o maior fornecedor de adesivos/termoplásticos do calçado brasileiro — alvo direto para Miracll/Xuchuan e para checar se a compra já passa por outro canal.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.gov.br/mdic/pt-br/assuntos/camex/outros-documentos/notas/deferimentos/239a-reuniao-do-comite-executivo-de-gestao/extrato-da-nota-tecnica-1358_2026_mdic.pdf",
+   "https://www.jornaldocomercio.com/especiais/anuario-de-investimentos/2026/10/1267393-fcc-investe-rs-20-milhoes-em-fabrica-de-material-inedita-na-america-latina.html",
+   "https://www.jornaldocomercio.com/especiais/anuario-de-investimentos/2026/07/1257155-industria-investe-para-expandir-producao-de-termoplastico-em-campo-bom.html",
+   "https://assintecal.azurewebsites.net/en/noticias/fcc-makes-its-mark-at-regional-footwear-fairs"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "FCC - INDUSTRIA E COMERCIO LTDA",
+  "nome_fantasia": "FCC",
+  "pais": "BRASIL",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "adesivos/químicos",
+  "produtos": "Pleiteante de ex-tarifário para elastômero TPU base poliéster (provavelmente do mesmo grupo FCC de Campo Bom/RS — não confirmado). Obs.: existe CNPJ 03.281.950/0001-20 com esta razão social em Conceição do Jacuípe/BA, CNAE fabricação de calçados de couro, mas não foi confirmado que é a mesma empresa da nota",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Pleito de Ex-tarifário: elastômeros termoplásticos de poliuretano à base de poliéster (TPU) — nomes comerciais HF-1080, HF-1195 e WANTHANE WHT1570/1580; a nota cita Wanhua e Huafon como principais produtores que concentram as exportações ao Brasil. Valores da NCM inteira: 2025 US$ 35.815.785 FOB / 9.961.684 kg; China US$ 10.283.805",
+    "ncm": "3909.50.29",
+    "origem": "China",
+    "fornecedor": "Huafon (série HF) e Wanhua (Wanthane) — inferido pelos nomes comerciais citados",
+    "periodo": "2026 (nota técnica da 239ª reunião Gecex; dados 2022–mai/2026)",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.gov.br/mdic/pt-br/assuntos/camex/outros-documentos/notas/deferimentos/239a-reuniao-do-comite-executivo-de-gestao/extrato-da-nota-tecnica-1296_2026_mdic.pdf"
+   }
+  ],
+  "fornecedores_conhecidos": "TPU base poliéster Huafon (HF-1080/HF-1195) e Wanhua (WANTHANE WHT1570/1580), China — inferido pelos nomes comerciais do pleito de 2026",
+  "por_que_e_prospect": "Comprador declarado de TPU poliéster chinês (3909.50.29) de concorrentes da Miracll (Huafon, Wanhua) — oportunidade de substituição pela Miracll.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.gov.br/mdic/pt-br/assuntos/camex/outros-documentos/notas/deferimentos/239a-reuniao-do-comite-executivo-de-gestao/extrato-da-nota-tecnica-1296_2026_mdic.pdf"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CURTUME KRUMENAUER S.A.",
+  "nome_fantasia": "Krumenauer",
+  "pais": "BRASIL",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume; importa couro bovino acabado e wet blue",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Couro bovino acabado (finished bovine leather), 4.156 kg",
+    "ncm": "410791",
+    "origem": "China (área de fornecimento; área de compra EUA)",
+    "fornecedor": "Portland Studios",
+    "periodo": "24/09/2026",
+    "valor": "83130 (moeda não informada na fonte)",
+    "unidade": "4156 kg",
+    "fonte": "https://en.52wmb.com/buyer/39745172"
+   },
+   {
+    "descricao": "Couro bovino acabado (latigo crupon, várias cores), 4.156,5 kg",
+    "ncm": "41079201",
+    "origem": "México (área de fornecimento)",
+    "fornecedor": "Portland Studios",
+    "periodo": "10/09/2026",
+    "valor": "63060.77 (moeda não informada na fonte)",
+    "unidade": "4156.5 kg",
+    "fonte": "https://en.52wmb.com/buyer/39745172"
+   },
+   {
+    "descricao": "Wet blue bovino (NBP), 1.000 volumes",
+    "ncm": "41041100",
+    "origem": "Estados Unidos",
+    "fornecedor": "National Beef Co",
+    "periodo": "30/10/2023",
+    "valor": null,
+    "unidade": "17692 kg",
+    "fonte": "https://en.52wmb.com/buyer/39745172"
+   },
+   {
+    "descricao": "Wet blue, 1.000 volumes (série de embarques abr–set/2023)",
+    "ncm": "41041114",
+    "origem": "Estados Unidos",
+    "fornecedor": "National Beef Co",
+    "periodo": "2023",
+    "valor": null,
+    "unidade": "~17.500–19.300 kg por embarque",
+    "fonte": "https://en.52wmb.com/buyer/39745172"
+   }
+  ],
+  "fornecedores_conhecidos": "National Beef Co (EUA) — wet blue 4104.11 (2022–2023); Portland Studios — couro acabado 4107 (set/2026)",
+  "por_que_e_prospect": "Importador recorrente de wet blue (lotes de ~18 t da National Beef) e em 2026 de couro acabado — alvo para wet blue/crust e acabado JBS.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/39745172"
+  ],
+  "atualiza_existente": true
+ }
+]
