@@ -1,0 +1,201 @@
+[
+ {
+  "empresa": "PROCESOS MODERNOS DE LEON S.A. DE C.V.",
+  "nome_fantasia": null,
+  "pais": "MEXICO",
+  "cidade": "León, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "curtume (couro bovino); importa extrato tanante de quebracho em grande volume (1.189 registros na fonte)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Extrato de quebracho (tanante vegetal) — 8 linhas no mesmo dia, 25.875 kg por embarque",
+    "ncm": "3201.10.01",
+    "origem": "Argentina (área de fornecimento na fonte)",
+    "fornecedor": "Ledoga S.r.l.",
+    "periodo": "28/08/2026",
+    "valor": "64.690,01 por linha (moeda não informada na fonte)",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/20176854"
+   },
+   {
+    "descricao": "Extrato de quebracho, 25.875 kg",
+    "ncm": "3201.10.01",
+    "origem": "Argentina (área de fornecimento na fonte)",
+    "fornecedor": "Ledoga S.r.l.",
+    "periodo": "06/08/2026",
+    "valor": "65.569,99 por linha (moeda não informada)",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/20176854"
+   },
+   {
+    "descricao": "Extrato de quebracho, 25.875 kg",
+    "ncm": "3201.10.01",
+    "origem": "Argentina (área de fornecimento na fonte)",
+    "fornecedor": "Ledoga S.r.l.",
+    "periodo": "15/06/2026 e 22/06/2026",
+    "valor": "63.655,00 / 63.655,02 por linha (moeda não informada)",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/20176854"
+   },
+   {
+    "descricao": "Fornecedor nº 2 no ranking de parceiros (68 transações, 5,72%); produto não detalhado na página (provável tanante de quebracho)",
+    "ncm": "não informado",
+    "origem": "Argentina",
+    "fornecedor": "Kilmecor S.A.",
+    "periodo": "última transação 04/11/2024",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/20176854"
+   },
+   {
+    "descricao": "Fornecedor nº 3 no ranking de parceiros (50 transações, 4,21%); produto não detalhado na página",
+    "ncm": "não informado",
+    "origem": "Itália",
+    "fornecedor": "Silvachimica (Via Torre)",
+    "periodo": "última transação 22/03/2023",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/20176854"
+   }
+  ],
+  "fornecedores_conhecidos": "Ledoga S.r.l.; Kilmecor S.A.; Silvachimica",
+  "por_que_e_prospect": "Curtume ativo em León com importações recorrentes em 2026 (tanino de quebracho Ledoga/Kilmecor) — processa couro em volume e pode comprar wet blue/crust JBS; os registros vistos não mostram ainda compra de couro importado.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/20176854"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "SADESA S.A.",
+  "nome_fantasia": "Sadesa",
+  "pais": "ARGENTINA",
+  "cidade": "Buenos Aires (CABA)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "curtume exportador (crust/acabado); importa químicos de curtimento",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.41",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Sulfato de cromo (Sulphates of chrome), 90.000 kg",
+    "ncm": "2833.29.50",
+    "origem": "Colômbia",
+    "fornecedor": "Ferro Colombia S.A.S.",
+    "periodo": "15/09/2023",
+    "valor": "51.250 (moeda não informada)",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/35282495"
+   },
+   {
+    "descricao": "Sulfato de cromo, 72.000 kg",
+    "ncm": "2833.29.50",
+    "origem": "Colômbia",
+    "fornecedor": "Ferro Colombia S.A.S.",
+    "periodo": "04/10/2023",
+    "valor": "40.980 (moeda não informada)",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/35282495"
+   },
+   {
+    "descricao": "Dióxido de titânio TIPURE 902P, 20.560 kg",
+    "ncm": "3206.11",
+    "origem": "Costa Rica (área na fonte)",
+    "fornecedor": "Chemours International Operations",
+    "periodo": "19/09/2023",
+    "valor": "411.200 (moeda não informada)",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/35282495"
+   },
+   {
+    "descricao": "CORIPOL SLG — lubrificante/engraxante para couro, 10.130 kg",
+    "ncm": "3403.11 / 3403.91",
+    "origem": "Costa Rica (área na fonte; fornecedor mexicano)",
+    "fornecedor": "TFL Mexicana S.A. de C.V.",
+    "periodo": "01/08/2023",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/35282495"
+   },
+   {
+    "descricao": "Tanantes sintéticos, polímeros acrílicos, tensoativos e sais de cromo fornecidos pela holding do grupo",
+    "ncm": "3202.90 / 3906.90 / 3402.13 / 2833.29",
+    "origem": "não informado (holding Sadesa)",
+    "fornecedor": "Sadesa Holding B.V.",
+    "periodo": "dez/2017",
+    "valor": "ex.: 38.764,88 (07/12/2017); 45.600 (26/12/2017) (moeda não informada)",
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/supplier/61006671"
+   }
+  ],
+  "fornecedores_conhecidos": "Ferro Colombia S.A.S.; Chemours International Operations; TFL Mexicana S.A. de C.V.; Sadesa Holding B.V.",
+  "por_que_e_prospect": "Grande curtume argentino com importações datadas de químicos (cromo Ferro Colombia, TFL, Chemours) — confirma operação de curtimento em escala; potencial para wet blue/crust de JBS como matéria-prima complementar.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/buyer/35282495",
+   "https://en.52wmb.com/supplier/61006671"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "Sociedad Forlivesa Termoplásticos S.A. de C.V.",
+  "nome_fantasia": "Forlivesa",
+  "pais": "MEXICO",
+  "cidade": "Silao, Guanajuato",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "solados",
+  "produtos": "compostos termoplásticos para solado; importa resinas/compostos da italiana So.F.Ter (grupo Celanese)",
+  "porte": null,
+  "ncms_provaveis": [
+   "3909.50",
+   "6406.20"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Resina (descrição mascarada; principais produtos: resin, polyamid), 12.580 kg, 20 volumes — consignatário Forlivesa",
+    "ncm": "3902.10",
+    "origem": "Itália",
+    "fornecedor": "So.F.Ter SpA",
+    "periodo": "24/11/2017",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Soc-Forlivesa-Term-Sa-De-Cv/28313390"
+   },
+   {
+    "descricao": "Embarque 2.410 kg (6 volumes), descrição mascarada; principais produtos 'nero', 'polyethers'",
+    "ncm": "3812.39",
+    "origem": "Itália",
+    "fornecedor": "Celanese So.F.Ter",
+    "periodo": "06/12/2017",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://panjiva.com/Sociedad-Forlivesa-Termoplasticos/4151533"
+   }
+  ],
+  "fornecedores_conhecidos": "So.F.Ter SpA (Celanese So.F.Ter)",
+  "por_que_e_prospect": "Transformador de termoplásticos para solado em Silao ligado à So.F.Ter/Celanese — candidato a TPU (Miracll) e a sistemas PU para solado.",
+  "confianca": "baixa",
+  "fontes": [
+   "https://panjiva.com/Sociedad-Forlivesa-Termoplasticos/4151533",
+   "https://panjiva.com/Soc-Forlivesa-Term-Sa-De-Cv/28313390"
+  ],
+  "atualiza_existente": true
+ }
+]

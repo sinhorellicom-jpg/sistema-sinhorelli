@@ -1,0 +1,777 @@
+[
+ {
+  "empresa": "CURTUME RUSAN LTDA",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": "Lajeado/RS",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume (couro bovino); importa wet blue, corantes e máquinas/peças para curtimento",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Couro bovino curtido (wet blue), importação",
+    "ncm": "41041940",
+    "origem": "Argentina",
+    "fornecedor": "ANAN S.A.",
+    "periodo": "06/2025",
+    "valor": "37.650,70 (moeda não indicada na fonte; provável US$)",
+    "unidade": "25.966 kg",
+    "fonte": "https://en.52wmb.com/buyer/39727173"
+   },
+   {
+    "descricao": "Couro bovino curtido (wet blue), importação",
+    "ncm": "41041940",
+    "origem": "Estados Unidos",
+    "fornecedor": "Wengup LLC",
+    "periodo": "05/2025",
+    "valor": "16.978,00 (moeda não indicada na fonte; provável US$)",
+    "unidade": "11.709 kg",
+    "fonte": "https://en.52wmb.com/buyer/39727173"
+   },
+   {
+    "descricao": "Couro bovino curtido (wet blue), importação",
+    "ncm": "41041940",
+    "origem": "Estados Unidos",
+    "fornecedor": "Rufecon Trading LLC",
+    "periodo": "05/2025",
+    "valor": "20.410,00 (moeda não indicada na fonte; provável US$)",
+    "unidade": "14.076 kg",
+    "fonte": "https://en.52wmb.com/buyer/39727173"
+   },
+   {
+    "descricao": "Corantes orgânicos sintéticos",
+    "ncm": "32041210",
+    "origem": "Países Baixos",
+    "fornecedor": "Chemische Fabriek Traide B.V.",
+    "periodo": "08/2025",
+    "valor": "68.788,40 (moeda não indicada na fonte; provável US$)",
+    "unidade": "11.250 kg",
+    "fonte": "https://en.52wmb.com/buyer/39727173"
+   }
+  ],
+  "fornecedores_conhecidos": "ANAN S.A. (Argentina, wet blue); Wengup LLC e Rufecon Trading LLC (EUA, wet blue); Chemische Fabriek Traide (Holanda, corantes); Officine di Cartigliano e Huni Italia (Itália, máquinas)",
+  "por_que_e_prospect": "Importa wet blue 4104.19 da Argentina e dos EUA em 2025: cliente direto para o wet blue da JBS (AR/US/UY).",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/39727173"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "CALCADOS CARTOM LTDA",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": "Imbituva/PR",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçados de segurança com solado injetado em PU (importa pré-polímero de PU)",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99",
+   "6406.90",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Pré-polímero de poliuretano JF 2067 Elastopan (sistema PU para solado); fonte mostra 69 embarques de importação",
+    "ncm": "390950",
+    "origem": "China",
+    "fornecedor": "Zhejiang Huafon New Materials Co Ltd",
+    "periodo": "16/11/2023 (embarque); total 2022 e 2023",
+    "valor": "2022: US$ 3,88 milhões; 2023: US$ 496 mil",
+    "unidade": "55.660 kg (embarque de 16/11/2023)",
+    "fonte": "https://www.trademo.com/companies/calcados-cartom-ltda/25366638"
+   },
+   {
+    "descricao": "Importação (produto não detalhado)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Zhejiang Huafon Spandex Co Ltd",
+    "periodo": "2022",
+    "valor": "US$ 154 mil",
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/calcados-cartom-ltda/25366638"
+   }
+  ],
+  "fornecedores_conhecidos": "Zhejiang Huafon New Materials Co Ltd (China) — pré-polímero PU/Elastopan; Zhejiang Huafon Spandex (China)",
+  "por_que_e_prospect": "Grande importador de sistema PU para solado (3909.50) da Huafon, concorrente direta da Xuchuan.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.trademo.com/companies/calcados-cartom-ltda/25366638"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "MARLUVAS EQUIPAMENTOS DE SEGURANCA LTDA",
+  "nome_fantasia": "Marluvas",
+  "pais": "BRASIL",
+  "cidade": "Dores de Campos/MG",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado de segurança",
+  "produtos": "Calçados de segurança (solado PU injetado)",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99",
+   "6406.90",
+   "4107",
+   "5603.14"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Pré-polímero de poliuretano (JF 1157, Elastopan JF 2067, Elastopan H 069, catalisador K 20:2), porto Santos (registro como 'Marluvas Calçados de Segurança Ltda', mesmo endereço em Dores de Campos)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Zhejiang Huafon New Materials Co Ltd",
+    "periodo": "26/11/2023",
+    "valor": "2023: US$ 106 mil",
+    "unidade": "81.872 kg",
+    "fonte": "https://www.trademo.com/companies/marluvas-calcados-de-seguranca-ltda/25363621"
+   },
+   {
+    "descricao": "Importação de fornecedor não detalhado (provável logística/tanque)",
+    "ncm": null,
+    "origem": "Estados Unidos",
+    "fornecedor": "Hoyer",
+    "periodo": "2023",
+    "valor": "US$ 165,8 mil",
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/marluvas-calcados-de-seguranca-ltda/25363621"
+   }
+  ],
+  "fornecedores_conhecidos": "Zhejiang Huafon New Materials Co Ltd (China) — sistema PU Elastopan; Hoyer (EUA)",
+  "por_que_e_prospect": "Maior fabricante de calçado de segurança do Brasil compra sistema PU chinês (Huafon): alvo para Xuchuan e insumos Yantai.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.trademo.com/companies/marluvas-calcados-de-seguranca-ltda/25363621"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "VULCABRAS S.A.",
+  "nome_fantasia": "Vulcabras",
+  "pais": "BRASIL",
+  "cidade": "Horizonte/CE",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Calçados esportivos (Olympikus, Mizuno, Under Armour)",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "3909.50",
+   "3907.99",
+   "3921.13",
+   "6406.90",
+   "5603.14"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importações de fornecedor chinês (produto não detalhado na página)",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Hangzhou Yaos Coop Import & Export Co Ltd",
+    "periodo": "2022-2023",
+    "valor": "2022: US$ 1,65 milhão; 2023: US$ 1,79 milhão",
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/vulcabras-azaleia-ba-calcados-e-artigos-esportivos-sa/25360617"
+   },
+   {
+    "descricao": "Importações da Covestro (fabricante de isocianatos/polióis PU e TPU)",
+    "ncm": null,
+    "origem": "Alemanha",
+    "fornecedor": "Covestro AG",
+    "periodo": "2022-2023",
+    "valor": "2022: US$ 276,6 mil; 2023: US$ 424,7 mil",
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/vulcabras-azaleia-ba-calcados-e-artigos-esportivos-sa/25360617"
+   },
+   {
+    "descricao": "Borracha natural SVR3L",
+    "ncm": "400122",
+    "origem": "Vietnã",
+    "fornecedor": "Maithao Co Ltd",
+    "periodo": "14/08/2025",
+    "valor": "Vietnã: 2024 US$ 81,78 mil; 2025 US$ 38,92 mil",
+    "unidade": "20.160 kg",
+    "fonte": "https://www.trademo.com/companies/vulcabras-azaleia-ba-calcados-e-artigos-esportivos-sa/25360617"
+   }
+  ],
+  "fornecedores_conhecidos": "Hangzhou Yaos Coop Import & Export (China); Covestro AG (Alemanha); Maithao Co Ltd (Vietnã, borracha natural)",
+  "por_que_e_prospect": "Compra PU da Covestro e insumos chineses em volume milionário: alvo para Xuchuan/Miracll (PU/TPU) e Yantai.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.trademo.com/companies/vulcabras-azaleia-ba-calcados-e-artigos-esportivos-sa/25360617"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "LYND CALCADOS LTDA",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": "Nova Serrana/MG",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Calçados (injetados; importa TPU e injetora)",
+  "porte": "pequeno",
+  "ncms_provaveis": [
+   "3909.50",
+   "6406.20",
+   "8480.71"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Poliuretano termoplástico (TPU) HF 1070AP; porto Santos; HS 3909 = 66,7% das importações",
+    "ncm": "3909",
+    "origem": "China",
+    "fornecedor": "Zhejiang Huafon TPU Co Ltd",
+    "periodo": "12/08/2023",
+    "valor": "2023: US$ 21,9 mil",
+    "unidade": "16.480 kg",
+    "fonte": "https://www.trademo.com/companies/lynd-calcados-ltda/25414722"
+   },
+   {
+    "descricao": "Máquina injetora (HS 8477.10)",
+    "ncm": "847710",
+    "origem": "China",
+    "fornecedor": "Ningbo Yinzhou Potis Import & Export Co Ltd",
+    "periodo": "2023",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/lynd-calcados-ltda/25414722"
+   }
+  ],
+  "fornecedores_conhecidos": "Zhejiang Huafon TPU Co Ltd (China) — TPU; Ningbo Yinzhou Potis (China) — injetora",
+  "por_que_e_prospect": "Fábrica de Nova Serrana que importa TPU (3909.50) da Huafon: alvo para TPU Miracll e moldes Polako.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.trademo.com/companies/lynd-calcados-ltda/25414722"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "PAMPILI PRODUTOS PARA MENINAS",
+  "nome_fantasia": "Pampili",
+  "pais": "BRASIL",
+  "cidade": "Birigui/SP",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Calçados infantis femininos",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "3921.13",
+   "6406.90",
+   "6406.20",
+   "5603.14"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Chapas/folhas/tiras de plástico (laminado sintético PU)",
+    "ncm": "39211390",
+    "origem": "Espanha (área de fornecimento indicada)",
+    "fornecedor": "Caimi & Liaison Trading American LLC",
+    "periodo": "11/2025",
+    "valor": "52.439,78 (moeda não indicada na fonte; provável US$)",
+    "unidade": "7.878 kg",
+    "fonte": "https://en.52wmb.com/buyer/55805200"
+   },
+   {
+    "descricao": "Tecidos revestidos/impregnados de plástico",
+    "ncm": "59032000",
+    "origem": "Hong Kong",
+    "fornecedor": "Acura Packaging HK Ltd",
+    "periodo": "11/2025",
+    "valor": "57.404,92 (moeda não indicada na fonte; provável US$)",
+    "unidade": "7.550 kg",
+    "fonte": "https://en.52wmb.com/buyer/55805200"
+   },
+   {
+    "descricao": "Partes de calçado",
+    "ncm": "64069020",
+    "origem": "Hong Kong",
+    "fornecedor": "Digs Asia Import and Export Ltd",
+    "periodo": "10/2025",
+    "valor": "14.422,80 (moeda não indicada na fonte; provável US$)",
+    "unidade": "2.203,5 kg",
+    "fonte": "https://en.52wmb.com/buyer/55805200"
+   },
+   {
+    "descricao": "Partes de calçado",
+    "ncm": "64069020",
+    "origem": "Hong Kong",
+    "fornecedor": "Digs Asia Import and Export Ltd",
+    "periodo": "11/2025",
+    "valor": "14.076,20 (moeda não indicada na fonte; provável US$)",
+    "unidade": "2.091,2 kg",
+    "fonte": "https://en.52wmb.com/buyer/55805200"
+   },
+   {
+    "descricao": "Partes de calçado (cabedais)",
+    "ncm": "64062000",
+    "origem": "Hong Kong",
+    "fornecedor": "Digs Asia Import and Export Ltd",
+    "periodo": "07/2025",
+    "valor": "24.281,77 (moeda não indicada na fonte; provável US$)",
+    "unidade": "1.425,61 kg",
+    "fonte": "https://en.52wmb.com/buyer/55805200"
+   }
+  ],
+  "fornecedores_conhecidos": "Caimi & Liaison Trading American LLC (sintético 3921.13); Acura Packaging HK (tecido revestido 5903.20); Digs Asia Import and Export (HK, partes de calçado 6406)",
+  "por_que_e_prospect": "Importa sintético PU 3921.13.90 e partes de calçado 6406 em 2025: alvo direto para microfibra/sintético Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/55805200"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "INDUSTRIA E COMERCIO DE CALCADOS MISS LOVE LTDA",
+  "nome_fantasia": "Miss Love",
+  "pais": "BRASIL",
+  "cidade": "MG (porto de destino Belo Horizonte; cidade não confirmada)",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "calçado geral",
+  "produtos": "Calçados femininos",
+  "porte": "pequeno",
+  "ncms_provaveis": [
+   "6406.90",
+   "3921.13"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Partes de calçado (cabedais, palmilhas removíveis, reforços internos, polainas) e insumos industriais",
+    "ncm": "64069090",
+    "origem": "Estados Unidos",
+    "fornecedor": "FT International LLC",
+    "periodo": "10/2025",
+    "valor": "49.672,16 (moeda não indicada na fonte; provável US$)",
+    "unidade": "4.457 kg",
+    "fonte": "https://en.52wmb.com/buyer/214251744"
+   }
+  ],
+  "fornecedores_conhecidos": "FT International LLC (EUA) — partes de calçado 6406.90",
+  "por_que_e_prospect": "Importa partes de calçado 6406.90.90 (palmilhas/reforços) em 2025: alvo para palmilhas e componentes Yantai.",
+  "confianca": "alta",
+  "fontes": [
+   "https://en.52wmb.com/buyer/214251744"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "BOXFLEX COMPONENTES PARA CALCADOS LTDA",
+  "nome_fantasia": "Boxflex",
+  "pais": "BRASIL",
+  "cidade": "Novo Hamburgo/RS",
+  "id_fiscal": "92.088.509/0001-56",
+  "site": null,
+  "contato": null,
+  "segmento": "distribuidor de insumos",
+  "produtos": "Componentes para calçados: couraças e contrafortes termoplásticos (Ecoforma, Ecogreen), Texair (tecidos/espumas); filial no México",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "3921.90",
+   "5603.14",
+   "3909.50",
+   "3506.91"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importações da Wanhua (fabricante de TPU/PU e isocianatos) — produto não detalhado na página",
+    "ncm": null,
+    "origem": "China",
+    "fornecedor": "Wanhua",
+    "periodo": "2022-2023",
+    "valor": "2022: US$ 285,6 mil; 2023: US$ 612,9 mil + US$ 345,7 mil (duas entradas Wanhua)",
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/boxflex-componentes-para-calcados-ltda/25362090"
+   },
+   {
+    "descricao": "Cadastro CNPJ: Boxflex Componentes para Calçados Ltda, Novo Hamburgo/RS, ativa",
+    "ncm": null,
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://cnpj-api.com/en/cnpj/92088509000156"
+   },
+   {
+    "descricao": "Linhas: couraças e contrafortes Ecoforma, termoplásticos Ecogreen, Texair",
+    "ncm": null,
+    "origem": "Brasil",
+    "fornecedor": null,
+    "periodo": "2026",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://b2usa.com/hotsite/boxflexcomponen"
+   }
+  ],
+  "fornecedores_conhecidos": "Wanhua (China) — PU/TPU",
+  "por_que_e_prospect": "Fabricante de couraça/contraforte que importa resinas Wanhua: alvo para TPU Miracll e não-tecidos/hotmelt Yantai.",
+  "confianca": "média",
+  "fontes": [
+   "https://b2usa.com/hotsite/boxflexcomponen",
+   "https://cnpj-api.com/en/cnpj/92088509000156",
+   "https://www.trademo.com/companies/boxflex-componentes-para-calcados-ltda/25362090"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "ALPHA INDUSTRIA E COMERCIO LTDA",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Compra couro wet blue/crust do Paraguai (perfil de curtume/beneficiador; atividade não confirmada)",
+  "porte": null,
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Comprador brasileiro do exportador paraguaio Parpelli (exporta wet blue 41041940 e crust para calçado); peso total acumulado 347.957 kg",
+    "ncm": "41041940 (NCM do exportador)",
+    "origem": "Paraguai",
+    "fornecedor": "Parpelli Industrial S.A.",
+    "periodo": "último embarque 06/09/2025",
+    "valor": null,
+    "unidade": "347.957 kg (acumulado)",
+    "fonte": "https://www.importgenius.com/paraguay/exporters/parpelli-industrial-s-a"
+   }
+  ],
+  "fornecedores_conhecidos": "Parpelli Industrial S.A. (Paraguai) — wet blue/crust",
+  "por_que_e_prospect": "Compra wet blue/crust do Paraguai até set/2025: alvo para wet blue/crust JBS e Zendaleather.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/paraguay/exporters/parpelli-industrial-s-a"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "IND. COM. DE COUROS INTERNATIONAL LTDA",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": null,
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume/beneficiador de couro bovino (compra wet blue integral)",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Comprador brasileiro de 'cueros wet blue integral de origen nacional' (Lecom exporta NCM 41041114); peso acumulado 1.502.349 kg",
+    "ncm": "41041114 (NCM do exportador)",
+    "origem": "Paraguai",
+    "fornecedor": "Lecom S.A. (Leather & Company S.A.)",
+    "periodo": "último embarque 30/10/2025",
+    "valor": null,
+    "unidade": "1.502.349 kg (acumulado)",
+    "fonte": "https://www.importgenius.com/paraguay/exporters/lecom-sociedad-anonima-leather-company-sa"
+   }
+  ],
+  "fornecedores_conhecidos": "Lecom S.A. – Leather & Company (Paraguai) — wet blue integral",
+  "por_que_e_prospect": "Importou cerca de 1.500 t de wet blue paraguaio até out/2025: forte alvo para wet blue JBS (AR/UY).",
+  "confianca": "média",
+  "fontes": [
+   "https://www.importgenius.com/paraguay/exporters/lecom-sociedad-anonima-leather-company-sa"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "CURTUME COBRASIL LTDA",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": "Parnaíba/PI",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume de peles ovinas/caprinas (importa wet blue ovino)",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "4104.11",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Peles de ovino em wet blue (pré-curtidas ao cromo); 56 embarques de importação",
+    "ncm": "410510",
+    "origem": "México",
+    "fornecedor": "Curtidos Fernuma SA de CV",
+    "periodo": "11/12/2025 (embarque); totais anuais 2022-2025",
+    "valor": "2025: US$ 1,21 milhão; 2024: US$ 819,29 mil; 2023: US$ 690,66 mil; 2022: US$ 409,87 mil",
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/curtume-cobrasil-limited/23044432"
+   },
+   {
+    "descricao": "Importação de fornecedor colombiano (produto não detalhado)",
+    "ncm": null,
+    "origem": "Colômbia",
+    "fornecedor": "Ferro Colombia SAS",
+    "periodo": "2023-2025",
+    "valor": "2025: US$ 63,13 mil; 2024: US$ 61,2 mil",
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/curtume-cobrasil-limited/23044432"
+   }
+  ],
+  "fornecedores_conhecidos": "Curtidos Fernuma SA de CV (México) — wet blue ovino 4105.10; Ferro Colombia SAS (Colômbia)",
+  "por_que_e_prospect": "Curtume que importa > US$ 1 milhão/ano de wet blue (ovino); pode diversificar para wet blue/crust bovino JBS.",
+  "confianca": "alta",
+  "fontes": [
+   "https://www.trademo.com/companies/curtume-cobrasil-limited/23044432"
+  ],
+  "atualiza_existente": false
+ },
+ {
+  "empresa": "FUGA COUROS S.A.",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": "Marau/RS",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume (couro bovino; exporta couro acabado e subprodutos)",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4107"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Sulfato básico de cromo (curtente)",
+    "ncm": "28332960",
+    "origem": "Índia",
+    "fornecedor": "Vishnu Chemical Ltd.",
+    "periodo": "05/2025",
+    "valor": "175.513 (moeda não indicada na fonte; provável US$)",
+    "unidade": "224.000 kg",
+    "fonte": "https://en.52wmb.com/buyer/21160763"
+   },
+   {
+    "descricao": "Produtos curtentes (KEMIA TAUPO)",
+    "ncm": "32021000",
+    "origem": "Itália",
+    "fornecedor": "Kemia Tau",
+    "periodo": "05/2025",
+    "valor": "30.505 (moeda não indicada na fonte; provável US$)",
+    "unidade": "19.350 kg",
+    "fonte": "https://en.52wmb.com/buyer/21160763"
+   },
+   {
+    "descricao": "Produtos curtentes sintéticos/pré-curtimento enzimático",
+    "ncm": "32021000",
+    "origem": "Uruguai",
+    "fornecedor": "Labdal International S.A.",
+    "periodo": "04/2025",
+    "valor": "21.696 (moeda não indicada na fonte; provável US$)",
+    "unidade": "10.101 kg",
+    "fonte": "https://en.52wmb.com/buyer/21160763"
+   },
+   {
+    "descricao": "Outras preparações curtentes",
+    "ncm": "32029029",
+    "origem": "Alemanha",
+    "fornecedor": "Zschimmer & Schwarz GmbH & Co. KG",
+    "periodo": "01/2025",
+    "valor": "6.604,30 (moeda não indicada na fonte; provável US$)",
+    "unidade": "2.625 kg",
+    "fonte": "https://en.52wmb.com/buyer/21160763"
+   },
+   {
+    "descricao": "Parceiro listado como fornecedor (5 transações; produto não detalhado)",
+    "ncm": null,
+    "origem": "Chile",
+    "fornecedor": "Teneria Bas S.A.",
+    "periodo": "não informado",
+    "valor": null,
+    "unidade": null,
+    "fonte": "https://en.52wmb.com/buyer/21160763"
+   }
+  ],
+  "fornecedores_conhecidos": "Vishnu Chemical (Índia, cromo); Sisecam (Turquia, cromo); Kemia Tau (Itália); Labdal (Uruguai); Zschimmer & Schwarz (Alemanha); Alpe Spak (Itália, máquinas); Teneria Bas (Chile)",
+  "por_que_e_prospect": "Curtume grande que importa ativamente em 2025 (químicos e possivelmente couro da Teneria Bas): alvo para wet blue/crust JBS.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/buyer/21160763"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "CURTUME NIMO LTDA",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": "Montenegro/RS",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume (couro bovino)",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19"
+  ],
+  "evidencias": [
+   {
+    "descricao": "CHROMOSAL B (sulfato de cromo, curtente)",
+    "ncm": "283329",
+    "origem": "Hong Kong",
+    "fornecedor": "Brother Group Hong Kong Ltd",
+    "periodo": "21/11/2023; totais 2022-2023",
+    "valor": "2022: US$ 85,6 mil; 2023: US$ 287,9 mil",
+    "unidade": "26.676 kg (embarque)",
+    "fonte": "https://www.trademo.com/companies/curtume-nimo-ltda/25361336"
+   },
+   {
+    "descricao": "Importação de fornecedor indiano (provável curtente; produto não detalhado)",
+    "ncm": null,
+    "origem": "Índia",
+    "fornecedor": "Solar Chemferts Pvt Ltd",
+    "periodo": "2022-2023",
+    "valor": "2022: US$ 42,8 mil; 2023: US$ 389,3 mil",
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/curtume-nimo-ltda/25361336"
+   }
+  ],
+  "fornecedores_conhecidos": "Solar Chemferts Pvt Ltd (Índia); Brother Group Hong Kong Ltd (cromo)",
+  "por_que_e_prospect": "Curtume ativo em importação (cerca de US$ 700 mil/ano em curtentes): perfil comprador de wet blue/crust JBS.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.trademo.com/companies/curtume-nimo-ltda/25361336"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "PARTNER INDUSTRIA E COMERCIO DE COUROS LTDA",
+  "nome_fantasia": null,
+  "pais": "BRASIL",
+  "cidade": "Estância Velha/RS",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume (couro bovino), certificado LWG",
+  "porte": "médio",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Importação de curtente (Sisecam = sulfato de cromo; produto não detalhado na página)",
+    "ncm": null,
+    "origem": "Turquia",
+    "fornecedor": "Sisecam",
+    "periodo": "2022",
+    "valor": "US$ 459 mil",
+    "unidade": null,
+    "fonte": "https://www.trademo.com/companies/partner-industria-e-comercio-de-couros-ltda/25369312"
+   },
+   {
+    "descricao": "Máquina para couro com espalhador e acessórios",
+    "ncm": "845310",
+    "origem": "China",
+    "fornecedor": "Jiangsu Liangang Leather Machinery Co Ltd",
+    "periodo": "02/10/2023",
+    "valor": null,
+    "unidade": "3.398 kg",
+    "fonte": "https://www.trademo.com/companies/partner-industria-e-comercio-de-couros-ltda/25369312"
+   }
+  ],
+  "fornecedores_conhecidos": "Sisecam (Turquia); Jiangsu Liangang Leather Machinery (China)",
+  "por_que_e_prospect": "Curtume do Vale dos Sinos que importa insumos de curtimento: prospect para wet blue/crust JBS.",
+  "confianca": "média",
+  "fontes": [
+   "https://www.trademo.com/companies/partner-industria-e-comercio-de-couros-ltda/25369312"
+  ],
+  "atualiza_existente": true
+ },
+ {
+  "empresa": "DURLICOUROS IND. E COM. DE COUROS EXP. E IMPORTACAO LTDA",
+  "nome_fantasia": "Durli Couros",
+  "pais": "BRASIL",
+  "cidade": "Erechim/RS",
+  "id_fiscal": null,
+  "site": null,
+  "contato": null,
+  "segmento": "curtume",
+  "produtos": "Curtume (couro bovino), certificado LWG",
+  "porte": "grande",
+  "ncms_provaveis": [
+   "4104.11",
+   "4104.19",
+   "4104.41"
+  ],
+  "evidencias": [
+   {
+    "descricao": "Couro bovino salgado (matéria-prima)",
+    "ncm": "41010000",
+    "origem": "Estados Unidos",
+    "fornecedor": "Cargill S.A.",
+    "periodo": "26/12/2022",
+    "valor": null,
+    "unidade": "38.990 kg",
+    "fonte": "https://en.52wmb.com/buyer/81839899"
+   },
+   {
+    "descricao": "Couro bovino salgado úmido (matéria-prima)",
+    "ncm": "41015010",
+    "origem": "Estados Unidos",
+    "fornecedor": "Swift Beef Co.",
+    "periodo": "12/01/2023",
+    "valor": null,
+    "unidade": "39.280 kg",
+    "fonte": "https://en.52wmb.com/buyer/81839899"
+   },
+   {
+    "descricao": "Sulfato básico de cromo (Turkrom AB), vários embarques",
+    "ncm": "32029011",
+    "origem": "Turquia",
+    "fornecedor": "Sisecam",
+    "periodo": "12/2022-11/2023",
+    "valor": null,
+    "unidade": "63.000 kg por embarque",
+    "fonte": "https://en.52wmb.com/buyer/81839899"
+   }
+  ],
+  "fornecedores_conhecidos": "Cargill e Swift Beef (EUA, couro cru); Sisecam (Turquia, cromo); TJCY e RST (China, químicos); Cremer Erzkontor",
+  "por_que_e_prospect": "Importa couro bovino dos frigoríficos dos EUA: alvo para wet blue JBS USA.",
+  "confianca": "média",
+  "fontes": [
+   "https://en.52wmb.com/buyer/81839899"
+  ],
+  "atualiza_existente": true
+ }
+]
